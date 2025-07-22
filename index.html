@@ -3,615 +3,575 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>万鹤书院 - 主页索引</title>
+    <title>万鹤书院 - 智能索引系统</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #8B4513;
-            --secondary-color: #D2691E;
-            --accent-color: #CD853F;
-            --text-dark: #2C1810;
-            --text-light: #8B4513;
-            --bg-light: #FFF8DC;
-            --border-color: #DEB887;
-        }
-        
-        * {
-            font-family: 'Noto Serif SC', serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #FFF8DC 0%, #F5DEB3 100%);
-            color: var(--text-dark);
-        }
-        
-        .academy-header {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        .crane-bg {
+            background: linear-gradient(135deg, #f5f1eb 0%, #e8ddd4 100%);
             position: relative;
             overflow: hidden;
         }
-        
-        .academy-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>');
+        .crane-pattern {
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" stroke="%23d4af37" stroke-width="0.5" opacity="0.1"><path d="M20,20 Q50,10 80,20 T80,80 Q50,90 20,80 Z"/></svg>');
+            background-size: 200px 200px;
         }
-        
         .category-card {
-            background: rgba(255, 255, 255, 0.9);
-            border: 2px solid var(--border-color);
             transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
+            border: 2px solid transparent;
         }
-        
         .category-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 10px 25px rgba(139, 69, 19, 0.2);
-            border-color: var(--accent-color);
+            border-color: #d4af37;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.2);
         }
-        
-        .file-item {
-            background: rgba(255, 255, 255, 0.8);
-            border-left: 4px solid var(--accent-color);
-            transition: all 0.3s ease;
+        .pulse-dot {
+            animation: pulse 2s infinite;
         }
-        
-        .file-item:hover {
-            background: rgba(255, 255, 255, 0.95);
-            transform: translateX(4px);
-            box-shadow: 0 4px 12px rgba(139, 69, 19, 0.15);
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
         }
-        
-        .search-box {
-            border: 2px solid var(--border-color);
-            background: rgba(255, 255, 255, 0.9);
-        }
-        
-        .search-box:focus {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 3px rgba(205, 133, 63, 0.1);
-        }
-        
-        .stats-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(245, 222, 179, 0.9) 100%);
-            border: 1px solid var(--border-color);
-        }
-        
-        .category-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: white;
-            margin-bottom: 12px;
-        }
-        
         .loading-spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(139, 69, 19, 0.3);
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #d4af37;
             border-radius: 50%;
-            border-top-color: var(--primary-color);
-            animation: spin 1s ease-in-out infinite;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
         }
-        
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
-        
-        .fade-in {
-            animation: fadeIn 0.5s ease-in-out;
+        .file-item {
+            transition: all 0.2s ease;
         }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .category-filter {
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .category-filter.active {
-            background: var(--accent-color) !important;
-            color: white !important;
-        }
-        
-        .empty-state {
-            background: rgba(255, 255, 255, 0.8);
-            border: 2px dashed var(--border-color);
-        }
-        
-        @media (max-width: 768px) {
-            .academy-header h1 {
-                font-size: 2rem;
-            }
-            
-            .category-card {
-                margin-bottom: 1rem;
-            }
+        .file-item:hover {
+            background-color: #f9f7f4;
+            border-left: 4px solid #d4af37;
         }
     </style>
 </head>
-<body class="min-h-screen">
-    <!-- 页面头部 -->
-    <header class="academy-header text-white py-12 mb-8 relative">
-        <div class="container mx-auto px-4 text-center relative z-10">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4">万鹤书院</h1>
-            <p class="text-xl mb-6 opacity-90">传承智慧 育人成才</p>
-            <div class="flex justify-center items-center space-x-4 text-sm opacity-80">
-                <span><i class="fas fa-book mr-2"></i>知识殿堂</span>
-                <span><i class="fas fa-users mr-2"></i>师生共进</span>
-                <span><i class="fas fa-graduation-cap mr-2"></i>升学指导</span>
+<body class="crane-bg crane-pattern min-h-screen">
+    <!-- 页头 -->
+    <header class="bg-white shadow-lg border-b-4 border-yellow-600">
+        <div class="max-w-7xl mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-university text-4xl text-yellow-600"></i>
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-800">万鹤书院</h1>
+                        <p class="text-gray-600">智能索引系统</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div id="status-indicator" class="flex items-center space-x-2">
+                        <div class="pulse-dot w-3 h-3 bg-green-500 rounded-full"></div>
+                        <span class="text-sm text-gray-600">系统运行中</span>
+                    </div>
+                    <button onclick="refreshPages()" class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg transition">
+                        <i class="fas fa-sync-alt mr-2"></i>刷新
+                    </button>
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- 搜索和统计区域 -->
-    <div class="container mx-auto px-4 mb-8">
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            <!-- 搜索框 -->
-            <div class="lg:col-span-3">
-                <div class="relative">
-                    <input 
-                        type="text" 
-                        id="searchInput" 
-                        placeholder="搜索页面..." 
-                        class="search-box w-full px-4 py-3 pl-12 rounded-lg outline-none transition-all duration-300"
-                    >
-                    <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <!-- 搜索栏 -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+                <div class="flex-1">
+                    <input type="text" id="search-input" placeholder="搜索页面..." 
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
                 </div>
-            </div>
-            
-            <!-- 统计信息 -->
-            <div class="stats-card p-4 rounded-lg text-center">
-                <div class="text-2xl font-bold text-primary-color" id="totalCount">0</div>
-                <div class="text-sm text-gray-600">页面总数</div>
+                <div class="flex space-x-2">
+                    <select id="category-filter" class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
+                        <option value="">全部分类</option>
+                        <option value="teacher">教师资料</option>
+                        <option value="parent">学生家长</option>
+                        <option value="course">课程信息</option>
+                        <option value="admission">升学信息</option>
+                    </select>
+                    <button onclick="addPage()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg transition">
+                        <i class="fas fa-plus mr-2"></i>添加页面
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- 分类导航 -->
-    <div class="container mx-auto px-4 mb-8">
-        <div class="flex flex-wrap justify-center gap-2 mb-6">
-            <button class="category-filter px-4 py-2 rounded-full bg-white border border-gray-300 text-sm font-medium active" data-category="all">
-                全部页面
-            </button>
-            <button class="category-filter px-4 py-2 rounded-full bg-white border border-gray-300 text-sm font-medium" data-category="teacher">
-                教师资料
-            </button>
-            <button class="category-filter px-4 py-2 rounded-full bg-white border border-gray-300 text-sm font-medium" data-category="student">
-                学生家长
-            </button>
-            <button class="category-filter px-4 py-2 rounded-full bg-white border border-gray-300 text-sm font-medium" data-category="course">
-                课程信息
-            </button>
-            <button class="category-filter px-4 py-2 rounded-full bg-white border border-gray-300 text-sm font-medium" data-category="admission">
-                升学信息
-            </button>
+        <!-- 统计信息 -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                <i class="fas fa-file-alt text-3xl text-blue-600 mb-2"></i>
+                <div class="text-2xl font-bold text-gray-800" id="total-pages">0</div>
+                <div class="text-gray-600">总页面数</div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                <i class="fas fa-chalkboard-teacher text-3xl text-green-600 mb-2"></i>
+                <div class="text-2xl font-bold text-gray-800" id="teacher-count">0</div>
+                <div class="text-gray-600">教师资料</div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                <i class="fas fa-users text-3xl text-purple-600 mb-2"></i>
+                <div class="text-2xl font-bold text-gray-800" id="parent-count">0</div>
+                <div class="text-gray-600">学生家长</div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                <i class="fas fa-graduation-cap text-3xl text-red-600 mb-2"></i>
+                <div class="text-2xl font-bold text-gray-800" id="other-count">0</div>
+                <div class="text-gray-600">其他内容</div>
+            </div>
         </div>
-    </div>
 
-    <!-- 主要内容区域 -->
-    <div class="container mx-auto px-4">
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-12">
-            <!-- 教师资料 -->
-            <div class="category-card rounded-lg p-6 text-center">
-                <div class="category-icon mx-auto" style="background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);">
-                    <i class="fas fa-chalkboard-teacher"></i>
-                </div>
-                <h3 class="text-lg font-semibold text-gray-800 mb-2">教师资料</h3>
-                <p class="text-sm text-gray-600 mb-4">师资力量 教学理念</p>
-                <div class="text-xl font-bold" style="color: var(--accent-color);" id="teacherCount">0</div>
-                <div class="text-xs text-gray-500">相关页面</div>
-            </div>
-
-            <!-- 学生家长 -->
-            <div class="category-card rounded-lg p-6 text-center">
-                <div class="category-icon mx-auto" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%);">
-                    <i class="fas fa-users"></i>
-                </div>
-                <h3 class="text-lg font-semibold text-gray-800 mb-2">学生家长</h3>
-                <p class="text-sm text-gray-600 mb-4">家校沟通 学生活动</p>
-                <div class="text-xl font-bold" style="color: var(--accent-color);" id="studentCount">0</div>
-                <div class="text-xs text-gray-500">相关页面</div>
-            </div>
-
-            <!-- 课程信息 -->
-            <div class="category-card rounded-lg p-6 text-center">
-                <div class="category-icon mx-auto" style="background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);">
-                    <i class="fas fa-book-open"></i>
-                </div>
-                <h3 class="text-lg font-semibold text-gray-800 mb-2">课程信息</h3>
-                <p class="text-sm text-gray-600 mb-4">教学大纲 学习资料</p>
-                <div class="text-xl font-bold" style="color: var(--accent-color);" id="courseCount">0</div>
-                <div class="text-xs text-gray-500">相关页面</div>
-            </div>
-
-            <!-- 升学信息 -->
-            <div class="category-card rounded-lg p-6 text-center">
-                <div class="category-icon mx-auto" style="background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);">
-                    <i class="fas fa-graduation-cap"></i>
-                </div>
-                <h3 class="text-lg font-semibold text-gray-800 mb-2">升学信息</h3>
-                <p class="text-sm text-gray-600 mb-4">升学指导 院校资讯</p>
-                <div class="text-xl font-bold" style="color: var(--accent-color);" id="admissionCount">0</div>
-                <div class="text-xs text-gray-500">相关页面</div>
+        <!-- 加载状态 -->
+        <div id="loading-section" class="bg-white rounded-lg shadow-md p-8 mb-8 text-center">
+            <div class="loading-spinner mb-4"></div>
+            <p class="text-gray-600">正在检索页面文件...</p>
+            <div id="detection-log" class="mt-4 text-sm text-left max-h-32 overflow-y-auto bg-gray-50 p-3 rounded">
+                <div class="text-blue-600">开始检索根目录下的HTML文件...</div>
             </div>
         </div>
 
         <!-- 页面列表 -->
-        <div class="bg-white rounded-lg shadow-lg p-6">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold text-gray-800">
-                    <i class="fas fa-list mr-3" style="color: var(--accent-color);"></i>
-                    页面索引
-                </h2>
-                <button id="refreshBtn" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm transition-colors duration-300">
-                    <i class="fas fa-sync-alt mr-2"></i>刷新
-                </button>
-            </div>
-            
-            <!-- 加载状态 -->
-            <div id="loadingState" class="text-center py-12">
-                <div class="loading-spinner mx-auto mb-4"></div>
-                <p class="text-gray-600">正在扫描页面...</p>
-            </div>
-            
-            <!-- 页面列表容器 -->
-            <div id="fileList" class="hidden space-y-3"></div>
-            
-            <!-- 空状态 -->
-            <div id="emptyState" class="empty-state text-center py-12 rounded-lg hidden">
-                <i class="fas fa-folder-open text-4xl text-gray-400 mb-4"></i>
-                <p class="text-gray-600 text-lg mb-2">暂无页面</p>
-                <p class="text-gray-500 text-sm">请在当前目录下添加HTML文件</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="pages-grid">
+            <!-- 页面卡片将在这里动态生成 -->
+        </div>
+
+        <!-- 手动添加页面模态框 -->
+        <div id="add-page-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+            <div class="flex items-center justify-center min-h-screen p-4">
+                <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+                    <h3 class="text-lg font-bold mb-4">手动添加页面</h3>
+                    <input type="text" id="manual-url" placeholder="输入HTML文件路径..." 
+                           class="w-full px-3 py-2 border border-gray-300 rounded mb-3">
+                    <input type="text" id="manual-title" placeholder="页面标题（可选）..." 
+                           class="w-full px-3 py-2 border border-gray-300 rounded mb-3">
+                    <select id="manual-category" class="w-full px-3 py-2 border border-gray-300 rounded mb-4">
+                        <option value="">选择分类</option>
+                        <option value="teacher">教师资料</option>
+                        <option value="parent">学生家长</option>
+                        <option value="course">课程信息</option>
+                        <option value="admission">升学信息</option>
+                    </select>
+                    <div class="flex justify-end space-x-2">
+                        <button onclick="closeAddModal()" class="px-4 py-2 text-gray-600 hover:text-gray-800">取消</button>
+                        <button onclick="confirmAddPage()" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">添加</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- 页面底部 -->
-    <footer class="mt-16 py-8 text-center text-gray-600 bg-white bg-opacity-50">
-        <div class="container mx-auto px-4">
-            <p class="mb-2">© 2024 万鹤书院 - 智能页面索引系统</p>
-            <p class="text-sm opacity-75">
-                <i class="fas fa-code mr-1"></i>
-                自动扫描 · 智能分类 · 响应式设计
-            </p>
-        </div>
-    </footer>
-
     <script>
-        class AcademyIndexSystem {
-            constructor() {
-                this.files = [];
-                this.filteredFiles = [];
-                this.categories = {
-                    teacher: {
-                        keywords: ['教师', '老师', '师资', '教学', '导师', 'teacher', 'tutor', 'instructor'],
-                        name: '教师资料',
-                        count: 0
-                    },
-                    student: {
-                        keywords: ['学生', '家长', '学员', '家校', '活动', 'student', 'parent', 'family'],
-                        name: '学生家长', 
-                        count: 0
-                    },
-                    course: {
-                        keywords: ['课程', '教材', '大纲', '学习', '资料', 'course', 'curriculum', 'material'],
-                        name: '课程信息',
-                        count: 0
-                    },
-                    admission: {
-                        keywords: ['升学', '考试', '院校', '招生', '录取', 'admission', 'exam', 'university'],
-                        name: '升学信息',
-                        count: 0
-                    }
-                };
-                
-                this.currentFilter = 'all';
-                this.searchTerm = '';
-                
-                this.initializeEventListeners();
-                this.scanFiles();
+        // 全局变量
+        let allPages = [];
+        let filteredPages = [];
+        const categoryKeywords = {
+            teacher: ['teacher', '教师', '老师', '师资', 'faculty', 'staff', 'instructor'],
+            parent: ['parent', 'student', '学生', '家长', '家校', 'family', '亲子'],
+            course: ['course', 'class', '课程', '课堂', '教学', 'curriculum', 'lesson', '学习'],
+            admission: ['admission', '升学', '招生', '考试', 'exam', 'college', '高考', '中考', '入学']
+        };
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeSystem();
+            setupEventListeners();
+            loadCachedPages();
+            discoverPages();
+        });
+
+        function initializeSystem() {
+            logMessage('系统初始化完成');
+            updateStatusIndicator('运行中', 'green');
+        }
+
+        function setupEventListeners() {
+            // 搜索功能
+            document.getElementById('search-input').addEventListener('input', filterPages);
+            document.getElementById('category-filter').addEventListener('change', filterPages);
+            
+            // 自动刷新
+            setInterval(discoverPages, 60000); // 每分钟检查一次
+        }
+
+        function logMessage(message) {
+            const log = document.getElementById('detection-log');
+            const timestamp = new Date().toLocaleTimeString();
+            log.innerHTML += `<div class="text-gray-600">[${timestamp}] ${message}</div>`;
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function updateStatusIndicator(status, color) {
+            const indicator = document.getElementById('status-indicator');
+            const dot = indicator.querySelector('.pulse-dot');
+            const text = indicator.querySelector('span');
+            
+            dot.className = `pulse-dot w-3 h-3 bg-${color}-500 rounded-full`;
+            text.textContent = status;
+        }
+
+        async function discoverPages() {
+            logMessage('开始页面发现流程...');
+            updateStatusIndicator('检索中...', 'yellow');
+
+            const discoveredPages = new Set();
+            
+            // 策略1: 尝试读取目录索引
+            try {
+                await tryDirectoryIndex(discoveredPages);
+            } catch (e) {
+                logMessage('目录索引不可用');
             }
 
-            initializeEventListeners() {
-                // 搜索功能
-                const searchInput = document.getElementById('searchInput');
-                searchInput.addEventListener('input', (e) => {
-                    this.searchTerm = e.target.value.toLowerCase();
-                    this.filterFiles();
-                });
+            // 策略2: 检查预定义常见文件名
+            await tryCommonFiles(discoveredPages);
 
-                // 分类筛选
-                document.querySelectorAll('.category-filter').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        document.querySelectorAll('.category-filter').forEach(b => b.classList.remove('active'));
-                        e.target.classList.add('active');
-                        this.currentFilter = e.target.dataset.category;
-                        this.filterFiles();
-                    });
-                });
-
-                // 刷新按钮
-                document.getElementById('refreshBtn').addEventListener('click', () => {
-                    this.scanFiles();
-                });
+            // 策略3: 尝试读取sitemap
+            try {
+                await trySitemap(discoveredPages);
+            } catch (e) {
+                logMessage('sitemap.xml不存在');
             }
 
-            async scanFiles() {
-                this.showLoading();
-                this.files = [];
-                
-                try {
-                    // 尝试获取目录列表（这在实际环境中可能需要服务器支持）
-                    const commonFiles = [
-                        'index.html', 'home.html', 'main.html',
-                        'teacher.html', 'teachers.html', '教师介绍.html', '师资力量.html',
-                        'student.html', 'students.html', '学生活动.html', '家长指南.html',
-                        'course.html', 'courses.html', '课程介绍.html', '教学大纲.html',
-                        'admission.html', 'admissions.html', '升学指导.html', '考试信息.html'
-                    ];
+            // 策略4: 加载本地缓存
+            const cached = loadFromLocalStorage();
+            cached.forEach(page => discoveredPages.add(page.url));
 
-                    const fileChecks = commonFiles.map(filename => this.checkFileExists(filename));
-                    const results = await Promise.all(fileChecks);
-                    
-                    for (let i = 0; i < commonFiles.length; i++) {
-                        if (results[i]) {
-                            const fileInfo = await this.getFileInfo(commonFiles[i]);
-                            if (fileInfo) {
-                                this.files.push(fileInfo);
+            // 处理发现的页面
+            const pagesArray = Array.from(discoveredPages);
+            logMessage(`发现 ${pagesArray.length} 个页面文件`);
+            
+            await processDiscoveredPages(pagesArray);
+            
+            updateStatusIndicator('运行中', 'green');
+            document.getElementById('loading-section').style.display = 'none';
+        }
+
+        async function tryDirectoryIndex(discoveredPages) {
+            try {
+                const response = await fetch('./');
+                if (response.ok) {
+                    const html = await response.text();
+                    const matches = html.match(/href="([^"]+\.html?)"/gi);
+                    if (matches) {
+                        matches.forEach(match => {
+                            const url = match.match(/href="([^"]+)"/)[1];
+                            if (!url.startsWith('http') && url.endsWith('.html')) {
+                                discoveredPages.add(url);
+                                logMessage(`目录索引发现: ${url}`);
                             }
-                        }
+                        });
                     }
-
-                    // 如果没有找到文件，创建示例数据
-                    if (this.files.length === 0) {
-                        this.createSampleData();
-                    }
-                    
-                } catch (error) {
-                    console.log('使用示例数据');
-                    this.createSampleData();
                 }
-
-                this.categorizeFiles();
-                this.filterFiles();
-                this.updateStatistics();
-                this.hideLoading();
-            }
-
-            async checkFileExists(filename) {
-                try {
-                    const response = await fetch(filename, { method: 'HEAD' });
-                    return response.ok;
-                } catch {
-                    return false;
-                }
-            }
-
-            async getFileInfo(filename) {
-                try {
-                    const response = await fetch(filename);
-                    if (response.ok) {
-                        const content = await response.text();
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(content, 'text/html');
-                        
-                        const title = doc.querySelector('title')?.textContent || filename;
-                        const description = doc.querySelector('meta[name="description"]')?.content || '';
-                        
-                        return {
-                            filename,
-                            title,
-                            description,
-                            url: filename,
-                            category: 'uncategorized',
-                            lastModified: new Date().toLocaleDateString()
-                        };
-                    }
-                } catch (error) {
-                    console.log(`无法获取 ${filename} 的信息`);
-                }
-                return null;
-            }
-
-            createSampleData() {
-                this.files = [
-                    {
-                        filename: '教师介绍.html',
-                        title: '师资力量介绍',
-                        description: '万鹤书院优秀教师团队介绍',
-                        url: '#',
-                        category: 'teacher',
-                        lastModified: '2024-01-15'
-                    },
-                    {
-                        filename: '学生活动.html', 
-                        title: '学生课外活动',
-                        description: '丰富多彩的学生活动和家校互动',
-                        url: '#',
-                        category: 'student',
-                        lastModified: '2024-01-14'
-                    },
-                    {
-                        filename: '课程大纲.html',
-                        title: '课程教学大纲',
-                        description: '详细的课程安排和教学计划',
-                        url: '#',
-                        category: 'course',
-                        lastModified: '2024-01-13'
-                    },
-                    {
-                        filename: '升学指导.html',
-                        title: '升学规划指导',
-                        description: '专业的升学咨询和院校推荐',
-                        url: '#',
-                        category: 'admission',
-                        lastModified: '2024-01-12'
-                    }
-                ];
-            }
-
-            categorizeFiles() {
-                // 重置计数
-                Object.keys(this.categories).forEach(key => {
-                    this.categories[key].count = 0;
-                });
-
-                this.files.forEach(file => {
-                    if (file.category === 'uncategorized') {
-                        // 自动分类
-                        const content = (file.title + ' ' + file.description + ' ' + file.filename).toLowerCase();
-                        
-                        for (const [categoryKey, categoryInfo] of Object.entries(this.categories)) {
-                            if (categoryInfo.keywords.some(keyword => content.includes(keyword))) {
-                                file.category = categoryKey;
-                                break;
-                            }
-                        }
-                        
-                        // 如果仍未分类，设为其他
-                        if (file.category === 'uncategorized') {
-                            file.category = 'other';
-                        }
-                    }
-                    
-                    // 更新计数
-                    if (this.categories[file.category]) {
-                        this.categories[file.category].count++;
-                    }
-                });
-            }
-
-            filterFiles() {
-                this.filteredFiles = this.files.filter(file => {
-                    const matchesCategory = this.currentFilter === 'all' || file.category === this.currentFilter;
-                    const matchesSearch = this.searchTerm === '' || 
-                        file.title.toLowerCase().includes(this.searchTerm) ||
-                        file.description.toLowerCase().includes(this.searchTerm) ||
-                        file.filename.toLowerCase().includes(this.searchTerm);
-                    
-                    return matchesCategory && matchesSearch;
-                });
-                
-                this.renderFiles();
-            }
-
-            renderFiles() {
-                const fileList = document.getElementById('fileList');
-                const emptyState = document.getElementById('emptyState');
-                
-                if (this.filteredFiles.length === 0) {
-                    fileList.classList.add('hidden');
-                    emptyState.classList.remove('hidden');
-                    return;
-                }
-                
-                fileList.classList.remove('hidden');
-                emptyState.classList.add('hidden');
-                
-                fileList.innerHTML = this.filteredFiles.map(file => this.createFileItem(file)).join('');
-                
-                // 添加动画
-                document.querySelectorAll('.file-item').forEach((item, index) => {
-                    item.style.animationDelay = `${index * 0.1}s`;
-                    item.classList.add('fade-in');
-                });
-            }
-
-            createFileItem(file) {
-                const categoryInfo = this.categories[file.category];
-                const categoryName = categoryInfo ? categoryInfo.name : '其他';
-                const categoryIcon = this.getCategoryIcon(file.category);
-                
-                return `
-                    <div class="file-item p-4 rounded-lg">
-                        <div class="flex items-start justify-between">
-                            <div class="flex-1">
-                                <div class="flex items-center mb-2">
-                                    <i class="${categoryIcon} text-lg mr-3" style="color: var(--accent-color);"></i>
-                                    <h3 class="text-lg font-semibold text-gray-800">
-                                        <a href="${file.url}" class="hover:underline">${file.title}</a>
-                                    </h3>
-                                    <span class="ml-3 px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-600">
-                                        ${categoryName}
-                                    </span>
-                                </div>
-                                <p class="text-gray-600 mb-2">${file.description || '暂无描述'}</p>
-                                <div class="flex items-center text-sm text-gray-500 space-x-4">
-                                    <span><i class="fas fa-file mr-1"></i>${file.filename}</span>
-                                    <span><i class="fas fa-calendar mr-1"></i>${file.lastModified}</span>
-                                </div>
-                            </div>
-                            <div class="ml-4">
-                                <a href="${file.url}" class="inline-flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-300">
-                                    <i class="fas fa-external-link-alt mr-2"></i>
-                                    访问
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
-
-            getCategoryIcon(category) {
-                const icons = {
-                    teacher: 'fas fa-chalkboard-teacher',
-                    student: 'fas fa-users',
-                    course: 'fas fa-book-open',
-                    admission: 'fas fa-graduation-cap',
-                    other: 'fas fa-file-alt'
-                };
-                return icons[category] || icons.other;
-            }
-
-            updateStatistics() {
-                document.getElementById('totalCount').textContent = this.files.length;
-                document.getElementById('teacherCount').textContent = this.categories.teacher.count;
-                document.getElementById('studentCount').textContent = this.categories.student.count;
-                document.getElementById('courseCount').textContent = this.categories.course.count;
-                document.getElementById('admissionCount').textContent = this.categories.admission.count;
-            }
-
-            showLoading() {
-                document.getElementById('loadingState').classList.remove('hidden');
-                document.getElementById('fileList').classList.add('hidden');
-                document.getElementById('emptyState').classList.add('hidden');
-            }
-
-            hideLoading() {
-                document.getElementById('loadingState').classList.add('hidden');
+            } catch (e) {
+                logMessage('目录索引检查失败');
             }
         }
 
-        // 初始化系统
-        document.addEventListener('DOMContentLoaded', () => {
-            new AcademyIndexSystem();
-        });
+        async function tryCommonFiles(discoveredPages) {
+            const commonFiles = [
+                'about.html', 'contact.html', 'news.html', 'events.html',
+                'teachers.html', 'courses.html', 'admission.html', 'gallery.html',
+                '关于我们.html', '联系我们.html', '新闻动态.html', '课程介绍.html',
+                '教师团队.html', '招生信息.html', '学生活动.html', '家长园地.html',
+                'teacher-profile.html', 'course-schedule.html', 'exam-info.html',
+                'parent-guide.html', 'student-handbook.html'
+            ];
+
+            for (const file of commonFiles) {
+                try {
+                    const response = await fetch(file, { method: 'HEAD' });
+                    if (response.ok) {
+                        discoveredPages.add(file);
+                        logMessage(`常见文件发现: ${file}`);
+                    }
+                } catch (e) {
+                    // 文件不存在，忽略
+                }
+            }
+        }
+
+        async function trySitemap(discoveredPages) {
+            try {
+                const response = await fetch('./sitemap.xml');
+                if (response.ok) {
+                    const xml = await response.text();
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(xml, 'application/xml');
+                    const urls = doc.getElementsByTagName('loc');
+                    
+                    for (let url of urls) {
+                        const href = url.textContent;
+                        if (href.endsWith('.html')) {
+                            const relativePath = href.split('/').pop();
+                            discoveredPages.add(relativePath);
+                            logMessage(`Sitemap发现: ${relativePath}`);
+                        }
+                    }
+                }
+            } catch (e) {
+                throw e;
+            }
+        }
+
+        async function processDiscoveredPages(urls) {
+            allPages = [];
+            
+            for (const url of urls) {
+                if (url === 'wanhe_academy_smart_index.html' || url === window.location.pathname.split('/').pop()) {
+                    continue; // 跳过自己
+                }
+
+                try {
+                    const pageInfo = await getPageInfo(url);
+                    if (pageInfo) {
+                        allPages.push(pageInfo);
+                        logMessage(`处理页面: ${pageInfo.title}`);
+                    }
+                } catch (e) {
+                    logMessage(`无法处理页面: ${url}`);
+                }
+            }
+
+            // 保存到本地存储
+            saveToLocalStorage(allPages);
+            
+            // 显示页面
+            filteredPages = [...allPages];
+            renderPages();
+            updateStatistics();
+        }
+
+        async function getPageInfo(url) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) return null;
+
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+
+                const title = doc.querySelector('title')?.textContent || url;
+                const description = doc.querySelector('meta[name="description"]')?.content || '';
+                const category = categorizeFile(url, title, description);
+
+                return {
+                    url,
+                    title: title.trim(),
+                    description: description.trim(),
+                    category,
+                    lastModified: new Date().toISOString()
+                };
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function categorizeFile(url, title, description) {
+            const text = (url + ' ' + title + ' ' + description).toLowerCase();
+            
+            for (const [category, keywords] of Object.entries(categoryKeywords)) {
+                if (keywords.some(keyword => text.includes(keyword))) {
+                    return category;
+                }
+            }
+            
+            return 'other';
+        }
+
+        function renderPages() {
+            const grid = document.getElementById('pages-grid');
+            
+            if (filteredPages.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-12 bg-white rounded-lg shadow-md">
+                        <i class="fas fa-search text-4xl text-gray-400 mb-4"></i>
+                        <h3 class="text-lg font-medium text-gray-600 mb-2">未找到页面</h3>
+                        <p class="text-gray-500">尝试调整搜索条件或手动添加页面</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filteredPages.map(page => `
+                <div class="category-card bg-white rounded-lg shadow-md p-6 file-item">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="flex items-center space-x-2">
+                            ${getCategoryIcon(page.category)}
+                            <span class="text-sm font-medium text-gray-600">${getCategoryName(page.category)}</span>
+                        </div>
+                        <button onclick="removePage('${page.url}')" class="text-gray-400 hover:text-red-500">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <h3 class="font-bold text-lg mb-2 text-gray-800 line-clamp-2">${page.title}</h3>
+                    
+                    ${page.description ? `<p class="text-gray-600 text-sm mb-4 line-clamp-3">${page.description}</p>` : ''}
+                    
+                    <div class="flex items-center justify-between">
+                        <a href="${page.url}" class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg text-sm transition flex items-center space-x-2" target="_blank">
+                            <i class="fas fa-external-link-alt"></i>
+                            <span>查看页面</span>
+                        </a>
+                        <div class="text-xs text-gray-500">
+                            ${new Date(page.lastModified).toLocaleDateString()}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getCategoryIcon(category) {
+            const icons = {
+                teacher: '<i class="fas fa-chalkboard-teacher text-green-600"></i>',
+                parent: '<i class="fas fa-users text-purple-600"></i>',
+                course: '<i class="fas fa-book text-blue-600"></i>',
+                admission: '<i class="fas fa-graduation-cap text-red-600"></i>',
+                other: '<i class="fas fa-file-alt text-gray-600"></i>'
+            };
+            return icons[category] || icons.other;
+        }
+
+        function getCategoryName(category) {
+            const names = {
+                teacher: '教师资料',
+                parent: '学生家长',
+                course: '课程信息',
+                admission: '升学信息',
+                other: '其他内容'
+            };
+            return names[category] || '其他内容';
+        }
+
+        function filterPages() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const categoryFilter = document.getElementById('category-filter').value;
+            
+            filteredPages = allPages.filter(page => {
+                const matchesSearch = !searchTerm || 
+                    page.title.toLowerCase().includes(searchTerm) ||
+                    page.description.toLowerCase().includes(searchTerm) ||
+                    page.url.toLowerCase().includes(searchTerm);
+                    
+                const matchesCategory = !categoryFilter || page.category === categoryFilter;
+                
+                return matchesSearch && matchesCategory;
+            });
+            
+            renderPages();
+        }
+
+        function updateStatistics() {
+            document.getElementById('total-pages').textContent = allPages.length;
+            document.getElementById('teacher-count').textContent = allPages.filter(p => p.category === 'teacher').length;
+            document.getElementById('parent-count').textContent = allPages.filter(p => p.category === 'parent').length;
+            document.getElementById('other-count').textContent = allPages.filter(p => ['course', 'admission', 'other'].includes(p.category)).length;
+        }
+
+        function refreshPages() {
+            logMessage('手动刷新页面列表...');
+            document.getElementById('loading-section').style.display = 'block';
+            discoverPages();
+        }
+
+        // 本地存储功能
+        function saveToLocalStorage(pages) {
+            try {
+                localStorage.setItem('wanhe-academy-pages', JSON.stringify(pages));
+            } catch (e) {
+                logMessage('无法保存到本地存储');
+            }
+        }
+
+        function loadFromLocalStorage() {
+            try {
+                const saved = localStorage.getItem('wanhe-academy-pages');
+                return saved ? JSON.parse(saved) : [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function loadCachedPages() {
+            const cached = loadFromLocalStorage();
+            if (cached.length > 0) {
+                allPages = cached;
+                filteredPages = [...allPages];
+                renderPages();
+                updateStatistics();
+                logMessage(`从缓存加载 ${cached.length} 个页面`);
+            }
+        }
+
+        // 手动添加页面功能
+        function addPage() {
+            document.getElementById('add-page-modal').classList.remove('hidden');
+        }
+
+        function closeAddModal() {
+            document.getElementById('add-page-modal').classList.add('hidden');
+            document.getElementById('manual-url').value = '';
+            document.getElementById('manual-title').value = '';
+            document.getElementById('manual-category').value = '';
+        }
+
+        async function confirmAddPage() {
+            const url = document.getElementById('manual-url').value.trim();
+            const title = document.getElementById('manual-title').value.trim();
+            const category = document.getElementById('manual-category').value;
+            
+            if (!url) {
+                alert('请输入页面路径');
+                return;
+            }
+
+            try {
+                let pageInfo;
+                if (title && category) {
+                    pageInfo = {
+                        url,
+                        title,
+                        description: '',
+                        category,
+                        lastModified: new Date().toISOString()
+                    };
+                } else {
+                    pageInfo = await getPageInfo(url);
+                    if (!pageInfo) {
+                        alert('无法访问该页面');
+                        return;
+                    }
+                }
+
+                allPages.push(pageInfo);
+                saveToLocalStorage(allPages);
+                filteredPages = [...allPages];
+                renderPages();
+                updateStatistics();
+                closeAddModal();
+                
+                logMessage(`手动添加页面: ${pageInfo.title}`);
+            } catch (e) {
+                alert('添加页面失败');
+            }
+        }
+
+        function removePage(url) {
+            if (confirm('确定要移除此页面吗？')) {
+                allPages = allPages.filter(page => page.url !== url);
+                filteredPages = filteredPages.filter(page => page.url !== url);
+                saveToLocalStorage(allPages);
+                renderPages();
+                updateStatistics();
+                logMessage(`移除页面: ${url}`);
+            }
+        }
     </script>
 </body>
 </html>
-    <script id="html_badge_script1">
-        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
-            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDq9Ifr9DZ2cObgNRlnN0q2J0dzYh73KlwinDZBZiH%2BPlfmO276bbnmSicWlnOU7y0PQOoft19TYVKAeeoGDrJCTugIssQ2pQvEMQ1pgXrKa84VOYPQODrMW0m%2BlbV8Zlzi2sCDCp35B2ilJ%2BUtsKl6APvxwiLuSeWJcWGJsOtEXJNZhMB4gHeIiFMyWrFgdQATOwDyuJ8JVp0QMr7URMoBaHaN5NFabXJcUEeWIS5uGTlbsB8VYt9ABR2MUw2Gg22X3Mxrswkvq2mTXzS8OpjDXaEbpVYWNPD4zg9VQfOq9wimkvyYQfk%2FimOgi9zazxVykbNbWUNNTdKvfK4fvMiaz5EpspU3hdRxmau8nZFosRoLDF5idN2jj1du%2FAZmDH%2F470K9TypJJ%2BdUcjQ2GZhpOPEs%2FEA7Nh9Q%2BcDZlW3Rj3ZpjsdFsLngArj8Ev8T8Q5oHDEqaRpSNvxsePSeWxsnFqpc%2BhyS8uOP3hcD3Un1Rqfx2IDkMNcJnPjUUcw4QNEcUtzGW9nRyignukLOEjYOk%3D";
-        window.__genspark_locale = "zh-CN";
-        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDq9Ifr9DZ2cObgNRlnN0q2J0dzYh73KlwinDZBZiH+PlfmO276bbnmSicWlnOU7y0PQOoft19TYVKAeeoGDrJCTugIssQ2pQvEMQ1pgXrKa84VOYPQODrMW0m+lbV8Zlzi2sCDCp35B2ilJ+UtsKl6APvxwiLuSeWJcWGJsOtEXJNZhMB4gHeIiFMyWrFgdQATOwDyuJ8JVp0QMr7URMoBaHaN5NFabXJcUEeWIS5uGTlbsB8VYt9ABR2MUw2Gg22X3Mxrswkvq2mTXzS8OpjDXaEbpVYWNPD4zg9VQfOq9wimkvyYQfk/imOgi9zazxVykbNbWUNNTdKvfK4fvMiaz5EpspU3hdRxmau8nZFosRoLDF5idN2jj1du/AZmDH/470K9TypJJ+dUcjQ2GZhpOPEs/EA7Nh9Q+cDZlW3Rj3ZpjsdFsLngArj8Ev8T8Q5oHDEqaRpSNvxsePSeWxsnFqpc+hyS8uOP3hcD3Un1Rqfx2IDkMNcJnPjUUcw4QNEcUtzGW9nRyignukLOEjYOk=";
-    </script>
-    
-        <script id="html_badge_script2" src="https://www.genspark.ai/html_badge.js"></script>
-        
-    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
-    
