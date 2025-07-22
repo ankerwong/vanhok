@@ -7,942 +7,427 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        * {
+        body {
             font-family: 'Noto Sans SC', sans-serif;
         }
-        
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        
-        .chinese-pattern {
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f3f4f6' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        }
-        
-        .card-hover {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .card-hover:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-        
-        .timeline-item:before {
-            content: '';
-            position: absolute;
-            left: 20px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: #667eea;
-        }
-        
-        .timeline-dot {
-            position: absolute;
-            left: 14px;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: #667eea;
-            border: 3px solid white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .animate-fade-up {
-            animation: fadeUp 0.8s ease forwards;
-        }
-        
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .pricing-popular {
+        .banner-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #3b82f6 100%);
             position: relative;
         }
-        
-        .pricing-popular:before {
-            content: '推荐';
+        .banner-bg::before {
+            content: '';
             position: absolute;
-            top: -10px;
-            right: 20px;
-            background: #ef4444;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+        .banner-content {
+            position: relative;
+            z-index: 2;
+        }
+        .gradient-text {
+            background: linear-gradient(45deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #3b82f6;
+            border: 3px solid #e5e7eb;
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 1.5rem;
+            width: 2px;
+            height: calc(100% - 1rem);
+            background: #e5e7eb;
+        }
+        .timeline-item:last-child::after {
+            display: none;
         }
     </style>
 </head>
 <body class="bg-gray-50">
-
-<!-- 顶部导航 -->
-<nav class="bg-white shadow-lg sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-16">
-            <div class="flex items-center">
-                <i class="fas fa-graduation-cap text-2xl text-indigo-600 mr-3"></i>
-                <span class="text-xl font-bold text-gray-900">万鹤书院</span>
-            </div>
-            <div class="hidden md:flex space-x-8">
-                <a href="#services" class="text-gray-700 hover:text-indigo-600 transition">服务套餐</a>
-                <a href="#requirements" class="text-gray-700 hover:text-indigo-600 transition">升学要求</a>
-                <a href="#timeline" class="text-gray-700 hover:text-indigo-600 transition">时间规划</a>
-                <a href="#cases" class="text-gray-700 hover:text-indigo-600 transition">成功案例</a>
-                <a href="#contact" class="text-gray-700 hover:text-indigo-600 transition">联系我们</a>
-            </div>
-        </div>
-    </div>
-</nav>
-
-<!-- 主横幅 -->
-<section class="gradient-bg chinese-pattern text-white py-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center animate-fade-up">
-            <h1 class="text-4xl md:text-6xl font-bold mb-6">香港副学士升学专业陪跑服务</h1>
-            <p class="text-xl md:text-2xl mb-8 text-indigo-100">助力学子跳进QS100名校，开启精英教育之路</p>
-            <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8">
-                <div class="bg-white bg-opacity-20 rounded-lg p-4">
-                    <div class="text-3xl font-bold">84.7%-90.1%</div>
-                    <div class="text-sm">副学士升学率</div>
-                </div>
-                <div class="bg-white bg-opacity-20 rounded-lg p-4">
-                    <div class="text-3xl font-bold">68.7%-82.4%</div>
-                    <div class="text-sm">升读港八大比例</div>
-                </div>
-                <div class="bg-white bg-opacity-20 rounded-lg p-4">
-                    <div class="text-3xl font-bold">2+2</div>
-                    <div class="text-sm">升学模式</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- 服务套餐 -->
-<section id="services" class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">专业服务套餐</h2>
-            <p class="text-lg text-gray-600">量身定制的升学解决方案，满足不同需求的学子</p>
-        </div>
-        
-        <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            <!-- 基础升学套餐 -->
-            <div class="bg-white rounded-2xl shadow-xl border-2 border-gray-200 p-8 card-hover">
-                <div class="text-center mb-8">
-                    <i class="fas fa-rocket text-4xl text-blue-500 mb-4"></i>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-2">基础升学套餐</h3>
-                    <div class="text-4xl font-bold text-blue-600 mb-2">¥39,800</div>
-                    <p class="text-gray-600">适合有一定自主学习能力的学生</p>
-                </div>
-                
-                <ul class="space-y-4 mb-8">
-                    <li class="flex items-center">
-                        <i class="fas fa-check-circle text-green-500 mr-3"></i>
-                        <span>4个学期的学术管家服务</span>
-                    </li>
-                    <li class="flex items-center">
-                        <i class="fas fa-check-circle text-green-500 mr-3"></i>
-                        <span>副学士申请指导</span>
-                    </li>
-                    <li class="flex items-center">
-                        <i class="fas fa-check-circle text-green-500 mr-3"></i>
-                        <span>升学规划咨询</span>
-                    </li>
-                    <li class="flex items-center">
-                        <i class="fas fa-check-circle text-green-500 mr-3"></i>
-                        <span>选课规划</span>
-                    </li>
-                    <li class="flex items-center">
-                        <i class="fas fa-check-circle text-green-500 mr-3"></i>
-                        <span>面试辅导</span>
-                    </li>
-                    <li class="flex items-center">
-                        <i class="fas fa-check-circle text-green-500 mr-3"></i>
-                        <span>文书修改服务</span>
-                    </li>
-                </ul>
-                
-                <button class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+    <!-- Header Banner -->
+    <header class="banner-bg text-white py-16 md:py-24">
+        <div class="banner-content container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                万鹤书院
+            </h1>
+            <h2 class="text-2xl md:text-3xl font-semibold mb-4">
+                香港副学士升学<span class="gradient-text">专业陪跑服务</span>
+            </h2>
+            <p class="text-lg md:text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
+                助力学子跳进QS100名校，专业陪跑，全程护航您的升学之路
+            </p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <button class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold py-3 px-8 rounded-lg transition duration-300">
+                    <i class="fas fa-phone mr-2"></i>
                     立即咨询
                 </button>
-            </div>
-            
-            <!-- 全程陪跑套餐 -->
-            <div class="bg-white rounded-2xl shadow-xl border-2 border-purple-400 p-8 card-hover pricing-popular">
-                <div class="text-center mb-8">
-                    <i class="fas fa-crown text-4xl text-purple-500 mb-4"></i>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-2">全程陪跑套餐</h3>
-                    <div class="text-4xl font-bold text-purple-600 mb-2">¥198,000</div>
-                    <p class="text-gray-600">VIP级别的全方位陪跑服务</p>
-                    <div class="text-sm text-purple-600 mt-2">按年度收费，每学年开始前支付50%</div>
-                </div>
-                
-                <ul class="space-y-4 mb-8">
-                    <li class="flex items-center">
-                        <i class="fas fa-crown text-purple-500 mr-3"></i>
-                        <span class="font-semibold">包含基础套餐所有服务</span>
-                    </li>
-                    <li class="flex items-center">
-                        <i class="fas fa-user-graduate text-purple-500 mr-3"></i>
-                        <span>2年专业课辅导（一对一/二）</span>
-                    </li>
-                    <li class="flex items-center">
-                        <i class="fas fa-chart-line text-purple-500 mr-3"></i>
-                        <span>GPA提升专项训练</span>
-                    </li>
-                    <li class="flex items-center">
-                        <i class="fas fa-globe text-purple-500 mr-3"></i>
-                        <span>海外升学备选方案</span>
-                    </li>
-                    <li class="flex items-center">
-                        <i class="fas fa-briefcase text-purple-500 mr-3"></i>
-                        <span>暑期实习申请</span>
-                    </li>
-                    <li class="flex items-center">
-                        <i class="fas fa-headset text-purple-500 mr-3"></i>
-                        <span>24/7专属学术顾问</span>
-                    </li>
-                </ul>
-                
-                <button class="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 transition">
-                    立即咨询
+                <button class="border-2 border-white text-white hover:bg-white hover:text-blue-900 font-semibold py-3 px-8 rounded-lg transition duration-300">
+                    <i class="fas fa-download mr-2"></i>
+                    获取方案
                 </button>
             </div>
         </div>
-    </div>
-</section>
+    </header>
 
-<!-- GPA要求数据 -->
-<section id="requirements" class="py-20 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">香港八大名校GPA要求</h2>
-            <p class="text-lg text-gray-600">基于最新调研的真实录取标准</p>
-        </div>
-        
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-            <div class="space-y-6">
-                <div class="bg-white rounded-lg p-6 shadow-lg">
-                    <div class="flex justify-between items-center mb-3">
-                        <h4 class="font-bold text-lg text-red-600">顶尖三校</h4>
-                        <span class="text-2xl font-bold text-red-600">3.8-4.0</span>
-                    </div>
-                    <div class="text-sm text-gray-600 space-y-1">
-                        <div>• 香港大学（顶尖专业）</div>
-                        <div>• 香港中文大学（顶尖专业）</div>
-                        <div>• 香港科技大学（顶尖专业）</div>
-                    </div>
-                </div>
-                
-                <div class="bg-white rounded-lg p-6 shadow-lg">
-                    <div class="flex justify-between items-center mb-3">
-                        <h4 class="font-bold text-lg text-orange-600">中坚力量</h4>
-                        <span class="text-2xl font-bold text-orange-600">3.3-3.5</span>
-                    </div>
-                    <div class="text-sm text-gray-600 space-y-1">
-                        <div>• 香港理工大学（需面试）</div>
-                        <div>• 香港城市大学</div>
-                        <div>• 香港浸会大学</div>
-                    </div>
-                </div>
-                
-                <div class="bg-white rounded-lg p-6 shadow-lg">
-                    <div class="flex justify-between items-center mb-3">
-                        <h4 class="font-bold text-lg text-green-600">相对友好</h4>
-                        <span class="text-2xl font-bold text-green-600">3.0-3.3</span>
-                    </div>
-                    <div class="text-sm text-gray-600 space-y-1">
-                        <div>• 香港岭南大学</div>
-                        <div>• 香港教育大学</div>
-                    </div>
-                </div>
+    <!-- 服务套餐 -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-graduation-cap text-blue-600 mr-3"></i>
+                    服务套餐体系
+                </h2>
+                <p class="text-lg text-gray-600">量身定制，满足不同需求的升学规划</p>
             </div>
-            
-            <div class="bg-white rounded-lg p-6 shadow-lg">
-                <canvas id="gpaChart" style="height: 400px;"></canvas>
-            </div>
-        </div>
-    </div>
-</section>
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <!-- 基础升学套餐 -->
+                <div class="card-hover bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl p-8 border border-blue-200">
+                    <div class="text-center mb-6">
+                        <i class="fas fa-rocket text-4xl text-blue-600 mb-4"></i>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">基础升学套餐</h3>
+                        <div class="text-3xl font-bold text-blue-600 mb-4">¥39,800</div>
+                    </div>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>4个学期的学术管家服务</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>副学士申请指导</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>升学规划咨询</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>选课规划</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>面试辅导</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>文书修改服务</li>
+                    </ul>
+                </div>
 
-<!-- 入学要求对比 -->
-<section class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">入学要求对比</h2>
-            <p class="text-lg text-gray-600">高考学生 vs HKDSE学生的不同路径</p>
-        </div>
-        
-        <div class="grid md:grid-cols-2 gap-8">
-            <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 card-hover">
-                <div class="text-center mb-6">
-                    <i class="fas fa-school text-4xl text-blue-600 mb-4"></i>
-                    <h3 class="text-2xl font-bold text-blue-800">高考学生</h3>
+                <!-- 全程陪跑套餐 -->
+                <div class="card-hover bg-gradient-to-br from-yellow-50 to-orange-100 rounded-2xl p-8 border-2 border-yellow-400 relative">
+                    <div class="absolute top-0 right-0 bg-yellow-500 text-white px-4 py-1 rounded-bl-2xl rounded-tr-2xl text-sm font-bold">
+                        推荐
+                    </div>
+                    <div class="text-center mb-6">
+                        <i class="fas fa-crown text-4xl text-yellow-600 mb-4"></i>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">全程陪跑套餐</h3>
+                        <div class="text-3xl font-bold text-yellow-600 mb-4">¥198,000</div>
+                        <p class="text-sm text-gray-600">按年度收费，每学年开始前支付50%</p>
+                    </div>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-center"><i class="fas fa-star text-yellow-500 mr-3"></i>包含基础套餐所有服务</li>
+                        <li class="flex items-center"><i class="fas fa-star text-yellow-500 mr-3"></i>2年专业课辅导（一对一/二）</li>
+                        <li class="flex items-center"><i class="fas fa-star text-yellow-500 mr-3"></i>GPA提升专项训练</li>
+                        <li class="flex items-center"><i class="fas fa-star text-yellow-500 mr-3"></i>海外升学备选方案</li>
+                        <li class="flex items-center"><i class="fas fa-star text-yellow-500 mr-3"></i>暑期实习申请</li>
+                    </ul>
                 </div>
-                
-                <ul class="space-y-4">
-                    <li class="flex items-start">
-                        <i class="fas fa-check-circle text-blue-600 mr-3 mt-1"></i>
-                        <div>
-                            <div class="font-semibold">高考成绩达本科线以上</div>
-                            <div class="text-sm text-gray-600">各省份要求不同</div>
-                        </div>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fas fa-check-circle text-blue-600 mr-3 mt-1"></i>
-                        <div>
-                            <div class="font-semibold">英语90分以上（满分150）</div>
-                            <div class="text-sm text-gray-600">约占总分60%</div>
-                        </div>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fas fa-check-circle text-blue-600 mr-3 mt-1"></i>
-                        <div>
-                            <div class="font-semibold">通过面试</div>
-                            <div class="text-sm text-gray-600">英语面试为主</div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            
-            <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-8 card-hover">
-                <div class="text-center mb-6">
-                    <i class="fas fa-certificate text-4xl text-purple-600 mb-4"></i>
-                    <h3 class="text-2xl font-bold text-purple-800">HKDSE学生</h3>
-                </div>
-                
-                <ul class="space-y-4">
-                    <li class="flex items-start">
-                        <i class="fas fa-check-circle text-purple-600 mr-3 mt-1"></i>
-                        <div>
-                            <div class="font-semibold">5科2分（包括中英文）</div>
-                            <div class="text-sm text-gray-600">最低入学要求</div>
-                        </div>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fas fa-check-circle text-purple-600 mr-3 mt-1"></i>
-                        <div>
-                            <div class="font-semibold">数学延伸部分可计入要求</div>
-                            <div class="text-sm text-gray-600">M1/M2选择其一</div>
-                        </div>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fas fa-check-circle text-purple-600 mr-3 mt-1"></i>
-                        <div>
-                            <div class="font-semibold">同样需通过面试</div>
-                            <div class="text-sm text-gray-600">中英双语面试</div>
-                        </div>
-                    </li>
-                </ul>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- 副学士阶段升学时间规划 -->
-<section id="timeline" class="py-20 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">副学士阶段升学时间规划</h2>
-            <p class="text-lg text-gray-600">2年精心规划，步步为营</p>
-        </div>
-        
-        <div class="grid md:grid-cols-2 gap-12">
-            <!-- Year 1 -->
-            <div class="bg-white rounded-2xl p-8 shadow-lg">
-                <div class="text-center mb-8">
-                    <div class="bg-blue-100 text-blue-800 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                        <span class="text-2xl font-bold">Y1</span>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900">第一年 - 基础建设</h3>
-                </div>
-                
-                <div class="space-y-6 relative pl-12">
-                    <div class="timeline-item relative">
-                        <div class="timeline-dot top-2"></div>
-                        <div>
-                            <div class="font-bold text-lg text-gray-900">9-12月</div>
-                            <div class="text-gray-600">适应期，建立良好学习习惯</div>
-                        </div>
-                    </div>
-                    
-                    <div class="timeline-item relative">
-                        <div class="timeline-dot top-2"></div>
-                        <div>
-                            <div class="font-bold text-lg text-gray-900">1-3月</div>
-                            <div class="text-gray-600 font-semibold text-red-600">第一学期成绩至关重要</div>
-                        </div>
-                    </div>
-                    
-                    <div class="timeline-item relative">
-                        <div class="timeline-dot top-2"></div>
-                        <div>
-                            <div class="font-bold text-lg text-gray-900">4-6月</div>
-                            <div class="text-gray-600">暑期实习/交流项目申请</div>
-                        </div>
-                    </div>
-                    
-                    <div class="timeline-item relative">
-                        <div class="timeline-dot top-2"></div>
-                        <div>
-                            <div class="font-bold text-lg text-gray-900">7-8月</div>
-                            <div class="text-gray-600">暑期提升计划</div>
-                        </div>
-                    </div>
-                </div>
+    <!-- 真实GPA要求 -->
+    <section class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-chart-line text-red-600 mr-3"></i>
+                    香港八大名校真实GPA要求
+                </h2>
+                <p class="text-lg text-gray-600">基于最新市场调研的准确数据</p>
             </div>
-            
-            <!-- Year 2 -->
-            <div class="bg-white rounded-2xl p-8 shadow-lg">
-                <div class="text-center mb-8">
-                    <div class="bg-purple-100 text-purple-800 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                        <span class="text-2xl font-bold">Y2</span>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900">第二年 - 冲刺升学</h3>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-lg p-6 text-center shadow-md">
+                    <h4 class="font-bold text-gray-800 mb-2">港大/中大/科大</h4>
+                    <div class="text-2xl font-bold text-red-600 mb-2">3.8-4.0</div>
+                    <p class="text-sm text-gray-600">顶尖专业竞争激烈</p>
                 </div>
-                
-                <div class="space-y-6 relative pl-12">
-                    <div class="timeline-item relative">
-                        <div class="timeline-dot top-2"></div>
-                        <div>
-                            <div class="font-bold text-lg text-gray-900">9-10月</div>
-                            <div class="text-gray-600">升学申请准备，选择目标院校</div>
-                        </div>
-                    </div>
-                    
-                    <div class="timeline-item relative">
-                        <div class="timeline-dot top-2"></div>
-                        <div>
-                            <div class="font-bold text-lg text-gray-900">11-12月</div>
-                            <div class="text-gray-600 font-semibold text-purple-600">提交Non-JUPAS申请</div>
-                        </div>
-                    </div>
-                    
-                    <div class="timeline-item relative">
-                        <div class="timeline-dot top-2"></div>
-                        <div>
-                            <div class="font-bold text-lg text-gray-900">次年1-3月</div>
-                            <div class="text-gray-600">面试准备和参加面试</div>
-                        </div>
-                    </div>
-                    
-                    <div class="timeline-item relative">
-                        <div class="timeline-dot top-2"></div>
-                        <div>
-                            <div class="font-bold text-lg text-gray-900">次年4-5月</div>
-                            <div class="text-gray-600 font-semibold text-green-600">录取结果公布</div>
-                        </div>
-                    </div>
-                    
-                    <div class="timeline-item relative">
-                        <div class="timeline-dot top-2"></div>
-                        <div>
-                            <div class="font-bold text-lg text-gray-900">次年6-8月</div>
-                            <div class="text-gray-600">入学准备</div>
-                        </div>
-                    </div>
+                <div class="bg-white rounded-lg p-6 text-center shadow-md">
+                    <h4 class="font-bold text-gray-800 mb-2">香港理工大学</h4>
+                    <div class="text-2xl font-bold text-orange-600 mb-2">3.5+</div>
+                    <p class="text-sm text-gray-600">需要通过面试</p>
+                </div>
+                <div class="bg-white rounded-lg p-6 text-center shadow-md">
+                    <h4 class="font-bold text-gray-800 mb-2">城大/浸会大学</h4>
+                    <div class="text-2xl font-bold text-blue-600 mb-2">3.3-3.5</div>
+                    <p class="text-sm text-gray-600">竞争相对温和</p>
+                </div>
+                <div class="bg-white rounded-lg p-6 text-center shadow-md">
+                    <h4 class="font-bold text-gray-800 mb-2">岭南/教育大学</h4>
+                    <div class="text-2xl font-bold text-green-600 mb-2">3.0-3.3</div>
+                    <p class="text-sm text-gray-600">入学相对容易</p>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- 成功案例 -->
-<section id="cases" class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">成功案例展示</h2>
-            <p class="text-lg text-gray-600">真实学生案例，见证升学奇迹</p>
-        </div>
-        
-        <div class="grid md:grid-cols-2 gap-8 mb-12">
-            <!-- 高考学生案例 -->
-            <div>
-                <h3 class="text-2xl font-bold text-blue-600 mb-6 text-center">高考学生案例</h3>
-                
-                <div class="space-y-6">
-                    <div class="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-6 card-hover">
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold mr-4">李</div>
-                            <div>
-                                <div class="font-bold text-lg">广东考生李同学</div>
-                                <div class="text-gray-600">高考558分</div>
-                            </div>
+    <!-- 升学时间规划 -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-calendar-alt text-green-600 mr-3"></i>
+                    副学士阶段升学时间规划
+                </h2>
+            </div>
+            <div class="grid md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-2xl font-bold text-blue-600 mb-6">Year 1 第一年</h3>
+                    <div class="space-y-6">
+                        <div class="timeline-item">
+                            <h4 class="font-semibold text-gray-800">9-12月：适应期</h4>
+                            <p class="text-gray-600">建立良好学习习惯，熟悉香港教育环境</p>
                         </div>
-                        <div class="flex items-center justify-between">
-                            <div class="text-center">
-                                <div class="text-sm text-gray-500">副学士阶段</div>
-                                <div class="font-semibold">港大附属学院</div>
-                            </div>
-                            <i class="fas fa-arrow-right text-blue-500 text-2xl"></i>
-                            <div class="text-center">
-                                <div class="text-sm text-gray-500">本科阶段</div>
-                                <div class="font-semibold text-red-600">香港大学文学士</div>
-                            </div>
+                        <div class="timeline-item">
+                            <h4 class="font-semibold text-gray-800">1-3月：关键期</h4>
+                            <p class="text-gray-600">第一学期成绩至关重要，奠定升学基础</p>
                         </div>
-                    </div>
-                    
-                    <div class="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-6 card-hover">
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold mr-4">王</div>
-                            <div>
-                                <div class="font-bold text-lg">江苏考生王同学</div>
-                                <div class="text-gray-600">高考532分</div>
-                            </div>
+                        <div class="timeline-item">
+                            <h4 class="font-semibold text-gray-800">4-6月：准备期</h4>
+                            <p class="text-gray-600">暑期实习/交流项目申请</p>
                         </div>
-                        <div class="flex items-center justify-between">
-                            <div class="text-center">
-                                <div class="text-sm text-gray-500">副学士阶段</div>
-                                <div class="font-semibold">理工学院</div>
-                            </div>
-                            <i class="fas fa-arrow-right text-blue-500 text-2xl"></i>
-                            <div class="text-center">
-                                <div class="text-sm text-gray-500">本科阶段</div>
-                                <div class="font-semibold text-red-600">香港科技大学商科</div>
-                            </div>
+                        <div class="timeline-item">
+                            <h4 class="font-semibold text-gray-800">7-8月：提升期</h4>
+                            <p class="text-gray-600">暑期提升计划，为第二年做准备</p>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- HKDSE学生案例 -->
-            <div>
-                <h3 class="text-2xl font-bold text-purple-600 mb-6 text-center">HKDSE学生案例</h3>
-                
-                <div class="space-y-6">
-                    <div class="bg-gradient-to-r from-purple-50 to-purple-100 rounded-lg p-6 card-hover">
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold mr-4">陈</div>
-                            <div>
-                                <div class="font-bold text-lg">香港考生陈同学</div>
-                                <div class="text-gray-600">DSE 5科12分</div>
-                            </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-orange-600 mb-6">Year 2 第二年</h3>
+                    <div class="space-y-6">
+                        <div class="timeline-item">
+                            <h4 class="font-semibold text-gray-800">9-10月：申请准备</h4>
+                            <p class="text-gray-600">选择目标院校，准备申请材料</p>
                         </div>
-                        <div class="flex items-center justify-between">
-                            <div class="text-center">
-                                <div class="text-sm text-gray-500">副学士阶段</div>
-                                <div class="font-semibold">浸会国际学院</div>
-                            </div>
-                            <i class="fas fa-arrow-right text-purple-500 text-2xl"></i>
-                            <div class="text-center">
-                                <div class="text-sm text-gray-500">本科阶段</div>
-                                <div class="font-semibold text-red-600">香港中文大学</div>
-                            </div>
+                        <div class="timeline-item">
+                            <h4 class="font-semibold text-gray-800">11-12月：提交申请</h4>
+                            <p class="text-gray-600">提交Non-JUPAS申请，完善文书</p>
                         </div>
-                    </div>
-                    
-                    <div class="bg-gradient-to-r from-purple-50 to-purple-100 rounded-lg p-6 card-hover">
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold mr-4">张</div>
-                            <div>
-                                <div class="font-bold text-lg">深圳考生张同学</div>
-                                <div class="text-gray-600">DSE 5科14分</div>
-                            </div>
+                        <div class="timeline-item">
+                            <h4 class="font-semibold text-gray-800">次年1-3月：面试期</h4>
+                            <p class="text-gray-600">面试准备和参加面试</p>
                         </div>
-                        <div class="flex items-center justify-between">
-                            <div class="text-center">
-                                <div class="text-sm text-gray-500">副学士阶段</div>
-                                <div class="font-semibold">城大专上学院</div>
-                            </div>
-                            <i class="fas fa-arrow-right text-purple-500 text-2xl"></i>
-                            <div class="text-center">
-                                <div class="text-sm text-gray-500">本科阶段</div>
-                                <div class="font-semibold text-red-600">香港城市大学</div>
-                            </div>
+                        <div class="timeline-item">
+                            <h4 class="font-semibold text-gray-800">次年4-5月：结果期</h4>
+                            <p class="text-gray-600">录取结果公布</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 class="font-semibold text-gray-800">次年6-8月：准备期</h4>
+                            <p class="text-gray-600">入学准备，办理相关手续</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <!-- 成功率数据 -->
-        <div class="bg-gray-50 rounded-2xl p-8">
-            <h4 class="text-xl font-bold text-center mb-6">万鹤书院学员升学成功率</h4>
-            <div class="max-w-2xl mx-auto">
-                <canvas id="successChart" style="height: 300px;"></canvas>
-            </div>
-        </div>
-    </div>
-</section>
+    </section>
 
-<!-- 升学路径图谱 -->
-<section class="py-20 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">升学路径图谱</h2>
-            <p class="text-lg text-gray-600">清晰的升学路径，明确的目标导向</p>
-        </div>
-        
-        <div class="max-w-4xl mx-auto">
-            <div class="bg-white rounded-2xl p-8 shadow-lg">
-                <div class="flex flex-col items-center space-y-8">
-                    <!-- 入学条件 -->
-                    <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8">
-                        <div class="bg-blue-100 rounded-lg p-6 text-center card-hover">
-                            <i class="fas fa-school text-3xl text-blue-600 mb-2"></i>
-                            <div class="font-bold">高考本科线以上</div>
-                            <div class="text-sm text-gray-600">英语90分+</div>
+    <!-- 成功案例 -->
+    <section class="py-16 bg-blue-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-trophy text-yellow-600 mr-3"></i>
+                    成功案例展示
+                </h2>
+                <p class="text-lg text-gray-600">真实案例，见证万鹤书院的专业实力</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-blue-600 mb-6 text-center">高考学生案例</h3>
+                    <div class="space-y-6">
+                        <div class="bg-white rounded-lg p-6 shadow-md">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-user-graduate text-blue-600 text-2xl mr-4"></i>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">李同学 - 广东考生（港籍）</h4>
+                                    <p class="text-gray-600">高考558分 → 港大附属学院 → 香港大学文学士</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-700">通过万鹤书院的专业陪跑服务，在副学士期间保持GPA 3.8以上，成功升读港大文学院</p>
                         </div>
-                        
-                        <div class="text-2xl font-bold text-gray-400">OR</div>
-                        
-                        <div class="bg-purple-100 rounded-lg p-6 text-center card-hover">
-                            <i class="fas fa-certificate text-3xl text-purple-600 mb-2"></i>
-                            <div class="font-bold">HKDSE 5科2分</div>
-                            <div class="text-sm text-gray-600">包括中英文</div>
-                        </div>
-                    </div>
-                    
-                    <i class="fas fa-arrow-down text-4xl text-gray-400"></i>
-                    
-                    <!-- 副学士阶段 -->
-                    <div class="bg-yellow-100 rounded-lg p-8 text-center card-hover">
-                        <i class="fas fa-graduation-cap text-4xl text-yellow-600 mb-4"></i>
-                        <div class="text-2xl font-bold">2年副学士课程</div>
-                        <div class="text-lg text-gray-600 mt-2">目标：GPA 3.3+</div>
-                        <div class="text-sm text-gray-500 mt-2">万鹤书院全程陪跑</div>
-                    </div>
-                    
-                    <i class="fas fa-arrow-down text-4xl text-gray-400"></i>
-                    
-                    <!-- 升学选择 -->
-                    <div class="grid md:grid-cols-2 gap-6 w-full">
-                        <div class="bg-red-100 rounded-lg p-6 text-center card-hover">
-                            <i class="fas fa-university text-3xl text-red-600 mb-2"></i>
-                            <div class="font-bold text-lg">香港八大本科</div>
-                            <div class="text-sm text-gray-600">2年获得学士学位</div>
-                        </div>
-                        
-                        <div class="bg-green-100 rounded-lg p-6 text-center card-hover">
-                            <i class="fas fa-globe text-3xl text-green-600 mb-2"></i>
-                            <div class="font-bold text-lg">海外名校</div>
-                            <div class="text-sm text-gray-600">英美澳等国名校</div>
+                        <div class="bg-white rounded-lg p-6 shadow-md">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-user-graduate text-blue-600 text-2xl mr-4"></i>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">王同学 - 江苏考生</h4>
+                                    <p class="text-gray-600">高考532分 → 理工学院 → 香港科技大学商科</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-700">在专业辅导下，GPA提升至3.9，成功逆袭进入香港科技大学商学院</p>
                         </div>
                     </div>
-                    
-                    <i class="fas fa-arrow-down text-4xl text-gray-400"></i>
-                    
-                    <!-- 最终目标 -->
-                    <div class="bg-gradient-to-r from-purple-200 to-blue-200 rounded-lg p-8 text-center card-hover">
-                        <i class="fas fa-trophy text-4xl text-purple-600 mb-4"></i>
-                        <div class="text-2xl font-bold">获得学士学位</div>
-                        <div class="text-lg text-gray-600 mt-2">QS100名校毕业生</div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-orange-600 mb-6 text-center">HKDSE学生案例</h3>
+                    <div class="space-y-6">
+                        <div class="bg-white rounded-lg p-6 shadow-md">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-user-graduate text-orange-600 text-2xl mr-4"></i>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">陈同学 - 香港考生（港籍）</h4>
+                                    <p class="text-gray-600">DSE 5科12分 → 浸会国际学院 → 香港中文大学</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-700">通过系统的GPA提升训练，最终以3.83的成绩成功升读香港中文大学</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-6 shadow-md">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-user-graduate text-orange-600 text-2xl mr-4"></i>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">张同学 - 深圳考生（港籍）</h4>
+                                    <p class="text-gray-600">DSE 5科14分 → 城大专上学院 → 香港城市大学</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-700">在万鹤书院的全程陪跑下，顺利升读香港城市大学工程学院</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- 联系我们 -->
-<section id="contact" class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">联系万鹤书院</h2>
-            <p class="text-lg text-gray-600">专业咨询团队，为您提供一对一升学指导</p>
-        </div>
-        
-        <div class="grid md:grid-cols-3 gap-8 mb-12">
-            <!-- 联系信息 -->
-            <div class="md:col-span-2 space-y-8">
-                <!-- 地址 -->
-                <div class="bg-gray-50 rounded-lg p-6">
-                    <h3 class="text-xl font-bold mb-4 flex items-center">
-                        <i class="fas fa-map-marker-alt text-red-500 mr-3"></i>
-                        校区地址
-                    </h3>
-                    <div class="space-y-3">
-                        <div class="flex items-start">
-                            <i class="fas fa-building text-blue-500 mr-3 mt-1"></i>
-                            <div>
-                                <div class="font-semibold">福田校区</div>
-                                <div class="text-gray-600">福田中深花园大厦A座4楼403</div>
+    <!-- 升学路径图谱 -->
+    <section class="py-16 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 text-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    <i class="fas fa-road text-yellow-400 mr-3"></i>
+                    升学路径图谱
+                </h2>
+                <p class="text-lg text-purple-200">多元入学，直达名校</p>
+            </div>
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center space-y-8">
+                    <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-2xl p-6">
+                        <h3 class="text-xl font-bold mb-4">入学条件</h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-blue-600 bg-opacity-50 rounded-lg p-4">
+                                <i class="fas fa-book text-2xl mb-2"></i>
+                                <p class="font-semibold">高考路径</p>
+                                <p class="text-sm">高考本科线以上成绩</p>
                             </div>
-                        </div>
-                        <div class="flex items-start">
-                            <i class="fas fa-home text-green-500 mr-3 mt-1"></i>
-                            <div>
-                                <div class="font-semibold">龙岗封闭校区</div>
-                                <div class="text-gray-600">龙岗区园山街道保安社区龙苑新村56号</div>
+                            <div class="bg-green-600 bg-opacity-50 rounded-lg p-4">
+                                <i class="fas fa-graduation-cap text-2xl mb-2"></i>
+                                <p class="font-semibold">HKDSE路径</p>
+                                <p class="text-sm">5科2分（包括中英文）</p>
                             </div>
                         </div>
                     </div>
-                </div>
-                
-                <!-- 电话 -->
-                <div class="bg-gray-50 rounded-lg p-6">
-                    <h3 class="text-xl font-bold mb-4 flex items-center">
-                        <i class="fas fa-phone text-green-500 mr-3"></i>
-                        联系电话
-                    </h3>
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <div class="flex items-center">
-                            <i class="fas fa-phone-alt text-blue-500 mr-3"></i>
-                            <div>
-                                <div class="font-semibold">400热线</div>
-                                <div class="text-gray-600">400-633-8747</div>
+                    
+                    <div class="text-4xl text-yellow-400">↓</div>
+                    
+                    <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-2xl p-6">
+                        <h3 class="text-xl font-bold mb-2">2年副学士课程</h3>
+                        <p class="text-purple-200">目标GPA 3.3+，万鹤书院全程陪跑</p>
+                    </div>
+                    
+                    <div class="text-4xl text-yellow-400">↓</div>
+                    
+                    <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-2xl p-6">
+                        <h3 class="text-xl font-bold mb-4">升学选择</h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-red-600 bg-opacity-50 rounded-lg p-4">
+                                <i class="fas fa-university text-2xl mb-2"></i>
+                                <p class="font-semibold">香港八大本科</p>
+                                <p class="text-sm">2年完成学士学位</p>
                             </div>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fab fa-weixin text-green-500 mr-3"></i>
-                            <div>
-                                <div class="font-semibold">客服微信电话</div>
-                                <div class="text-gray-600">+86 130-4989-9208</div>
-                            </div>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-phone text-red-500 mr-3"></i>
-                            <div>
-                                <div class="font-semibold">香港电话</div>
-                                <div class="text-gray-600">+852 55155942</div>
+                            <div class="bg-purple-600 bg-opacity-50 rounded-lg p-4">
+                                <i class="fas fa-globe text-2xl mb-2"></i>
+                                <p class="font-semibold">海外名校</p>
+                                <p class="text-sm">英美澳加等国名校</p>
                             </div>
                         </div>
                     </div>
-                </div>
-                
-                <!-- 微信 -->
-                <div class="bg-gray-50 rounded-lg p-6">
-                    <h3 class="text-xl font-bold mb-4 flex items-center">
-                        <i class="fab fa-weixin text-green-500 mr-3"></i>
-                        微信联系
-                    </h3>
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <div class="flex items-center">
-                            <i class="fab fa-weixin text-green-500 mr-3"></i>
-                            <div>
-                                <div class="font-semibold">客服微信</div>
-                                <div class="text-gray-600">MSS-Cinly</div>
-                            </div>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-users text-blue-500 mr-3"></i>
-                            <div>
-                                <div class="font-semibold">微信公众号</div>
-                                <div class="text-gray-600">万鹤DSE</div>
-                            </div>
-                        </div>
+                    
+                    <div class="text-4xl text-yellow-400">↓</div>
+                    
+                    <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-2xl p-6">
+                        <h3 class="text-xl font-bold mb-2">获得学士学位</h3>
+                        <p class="text-purple-200">QS100名校学位，开启精彩人生</p>
                     </div>
                 </div>
             </div>
-            
-            <!-- 快速咨询 -->
-            <div class="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl p-8 text-white">
+        </div>
+    </section>
+
+    <!-- 联系方式 -->
+    <section class="py-16 bg-gray-800 text-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    <i class="fas fa-phone text-blue-400 mr-3"></i>
+                    联系万鹤书院
+                </h2>
+                <p class="text-lg text-gray-300">多渠道咨询，专业团队为您服务</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
                 <div class="text-center">
-                    <i class="fas fa-comments text-4xl mb-4"></i>
-                    <h3 class="text-2xl font-bold mb-6">立即咨询</h3>
-                    <p class="mb-6">专业升学顾问在线为您解答</p>
-                    <div class="space-y-4">
-                        <button class="w-full bg-white text-indigo-600 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
-                            <i class="fab fa-weixin mr-2"></i>添加微信咨询
-                        </button>
-                        <button class="w-full bg-indigo-400 text-white py-3 rounded-lg font-semibold hover:bg-indigo-300 transition">
-                            <i class="fas fa-phone mr-2"></i>拨打热线电话
-                        </button>
-                        <button class="w-full bg-purple-400 text-white py-3 rounded-lg font-semibold hover:bg-purple-300 transition">
-                            <i class="fas fa-calendar mr-2"></i>预约面谈
-                        </button>
+                    <i class="fas fa-map-marker-alt text-4xl text-red-400 mb-4"></i>
+                    <h3 class="text-xl font-bold mb-4">校区地址</h3>
+                    <div class="space-y-2 text-gray-300">
+                        <p><strong>福田校区：</strong><br>福田中深花园大厦A座4楼403</p>
+                        <p><strong>龙岗封闭校区：</strong><br>龙岗区园山街道保安社区<br>龙苑新村56号</p>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <i class="fas fa-phone text-4xl text-green-400 mb-4"></i>
+                    <h3 class="text-xl font-bold mb-4">联系电话</h3>
+                    <div class="space-y-2 text-gray-300">
+                        <p><strong>400热线：</strong><br>400-633-8747</p>
+                        <p><strong>客服微信电话：</strong><br>+86 130-4989-9208</p>
+                        <p><strong>香港电话：</strong><br>+852 55155942</p>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <i class="fab fa-weixin text-4xl text-blue-400 mb-4"></i>
+                    <h3 class="text-xl font-bold mb-4">微信联系</h3>
+                    <div class="space-y-2 text-gray-300">
+                        <p><strong>客服微信：</strong><br>MSS-Cinly</p>
+                        <p><strong>微信公众号：</strong><br>万鹤DSE</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
-
-<!-- 页脚 -->
-<footer class="bg-gray-900 text-white py-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid md:grid-cols-4 gap-8">
-            <div class="md:col-span-2">
-                <div class="flex items-center mb-4">
-                    <i class="fas fa-graduation-cap text-2xl text-indigo-400 mr-3"></i>
-                    <span class="text-xl font-bold">万鹤书院</span>
-                </div>
-                <p class="text-gray-400 mb-4">专注香港副学士升学服务，助力学子实现名校梦想。我们以专业的服务、丰富的经验，为每一位学生提供个性化的升学解决方案。</p>
-                <div class="flex space-x-4">
-                    <i class="fab fa-weixin text-2xl text-gray-400 hover:text-green-400 cursor-pointer transition"></i>
-                    <i class="fab fa-qq text-2xl text-gray-400 hover:text-blue-400 cursor-pointer transition"></i>
-                    <i class="fas fa-envelope text-2xl text-gray-400 hover:text-red-400 cursor-pointer transition"></i>
-                </div>
-            </div>
-            
-            <div>
-                <h4 class="text-lg font-semibold mb-4">服务项目</h4>
-                <ul class="space-y-2 text-gray-400">
-                    <li><a href="#" class="hover:text-white transition">副学士申请</a></li>
-                    <li><a href="#" class="hover:text-white transition">升学规划</a></li>
-                    <li><a href="#" class="hover:text-white transition">GPA提升</a></li>
-                    <li><a href="#" class="hover:text-white transition">面试辅导</a></li>
-                    <li><a href="#" class="hover:text-white transition">文书修改</a></li>
-                </ul>
-            </div>
-            
-            <div>
-                <h4 class="text-lg font-semibold mb-4">联系方式</h4>
-                <ul class="space-y-2 text-gray-400">
-                    <li><i class="fas fa-phone mr-2"></i>400-633-8747</li>
-                    <li><i class="fas fa-mobile mr-2"></i>130-4989-9208</li>
-                    <li><i class="fas fa-map-marker-alt mr-2"></i>深圳福田/龙岗</li>
-                    <li><i class="fab fa-weixin mr-2"></i>MSS-Cinly</li>
-                </ul>
+            <div class="text-center mt-12">
+                <button class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition duration-300 transform hover:scale-105">
+                    <i class="fas fa-comments mr-2"></i>
+                    立即开始免费咨询
+                </button>
             </div>
         </div>
-        
-        <hr class="border-gray-800 my-8">
-        
-        <div class="flex flex-col md:flex-row justify-between items-center">
-            <div class="text-gray-400 text-sm">
-                © 2024 万鹤书院. 保留所有权利.
-            </div>
-            <div class="text-gray-400 text-sm mt-4 md:mt-0">
-                专业香港副学士升学服务 | 助力QS100名校梦想
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2024 万鹤书院. 专注香港副学士升学服务，助力学子实现名校梦想。</p>
+            <div class="mt-4 flex justify-center space-x-6">
+                <a href="#" class="hover:text-white transition duration-300"><i class="fab fa-wechat text-2xl"></i></a>
+                <a href="#" class="hover:text-white transition duration-300"><i class="fas fa-phone text-2xl"></i></a>
+                <a href="#" class="hover:text-white transition duration-300"><i class="fas fa-envelope text-2xl"></i></a>
             </div>
         </div>
-    </div>
-</footer>
-
-<script>
-// GPA要求图表
-const gpaCtx = document.getElementById('gpaChart').getContext('2d');
-new Chart(gpaCtx, {
-    type: 'bar',
-    data: {
-        labels: ['顶尖三校', '中坚力量', '相对友好'],
-        datasets: [{
-            label: 'GPA要求范围',
-            data: [3.9, 3.4, 3.15],
-            backgroundColor: [
-                'rgba(239, 68, 68, 0.8)',
-                'rgba(251, 146, 60, 0.8)',
-                'rgba(34, 197, 94, 0.8)'
-            ],
-            borderColor: [
-                'rgba(239, 68, 68, 1)',
-                'rgba(251, 146, 60, 1)',
-                'rgba(34, 197, 94, 1)'
-            ],
-            borderWidth: 2
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: false
-            },
-            title: {
-                display: true,
-                text: '香港八大GPA要求分布',
-                font: {
-                    size: 16,
-                    weight: 'bold'
-                }
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-                max: 4.0,
-                ticks: {
-                    stepSize: 0.5
-                },
-                title: {
-                    display: true,
-                    text: 'GPA (满分4.0)'
-                }
-            }
-        }
-    }
-});
-
-// 成功率图表
-const successCtx = document.getElementById('successChart').getContext('2d');
-new Chart(successCtx, {
-    type: 'doughnut',
-    data: {
-        labels: ['升读港八大', '升读其他院校', '海外升学'],
-        datasets: [{
-            data: [75, 15, 10],
-            backgroundColor: [
-                'rgba(99, 102, 241, 0.8)',
-                'rgba(168, 85, 247, 0.8)',
-                'rgba(34, 197, 94, 0.8)'
-            ],
-            borderColor: [
-                'rgba(99, 102, 241, 1)',
-                'rgba(168, 85, 247, 1)',
-                'rgba(34, 197, 94, 1)'
-            ],
-            borderWidth: 2
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                position: 'bottom',
-                labels: {
-                    padding: 20,
-                    usePointStyle: true
-                }
-            },
-            title: {
-                display: true,
-                text: '万鹤书院学员升学去向分布',
-                font: {
-                    size: 16,
-                    weight: 'bold'
-                }
-            }
-        }
-    }
-});
-
-// 平滑滚动
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
-
-// 动画效果
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-up');
-        }
-    });
-}, observerOptions);
-
-document.querySelectorAll('.card-hover').forEach(el => {
-    observer.observe(el);
-});
-</script>
-
+    </footer>
 </body>
 </html>
