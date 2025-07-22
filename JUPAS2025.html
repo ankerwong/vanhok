@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>香港九大学2025年JUPAS志愿改选深度调查报告 - 万鹤书院升学部</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .chart-container {
+            height: 400px;
+            margin: 20px 0;
+        }
+        .section-divider {
+            border-top: 3px solid #1f2937;
+            margin: 40px 0;
+        }
+        @media print {
+            .no-print {
+                display: none;
+            }
+            body {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 顶部标题栏 -->
+    <div class="bg-gradient-to-r from-indigo-900 to-purple-900 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold mb-2">
+                    <i class="fas fa-graduation-cap mr-3"></i>万鹤书院升学部
+                </h1>
+                <p class="text-xl opacity-90">专业升学指导 · 助力未来发展</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 报告标题 -->
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+            <div class="text-center mb-6">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">
+                    香港九大学2025年JUPAS志愿改选深度调查报告
+                </h2>
+                <p class="text-lg text-gray-600 leading-relaxed">
+                    基于2025年7月19日JUPAS志愿改选截止后的最新统计数据<br>
+                    深度分析各大学专业竞争态势 · 提供权威升学参考
+                </p>
+                <div class="mt-6 p-4 bg-yellow-50 border-l-4 border-yellow-400">
+                    <p class="text-sm text-gray-700">
+                        <i class="fas fa-info-circle mr-2"></i>
+                        数据来源：香港01新闻报道及各大学官方公布数据 | 统计时间：2025年7月
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 总体概况 -->
+        <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6">
+                <i class="fas fa-chart-line mr-3 text-indigo-600"></i>2025年JUPAS申请总体概况
+            </h3>
+            <div class="grid md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-6 rounded-lg">
+                    <div class="text-3xl font-bold">42,916</div>
+                    <div class="text-sm opacity-90">总申请人数</div>
+                    <div class="text-xs mt-2">↑9.2% vs 2024年</div>
+                </div>
+                <div class="bg-gradient-to-br from-red-500 to-red-600 text-white p-6 rounded-lg">
+                    <div class="text-3xl font-bold">51:1</div>
+                    <div class="text-sm opacity-90">最高竞争比例</div>
+                    <div class="text-xs mt-2">嶺大健康社会服务</div>
+                </div>
+                <div class="bg-gradient-to-br from-green-500 to-green-600 text-white p-6 rounded-lg">
+                    <div class="text-3xl font-bold">2,503</div>
+                    <div class="text-sm opacity-90">最多申请人数</div>
+                    <div class="text-xs mt-2">都大护理学普通科</div>
+                </div>
+                <div class="bg-gradient-to-br from-purple-500 to-purple-600 text-white p-6 rounded-lg">
+                    <div class="text-3xl font-bold">9</div>
+                    <div class="text-sm opacity-90">参与大学数量</div>
+                    <div class="text-xs mt-2">八大+都会大学</div>
+                </div>
+            </div>
+
+            <!-- 申请趋势图表 -->
+            <div class="chart-container">
+                <canvas id="applicationTrendChart"></canvas>
+            </div>
+        </div>
+
+        <!-- 竞争最激烈专业TOP10 -->
+        <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6">
+                <i class="fas fa-fire mr-3 text-red-600"></i>2025年竞争最激烈专业TOP10
+            </h3>
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse border border-gray-300">
+                    <thead class="bg-red-50">
+                        <tr>
+                            <th class="border border-gray-300 px-4 py-3 text-left">排名</th>
+                            <th class="border border-gray-300 px-4 py-3 text-left">大学</th>
+                            <th class="border border-gray-300 px-4 py-3 text-left">专业名称</th>
+                            <th class="border border-gray-300 px-4 py-3 text-center">申请人数</th>
+                            <th class="border border-gray-300 px-4 py-3 text-center">录取名额</th>
+                            <th class="border border-gray-300 px-4 py-3 text-center">竞争比例</th>
+                            <th class="border border-gray-300 px-4 py-3 text-center">预估分数</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bg-red-100">
+                            <td class="border border-gray-300 px-4 py-3 font-bold">1</td>
+                            <td class="border border-gray-300 px-4 py-3">嶺南大学</td>
+                            <td class="border border-gray-300 px-4 py-3">社会科学（健康及社会服务管理）</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">407</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">8</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center font-bold text-red-600">51:1</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">--</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-3 font-bold">2</td>
+                            <td class="border border-gray-300 px-4 py-3">中文大学</td>
+                            <td class="border border-gray-300 px-4 py-3">健康与体育运动科学</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">596</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">16</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center font-bold text-red-600">37:1</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">25</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-3 font-bold">3</td>
+                            <td class="border border-gray-300 px-4 py-3">教育大学</td>
+                            <td class="border border-gray-300 px-4 py-3">运动科学及教练理学士</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">889</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">25</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center font-bold text-red-600">36:1</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">--</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-3 font-bold">4</td>
+                            <td class="border border-gray-300 px-4 py-3">城市大学</td>
+                            <td class="border border-gray-300 px-4 py-3">工商管理学士（商业决策分析）</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">747</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">24</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center font-bold text-red-600">31:1</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">--</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-3 font-bold">5</td>
+                            <td class="border border-gray-300 px-4 py-3">中文大学</td>
+                            <td class="border border-gray-300 px-4 py-3">教育学士（幼儿教育）</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">572</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">19</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center font-bold text-red-600">30:1</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">20</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-3 font-bold">6</td>
+                            <td class="border border-gray-300 px-4 py-3">浸会大学</td>
+                            <td class="border border-gray-300 px-4 py-3">环球萤幕演技艺术学士</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">223</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">8</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center font-bold text-red-600">28:1</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">--</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-3 font-bold">7</td>
+                            <td class="border border-gray-300 px-4 py-3">都会大学</td>
+                            <td class="border border-gray-300 px-4 py-3">应用心理学及商业管理学士</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">--</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">--</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center font-bold text-red-600">23:1</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">--</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-3 font-bold">8</td>
+                            <td class="border border-gray-300 px-4 py-3">中文大学</td>
+                            <td class="border border-gray-300 px-4 py-3">教育学士（数学及数学教育）</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">257</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">12</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center font-bold text-red-600">21:1</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">49</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-3 font-bold">9</td>
+                            <td class="border border-gray-300 px-4 py-3">中文大学</td>
+                            <td class="border border-gray-300 px-4 py-3">文学士（中国语文研究）及教育学士</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">249</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">12</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center font-bold text-red-600">21:1</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">37.5</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-3 font-bold">10</td>
+                            <td class="border border-gray-300 px-4 py-3">理工大学</td>
+                            <td class="border border-gray-300 px-4 py-3">中国历史及文化文学士</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">302</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">16</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center font-bold text-red-600">19:1</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">--</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-4 p-4 bg-red-50 border-l-4 border-red-400">
+                <p class="text-sm text-gray-700">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    <strong>重要提醒：</strong>竞争比例越高的专业，录取难度越大，建议考生合理评估自身实力，做好志愿搭配。
+                </p>
+            </div>
+        </div>
+
+        <!-- 最多人申请专业TOP10 -->
+        <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6">
+                <i class="fas fa-users mr-3 text-blue-600"></i>2025年最多人申请专业TOP10
+            </h3>
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse border border-gray-300">
+                    <thead class="bg-blue-50">
+                        <tr>
+                            <th class="border border-gray-300 px-4 py-3 text-left">排名</th>
+                            <th class="border border-gray-300 px-4 py-3 text-left">大学</th>
+                            <th class="border border-gray-300 px-4 py-3 text-left">专业名称</th>
+                            <th class="border border-gray-300 px-4 py-3 text-center">申请人数</th>
+                            <th class="border border-gray-300 px-4 py-3 text-center">录取名额</th>
+                            <th class="border border-gray-300 px-4 py-3 text-center">竞争比例</th>
+                            <th class="border border-gray-300 px-4 py-3 text-center">预估分数</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bg-blue-100">
+                            <td class="border border-gray-300 px-4 py-3 font-bold">1</td>
+                            <td class="border border-gray-300 px-4 py-3">都会大学</td>
+                            <td class="border border-gray-300 px-4 py-3">护理学学士（普通科）</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center font-bold text-blue-600">2,503</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">390</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">6:1</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">--</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-3 font-bold">2</td>
+                            <td class="border border-gray-300 px-4 py-3">中文大学</td>
+                            <td class="border border-gray-300 px-4 py-3">理学</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center font-bold text-blue-600">1,913</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">335</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">6:1</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">33</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-3 font-bold">3</td>
+                            <td class="border border-gray-300 px-4 py-3">中文大学</td>
+                            <td class="border border-gray-300 px-4 py-3">工商管理学士综合课程</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center font-bold text-blue-600">1,863</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">212</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">9:1</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">24</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-3 font-bold">4</td>
+                            <td class="border border-gray-300 px-4 py-3">香港大学</td>
+                            <td class="border border-gray-300 px-4 py-3">护理学学士（含菁英组别）</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center font-bold text-blue-600">1,706</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">210</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">8:1</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">24-34</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-3 font-bold">5</td>
+                            <td class="border border-gray-300 px-4 py-3">中文大学</td>
+                            <td class="border border-gray-300 px-4 py-3">护理学</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center font-bold text-blue-600">1,392</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">217</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">6:1</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">26</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-3 font-bold">6</td>
+                            <td class="border border-gray-300 px-4 py-3">理工大学</td>
+                            <td class="border border-gray-300 px-4 py-3">护理学（荣誉）理学士</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center font-bold text-blue-600">1,332</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">193</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">7:1</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">--</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-3 font-bold">7</td>
+                            <td class="border border-gray-300 px-4 py-3">浸会大学</td>
+                            <td class="border border-gray-300 px-4 py-3">理学士</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center font-bold text-blue-600">1,309</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">--</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">--</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">--</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-3 font-bold">8</td>
+                            <td class="border border-gray-300 px-4 py-3">香港大学</td>
+                            <td class="border border-gray-300 px-4 py-3">内外全科医学士</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center font-bold text-blue-600">1,084</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">300</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">4:1</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">40.5</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-3 font-bold">9</td>
+                            <td class="border border-gray-300 px-4 py-3">香港大学</td>
+                            <td class="border border-gray-300 px-4 py-3">文学士</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center font-bold text-blue-600">1,076</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">217</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">5:1</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">28</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-3 font-bold">10</td>
+                            <td class="border border-gray-300 px-4 py-3">城市大学</td>
+                            <td class="border border-gray-300 px-4 py-3">工商管理学士（会计）</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center font-bold text-blue-600">1,030</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">--</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">--</td>
+                            <td class="border border-gray-300 px-4 py-3 text-center">--</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 各大学详细分析 -->
+        <div class="section-divider"></div>
+        <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+            <i class="fas fa-university mr-3 text-indigo-600"></i>九大学详细专业数据分析
+        </h2>
+
+        <!-- 香港大学 -->
+        <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+            <div class="border-l-4 border-red-500 pl-6 mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">香港大学 (HKU)</h3>
+                <p class="text-gray-600">香港顶尖学府，医学、法学、工程等专业享誉国际</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h4 class="text-xl font-semibold mb-4 text-red-600">
+                        <i class="fas fa-star mr-2"></i>最多人申请专业TOP5
+                    </h4>
+                    <div class="space-y-3">
+                        <div class="bg-red-50 p-4 rounded border-l-4 border-red-400">
+                            <div class="font-semibold">护理学学士（含菁英组别）</div>
+                            <div class="text-sm text-gray-600 mt-1">
+                                申请：1,706人 | 名额：210个 | 预估分数：24-34分
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded">
+                            <div class="font-semibold">内外全科医学士</div>
+                            <div class="text-sm text-gray-600 mt-1">
+                                申请：1,084人 | 名额：300个 | 预估分数：40.5分
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded">
+                            <div class="font-semibold">文学士</div>
+                            <div class="text-sm text-gray-600 mt-1">
+                                申请：1,076人 | 名额：217个 | 预估分数：28分
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded">
+                            <div class="font-semibold">理学士</div>
+                            <div class="text-sm text-gray-600 mt-1">
+                                申请：904人 | 名额：253个 | 预估分数：27分
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded">
+                            <div class="font-semibold">工商管理学学士</div>
+                            <div class="text-sm text-gray-600 mt-1">
+                                申请：748人 | 名额：226个 | 预估分数：28分
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-xl font-semibold mb-4 text-orange-600">
+                        <i class="fas fa-fire mr-2"></i>竞争最激烈专业TOP5
+                    </h4>
+                    <div class="space-y-3">
+                        <div class="bg-orange-50 p-4 rounded border-l-4 border-orange-400">
+                            <div class="font-semibold">文学士及教育学士（语文教育）-英文教育</div>
+                            <div class="text-sm text-gray-600 mt-1">
+                                申请：211人 | 名额：17个 | 竞争比例：<span class="font-bold text-red-600">12:1</span>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded">
+                            <div class="font-semibold">教育学士（幼儿教育及特殊教育）</div>
+                            <div class="text-sm text-gray-600 mt-1">
+                                申请：193人 | 名额：16个 | 竞争比例：<span class="font-bold text-red-600">12:1</span>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded">
+                            <div class="font-semibold">社会工作学学士</div>
+                            <div class="text-sm text-gray-600 mt-1">
+                                申请：417人 | 名额：35个 | 竞争比例：<span class="font-bold text-red-600">12:1</span>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded">
+                            <div class="font-semibold">文学士（城市研究）</div>
+                            <div class="text-sm text-gray-600 mt-1">
+                                申请：198人 | 名额：17个 | 竞争比例：<span class="font-bold text-red-600">12:1</span>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded">
+                            <div class="font-semibold">工商管理学学士（商业分析）</div>
+                            <div class="text-sm text-gray-600 mt-1">
+                                申请：156人 | 名额：15个 | 竞争比例：<span class="font-bold text-red-600">10:1</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 p-4 bg-blue-50 border-l-4 border-blue-400">
+                <h5 class="font-semibold mb-2">港大分数换算方法</h5>
+                <p class="text-sm text-gray-700">5**=8.5分 | 5*=7分 | 5=5.5分 | 4=4分 | 3=3分 | 2=2分 | 1=1分</p>
+            </div>
+        </div>
+
+        <!-- 香港中文大学 -->
+        <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+            <div class="border-l-4 border-blue-500 pl-6 mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">香港中文大学 (CUHK)</h3>
+                <p class="text-gray-600">享有"亚洲哈佛"美誉，书院制度独具特色</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h4 class="text-xl font-semibold mb-4 text-blue-600">
+                        <i class="fas fa-star mr-2"></i>最多人申请专业TOP5
+                    </h4>
+                    <div class="space-y-3">
+                        <div class="bg-blue-50 p-4 rounded border-l-4 border-blue-400">
+                            <div class="font-semibold">理学</div>
+                            <div class="text-sm text-gray-600 mt-1">
+                                申请：1,913人 | 名额：335个 | 预估分数：33分
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded">
+                            <div class="font-semibold">工商管理学士综合课程</div>
+                            <div class="text-sm text-gray-600 mt-1">
+                                申请：1,863人 | 名额：212个 | 预估分数：24分
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded">
+                            <div class="font-semibold">护理学</div>
+                            <div class="text-sm text-gray-600 mt-1">
+                                申请：1,392人 | 名额：217个 | 预估分数：26分
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded">
+                            <div class="font-semibold">内外全科医学士课程</div>
+                            <div class="text-sm text-gray-600 mt-1">
+                                申请：961人 | 名额：300个 | 预估分数：34分
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded">
+                            <div class="font-semibold">社会科学</div>
+                            <div class="text-sm text-gray-600 mt-1">
+                                申请：908人 | 名额：53个 | 预估分数：24.5分
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-xl font-semibold mb-4 text-orange-600">
+                        <i class="fas fa-fire mr-2"></i>竞争最激烈专业TOP5
+                    </h4>
+                    <div class="space-y-3">
+                        <div class="bg-orange-50 p-4 rounded border-l-4 border-orange-400">
+                            <div class="font-semibold">健康与体育运动科学</div>
+                            <div class="text-sm text-gray-600 mt-1">
+                                申请：596人 | 名额：16个 | 竞争比例：<span class="font-bold text-red-600">37:1</span>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded">
+                            <div class="font-semibold">教育学士（幼儿教育）</div>
+                            <div class="text-sm text-gray-600 mt-1">
+                                申请：572人 | 名额：19个 | 竞争比例：<span class="font-bold text-red-600">30:1</span>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded">
+                            <div class="font-semibold">教育学士（数学及数学教育）</div>
+                            <div class="text-sm text-gray-600 mt-1">
+                                申请：257人 | 名额：12个 | 竞争比例：<span class="font-bold text-red-600">21:1</span>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded">
+                            <div class="font-semibold">文学士（中国语文研究）及教育学士</div>
+                            <div class="text-sm text-gray-600 mt-1">
+                                申请：249人 | 名额：12个 | 竞争比例：<span class="font-bold text-red-600">21:1</span>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded">
+                            <div class="font-semibold">中医学</div>
+                            <div class="text-sm text-gray-600 mt-1">
+                                申请：475人 | 名额：23个 | 竞争比例：<span class="font-bold text-red-600">21:1</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 其他大学概况 -->
+        <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6">
+                <i class="fas fa-building mr-3 text-purple-600"></i>其他大学重点专业概况
+            </h3>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="border rounded-lg p-6">
+                    <h4 class="text-lg font-bold text-green-600 mb-4">香港科技大学</h4>
+                    <div class="space-y-2 text-sm">
+                        <div><strong>最热门：</strong>理学B组 (925人申请)</div>
+                        <div><strong>最激烈：</strong>理学士（定量社会数据分析）</div>
+                        <div class="text-red-600"><strong>竞争比例：</strong>139人争26个名额 (5:1)</div>
+                    </div>
+                </div>
+                
+                <div class="border rounded-lg p-6">
+                    <h4 class="text-lg font-bold text-purple-600 mb-4">香港城市大学</h4>
+                    <div class="space-y-2 text-sm">
+                        <div><strong>最热门：</strong>工商管理学士（会计）(1,030人)</div>
+                        <div><strong>最激烈：</strong>工商管理学士（商业决策分析）</div>
+                        <div class="text-red-600"><strong>竞争比例：</strong>747人争24个名额 (31:1)</div>
+                    </div>
+                </div>
+
+                <div class="border rounded-lg p-6">
+                    <h4 class="text-lg font-bold text-indigo-600 mb-4">香港教育大学</h4>
+                    <div class="space-y-2 text-sm">
+                        <div><strong>最热门：</strong>心理学社会科学学士 (998人)</div>
+                        <div><strong>最激烈：</strong>运动科学及教练理学士</div>
+                        <div class="text-red-600"><strong>竞争比例：</strong>889人争25个名额 (36:1)</div>
+                    </div>
+                </div>
+
+                <div class="border rounded-lg p-6">
+                    <h4 class="text-lg font-bold text-yellow-600 mb-4">香港浸会大学</h4>
+                    <div class="space-y-2 text-sm">
+                        <div><strong>最热门：</strong>理学士 (1,309人申请)</div>
+                        <div><strong>最激烈：</strong>环球萤幕演技艺术学士</div>
+                        <div class="text-red-600"><strong>竞争比例：</strong>223人争8个名额 (28:1)</div>
+                    </div>
+                </div>
+
+                <div class="border rounded-lg p-6">
+                    <h4 class="text-lg font-bold text-pink-600 mb-4">香港理工大学</h4>
+                    <div class="space-y-2 text-sm">
+                        <div><strong>最热门：</strong>护理学（荣誉）理学士 (1,332人)</div>
+                        <div><strong>最激烈：</strong>中国历史及文化文学士</div>
+                        <div class="text-red-600"><strong>竞争比例：</strong>302人争16个名额 (19:1)</div>
+                    </div>
+                </div>
+
+                <div class="border rounded-lg p-6">
+                    <h4 class="text-lg font-bold text-teal-600 mb-4">嶺南大学</h4>
+                    <div class="space-y-2 text-sm">
+                        <div><strong>最热门：</strong>工商管理学士（市场学与社交媒体）(718人)</div>
+                        <div><strong>最激烈：</strong>社会科学（健康及社会服务管理）</div>
+                        <div class="text-red-600"><strong>竞争比例：</strong>407人争8个名额 (51:1)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 专业趋势分析 -->
+        <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6">
+                <i class="fas fa-chart-bar mr-3 text-green-600"></i>2025年JUPAS专业选择趋势分析
+            </h3>
+            <div class="chart-container mb-6">
+                <canvas id="majorTrendChart"></canvas>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-green-50 p-6 rounded-lg border-l-4 border-green-400">
+                    <h4 class="text-lg font-semibold text-green-700 mb-3">
+                        <i class="fas fa-arrow-up mr-2"></i>热门上升专业
+                    </h4>
+                    <ul class="space-y-2 text-sm">
+                        <li>• 护理学专业（各大学均热门）</li>
+                        <li>• 数据科学与人工智能</li>
+                        <li>• 健康与体育运动科学</li>
+                        <li>• 商业分析与金融科技</li>
+                        <li>• 环球医学领袖培训</li>
+                    </ul>
+                </div>
+
+                <div class="bg-yellow-50 p-6 rounded-lg border-l-4 border-yellow-400">
+                    <h4 class="text-lg font-semibold text-yellow-700 mb-3">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>竞争白热化领域
+                    </h4>
+                    <ul class="space-y-2 text-sm">
+                        <li>• 师范教育类专业</li>
+                        <li>• 健康管理与社会服务</li>
+                        <li>• 创意艺术与传媒</li>
+                        <li>• 心理学与社会工作</li>
+                        <li>• 小班制特色专业</li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-400">
+                    <h4 class="text-lg font-semibold text-blue-700 mb-3">
+                        <i class="fas fa-lightbulb mr-2"></i>升学策略建议
+                    </h4>
+                    <ul class="space-y-2 text-sm">
+                        <li>• 合理搭配冷热门专业</li>
+                        <li>• 关注新兴交叉学科</li>
+                        <li>• 重视专业发展前景</li>
+                        <li>• 考虑个人兴趣匹配</li>
+                        <li>• 提前准备面试技巧</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 录取分数分析 -->
+        <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6">
+                <i class="fas fa-calculator mr-3 text-red-600"></i>2025年各大学录取分数区间分析
+            </h3>
+            <div class="chart-container mb-6">
+                <canvas id="scoreRangeChart"></canvas>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse border border-gray-300 text-sm">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="border border-gray-300 px-4 py-3">分数区间</th>
+                            <th class="border border-gray-300 px-4 py-3">适合专业类别</th>
+                            <th class="border border-gray-300 px-4 py-3">推荐院校</th>
+                            <th class="border border-gray-300 px-4 py-3">竞争程度</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bg-red-50">
+                            <td class="border border-gray-300 px-4 py-3 font-bold">40分以上</td>
+                            <td class="border border-gray-300 px-4 py-3">医学、法学、金融</td>
+                            <td class="border border-gray-300 px-4 py-3">港大、中大医学院</td>
+                            <td class="border border-gray-300 px-4 py-3 text-red-600">极高</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-3 font-bold">35-40分</td>
+                            <td class="border border-gray-300 px-4 py-3">工程、商科、理学</td>
+                            <td class="border border-gray-300 px-4 py-3">港三大主流专业</td>
+                            <td class="border border-gray-300 px-4 py-3 text-orange-600">高</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-3 font-bold">30-35分</td>
+                            <td class="border border-gray-300 px-4 py-3">文科、社科、教育</td>
+                            <td class="border border-gray-300 px-4 py-3">八大部分专业</td>
+                            <td class="border border-gray-300 px-4 py-3 text-yellow-600">中等</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-3 font-bold">25-30分</td>
+                            <td class="border border-gray-300 px-4 py-3">护理、应用学科</td>
+                            <td class="border border-gray-300 px-4 py-3">理大、城大、浸大</td>
+                            <td class="border border-gray-300 px-4 py-3 text-green-600">中低</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-3 font-bold">20-25分</td>
+                            <td class="border border-gray-300 px-4 py-3">实用专业、创意艺术</td>
+                            <td class="border border-gray-300 px-4 py-3">教大、岭大、都大</td>
+                            <td class="border border-gray-300 px-4 py-3 text-blue-600">较低</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 结语和建议 -->
+        <div class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-lg shadow-lg p-8 mb-8">
+            <div class="text-center">
+                <h3 class="text-2xl font-bold mb-6">
+                    <i class="fas fa-rocket mr-3"></i>万鹤书院升学部专业建议
+                </h3>
+                <div class="grid md:grid-cols-2 gap-8 text-left">
+                    <div>
+                        <h4 class="text-xl font-semibold mb-4">
+                            <i class="fas fa-star mr-2 text-yellow-300"></i>志愿填报策略
+                        </h4>
+                        <ul class="space-y-2 text-sm">
+                            <li>• <strong>梯度搭配：</strong>按"冲刺-稳妥-保底"原则排列</li>
+                            <li>• <strong>专业优先：</strong>优先考虑个人兴趣和职业规划</li>
+                            <li>• <strong>信息更新：</strong>持续关注最新录取数据变化</li>
+                            <li>• <strong>多元选择：</strong>考虑不同类型院校的特色专业</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-semibold mb-4">
+                            <i class="fas fa-lightbulb mr-2 text-yellow-300"></i>备考提升建议
+                        </h4>
+                        <ul class="space-y-2 text-sm">
+                            <li>• <strong>成绩提升：</strong>重点加强薄弱科目，争取更高分数</li>
+                            <li>• <strong>面试准备：</strong>提前了解目标专业的面试要求</li>
+                            <li>• <strong>作品集：</strong>艺术类专业需提前准备优质作品</li>
+                            <li>• <strong>OEA活动：</strong>积极参与相关学科的课外活动</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-8 p-4 bg-white bg-opacity-20 rounded-lg">
+                    <p class="text-center text-lg">
+                        <i class="fas fa-phone mr-2"></i>
+                        如需个性化升学咨询，欢迎联系万鹤书院升学部专业顾问团队<br>
+                        <span class="text-sm opacity-90">我们将为每位学生提供量身定制的升学规划方案</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 页脚 -->
+        <div class="bg-gray-800 text-white rounded-lg p-6 text-center">
+            <p class="mb-2">
+                <i class="fas fa-graduation-cap mr-2"></i>
+                <strong>万鹤书院升学部</strong> - 您的升学路上的专业伙伴
+            </p>
+            <p class="text-sm text-gray-400">
+                报告生成时间：2025年7月 | 数据来源：各大学官方及香港01新闻报道
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // 申请趋势图表
+        const trendCtx = document.getElementById('applicationTrendChart').getContext('2d');
+        new Chart(trendCtx, {
+            type: 'line',
+            data: {
+                labels: ['2020', '2021', '2022', '2023', '2024', '2025'],
+                datasets: [{
+                    label: 'JUPAS申请人数',
+                    data: [38000, 37500, 39523, 39948, 39298, 42916],
+                    borderColor: 'rgb(59, 130, 246)',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '2020-2025年JUPAS申请人数趋势'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 35000
+                    }
+                }
+            }
+        });
+
+        // 专业类别热度图表
+        const majorCtx = document.getElementById('majorTrendChart').getContext('2d');
+        new Chart(majorCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['护理学', '商科', '理学', '医学', '工程', '教育', '文科', '其他'],
+                datasets: [{
+                    data: [25, 20, 15, 12, 10, 8, 6, 4],
+                    backgroundColor: [
+                        '#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#f0932b',
+                        '#eb4d4b', '#6c5ce7', '#a29bfe'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '2025年热门专业类别分布（%）'
+                    }
+                }
+            }
+        });
+
+        // 录取分数区间图表
+        const scoreCtx = document.getElementById('scoreRangeChart').getContext('2d');
+        new Chart(scoreCtx, {
+            type: 'bar',
+            data: {
+                labels: ['港大', '中大', '科大', '城大', '理大', '浸大', '岭大', '教大', '都大'],
+                datasets: [{
+                    label: '最高分专业',
+                    data: [45, 49, 35, 32, 30, 28, 25, 30, 24],
+                    backgroundColor: 'rgba(239, 68, 68, 0.8)'
+                }, {
+                    label: '最低分专业',
+                    data: [24, 20, 22, 18, 20, 16, 15, 18, 12],
+                    backgroundColor: 'rgba(34, 197, 94, 0.8)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '各大学录取分数区间对比'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'DSE分数'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
