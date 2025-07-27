@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Linear Programming Calculator (2 Variables)</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjs@11.8.0/lib/browser/math.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+            color: #2d3748;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #f5365c 0%, #f56036 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(245, 54, 92, 0.4);
+        }
+        
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        
+        input, select {
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
+        }
+        
+        .constraint-container {
+            background-color: #f8fafc;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #4c51bf;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            color: white;
+            padding: 1.5rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .footer {
+            background: #1a202c;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        
+        .chart-container {
+            width: 100%;
+            height: 800px;
+            margin: 2rem auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        th, td {
+            padding: 0.75rem 1rem;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f7fafc;
+            font-weight: 600;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+        
+        tr:hover {
+            background-color: #f1f5f9;
+        }
+        
+        .result-box {
+            background: linear-gradient(135deg, #c6f6d5 0%, #9ae6b4 100%);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid #38a169;
+        }
+        
+        .sensitivity-box {
+            background: linear-gradient(135deg, #e9d8fd 0%, #d6bcfa 100%);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid #805ad5;
+        }
+        
+        .heading-gradient {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container mx-auto text-center">
+            <h1 class="text-4xl font-bold">Online Linear Programming Calculator</h1>
+            <p class="text-xl mt-2">Two Variables with Graphical Visualization & Sensitivity Analysis</p>
+            <p class="mt-3">by Anker Wong</p>
+        </div>
+    </header>
+
+    <div class="container mx-auto p-4">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-1">
+                <div class="card">
+                    <h2 class="text-2xl font-semibold mb-4 heading-gradient">
+                        <i class="fas fa-bullseye mr-2"></i>Objective Function
+                    </h2>
+                    <div class="input-group">
+                        <label class="block mb-2">Type:</label>
+                        <select id="objectiveType" class="block w-full">
+                            <option value="max">Maximize</option>
+                            <option value="min">Minimize</option>
+                        </select>
+                    </div>
+                    <div class="flex space-x-2">
+                        <div class="input-group w-1/2">
+                            <label class="block mb-2">X Coefficient:</label>
+                            <input type="number" id="objectiveX" class="block w-full" value="3" step="0.1">
+                        </div>
+                        <div class="input-group w-1/2">
+                            <label class="block mb-2">Y Coefficient:</label>
+                            <input type="number" id="objectiveY" class="block w-full" value="2" step="0.1">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="text-2xl font-semibold mb-4 heading-gradient">
+                        <i class="fas fa-not-equal mr-2"></i>Constraints
+                    </h2>
+                    <div id="constraints-container">
+                        <div class="constraint-container" data-constraint-id="1">
+                            <div class="flex justify-between mb-2">
+                                <span class="font-bold">Constraint #1</span>
+                                <button class="text-red-500 delete-constraint" data-constraint-id="1">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                            <div class="flex space-x-2">
+                                <div class="w-1/3">
+                                    <label class="block mb-2">X Coeff:</label>
+                                    <input type="number" class="constraint-x block w-full" value="1" step="0.1">
+                                </div>
+                                <div class="w-1/3">
+                                    <label class="block mb-2">Y Coeff:</label>
+                                    <input type="number" class="constraint-y block w-full" value="1" step="0.1">
+                                </div>
+                                <div class="w-1/3">
+                                    <label class="block mb-2">Type:</label>
+                                    <select class="constraint-type block w-full">
+                                        <option value="<=">≤</option>
+                                        <option value="=">= (equal)</option>
+                                        <option value=">=">≥</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mt-2">
+                                <label class="block mb-2">RHS Value:</label>
+                                <input type="number" class="constraint-rhs block w-full" value="6" step="0.1">
+                            </div>
+                        </div>
+                        <div class="constraint-container" data-constraint-id="2">
+                            <div class="flex justify-between mb-2">
+                                <span class="font-bold">Constraint #2</span>
+                                <button class="text-red-500 delete-constraint" data-constraint-id="2">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                            <div class="flex space-x-2">
+                                <div class="w-1/3">
+                                    <label class="block mb-2">X Coeff:</label>
+                                    <input type="number" class="constraint-x block w-full" value="2" step="0.1">
+                                </div>
+                                <div class="w-1/3">
+                                    <label class="block mb-2">Y Coeff:</label>
+                                    <input type="number" class="constraint-y block w-full" value="1" step="0.1">
+                                </div>
+                                <div class="w-1/3">
+                                    <label class="block mb-2">Type:</label>
+                                    <select class="constraint-type block w-full">
+                                        <option value="<=">≤</option>
+                                        <option value="=">= (equal)</option>
+                                        <option value=">=">≥</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mt-2">
+                                <label class="block mb-2">RHS Value:</label>
+                                <input type="number" class="constraint-rhs block w-full" value="8" step="0.1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="add-constraint" class="btn-primary mt-4 w-full">
+                        <i class="fas fa-plus mr-2"></i>Add Constraint
+                    </button>
+                </div>
+
+                <div class="card">
+                    <h2 class="text-2xl font-semibold mb-4 heading-gradient">
+                        <i class="fas fa-chart-line mr-2"></i>Graph Settings
+                    </h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="input-group">
+                            <label class="block mb-2">X-Axis Max:</label>
+                            <input type="number" id="xAxisMax" class="block w-full" value="10" min="1">
+                        </div>
+                        <div class="input-group">
+                            <label class="block mb-2">Y-Axis Max:</label>
+                            <input type="number" id="yAxisMax" class="block w-full" value="10" min="1">
+                        </div>
+                        <div class="input-group">
+                            <label class="block mb-2">X-Axis Step:</label>
+                            <input type="number" id="xAxisStep" class="block w-full" value="1" min="0.1" step="0.1">
+                        </div>
+                        <div class="input-group">
+                            <label class="block mb-2">Y-Axis Step:</label>
+                            <input type="number" id="yAxisStep" class="block w-full" value="1" min="0.1" step="0.1">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button id="solve-button" class="btn-primary w-full text-lg py-3">
+                        <i class="fas fa-calculator mr-2"></i>Solve
+                    </button>
+                </div>
+
+                <div class="card mt-4">
+                    <h2 class="text-2xl font-semibold mb-4 heading-gradient">
+                        <i class="fas fa-info-circle mr-2"></i>Instructions
+                    </h2>
+                    <ol class="list-decimal pl-5 space-y-2">
+                        <li>Input your objective function coefficients and choose max or min</li>
+                        <li>Add constraints with their coefficients and right-hand side values</li>
+                        <li>Adjust graph settings if needed</li>
+                        <li>Click "Solve" to calculate the optimal solution</li>
+                        <li>View the results and sensitivity analysis</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2">
+                <div class="card">
+                    <h2 class="text-2xl font-semibold mb-4 heading-gradient">
+                        <i class="fas fa-chart-area mr-2"></i>Graphical Representation
+                    </h2>
+                    <div class="chart-container">
+                        <canvas id="lpChart"></canvas>
+                    </div>
+                </div>
+
+                <div id="results-section" class="card hidden">
+                    <h2 class="text-2xl font-semibold mb-4 heading-gradient">
+                        <i class="fas fa-star mr-2"></i>Results
+                    </h2>
+                    <div id="optimal-solution" class="result-box">
+                        <h3 class="text-xl font-semibold mb-2">Optimal Solution</h3>
+                        <div id="optimal-solution-content" class="text-lg"></div>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-6 mb-3">Constraints at Optimal Solution</h3>
+                    <div id="constraints-table-container">
+                        <table id="constraints-table" class="w-full">
+                            <thead>
+                                <tr>
+                                    <th>Constraint</th>
+                                    <th>LHS Value</th>
+                                    <th>Type</th>
+                                    <th>RHS Value</th>
+                                    <th>Slack/Surplus</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="constraints-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div id="sensitivity-section" class="card hidden">
+                    <h2 class="text-2xl font-semibold mb-4 heading-gradient">
+                        <i class="fas fa-microscope mr-2"></i>Sensitivity Analysis
+                    </h2>
+                    
+                    <div class="sensitivity-box">
+                        <h3 class="text-xl font-semibold mb-2">What is Sensitivity Analysis?</h3>
+                        <p class="mb-3">Sensitivity analysis determines how changes in the coefficients and constraints affect the optimal solution. It helps understand which parameters are most critical to the solution.</p>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-6 mb-3">Objective Function Coefficients</h3>
+                    <div id="obj-sensitivity-container">
+                        <table id="obj-sensitivity-table" class="w-full">
+                            <thead>
+                                <tr>
+                                    <th>Variable</th>
+                                    <th>Current Value</th>
+                                    <th>Allowable Decrease</th>
+                                    <th>Allowable Increase</th>
+                                </tr>
+                            </thead>
+                            <tbody id="obj-sensitivity-body"></tbody>
+                        </table>
+                        <div class="mt-4 text-gray-700">
+                            <p><strong>Interpretation:</strong> The allowable increase/decrease shows how much each objective coefficient can change without changing the optimal corner point. Beyond these ranges, a different corner point would become optimal.</p>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-6 mb-3">Right Hand Side (RHS) Sensitivity</h3>
+                    <div id="rhs-sensitivity-container">
+                        <table id="rhs-sensitivity-table" class="w-full">
+                            <thead>
+                                <tr>
+                                    <th>Constraint</th>
+                                    <th>Current RHS</th>
+                                    <th>Shadow Price</th>
+                                    <th>Allowable Decrease</th>
+                                    <th>Allowable Increase</th>
+                                </tr>
+                            </thead>
+                            <tbody id="rhs-sensitivity-body"></tbody>
+                        </table>
+                        <div class="mt-4 text-gray-700">
+                            <p><strong>Interpretation:</strong></p>
+                            <ul class="list-disc pl-5 space-y-2 mt-2">
+                                <li><strong>Shadow Price:</strong> The change in the objective value per unit increase in the RHS of the constraint.</li>
+                                <li><strong>Binding Constraints:</strong> Constraints that are fully utilized at the optimal solution (equality or zero slack). These constraints have non-zero shadow prices.</li>
+                                <li><strong>Non-binding Constraints:</strong> Constraints with slack (not fully utilized) at the optimal solution. These have zero shadow prices.</li>
+                                <li><strong>Allowable Range:</strong> The range within which the shadow price remains valid. Beyond this range, the set of binding constraints changes.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer text-center">
+        <div class="container mx-auto">
+            <p class="text-lg">Online Linear Programming Calculator</p>
+            <p class="mt-2">Created by Anker Wong</p>
+        </div>
+    </footer>
+
+    <script>
+        // Global variables
+        let lpChart = null;
+        let nextConstraintId = 3;
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeChart();
+            setupEventListeners();
+        });
+
+        // Set up event listeners
+        function setupEventListeners() {
+            document.getElementById('add-constraint').addEventListener('click', addConstraint);
+            document.getElementById('solve-button').addEventListener('click', solveLP);
+            
+            // Handle constraint deletions
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('delete-constraint') || 
+                    (e.target.parentElement && e.target.parentElement.classList.contains('delete-constraint'))) {
+                    const button = e.target.classList.contains('delete-constraint') ? e.target : e.target.parentElement;
+                    const constraintId = button.getAttribute('data-constraint-id');
+                    const container = document.querySelector(`.constraint-container[data-constraint-id="${constraintId}"]`);
+                    
+                    if (container && document.querySelectorAll('.constraint-container').length > 1) {
+                        container.remove();
+                    } else {
+                        alert("You must have at least one constraint.");
+                    }
+                }
+            });
+
+            // Update chart when settings change
+            document.getElementById('xAxisMax').addEventListener('change', updateChart);
+            document.getElementById('yAxisMax').addEventListener('change', updateChart);
+            document.getElementById('xAxisStep').addEventListener('change', updateChart);
+            document.getElementById('yAxisStep').addEventListener('change', updateChart);
+        }
+
+        // Add a new constraint
+        function addConstraint() {
+            const constraintsContainer = document.getElementById('constraints-container');
+            const newConstraint = document.createElement('div');
+            newConstraint.className = 'constraint-container';
+            newConstraint.setAttribute('data-constraint-id', nextConstraintId);
+            
+            newConstraint.innerHTML = `
+                <div class="flex justify-between mb-2">
+                    <span class="font-bold">Constraint #${nextConstraintId}</span>
+                    <button class="text-red-500 delete-constraint" data-constraint-id="${nextConstraintId}">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+                <div class="flex space-x-2">
+                    <div class="w-1/3">
+                        <label class="block mb-2">X Coeff:</label>
+                        <input type="number" class="constraint-x block w-full" value="1" step="0.1">
+                    </div>
+                    <div class="w-1/3">
+                        <label class="block mb-2">Y Coeff:</label>
+                        <input type="number" class="constraint-y block w-full" value="1" step="0.1">
+                    </div>
+                    <div class="w-1/3">
+                        <label class="block mb-2">Type:</label>
+                        <select class="constraint-type block w-full">
+                            <option value="<=">≤</option>
+                            <option value="=">= (equal)</option>
+                            <option value=">=">≥</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <label class="block mb-2">RHS Value:</label>
+                    <input type="number" class="constraint-rhs block w-full" value="5" step="0.1">
+                </div>
+            `;
+            
+            constraintsContainer.appendChild(newConstraint);
+            nextConstraintId++;
+        }
+
+        // Initialize chart
+        function initializeChart() {
+            const ctx = document.getElementById('lpChart').getContext('2d');
+            
+            lpChart = new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: []
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            min: 0,
+                            max: 10,
+                            title: {
+                                display: true,
+                                text: 'X',
+                                font: {
+                                    size: 16,
+                                    weight: 'bold'
+                                }
+                            },
+                            ticks: {
+                                stepSize: 1
+                            }
+                        },
+                        y: {
+                            min: 0,
+                            max: 10,
+                            title: {
+                                display: true,
+                                text: 'Y',
+                                font: {
+                                    size: 16,
+                                    weight: 'bold'
+                                }
+                            },
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `(${context.parsed.x.toFixed(4)}, ${context.parsed.y.toFixed(4)})`;
+                                }
+                            }
+                        },
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 20,
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update chart dimensions based on user input
+        function updateChart() {
+            const xMax = parseFloat(document.getElementById('xAxisMax').value);
+            const yMax = parseFloat(document.getElementById('yAxisMax').value);
+            const xStep = parseFloat(document.getElementById('xAxisStep').value);
+            const yStep = parseFloat(document.getElementById('yAxisStep').value);
+            
+            lpChart.options.scales.x.max = xMax;
+            lpChart.options.scales.y.max = yMax;
+            lpChart.options.scales.x.ticks.stepSize = xStep;
+            lpChart.options.scales.y.ticks.stepSize = yStep;
+            
+            lpChart.update();
+        }
+
+        // Collect all constraints
+        function collectConstraints() {
+            const constraints = [];
+            const constraintElements = document.querySelectorAll('.constraint-container');
+            
+            constraintElements.forEach((element, index) => {
+                const xCoeff = parseFloat(element.querySelector('.constraint-x').value);
+                const yCoeff = parseFloat(element.querySelector('.constraint-y').value);
+                const type = element.querySelector('.constraint-type').value;
+                const rhs = parseFloat(element.querySelector('.constraint-rhs').value);
+                
+                constraints.push({
+                    id: index + 1,
+                    xCoeff,
+                    yCoeff,
+                    type,
+                    rhs
+                });
+            });
+            
+            return constraints;
+        }
+
+        // Add non-negativity constraints (x >= 0, y >= 0)
+        function addNonNegativityConstraints(constraints) {
+            constraints.push({
+                id: constraints.length + 1,
+                xCoeff: 1,
+                yCoeff: 0,
+                type: ">=",
+                rhs: 0,
+                isNonNeg: true
+            });
+            
+            constraints.push({
+                id: constraints.length + 1,
+                xCoeff: 0,
+                yCoeff: 1,
+                type: ">=",
+                rhs: 0,
+                isNonNeg: true
+            });
+            
+            return constraints;
+        }
+
+        // Calculate intersection points of constraint lines
+        function calculateIntersectionPoints(constraints) {
+            const points = [];
+            
+            // Add origin point
+            points.push({ x: 0, y: 0 });
+            
+            // Intersections with axes
+            constraints.forEach(constraint => {
+                // X-axis intersection (y = 0)
+                if (constraint.xCoeff !== 0) {
+                    const x = constraint.rhs / constraint.xCoeff;
+                    if (x >= 0) {
+                        points.push({ x, y: 0 });
+                    }
+                }
+                
+                // Y-axis intersection (x = 0)
+                if (constraint.yCoeff !== 0) {
+                    const y = constraint.rhs / constraint.yCoeff;
+                    if (y >= 0) {
+                        points.push({ x: 0, y });
+                    }
+                }
+            });
+            
+            // Intersections between constraints
+            for (let i = 0; i < constraints.length; i++) {
+                for (let j = i + 1; j < constraints.length; j++) {
+                    const c1 = constraints[i];
+                    const c2 = constraints[j];
+                    
+                    // Calculate determinant
+                    const det = c1.xCoeff * c2.yCoeff - c1.yCoeff * c2.xCoeff;
+                    
+                    // If lines are not parallel
+                    if (Math.abs(det) > 1e-10) {
+                        const x = (c1.rhs * c2.yCoeff - c2.rhs * c1.yCoeff) / det;
+                        const y = (c2.rhs * c1.xCoeff - c1.rhs * c2.xCoeff) / det;
+                        
+                        // Only add if point is in first quadrant
+                        if (x >= 0 && y >= 0) {
+                            points.push({ x, y });
+                        }
+                    }
+                }
+            }
+            
+            return points;
+        }
+
+        // Check if a point satisfies all constraints
+        function isFeasiblePoint(point, constraints) {
+            return constraints.every(constraint => {
+                const lhs = constraint.xCoeff * point.x + constraint.yCoeff * point.y;
+                
+                switch (constraint.type) {
+                    case "<=": return lhs <= constraint.rhs + 1e-10;
+                    case ">=": return lhs >= constraint.rhs - 1e-10;
+                    case "=": return Math.abs(lhs - constraint.rhs) < 1e-10;
+                    default: return false;
+                }
+            });
+        }
+
+        // Calculate objective value at a point
+        function calculateObjectiveValue(point, objCoeffs, isMax) {
+            const value = objCoeffs.x * point.x + objCoeffs.y * point.y;
+            return isMax ? value : -value;
+        }
+
+        // Find optimal solution from feasible points
+        function findOptimalSolution(feasiblePoints, objCoeffs, isMax) {
+            if (feasiblePoints.length === 0) {
+                return null;
+            }
+            
+            let optimalPoint = feasiblePoints[0];
+            let optimalValue = calculateObjectiveValue(optimalPoint, objCoeffs, isMax);
+            
+            for (let i = 1; i < feasiblePoints.length; i++) {
+                const point = feasiblePoints[i];
+                const value = calculateObjectiveValue(point, objCoeffs, isMax);
+                
+                if (value > optimalValue) {
+                    optimalPoint = point;
+                    optimalValue = value;
+                }
+            }
+            
+            return {
+                point: optimalPoint,
+                value: isMax ? optimalValue : -optimalValue
+            };
+        }
+
+        // Generate points for constraint lines
+        function generateConstraintLinePoints(constraint, xMax, yMax) {
+            const points = [];
+            
+            if (constraint.xCoeff === 0) {
+                // Horizontal line
+                if (constraint.yCoeff !== 0) {
+                    const y = constraint.rhs / constraint.yCoeff;
+                    points.push({ x: 0, y });
+                    points.push({ x: xMax, y });
+                }
+            } else if (constraint.yCoeff === 0) {
+                // Vertical line
+                const x = constraint.rhs / constraint.xCoeff;
+                points.push({ x, y: 0 });
+                points.push({ x, y: yMax });
+            } else {
+                // Calculate points for diagonal lines
+                // y = (rhs - x_coeff * x) / y_coeff
+                
+                // Point at x = 0
+                const y1 = constraint.rhs / constraint.yCoeff;
+                if (y1 >= 0 && y1 <= yMax) {
+                    points.push({ x: 0, y: y1 });
+                }
+                
+                // Point at y = 0
+                const x1 = constraint.rhs / constraint.xCoeff;
+                if (x1 >= 0 && x1 <= xMax) {
+                    points.push({ x: x1, y: 0 });
+                }
+                
+                // Point at x = xMax
+                const y2 = (constraint.rhs - constraint.xCoeff * xMax) / constraint.yCoeff;
+                if (y2 >= 0 && y2 <= yMax) {
+                    points.push({ x: xMax, y: y2 });
+                }
+                
+                // Point at y = yMax
+                const x2 = (constraint.rhs - constraint.yCoeff * yMax) / constraint.xCoeff;
+                if (x2 >= 0 && x2 <= xMax) {
+                    points.push({ x: x2, y: yMax });
+                }
+            }
+            
+            // Sort points for proper line drawing
+            if (points.length >= 2) {
+                points.sort((a, b) => a.x - b.x);
+            }
+            
+            return points;
+        }
+
+        // Generate points for objective function line through optimal point
+        function generateObjectiveLinePoints(objCoeffs, optimalPoint, xMax, yMax) {
+            const points = [];
+            
+            if (objCoeffs.y === 0) {
+                // Vertical line
+                points.push({ x: optimalPoint.x, y: 0 });
+                points.push({ x: optimalPoint.x, y: yMax });
+            } else {
+                // Calculate objective line: c1*x + c2*y = val
+                // y = (val - c1*x) / c2
+                const val = objCoeffs.x * optimalPoint.x + objCoeffs.y * optimalPoint.y;
+                
+                // Point at x = 0
+                const y1 = val / objCoeffs.y;
+                if (y1 >= 0 && y1 <= yMax) {
+                    points.push({ x: 0, y: y1 });
+                }
+                
+                // Point at y = 0
+                const x1 = val / objCoeffs.x;
+                if (x1 >= 0 && x1 <= xMax) {
+                    points.push({ x: x1, y: 0 });
+                }
+                
+                // Point at x = xMax
+                const y2 = (val - objCoeffs.x * xMax) / objCoeffs.y;
+                if (y2 >= 0 && y2 <= yMax) {
+                    points.push({ x: xMax, y: y2 });
+                }
+                
+                // Point at y = yMax
+                const x2 = (val - objCoeffs.y * yMax) / objCoeffs.x;
+                if (x2 >= 0 && x2 <= xMax) {
+                    points.push({ x: x2, y: yMax });
+                }
+                
+                // Sort points for proper line drawing
+                points.sort((a, b) => a.x - b.x);
+            }
+            
+            return points;
+        }
+
+        // Format number for display (4 decimal places for non-integers)
+        function formatNumber(num) {
+            if (Math.abs(num - Math.round(num)) < 1e-10) {
+                return num.toString();
+            } else {
+                return num.toFixed(4);
+            }
+        }
+
+        // Calculate binding status and slack/surplus for each constraint
+        function calculateConstraintStatus(constraints, optimalPoint) {
+            return constraints.map(constraint => {
+                const lhs = constraint.xCoeff * optimalPoint.x + constraint.yCoeff * optimalPoint.y;
+                let status = "";
+                let slackSurplus = 0;
+                
+                switch (constraint.type) {
+                    case "<=":
+                        slackSurplus = constraint.rhs - lhs;
+                        status = Math.abs(slackSurplus) < 1e-10 ? "Binding" : "Not Binding";
+                        break;
+                    case ">=":
+                        slackSurplus = lhs - constraint.rhs;
+                        status = Math.abs(slackSurplus) < 1e-10 ? "Binding" : "Not Binding";
+                        break;
+                    case "=":
+                        slackSurplus = 0;
+                        status = "Binding (Equality)";
+                        break;
+                }
+                
+                return {
+                    ...constraint,
+                    lhs,
+                    status,
+                    slackSurplus
+                };
+            });
+        }
+
+        // Perform sensitivity analysis for objective coefficients
+        function analyzeObjectiveCoefficients(objCoeffs, constraints, optimalPoint, isMax) {
+            // For 2D LP, we need to find the allowable ranges where the current basis remains optimal
+            // This is a simplified approach for 2D problems
+            
+            // Get binding constraints at optimal solution
+            const bindingConstraints = constraints.filter(c => 
+                Math.abs(c.xCoeff * optimalPoint.x + c.yCoeff * optimalPoint.y - c.rhs) < 1e-10
+            );
+            
+            // We need at least 2 binding constraints to form a corner point
+            if (bindingConstraints.length < 2) {
+                return {
+                    x: { current: objCoeffs.x, allowableDecrease: "Unbounded", allowableIncrease: "Unbounded" },
+                    y: { current: objCoeffs.y, allowableDecrease: "Unbounded", allowableIncrease: "Unbounded" }
+                };
+            }
+            
+            // For X coefficient sensitivity
+            const xResult = analyzeCoefficient("x", objCoeffs, constraints, optimalPoint, isMax);
+            
+            // For Y coefficient sensitivity
+            const yResult = analyzeCoefficient("y", objCoeffs, constraints, optimalPoint, isMax);
+            
+            return {
+                x: { current: objCoeffs.x, ...xResult },
+                y: { current: objCoeffs.y, ...yResult }
+            };
+        }
+
+        // Analyze coefficient sensitivity for a specific variable
+        function analyzeCoefficient(variable, objCoeffs, constraints, optimalPoint, isMax) {
+            // Create a deep copy of objective coefficients
+            const originalObjCoeffs = { ...objCoeffs };
+            const delta = Math.max(1, Math.abs(objCoeffs[variable]) * 0.1); // Step size for testing
+            
+            // Test decreasing the coefficient
+            let decreaseLimit = -Infinity;
+            let modifiedObjCoeffs = { ...objCoeffs };
+            let step = delta;
+            
+            while (true) {
+                modifiedObjCoeffs[variable] = originalObjCoeffs[variable] - step;
+                
+                // Check if optimal point is still optimal with modified coefficients
+                const feasiblePoints = findFeasibleCornerPoints(constraints);
+                const newOptimal = findOptimalSolution(feasiblePoints, modifiedObjCoeffs, isMax);
+                
+                if (!newOptimal || 
+                    Math.abs(newOptimal.point.x - optimalPoint.x) > 1e-10 || 
+                    Math.abs(newOptimal.point.y - optimalPoint.y) > 1e-10) {
+                    decreaseLimit = originalObjCoeffs[variable] - step + delta;
+                    break;
+                }
+                
+                step += delta;
+                if (step > 1000) {
+                    decreaseLimit = "Unbounded";
+                    break;
+                }
+            }
+            
+            // Test increasing the coefficient
+            let increaseLimit = Infinity;
+            modifiedObjCoeffs = { ...objCoeffs };
+            step = delta;
+            
+            while (true) {
+                modifiedObjCoeffs[variable] = originalObjCoeffs[variable] + step;
+                
+                // Check if optimal point is still optimal with modified coefficients
+                const feasiblePoints = findFeasibleCornerPoints(constraints);
+                const newOptimal = findOptimalSolution(feasiblePoints, modifiedObjCoeffs, isMax);
+                
+                if (!newOptimal || 
+                    Math.abs(newOptimal.point.x - optimalPoint.x) > 1e-10 || 
+                    Math.abs(newOptimal.point.y - optimalPoint.y) > 1e-10) {
+                    increaseLimit = originalObjCoeffs[variable] + step - delta;
+                    break;
+                }
+                
+                step += delta;
+                if (step > 1000) {
+                    increaseLimit = "Unbounded";
+                    break;
+                }
+            }
+            
+            return {
+                allowableDecrease: decreaseLimit === -Infinity ? "Unbounded" : 
+                                  originalObjCoeffs[variable] - decreaseLimit,
+                allowableIncrease: increaseLimit === Infinity ? "Unbounded" : 
+                                  increaseLimit - originalObjCoeffs[variable]
+            };
+        }
+
+        // Find all feasible corner points
+        function findFeasibleCornerPoints(constraints) {
+            const intersectionPoints = calculateIntersectionPoints(constraints);
+            return intersectionPoints.filter(point => isFeasiblePoint(point, constraints));
+        }
+
+        // Analyze RHS sensitivity
+        function analyzeRHSSensitivity(constraints, objCoeffs, optimalPoint, isMax) {
+            const results = [];
+            
+            // Skip non-negativity constraints
+            const userConstraints = constraints.filter(c => !c.isNonNeg);
+            
+            for (const constraint of userConstraints) {
+                // Deep copy of constraints for testing
+                const originalRHS = constraint.rhs;
+                const result = {
+                    id: constraint.id,
+                    constraint: `${constraint.xCoeff}x + ${constraint.yCoeff}y ${constraint.type} ${constraint.rhs}`,
+                    currentRHS: originalRHS
+                };
+                
+                // Calculate shadow price
+                const shadowPrice = calculateShadowPrice(constraint, constraints, objCoeffs, optimalPoint, isMax);
+                result.shadowPrice = shadowPrice;
+                
+                // Find RHS ranges
+                const rhsRange = findRHSRange(constraint, constraints, objCoeffs, optimalPoint, isMax);
+                result.allowableDecrease = rhsRange.decrease;
+                result.allowableIncrease = rhsRange.increase;
+                
+                results.push(result);
+            }
+            
+            return results;
+        }
+
+        // Calculate shadow price for a constraint
+        function calculateShadowPrice(targetConstraint, allConstraints, objCoeffs, optimalPoint, isMax) {
+            // For a binding constraint, shadow price is the rate of change of the objective value
+            // with respect to the RHS value
+            const isBinding = Math.abs(targetConstraint.xCoeff * optimalPoint.x + 
+                                      targetConstraint.yCoeff * optimalPoint.y - 
+                                      targetConstraint.rhs) < 1e-10;
+            
+            if (!isBinding) {
+                return 0; // Non-binding constraints have zero shadow price
+            }
+            
+            // We'll use a small perturbation to estimate the shadow price
+            const delta = 0.0001;
+            const modifiedConstraints = allConstraints.map(c => {
+                if (c.id === targetConstraint.id) {
+                    return { ...c, rhs: c.rhs + delta };
+                }
+                return { ...c };
+            });
+            
+            // Solve the perturbed problem
+            const feasiblePoints = findFeasibleCornerPoints(modifiedConstraints);
+            const newOptimal = findOptimalSolution(feasiblePoints, objCoeffs, isMax);
+            
+            // If the problem becomes infeasible
+            if (!newOptimal) {
+                return "N/A";
+            }
+            
+            // Calculate the original objective value
+            const originalValue = isMax ? 
+                objCoeffs.x * optimalPoint.x + objCoeffs.y * optimalPoint.y :
+                -(objCoeffs.x * optimalPoint.x + objCoeffs.y * optimalPoint.y);
+            
+            // Calculate the change in objective value
+            const shadowPrice = (newOptimal.value - originalValue) / delta;
+            
+            return shadowPrice;
+        }
+
+        // Find the allowable range for RHS of a constraint
+        function findRHSRange(targetConstraint, allConstraints, objCoeffs, optimalPoint, isMax) {
+            // For non-binding constraints
+            const isBinding = Math.abs(targetConstraint.xCoeff * optimalPoint.x + 
+                                      targetConstraint.yCoeff * optimalPoint.y - 
+                                      targetConstraint.rhs) < 1e-10;
+            
+            if (!isBinding) {
+                return {
+                    decrease: targetConstraint.rhs - (targetConstraint.xCoeff * optimalPoint.x + 
+                                                    targetConstraint.yCoeff * optimalPoint.y),
+                    increase: "Infinity"
+                };
+            }
+            
+            // For binding constraints, find the range by perturbing the RHS
+            // and checking when the basis changes
+            const delta = Math.max(0.1, Math.abs(targetConstraint.rhs) * 0.01);
+            
+            // Test decreasing the RHS
+            let decreaseLimit = 0;
+            let step = delta;
+            
+            while (true) {
+                const modifiedConstraints = allConstraints.map(c => {
+                    if (c.id === targetConstraint.id) {
+                        return { ...c, rhs: c.rhs - step };
+                    }
+                    return { ...c };
+                });
+                
+                const feasiblePoints = findFeasibleCornerPoints(modifiedConstraints);
+                const newOptimal = findOptimalSolution(feasiblePoints, objCoeffs, isMax);
+                
+                // Check if solution is still valid and optimal point hasn't changed significantly
+                if (!newOptimal || 
+                    Math.abs(newOptimal.point.x - optimalPoint.x) > 1e-5 || 
+                    Math.abs(newOptimal.point.y - optimalPoint.y) > 1e-5) {
+                    decreaseLimit = step - delta;
+                    break;
+                }
+                
+                step += delta;
+                if (step > targetConstraint.rhs || step > 1000) {
+                    decreaseLimit = targetConstraint.rhs;
+                    break;
+                }
+            }
+            
+            // Test increasing the RHS
+            let increaseLimit = 0;
+            step = delta;
+            
+            while (true) {
+                const modifiedConstraints = allConstraints.map(c => {
+                    if (c.id === targetConstraint.id) {
+                        return { ...c, rhs: c.rhs + step };
+                    }
+                    return { ...c };
+                });
+                
+                const feasiblePoints = findFeasibleCornerPoints(modifiedConstraints);
+                const newOptimal = findOptimalSolution(feasiblePoints, objCoeffs, isMax);
+                
+                // Check if solution is still valid and optimal point hasn't changed significantly
+                if (!newOptimal || 
+                    Math.abs(newOptimal.point.x - optimalPoint.x) > 1e-5 || 
+                    Math.abs(newOptimal.point.y - optimalPoint.y) > 1e-5) {
+                    increaseLimit = step - delta;
+                    break;
+                }
+                
+                step += delta;
+                if (step > 1000) {
+                    increaseLimit = "Infinity";
+                    break;
+                }
+            }
+            
+            return {
+                decrease: decreaseLimit,
+                increase: increaseLimit
+            };
+        }
+
+        // Main function to solve the LP problem
+        function solveLP() {
+            // Clear previous results
+            document.getElementById('results-section').classList.add('hidden');
+            document.getElementById('sensitivity-section').classList.add('hidden');
+            
+            // Get objective function
+            const objectiveType = document.getElementById('objectiveType').value;
+            const objXCoeff = parseFloat(document.getElementById('objectiveX').value);
+            const objYCoeff = parseFloat(document.getElementById('objectiveY').value);
+            
+            // Get constraints (including non-negativity)
+            let constraints = collectConstraints();
+            constraints = addNonNegativityConstraints(constraints);
+            
+            // Find all feasible corner points
+            const intersectionPoints = calculateIntersectionPoints(constraints);
+            const feasiblePoints = intersectionPoints.filter(point => isFeasiblePoint(point, constraints));
+            
+            // Find optimal solution
+            const isMax = objectiveType === 'max';
+            const objCoeffs = { x: objXCoeff, y: objYCoeff };
+            const optimal = findOptimalSolution(feasiblePoints, objCoeffs, isMax);
+            
+            // Update chart
+            updateLPChart(constraints, feasiblePoints, optimal, objCoeffs);
+            
+            // Display results
+            if (optimal) {
+                displayResults(optimal, constraints, objCoeffs, isMax);
+            } else {
+                alert('No feasible solution found. Please check your constraints.');
+            }
+        }
+
+        // Update chart with LP data
+        function updateLPChart(constraints, feasiblePoints, optimal, objCoeffs) {
+            const xMax = parseFloat(document.getElementById('xAxisMax').value);
+            const yMax = parseFloat(document.getElementById('yAxisMax').value);
+            
+            // Clear previous data
+            lpChart.data.datasets = [];
+            
+            // Add constraint lines
+            const userConstraints = constraints.filter(c => !c.isNonNeg);
+            userConstraints.forEach((constraint, index) => {
+                const linePoints = generateConstraintLinePoints(constraint, xMax, yMax);
+                
+                if (linePoints.length >= 2) {
+                    lpChart.data.datasets.push({
+                        label: `Constraint ${index + 1}: ${constraint.xCoeff}x + ${constraint.yCoeff}y ${constraint.type} ${constraint.rhs}`,
+                        data: linePoints,
+                        borderColor: getConstraintColor(index),
+                        backgroundColor: 'transparent',
+                        borderWidth: 2,
+                        pointRadius: 0,
+                        showLine: true,
+                        tension: 0
+                    });
+                }
+            });
+            
+            // Add non-negativity constraint lines
+            lpChart.data.datasets.push({
+                label: 'x ≥ 0',
+                data: [{ x: 0, y: 0 }, { x: 0, y: yMax }],
+                borderColor: 'rgba(0, 0, 0, 0.7)',
+                backgroundColor: 'transparent',
+                borderWidth: 2,
+                pointRadius: 0,
+                showLine: true,
+                tension: 0
+            });
+            
+            lpChart.data.datasets.push({
+                label: 'y ≥ 0',
+                data: [{ x: 0, y: 0 }, { x: xMax, y: 0 }],
+                borderColor: 'rgba(0, 0, 0, 0.7)',
+                backgroundColor: 'transparent',
+                borderWidth: 2,
+                pointRadius: 0,
+                showLine: true,
+                tension: 0
+            });
+            
+            // Add feasible region
+            if (feasiblePoints.length > 0) {
+                // Create a convex hull of feasible points for the feasible region
+                const convexHullPoints = calculateConvexHull(feasiblePoints);
+                
+                lpChart.data.datasets.push({
+                    label: 'Feasible Region',
+                    data: convexHullPoints,
+                    backgroundColor: 'rgba(0, 123, 255, 0.2)',
+                    borderColor: 'rgba(0, 123, 255, 0.5)',
+                    borderWidth: 1,
+                    pointRadius: 0,
+                    fill: true,
+                    showLine: true,
+                    tension: 0
+                });
+            }
+            
+            // Add optimal solution point
+            if (optimal) {
+                lpChart.data.datasets.push({
+                    label: `Optimal Solution (${formatNumber(optimal.point.x)}, ${formatNumber(optimal.point.y)})`,
+                    data: [optimal.point],
+                    backgroundColor: 'rgba(255, 0, 0, 0.7)',
+                    borderColor: 'rgba(255, 0, 0, 1)',
+                    pointRadius: 6,
+                    pointHoverRadius: 8,
+                    showLine: false
+                });
+                
+                // Add objective function line through optimal point
+                const objLinePoints = generateObjectiveLinePoints(objCoeffs, optimal.point, xMax, yMax);
+                
+                lpChart.data.datasets.push({
+                    label: `Objective: ${objCoeffs.x}x + ${objCoeffs.y}y = ${formatNumber(objCoeffs.x * optimal.point.x + objCoeffs.y * optimal.point.y)}`,
+                    data: objLinePoints,
+                    borderColor: 'rgba(255, 0, 0, 0.7)',
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    pointRadius: 0,
+                    showLine: true,
+                    tension: 0
+                });
+            }
+            
+            // Add feasible points
+            lpChart.data.datasets.push({
+                label: 'Feasible Corner Points',
+                data: feasiblePoints,
+                backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                pointRadius: 4,
+                pointHoverRadius: 6,
+                showLine: false
+            });
+            
+            lpChart.update();
+        }
+
+        // Display results in HTML
+        function displayResults(optimal, constraints, objCoeffs, isMax) {
+            // Show result sections
+            document.getElementById('results-section').classList.remove('hidden');
+            document.getElementById('sensitivity-section').classList.remove('hidden');
+            
+            // Optimal solution
+            const objType = isMax ? 'Maximize' : 'Minimize';
+            const objectiveValue = objCoeffs.x * optimal.point.x + objCoeffs.y * optimal.point.y;
+            
+            document.getElementById('optimal-solution-content').innerHTML = `
+                <p><strong>${objType} Z = ${objCoeffs.x}x + ${objCoeffs.y}y</strong></p>
+                <p>Optimal Solution: x = ${formatNumber(optimal.point.x)}, y = ${formatNumber(optimal.point.y)}</p>
+                <p>Objective Value: Z = ${formatNumber(objectiveValue)}</p>
+            `;
+            
+            // Constraints table
+            const constraintStatus = calculateConstraintStatus(
+                constraints.filter(c => !c.isNonNeg), 
+                optimal.point
+            );
+            
+            const constraintTableBody = document.getElementById('constraints-table-body');
+            constraintTableBody.innerHTML = '';
+            
+            constraintStatus.forEach(constraint => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${constraint.xCoeff}x + ${constraint.yCoeff}y ${constraint.type} ${constraint.rhs}</td>
+                    <td>${formatNumber(constraint.lhs)}</td>
+                    <td>${constraint.type}</td>
+                    <td>${formatNumber(constraint.rhs)}</td>
+                    <td>${formatNumber(constraint.slackSurplus)}</td>
+                    <td>${constraint.status}</td>
+                `;
+                constraintTableBody.appendChild(row);
+            });
+            
+            // Objective coefficients sensitivity
+            const objSensitivity = analyzeObjectiveCoefficients(
+                objCoeffs, 
+                constraints, 
+                optimal.point, 
+                isMax
+            );
+            
+            const objSensitivityBody = document.getElementById('obj-sensitivity-body');
+            objSensitivityBody.innerHTML = '';
+            
+            // X coefficient
+            const xRow = document.createElement('tr');
+            xRow.innerHTML = `
+                <td>X</td>
+                <td>${formatNumber(objSensitivity.x.current)}</td>
+                <td>${typeof objSensitivity.x.allowableDecrease === 'number' ? formatNumber(objSensitivity.x.allowableDecrease) : objSensitivity.x.allowableDecrease}</td>
+                <td>${typeof objSensitivity.x.allowableIncrease === 'number' ? formatNumber(objSensitivity.x.allowableIncrease) : objSensitivity.x.allowableIncrease}</td>
+            `;
+            objSensitivityBody.appendChild(xRow);
+            
+            // Y coefficient
+            const yRow = document.createElement('tr');
+            yRow.innerHTML = `
+                <td>Y</td>
+                <td>${formatNumber(objSensitivity.y.current)}</td>
+                <td>${typeof objSensitivity.y.allowableDecrease === 'number' ? formatNumber(objSensitivity.y.allowableDecrease) : objSensitivity.y.allowableDecrease}</td>
+                <td>${typeof objSensitivity.y.allowableIncrease === 'number' ? formatNumber(objSensitivity.y.allowableIncrease) : objSensitivity.y.allowableIncrease}</td>
+            `;
+            objSensitivityBody.appendChild(yRow);
+            
+            // RHS sensitivity
+            const rhsSensitivity = analyzeRHSSensitivity(
+                constraints, 
+                objCoeffs, 
+                optimal.point, 
+                isMax
+            );
+            
+            const rhsSensitivityBody = document.getElementById('rhs-sensitivity-body');
+            rhsSensitivityBody.innerHTML = '';
+            
+            rhsSensitivity.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.constraint}</td>
+                    <td>${formatNumber(item.currentRHS)}</td>
+                    <td>${typeof item.shadowPrice === 'number' ? formatNumber(item.shadowPrice) : item.shadowPrice}</td>
+                    <td>${typeof item.allowableDecrease === 'number' ? formatNumber(item.allowableDecrease) : item.allowableDecrease}</td>
+                    <td>${typeof item.allowableIncrease === 'number' ? formatNumber(item.allowableIncrease) : item.allowableIncrease}</td>
+                `;
+                rhsSensitivityBody.appendChild(row);
+            });
+        }
+
+        // Get color for constraint lines
+        function getConstraintColor(index) {
+            const colors = [
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(46, 204, 113, 1)',
+                'rgba(155, 89, 182, 1)',
+                'rgba(241, 196, 15, 1)',
+                'rgba(231, 76, 60, 1)',
+                'rgba(52, 152, 219, 1)'
+            ];
+            
+            return colors[index % colors.length];
+        }
+
+        // Calculate convex hull of points (Graham scan algorithm)
+        function calculateConvexHull(points) {
+            // If fewer than 3 points, return the points as is
+            if (points.length < 3) {
+                return points;
+            }
+            
+            // Find the point with the lowest y-coordinate
+            let pivot = points[0];
+            for (let i = 1; i < points.length; i++) {
+                if (points[i].y < pivot.y || (points[i].y === pivot.y && points[i].x < pivot.x)) {
+                    pivot = points[i];
+                }
+            }
+            
+            // Sort points by polar angle with respect to pivot
+            const sortedPoints = [...points];
+            sortedPoints.sort((a, b) => {
+                if (a === pivot) return -1;
+                if (b === pivot) return 1;
+                
+                const angleA = Math.atan2(a.y - pivot.y, a.x - pivot.x);
+                const angleB = Math.atan2(b.y - pivot.y, b.x - pivot.x);
+                
+                if (angleA === angleB) {
+                    // If same angle, sort by distance to pivot
+                    const distA = Math.sqrt(Math.pow(a.x - pivot.x, 2) + Math.pow(a.y - pivot.y, 2));
+                    const distB = Math.sqrt(Math.pow(b.x - pivot.x, 2) + Math.pow(b.y - pivot.y, 2));
+                    return distA - distB;
+                }
+                
+                return angleA - angleB;
+            });
+            
+            // Build hull
+            const hull = [sortedPoints[0], sortedPoints[1]];
+            
+            for (let i = 2; i < sortedPoints.length; i++) {
+                while (hull.length > 1 && !isLeftTurn(hull[hull.length - 2], hull[hull.length - 1], sortedPoints[i])) {
+                    hull.pop();
+                }
+                hull.push(sortedPoints[i]);
+            }
+            
+            return hull;
+        }
+
+        // Check if three points make a left turn
+        function isLeftTurn(p1, p2, p3) {
+            return ((p2.x - p1.x) * (p3.y - p1.y) - (p2.y - p1.y) * (p3.x - p1.x)) > 0;
+        }
+    </script>
+</body>
+</html>
