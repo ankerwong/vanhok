@@ -1,321 +1,321 @@
 <!DOCTYPE html>
-<html lang="zh-HK">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>香港政府資助專上課程學額和資助申請資格新規定</title>
+    <title>香港本地生定义新规定深度分析</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-            line-height: 1.6;
-        }
-        .section-container {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 2rem 0;
-        }
         .gradient-bg {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
         .card-shadow {
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
-        .icon-circle {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
+        @media print {
+            body { margin: 0; padding: 0; }
+            .no-print { display: none; }
         }
+        .transition-all { transition: all 0.3s ease; }
+        .chart-container { height: 300px !important; }
     </style>
 </head>
-<body class="bg-gray-50">
-    
-    <!-- 標題頁面 -->
-    <div class="section-container gradient-bg">
-        <div class="container mx-auto px-6 text-center text-white">
-            <div class="icon-circle mx-auto mb-8">
-                <i class="fas fa-graduation-cap"></i>
-            </div>
-            <h1 class="text-5xl font-bold mb-6">香港政府資助專上課程</h1>
-            <h2 class="text-4xl font-semibold mb-8">學額和資助申請資格新規定</h2>
-            <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-6 inline-block">
-                <p class="text-xl mb-2">
-                    <i class="fas fa-calendar-alt mr-3"></i>
-                    發布日期：2025年7月31日
-                </p>
-                <p class="text-xl">
-                    <i class="fas fa-clock mr-3"></i>
-                    實施時間：2027/28學年起
-                </p>
-            </div>
+<body class="bg-gray-50 text-gray-800">
+    <!-- 语言切换按钮 -->
+    <div class="fixed top-4 right-4 z-50 no-print">
+        <div class="bg-white rounded-lg shadow-lg p-2">
+            <button onclick="switchLanguage('zh-cn')" class="lang-btn px-3 py-1 m-1 rounded bg-blue-500 text-white text-sm">简体</button>
+            <button onclick="switchLanguage('zh-tw')" class="lang-btn px-3 py-1 m-1 rounded bg-gray-300 text-gray-700 text-sm">繁體</button>
+            <button onclick="switchLanguage('en')" class="lang-btn px-3 py-1 m-1 rounded bg-gray-300 text-gray-700 text-sm">EN</button>
         </div>
     </div>
 
-    <!-- 政策背景 -->
-    <div class="section-container bg-white">
-        <div class="container mx-auto px-6">
-            <div class="max-w-4xl mx-auto">
-                <div class="text-center mb-12">
-                    <div class="icon-circle mx-auto mb-6">
-                        <i class="fas fa-info-circle"></i>
-                    </div>
-                    <h2 class="text-4xl font-bold text-gray-800 mb-4">政策背景</h2>
+    <!-- 封面页 -->
+    <div class="gradient-bg min-h-screen flex items-center justify-center text-white p-8">
+        <div class="text-center max-w-4xl">
+            <div class="mb-8">
+                <i class="fas fa-graduation-cap text-6xl mb-4"></i>
+            </div>
+            <h1 class="text-5xl font-bold mb-6" data-zh-cn="香港本地生定义新规定" data-zh-tw="香港本地生定義新規定" data-en="New Regulations on Hong Kong Local Student Definition">香港本地生定义新规定</h1>
+            <h2 class="text-2xl mb-4" data-zh-cn="深度分析与影响评估" data-zh-tw="深度分析與影響評估" data-en="In-depth Analysis and Impact Assessment">深度分析与影响评估</h2>
+            <div class="text-lg opacity-90" data-zh-cn="基于2025年7月31日香港政府最新政策公布" data-zh-tw="基於2025年7月31日香港政府最新政策公佈" data-en="Based on Hong Kong Government's Latest Policy Announcement on July 31, 2025">基于2025年7月31日香港政府最新政策公布</div>
+            <div class="mt-8 text-sm opacity-75" data-zh-cn="适用于2027/28学年及以后 | 申请周期于2026年10月开始" data-zh-tw="適用於2027/28學年及以後 | 申請週期於2026年10月開始" data-en="Applicable from 2027/28 academic year | Application cycle starts October 2026">适用于2027/28学年及以后 | 申请周期于2026年10月开始</div>
+        </div>
+    </div>
+
+    <!-- 政策背景与争议分析 -->
+    <div class="bg-white p-8">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-6 text-center" data-zh-cn="政策背景：遏制"考试移民"争议" data-zh-tw="政策背景：遏制「考試移民」爭議" data-en="Policy Background: Addressing 'Exam Migration' Controversy">政策背景：遏制"考试移民"争议</h2>
+            
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+                <div class="card-shadow bg-red-50 p-6 rounded-lg">
+                    <i class="fas fa-exclamation-triangle text-red-500 text-2xl mb-3"></i>
+                    <h3 class="font-bold mb-3" data-zh-cn="争议焦点" data-zh-tw="爭議焦點" data-en="Key Issues">争议焦点</h3>
+                    <p class="text-sm" data-zh-cn="部分透过高才通等人才计划来港的受养人子女，在不曾到港学习或生活的情况下，却能以本地生身份申请教资会资助大学学位，享受学费资助。" data-zh-tw="部分透過高才通等人才計劃來港的受養人子女，在不曾到港學習或生活的情況下，卻能以本地生身份申請教資會資助大學學位，享受學費資助。" data-en="Some dependent children under talent schemes can apply for UGC-funded university places as local students without actually living or studying in Hong Kong.">部分透过高才通等人才计划来港的受养人子女，在不曾到港学习或生活的情况下，却能以本地生身份申请教资会资助大学学位，享受学费资助。</p>
                 </div>
                 
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div class="bg-blue-50 p-8 rounded-lg card-shadow">
-                        <h3 class="text-2xl font-semibold text-blue-800 mb-4">
-                            <i class="fas fa-exclamation-triangle mr-3"></i>現況問題
-                        </h3>
-                        <ul class="space-y-3 text-lg text-gray-700">
-                            <li class="flex items-start">
-                                <i class="fas fa-dot-circle text-blue-600 mr-3 mt-1"></i>
-                                部分學生並無來港居住，卻以本地學生身分申請政府資助學額
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-dot-circle text-blue-600 mr-3 mt-1"></i>
-                                影響本地學生升讀大學的機會
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-dot-circle text-blue-600 mr-3 mt-1"></i>
-                                公帑運用準確性受到關注
-                            </li>
-                        </ul>
+                <div class="card-shadow bg-yellow-50 p-6 rounded-lg">
+                    <i class="fas fa-chart-line text-yellow-500 text-2xl mb-3"></i>
+                    <h3 class="font-bold mb-3" data-zh-cn="数据增长" data-zh-tw="數據增長" data-en="Data Growth">数据增长</h3>
+                    <p class="text-sm" data-zh-cn="2022-2025年通过联招获得教资会资助学位的受养人数目：2022-23年62人，2023-24年68人，2024-25年185人，增长趋势明显。" data-zh-tw="2022-2025年通過聯招獲得教資會資助學位的受養人數目：2022-23年62人，2023-24年68人，2024-25年185人，增長趨勢明顯。" data-en="Number of dependents admitted through JUPAS: 2022-23: 62, 2023-24: 68, 2024-25: 185, showing significant growth.">2022-2025年通过联招获得教资会资助学位的受养人数目：2022-23年62人，2023-24年68人，2024-25年185人，增长趋势明显。</p>
+                </div>
+                
+                <div class="card-shadow bg-blue-50 p-6 rounded-lg">
+                    <i class="fas fa-users text-blue-500 text-2xl mb-3"></i>
+                    <h3 class="font-bold mb-3" data-zh-cn="人才规模" data-zh-tw="人才規模" data-en="Talent Scale">人才规模</h3>
+                    <p class="text-sm" data-zh-cn="截至2025年2月底，各项人才入境计划共收到超过45万宗申请，29万宗获批，约19.6万名人才抵港，18岁以下受养子女约13.2万人。" data-zh-tw="截至2025年2月底，各項人才入境計劃共收到超過45萬宗申請，29萬宗獲批，約19.6萬名人才抵港，18歲以下受養子女約13.2萬人。" data-en="As of February 2025, talent schemes received 450,000+ applications, 290,000 approved, 196,000 talents arrived, with 132,000 dependent children under 18.">截至2025年2月底，各项人才入境计划共收到超过45万宗申请，29万宗获批，约19.6万名人才抵港，18岁以下受养子女约13.2万人。</p>
+                </div>
+            </div>
+
+            <!-- 教育局长蔡若莲立法会发言摘要 -->
+            <div class="card-shadow bg-green-50 p-6 rounded-lg mb-8">
+                <h3 class="font-bold mb-4 text-green-700" data-zh-cn="🎯 教育局长蔡若莲立法会发言要点（2025年3月19日）" data-zh-tw="🎯 教育局長蔡若蓮立法會發言要點（2025年3月19日）" data-en="🎯 Key Points from Secretary Christine Choi's LegCo Speech (March 19, 2025)">🎯 教育局长蔡若莲立法会发言要点（2025年3月19日）</h3>
+                <div class="grid md:grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <strong data-zh-cn="检视进展：" data-zh-tw="檢視進展：" data-en="Review Progress:">检视进展：</strong>
+                        <span data-zh-cn="「就检视『本地学生』定义的工作，目前进展顺利。我们分别与不同持份者见面，聆听意见。」" data-zh-tw="「就檢視『本地學生』定義的工作，目前進展順利。我們分別與不同持份者見面，聆聽意見。」" data-en="'The review of local student definition is progressing smoothly. We have met with different stakeholders to listen to their views.'">「就检视『本地学生』定义的工作，目前进展顺利。我们分别与不同持份者见面，聆听意见。」</span>
                     </div>
-                    
-                    <div class="bg-green-50 p-8 rounded-lg card-shadow">
-                        <h3 class="text-2xl font-semibold text-green-800 mb-4">
-                            <i class="fas fa-target mr-3"></i>政策目標
-                        </h3>
-                        <ul class="space-y-3 text-lg text-gray-700">
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-green-600 mr-3 mt-1"></i>
-                                釐清政府資助專上課程學額申請資格
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-green-600 mr-3 mt-1"></i>
-                                確保公帑用得其所
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-green-600 mr-3 mt-1"></i>
-                                平衡各方利益，照顧真正有意來港發展的家庭
-                            </li>
-                        </ul>
+                    <div>
+                        <strong data-zh-cn="国际参考：" data-zh-tw="國際參考：" data-en="International Reference:">国际参考：</strong>
+                        <span data-zh-cn="「参考包括英国、新加坡等地的政策」，英国要求学生在课程开始前三年内通常居于英国。" data-zh-tw="「參考包括英國、新加坡等地的政策」，英國要求學生在課程開始前三年內通常居於英國。" data-en="'Referencing policies from UK, Singapore and other places', with UK requiring 3-year residency before course commencement.">「参考包括英国、新加坡等地的政策」，英国要求学生在课程开始前三年内通常居于英国。</span>
+                    </div>
+                    <div>
+                        <strong data-zh-cn="居住要求：" data-zh-tw="居住要求：" data-en="Residency Requirement:">居住要求：</strong>
+                        <span data-zh-cn="「考虑有关签证持有人必须于入学前在香港通常居住一段时间，才可以享有本地生学费资助。」" data-zh-tw="「考慮有關簽證持有人必須於入學前在香港通常居住一段時間，才可以享有本地生學費資助。」" data-en="'Considering visa holders must reside in Hong Kong for a period before admission to enjoy local student fee subsidies.'">「考虑有关签证持有人必须于入学前在香港通常居住一段时间，才可以享有本地生学费资助。」</span>
+                    </div>
+                    <div>
+                        <strong data-zh-cn="过渡安排：" data-zh-tw="過渡安排：" data-en="Transitional Arrangements:">过渡安排：</strong>
+                        <span data-zh-cn="「为减少新措施对人才子女的影响，我们会积极考虑设立过渡安排。」" data-zh-tw="「為減少新措施對人才子女的影響，我們會積極考慮設立過渡安排。」" data-en="'To reduce impact on talent children, we will actively consider transitional arrangements.'">「为减少新措施对人才子女的影响，我们会积极考虑设立过渡安排。」</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 第I類別 - 獲資助學費 -->
-    <div class="section-container bg-gradient-to-br from-green-50 to-blue-50">
-        <div class="container mx-auto px-6">
-            <div class="max-w-5xl mx-auto">
-                <div class="text-center mb-12">
-                    <div class="icon-circle mx-auto mb-6" style="background: linear-gradient(135deg, #4ade80 0%, #3b82f6 100%);">
-                        <i class="fas fa-medal"></i>
+    <!-- 新规定详解 -->
+    <div class="bg-gray-100 p-8">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-6 text-center" data-zh-cn="新规定详解：两个学费类别" data-zh-tw="新規定詳解：兩個學費類別" data-en="New Regulations: Two Fee Categories">新规定详解：两个学费类别</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- 第I类别 -->
+                <div class="card-shadow bg-green-50 p-6 rounded-lg border-l-4 border-green-500">
+                    <h3 class="text-xl font-bold mb-4 text-green-700" data-zh-cn="💰 第I类别 - 获资助学费" data-zh-tw="💰 第I類別 - 獲資助學費" data-en="💰 Category I - Subsidized Fees">💰 第I类别 - 获资助学费</h3>
+                    <div class="mb-4">
+                        <div class="text-2xl font-bold text-green-600" data-zh-cn="HK$42,100/年" data-zh-tw="HK$42,100/年" data-en="HK$42,100/year">HK$42,100/年</div>
                     </div>
-                    <h2 class="text-5xl font-bold text-gray-800 mb-4">第I類別</h2>
-                    <p class="text-2xl text-gray-600">獲資助的學費</p>
+                    
+                    <h4 class="font-semibold mb-2" data-zh-cn="符合资格人士：" data-zh-tw="符合資格人士：" data-en="Eligible Persons:">符合资格人士：</h4>
+                    <ul class="text-sm space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span data-zh-cn="香港永久性居民身份证持有人" data-zh-tw="香港永久性居民身份證持有人" data-en="Hong Kong permanent residents">香港永久性居民身份证持有人</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span data-zh-cn="单程证持有人" data-zh-tw="單程證持有人" data-en="One-way permit holders">单程证持有人</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span data-zh-cn="受养人签证持有人（18岁前获签发 + 居港满2年）" data-zh-tw="受養人簽證持有人（18歲前獲簽發 + 居港滿2年）" data-en="Dependent visa holders (obtained before 18 + 2-year HK residency)">受养人签证持有人（18岁前获签发 + 居港满2年）</span>
+                        </li>
+                    </ul>
+
+                    <div class="mt-4 p-3 bg-green-100 rounded">
+                        <h5 class="font-semibold text-green-800" data-zh-cn="居港要求详情：" data-zh-tw="居港要求詳情：" data-en="HK Residency Requirements:">居港要求详情：</h5>
+                        <p class="text-xs mt-1" data-zh-cn="须在课程开课前两年内居住于香港（2027/28学年过渡期为一年）" data-zh-tw="須在課程開課前兩年內居住於香港（2027/28學年過渡期為一年）" data-en="Must reside in HK within 2 years before course commencement (1-year transition for 2027/28)">须在课程开课前两年内居住于香港（2027/28学年过渡期为一年）</p>
+                    </div>
+                </div>
+
+                <!-- 第II类别 -->
+                <div class="card-shadow bg-red-50 p-6 rounded-lg border-l-4 border-red-500">
+                    <h3 class="text-xl font-bold mb-4 text-red-700" data-zh-cn="💸 第II类别 - 不获资助学费" data-zh-tw="💸 第II類別 - 不獲資助學費" data-en="💸 Category II - Non-subsidized Fees">💸 第II类别 - 不获资助学费</h3>
+                    <div class="mb-4">
+                        <div class="text-2xl font-bold text-red-600" data-zh-cn="HK$140k-200k/年" data-zh-tw="HK$140k-200k/年" data-en="HK$140k-200k/year">HK$140k-200k/年</div>
+                        <div class="text-xs opacity-75" data-zh-cn="(与非本地学生学费一致)" data-zh-tw="(與非本地學生學費一致)" data-en="(Same as non-local student fees)">(与非本地学生学费一致)</div>
+                    </div>
+                    
+                    <h4 class="font-semibold mb-2" data-zh-cn="适用人士：" data-zh-tw="適用人士：" data-en="Applicable Persons:">适用人士：</h4>
+                    <ul class="text-sm space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-times text-red-500 mt-1 mr-2"></i>
+                            <span data-zh-cn="不符合居港要求的受养人签证持有人" data-zh-tw="不符合居港要求的受養人簽證持有人" data-en="Dependent visa holders not meeting residency requirements">不符合居港要求的受养人签证持有人</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times text-red-500 mt-1 mr-2"></i>
+                            <span data-zh-cn="全职工作签证持有人" data-zh-tw="全職工作簽證持有人" data-en="Full-time work visa holders">全职工作签证持有人</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times text-red-500 mt-1 mr-2"></i>
+                            <span data-zh-cn="各项入境计划签证持有人（高才通、投资者、二代等）" data-zh-tw="各項入境計劃簽證持有人（高才通、投資者、二代等）" data-en="Various admission scheme visa holders (QMAS, Investors, etc.)">各项入境计划签证持有人（高才通、投资者、二代等）</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times text-red-500 mt-1 mr-2"></i>
+                            <span data-zh-cn="学生签证持有人及其他非本地学生" data-zh-tw="學生簽證持有人及其他非本地學生" data-en="Student visa holders and other non-local students">学生签证持有人及其他非本地学生</span>
+                        </li>
+                    </ul>
+
+                    <div class="mt-4 p-3 bg-red-100 rounded">
+                        <h5 class="font-semibold text-red-800" data-zh-cn="重要影响：" data-zh-tw="重要影響：" data-en="Key Impact:">重要影响：</h5>
+                        <p class="text-xs mt-1" data-zh-cn="学费增加约3-4倍，且无法使用JUPAS系统申请，必须通过Non-JUPAS途径" data-zh-tw="學費增加約3-4倍，且無法使用JUPAS系統申請，必須通過Non-JUPAS途徑" data-en="Fees increase 3-4 times, cannot use JUPAS, must apply via Non-JUPAS route">学费增加约3-4倍，且无法使用JUPAS系统申请，必须通过Non-JUPAS途径</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JUPAS vs Non-JUPAS 申请差异分析 -->
+    <div class="bg-white p-8">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-6 text-center" data-zh-cn="🎯 JUPAS vs Non-JUPAS：申请难度差异分析" data-zh-tw="🎯 JUPAS vs Non-JUPAS：申請難度差異分析" data-en="🎯 JUPAS vs Non-JUPAS: Application Difficulty Analysis">🎯 JUPAS vs Non-JUPAS：申请难度差异分析</h2>
+            
+            <!-- 图表显示录取数据对比 -->
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+                <div class="card-shadow p-6 rounded-lg">
+                    <h3 class="font-bold mb-4" data-zh-cn="本地生 vs 非本地生录取率对比" data-zh-tw="本地生 vs 非本地生錄取率對比" data-en="Local vs Non-local Student Admission Rate Comparison">本地生 vs 非本地生录取率对比</h3>
+                    <div class="chart-container">
+                        <canvas id="admissionChart"></canvas>
+                    </div>
                 </div>
                 
-                <div class="bg-white p-10 rounded-2xl card-shadow">
-                    <h3 class="text-3xl font-semibold text-center mb-8 text-green-700">符合資格人士</h3>
+                <div class="card-shadow p-6 rounded-lg">
+                    <h3 class="font-bold mb-4" data-zh-cn="学费对比" data-zh-tw="學費對比" data-en="Fee Comparison">学费对比</h3>
+                    <div class="chart-container">
+                        <canvas id="feeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 详细对比表格 -->
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse border border-gray-300 text-sm">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="border border-gray-300 p-3" data-zh-cn="申请途径" data-zh-tw="申請途徑" data-en="Application Route">申请途径</th>
+                            <th class="border border-gray-300 p-3" data-zh-cn="适用学生" data-zh-tw="適用學生" data-en="Applicable Students">适用学生</th>
+                            <th class="border border-gray-300 p-3" data-zh-cn="录取机制" data-zh-tw="錄取機制" data-en="Admission Mechanism">录取机制</th>
+                            <th class="border border-gray-300 p-3" data-zh-cn="录取难度" data-zh-tw="錄取難度" data-en="Admission Difficulty">录取难度</th>
+                            <th class="border border-gray-300 p-3" data-zh-cn="学费水平" data-zh-tw="學費水平" data-en="Fee Level">学费水平</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bg-green-50">
+                            <td class="border border-gray-300 p-3 font-semibold">JUPAS<br>(联招)</td>
+                            <td class="border border-gray-300 p-3">
+                                <span data-zh-cn="第I类别本地生" data-zh-tw="第I類別本地生" data-en="Category I Local Students">第I类别本地生</span><br>
+                                <small data-zh-cn="(含符合居港要求的受养人)" data-zh-tw="(含符合居港要求的受養人)" data-en="(including qualifying dependents)">(含符合居港要求的受养人)</small>
+                            </td>
+                            <td class="border border-gray-300 p-3">
+                                <span data-zh-cn="志愿填报制，按分数排序录取" data-zh-tw="志願填報制，按分數排序錄取" data-en="Preference system, rank by scores">志愿填报制，按分数排序录取</span><br>
+                                <small data-zh-cn="约75%学位预留给本地生" data-zh-tw="約75%學位預留給本地生" data-en="~75% places reserved for locals">约75%学位预留给本地生</small>
+                            </td>
+                            <td class="border border-gray-300 p-3 text-green-600 font-semibold">
+                                <span data-zh-cn="较低" data-zh-tw="較低" data-en="Lower">较低</span><br>
+                                <small data-zh-cn="2024年港八大录取率38.2%" data-zh-tw="2024年港八大錄取率38.2%" data-en="2024 Big 8 admission rate: 38.2%">2024年港八大录取率38.2%</small>
+                            </td>
+                            <td class="border border-gray-300 p-3 text-green-600 font-semibold">HK$42,100</td>
+                        </tr>
+                        <tr class="bg-red-50">
+                            <td class="border border-gray-300 p-3 font-semibold">Non-JUPAS<br>(非联招)</td>
+                            <td class="border border-gray-300 p-3">
+                                <span data-zh-cn="第II类别学生" data-zh-tw="第II類別學生" data-en="Category II Students">第II类别学生</span><br>
+                                <small data-zh-cn="(工作签证、入境计划等)" data-zh-tw="(工作簽證、入境計劃等)" data-en="(work visas, admission schemes, etc.)">(工作签证、入境计划等)</small>
+                            </td>
+                            <td class="border border-gray-300 p-3">
+                                <span data-zh-cn="直接申请，需文书+面试" data-zh-tw="直接申請，需文書+面試" data-en="Direct application, requires essays + interviews">直接申请，需文书+面试</span><br>
+                                <small data-zh-cn="竞争剩余25%非本地生学位" data-zh-tw="競爭剩餘25%非本地生學位" data-en="Compete for remaining 25% non-local places">竞争剩余25%非本地生学位</small>
+                            </td>
+                            <td class="border border-gray-300 p-3 text-red-600 font-semibold">
+                                <span data-zh-cn="较高" data-zh-tw="較高" data-en="Higher">较高</span><br>
+                                <small data-zh-cn="录取分数一般高3-5分" data-zh-tw="錄取分數一般高3-5分" data-en="Admission scores typically 3-5 points higher">录取分数一般高3-5分</small>
+                            </td>
+                            <td class="border border-gray-300 p-3 text-red-600 font-semibold">HK$140k-200k</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 具体大学录取分数对比实例 -->
+            <div class="mt-8 card-shadow bg-blue-50 p-6 rounded-lg">
+                <h3 class="font-bold mb-4" data-zh-cn="📊 2024年港八大录取分数差异实例" data-zh-tw="📊 2024年港八大錄取分數差異實例" data-en="📊 2024 Big 8 Universities Admission Score Differences">📊 2024年港八大录取分数差异实例</h3>
+                <div class="grid md:grid-cols-3 gap-4 text-sm">
+                    <div class="bg-white p-4 rounded">
+                        <h4 class="font-semibold text-blue-700" data-zh-cn="香港大学" data-zh-tw="香港大學" data-en="University of Hong Kong">香港大学</h4>
+                        <p><strong data-zh-cn="本地生JUPAS:" data-zh-tw="本地生JUPAS:" data-en="Local (JUPAS):">本地生JUPAS:</strong> <span data-zh-cn="约25-30分" data-zh-tw="約25-30分" data-en="~25-30 points">约25-30分</span></p>
+                        <p><strong data-zh-cn="非本地生:" data-zh-tw="非本地生:" data-en="Non-local:">非本地生:</strong> <span data-zh-cn="约30-35分" data-zh-tw="約30-35分" data-en="~30-35 points">约30-35分</span></p>
+                    </div>
+                    <div class="bg-white p-4 rounded">
+                        <h4 class="font-semibold text-blue-700" data-zh-cn="香港中文大学" data-zh-tw="香港中文大學" data-en="Chinese University of Hong Kong">香港中文大学</h4>
+                        <p><strong data-zh-cn="本地生JUPAS:" data-zh-tw="本地生JUPAS:" data-en="Local (JUPAS):">本地生JUPAS:</strong> <span data-zh-cn="约22-28分" data-zh-tw="約22-28分" data-en="~22-28 points">约22-28分</span></p>
+                        <p><strong data-zh-cn="非本地生:" data-zh-tw="非本地生:" data-en="Non-local:">非本地生:</strong> <span data-zh-cn="约27-32分" data-zh-tw="約27-32分" data-en="~27-32 points">约27-32分</span></p>
+                    </div>
+                    <div class="bg-white p-4 rounded">
+                        <h4 class="font-semibold text-blue-700" data-zh-cn="香港科技大学" data-zh-tw="香港科技大學" data-en="Hong Kong University of Science and Technology">香港科技大学</h4>
+                        <p><strong data-zh-cn="本地生JUPAS:" data-zh-tw="本地生JUPAS:" data-en="Local (JUPAS):">本地生JUPAS:</strong> <span data-zh-cn="约24-29分" data-zh-tw="約24-29分" data-en="~24-29 points">约24-29分</span></p>
+                        <p><strong data-zh-cn="非本地生:" data-zh-tw="非本地生:" data-en="Non-local:">非本地生:</strong> <span data-zh-cn="约29-34分" data-zh-tw="約29-34分" data-en="~29-34 points">约29-34分</span></p>
+                    </div>
+                </div>
+                <p class="text-xs mt-4 opacity-75" data-zh-cn="*DSE满分为35分(5科x7分)，以上为大致参考分数，实际录取分数因专业而异" data-zh-tw="*DSE滿分為35分(5科x7分)，以上為大致參考分數，實際錄取分數因專業而異" data-en="*DSE maximum is 35 points (5 subjects x 7 points), above are reference scores, actual scores vary by program">*DSE满分为35分(5科x7分)，以上为大致参考分数，实际录取分数因专业而异</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 政策影响深度分析 -->
+    <div class="bg-gray-100 p-8">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-6 text-center" data-zh-cn="🔍 政策影响深度分析" data-zh-tw="🔍 政策影響深度分析" data-en="🔍 In-depth Policy Impact Analysis">🔍 政策影响深度分析</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- 对不同群体的影响 -->
+                <div class="card-shadow bg-white p-6 rounded-lg">
+                    <h3 class="font-bold mb-4" data-zh-cn="对不同群体的影响" data-zh-tw="對不同群體的影響" data-en="Impact on Different Groups">对不同群体的影响</h3>
                     
-                    <div class="grid md:grid-cols-3 gap-6 mb-8">
-                        <div class="text-center p-6 bg-green-50 rounded-lg">
-                            <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <i class="fas fa-id-card text-white text-2xl"></i>
-                            </div>
-                            <h4 class="text-xl font-semibold mb-3">永久居民</h4>
-                            <p class="text-gray-700">香港永久性居民身份證或享有香港入境權/居留權文件持有人</p>
+                    <div class="space-y-4">
+                        <div class="border-l-4 border-green-500 pl-4">
+                            <h4 class="font-semibold text-green-700" data-zh-cn="有利群体：" data-zh-tw="有利群體：" data-en="Beneficiaries:">有利群体：</h4>
+                            <ul class="text-sm list-disc list-inside space-y-1">
+                                <li data-zh-cn="香港永久居民及其子女" data-zh-tw="香港永久居民及其子女" data-en="Hong Kong permanent residents and their children">香港永久居民及其子女</li>
+                                <li data-zh-cn="已在港居住满足要求的受养人子女" data-zh-tw="已在港居住滿足要求的受養人子女" data-en="Dependent children meeting residency requirements">已在港居住满足要求的受养人子女</li>
+                                <li data-zh-cn="减少"考试移民"现象，保障本地生权益" data-zh-tw="減少「考試移民」現象，保障本地生權益" data-en="Reduced 'exam migration', protecting local student interests">减少"考试移民"现象，保障本地生权益</li>
+                            </ul>
                         </div>
                         
-                        <div class="text-center p-6 bg-blue-50 rounded-lg">
-                            <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <i class="fas fa-passport text-white text-2xl"></i>
-                            </div>
-                            <h4 class="text-xl font-semibold mb-3">單程證</h4>
-                            <p class="text-gray-700">持有單程證人士</p>
+                        <div class="border-l-4 border-red-500 pl-4">
+                            <h4 class="font-semibold text-red-700" data-zh-cn="受冲击群体：" data-zh-tw="受衝擊群體：" data-en="Impacted Groups:">受冲击群体：</h4>
+                            <ul class="text-sm list-disc list-inside space-y-1">
+                                <li data-zh-cn="高才通等人才计划参与者子女" data-zh-tw="高才通等人才計劃參與者子女" data-en="Children of QMAS and other talent scheme participants">高才通等人才计划参与者子女</li>
+                                <li data-zh-cn="工作签证持有人子女" data-zh-tw="工作簽證持有人子女" data-en="Children of work visa holders">工作签证持有人子女</li>
+                                <li data-zh-cn="未满足居港要求的新移民家庭" data-zh-tw="未滿足居港要求的新移民家庭" data-en="New immigrant families not meeting residency requirements">未满足居港要求的新移民家庭</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 申请难度变化预测 -->
+                <div class="card-shadow bg-white p-6 rounded-lg">
+                    <h3 class="font-bold mb-4" data-zh-cn="申请难度变化预测" data-zh-tw="申請難度變化預測" data-en="Predicted Application Difficulty Changes">申请难度变化预测</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="bg-red-50 p-4 rounded">
+                            <h4 class="font-semibold text-red-700 mb-2" data-zh-cn="第II类别学生面临的挑战：" data-zh-tw="第II類別學生面臨的挑戰：" data-en="Challenges for Category II Students:">第II类别学生面临的挑战：</h4>
+                            <ul class="text-sm space-y-1">
+                                <li><strong data-zh-cn="无法使用JUPAS：" data-zh-tw="無法使用JUPAS：" data-en="Cannot use JUPAS:">无法使用JUPAS：</strong> <span data-zh-cn="失去志愿填报优势，必须逐个大学申请" data-zh-tw="失去志願填報優勢，必須逐個大學申請" data-en="Lose preference system advantage, must apply to each university individually">失去志愿填报优势，必须逐个大学申请</span></li>
+                                <li><strong data-zh-cn="录取标准更高：" data-zh-tw="錄取標準更高：" data-en="Higher admission standards:">录取标准更高：</strong> <span data-zh-cn="需要更高的DSE分数，额外的文书和面试" data-zh-tw="需要更高的DSE分數，額外的文書和面試" data-en="Require higher DSE scores, additional essays and interviews">需要更高的DSE分数，额外的文书和面试</span></li>
+                                <li><strong data-zh-cn="学位竞争激烈：" data-zh-tw="學位競爭激烈：" data-en="Fierce competition for places:">学位竞争激烈：</strong> <span data-zh-cn="仅能竞争25%的非本地生学位" data-zh-tw="僅能競爭25%的非本地生學位" data-en="Can only compete for 25% of non-local student places">仅能竞争25%的非本地生学位</span></li>
+                                <li><strong data-zh-cn="经济负担沉重：" data-zh-tw="經濟負擔沉重：" data-en="Heavy financial burden:">经济负担沉重：</strong> <span data-zh-cn="学费增加3-4倍，四年总费用可达HK$80万" data-zh-tw="學費增加3-4倍，四年總費用可達HK$80萬" data-en="Fees increase 3-4 times, total 4-year cost up to HK$800k">学费增加3-4倍，四年总费用可达HK$80万</span></li>
+                            </ul>
                         </div>
                         
-                        <div class="text-center p-6 bg-purple-50 rounded-lg">
-                            <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <i class="fas fa-users text-white text-2xl"></i>
-                            </div>
-                            <h4 class="text-xl font-semibold mb-3">受養人</h4>
-                            <p class="text-gray-700">符合特定條件的受養人簽證持有人</p>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-yellow-50 p-6 rounded-lg border-l-4 border-yellow-400">
-                        <h4 class="text-xl font-semibold mb-3 text-yellow-800">
-                            <i class="fas fa-home mr-2"></i>受養人特別條件：
-                        </h4>
-                        <ul class="space-y-2 text-lg text-gray-700">
-                            <li>• 首次獲入境處簽發受養人簽證/進入許可時未滿18歲</li>
-                            <li>• 須在緊接所修讀課程開課首天前的兩年內居住於香港</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 第II類別 - 不獲資助學費 -->
-    <div class="section-container bg-gradient-to-br from-red-50 to-orange-50">
-        <div class="container mx-auto px-6">
-            <div class="max-w-5xl mx-auto">
-                <div class="text-center mb-12">
-                    <div class="icon-circle mx-auto mb-6" style="background: linear-gradient(135deg, #f87171 0%, #fb923c 100%);">
-                        <i class="fas fa-coins"></i>
-                    </div>
-                    <h2 class="text-5xl font-bold text-gray-800 mb-4">第II類別</h2>
-                    <p class="text-2xl text-gray-600">不獲資助的學費</p>
-                </div>
-                
-                <div class="bg-white p-10 rounded-2xl card-shadow">
-                    <h3 class="text-3xl font-semibold text-center mb-8 text-red-700">適用人士</h3>
-                    
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div class="space-y-4">
-                            <div class="p-6 bg-red-50 rounded-lg">
-                                <h4 class="text-xl font-semibold mb-3 text-red-700">
-                                    <i class="fas fa-briefcase mr-2"></i>工作簽證持有人
-                                </h4>
-                                <p class="text-gray-700">全職工作簽證/工作許可證持有人</p>
-                            </div>
-                            
-                            <div class="p-6 bg-orange-50 rounded-lg">
-                                <h4 class="text-xl font-semibold mb-3 text-orange-700">
-                                    <i class="fas fa-star mr-2"></i>入境計劃簽證
-                                </h4>
-                                <p class="text-gray-700">各項入境計劃下的簽證/進入許可持有人（包括優秀人才入境計劃、資本投資者入境計劃等）</p>
-                            </div>
-                        </div>
-                        
-                        <div class="space-y-4">
-                            <div class="p-6 bg-pink-50 rounded-lg">
-                                <h4 class="text-xl font-semibold mb-3 text-pink-700">
-                                    <i class="fas fa-user-clock mr-2"></i>不符合居港要求
-                                </h4>
-                                <p class="text-gray-700">首次獲簽發受養人簽證時未滿18歲，但不符合兩年居港規定的受養人</p>
-                            </div>
-                            
-                            <div class="p-6 bg-purple-50 rounded-lg">
-                                <h4 class="text-xl font-semibold mb-3 text-purple-700">
-                                    <i class="fas fa-graduation-cap mr-2"></i>非本地學生
-                                </h4>
-                                <p class="text-gray-700">學生簽證持有人、非本地畢業生留港就業安排下的簽證持有人等</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="mt-8 bg-gray-50 p-6 rounded-lg">
-                        <h4 class="text-xl font-semibold mb-3 text-gray-800">
-                            <i class="fas fa-dollar-sign mr-2"></i>學費安排：
-                        </h4>
-                        <p class="text-lg text-gray-700">院校可自行釐訂合適的學費水平，須收取至少足以收回所有額外直接成本的學費，學費水平須與非本地學生一致。</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 居港要求詳情 -->
-    <div class="section-container bg-white">
-        <div class="container mx-auto px-6">
-            <div class="max-w-5xl mx-auto">
-                <div class="text-center mb-12">
-                    <div class="icon-circle mx-auto mb-6">
-                        <i class="fas fa-home"></i>
-                    </div>
-                    <h2 class="text-4xl font-bold text-gray-800 mb-4">居港要求詳情</h2>
-                </div>
-                
-                <div class="bg-white p-10 rounded-2xl card-shadow border border-gray-200">
-                    <h3 class="text-3xl font-semibold text-center mb-8 text-blue-700">申請第一年學士學位課程證明方法</h3>
-                    
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div class="p-8 bg-blue-50 rounded-lg">
-                            <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                                <i class="fas fa-school text-white text-2xl"></i>
-                            </div>
-                            <h4 class="text-2xl font-semibold mb-4 text-blue-800 text-center">方法一：學校證明</h4>
-                            <p class="text-lg text-gray-700 text-center">提供證明顯示在計至所修讀課程開課當年5月31日為止的兩年期內，以全日制學生身分於本港正規課程學校就讀</p>
-                        </div>
-                        
-                        <div class="p-8 bg-green-50 rounded-lg">
-                            <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                                <i class="fas fa-passport text-white text-2xl"></i>
-                            </div>
-                            <h4 class="text-2xl font-semibold mb-4 text-green-800 text-center">方法二：出入境記錄</h4>
-                            <p class="text-lg text-gray-700 text-center">向入境處付費申領涵蓋該段兩年期的出入境紀錄證明，顯示在該段兩年期內每年不多於90天不在香港</p>
-                        </div>
-                    </div>
-                    
-                    <div class="mt-10 bg-yellow-50 p-6 rounded-lg border-l-4 border-yellow-400">
-                        <h4 class="text-xl font-semibold mb-3 text-yellow-800">
-                            <i class="fas fa-info-circle mr-2"></i>其他課程：
-                        </h4>
-                        <p class="text-lg text-gray-700">副學位、高年級學士學位及研究院修課課程的政府資助學額申請，相關院校須採取類似做法審批。</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 實施時間表 -->
-    <div class="section-container bg-gradient-to-br from-purple-50 to-pink-50">
-        <div class="container mx-auto px-6">
-            <div class="max-w-5xl mx-auto">
-                <div class="text-center mb-12">
-                    <div class="icon-circle mx-auto mb-6" style="background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);">
-                        <i class="fas fa-calendar-check"></i>
-                    </div>
-                    <h2 class="text-4xl font-bold text-gray-800 mb-4">實施時間表</h2>
-                </div>
-                
-                <div class="bg-white p-10 rounded-2xl card-shadow">
-                    <div class="space-y-8">
-                        <div class="flex items-center p-6 bg-blue-50 rounded-lg">
-                            <div class="w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center mr-6 flex-shrink-0">
-                                <span class="text-white font-bold text-xl">2026</span>
-                            </div>
-                            <div>
-                                <h3 class="text-2xl font-semibold text-blue-800 mb-2">2026年10月</h3>
-                                <p class="text-lg text-gray-700">2027/28學年申請周期開始</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-center p-6 bg-green-50 rounded-lg">
-                            <div class="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mr-6 flex-shrink-0">
-                                <span class="text-white font-bold text-xl">2027</span>
-                            </div>
-                            <div>
-                                <h3 class="text-2xl font-semibold text-green-800 mb-2">2027/28學年</h3>
-                                <p class="text-lg text-gray-700">新規定正式實施，過渡期居港要求為<span class="font-bold text-green-600">一年</span></p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-center p-6 bg-purple-50 rounded-lg">
-                            <div class="w-20 h-20 bg-purple-500 rounded-full flex items-center justify-center mr-6 flex-shrink-0">
-                                <span class="text-white font-bold text-xl">2028</span>
-                            </div>
-                            <div>
-                                <h3 class="text-2xl font-semibold text-purple-800 mb-2">2028/29學年起</h3>
-                                <p class="text-lg text-gray-700">居港要求實行完整的<span class="font-bold text-purple-600">兩年</span>規定</p>
-                            </div>
+                        <div class="bg-blue-50 p-4 rounded">
+                            <h4 class="font-semibold text-blue-700 mb-2" data-zh-cn="应对策略建议：" data-zh-tw="應對策略建議：" data-en="Recommended Strategies:">应对策略建议：</h4>
+                            <ul class="text-sm space-y-1">
+                                <li data-zh-cn="提前规划：尽早满足居港要求" data-zh-tw="提前規劃：儘早滿足居港要求" data-en="Early planning: Meet residency requirements as soon as possible">提前规划：尽早满足居港要求</li>
+                                <li data-zh-cn="提升学术竞争力：争取更高DSE分数" data-zh-tw="提升學術競爭力：爭取更高DSE分數" data-en="Enhance academic competitiveness: Achieve higher DSE scores">提升学术竞争力：争取更高DSE分数</li>
+                                <li data-zh-cn="考虑其他升学途径：海外大学或自资院校" data-zh-tw="考慮其他升學途徑：海外大學或自資院校" data-en="Consider alternative pathways: Overseas universities or self-funded institutions">考虑其他升学途径：海外大学或自资院校</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -323,127 +323,236 @@
         </div>
     </div>
 
-    <!-- 相關影響 -->
-    <div class="section-container bg-white">
-        <div class="container mx-auto px-6">
-            <div class="max-w-5xl mx-auto">
-                <div class="text-center mb-12">
-                    <div class="icon-circle mx-auto mb-6">
-                        <i class="fas fa-impact"></i>
-                    </div>
-                    <h2 class="text-4xl font-bold text-gray-800 mb-4">相關影響與安排</h2>
-                </div>
+    <!-- 时间线和过渡安排 -->
+    <div class="bg-white p-8">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-6 text-center" data-zh-cn="⏰ 实施时间线与过渡安排" data-zh-tw="⏰ 實施時間線與過渡安排" data-en="⏰ Implementation Timeline and Transitional Arrangements">⏰ 实施时间线与过渡安排</h2>
+            
+            <div class="relative">
+                <!-- 时间线 -->
+                <div class="absolute left-8 top-0 bottom-0 w-0.5 bg-blue-500"></div>
                 
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div class="bg-white p-8 rounded-2xl card-shadow border border-gray-200">
-                        <h3 class="text-2xl font-semibold text-blue-800 mb-6">
-                            <i class="fas fa-award mr-3"></i>受影響的獎學金計劃
-                        </h3>
-                        <ul class="space-y-3 text-lg text-gray-700">
-                            <li class="flex items-start">
-                                <i class="fas fa-chevron-right text-blue-600 mr-3 mt-1"></i>
-                                香港未來人才深造獎學金計劃
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-chevron-right text-blue-600 mr-3 mt-1"></i>
-                                本地研究生學費豁免計劃
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-chevron-right text-blue-600 mr-3 mt-1"></i>
-                                指定專業/界別課程資助計劃
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-chevron-right text-blue-600 mr-3 mt-1"></i>
-                                自資學士學位課程免入息審查資助計劃
-                            </li>
-                        </ul>
+                <div class="space-y-8">
+                    <div class="flex items-start">
+                        <div class="bg-blue-500 text-white rounded-full w-16 h-16 flex items-center justify-center font-bold mr-6">2025</div>
+                        <div class="card-shadow bg-blue-50 p-4 rounded-lg flex-1">
+                            <h3 class="font-bold" data-zh-cn="政策公布与准备期" data-zh-tw="政策公佈與準備期" data-en="Policy Announcement and Preparation Period">政策公布与准备期</h3>
+                            <p class="text-sm mt-2" data-zh-cn="7月31日正式公布新规定，给予受影响人士合理时间规划，各院校进行相应行政安排。" data-zh-tw="7月31日正式公佈新規定，給予受影響人士合理時間規劃，各院校進行相應行政安排。" data-en="Policy officially announced on July 31, allowing affected parties reasonable planning time and institutions to make administrative arrangements.">7月31日正式公布新规定，给予受影响人士合理时间规划，各院校进行相应行政安排。</p>
+                        </div>
                     </div>
                     
-                    <div class="bg-white p-8 rounded-2xl card-shadow border border-gray-200">
-                        <h3 class="text-2xl font-semibold text-green-800 mb-6">
-                            <i class="fas fa-university mr-3"></i>適用院校範圍
-                        </h3>
-                        <ul class="space-y-3 text-lg text-gray-700">
-                            <li class="flex items-start">
-                                <i class="fas fa-chevron-right text-green-600 mr-3 mt-1"></i>
-                                大學教育資助委員會資助大學
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-chevron-right text-green-600 mr-3 mt-1"></i>
-                                香港演藝學院
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-chevron-right text-green-600 mr-3 mt-1"></i>
-                                職業訓練局
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-chevron-right text-green-600 mr-3 mt-1"></i>
-                                大學聯合招生處參與院校
-                            </li>
-                        </ul>
+                    <div class="flex items-start">
+                        <div class="bg-yellow-500 text-white rounded-full w-16 h-16 flex items-center justify-center font-bold mr-6">2026</div>
+                        <div class="card-shadow bg-yellow-50 p-4 rounded-lg flex-1">
+                            <h3 class="font-bold" data-zh-cn="申请周期开始" data-zh-tw="申請週期開始" data-en="Application Cycle Begins">申请周期开始</h3>
+                            <p class="text-sm mt-2" data-zh-cn="10月：2027/28学年申请周期正式开始，大学联招处和各院校开始按新规定处理申请。" data-zh-tw="10月：2027/28學年申請週期正式開始，大學聯招處和各院校開始按新規定處理申請。" data-en="October: 2027/28 academic year application cycle begins, JUPAS and institutions start processing applications under new regulations.">10月：2027/28学年申请周期正式开始，大学联招处和各院校开始按新规定处理申请。</p>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="mt-8 bg-gray-50 p-8 rounded-lg">
-                    <h3 class="text-2xl font-semibold text-center mb-4 text-gray-800">
-                        <i class="fas fa-balance-scale mr-3"></i>政府聲明
-                    </h3>
-                    <p class="text-xl text-gray-700 text-center italic">"政府在制訂有關修訂時，已充分聽取社會不同意見，並取得適當平衡，相信有關修訂對真正有意來港發展的家庭影響不大。"</p>
+                    
+                    <div class="flex items-start">
+                        <div class="bg-orange-500 text-white rounded-full w-16 h-16 flex items-center justify-center font-bold mr-6">2027</div>
+                        <div class="card-shadow bg-orange-50 p-4 rounded-lg flex-1">
+                            <h3 class="font-bold" data-zh-cn="过渡期实施" data-zh-tw="過渡期實施" data-en="Transitional Period Implementation">过渡期实施</h3>
+                            <p class="text-sm mt-2" data-zh-cn="2027/28学年：居港要求设为一年（过渡安排），受养人签证持有人需在课程开始前一年内居住于香港。" data-zh-tw="2027/28學年：居港要求設為一年（過渡安排），受養人簽證持有人需在課程開始前一年內居住於香港。" data-en="2027/28 academic year: Residency requirement set to one year (transitional arrangement), dependent visa holders must reside in HK within one year before course commencement.">2027/28学年：居港要求设为一年（过渡安排），受养人签证持有人需在课程开始前一年内居住于香港。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="bg-green-500 text-white rounded-full w-16 h-16 flex items-center justify-center font-bold mr-6">2028</div>
+                        <div class="card-shadow bg-green-50 p-4 rounded-lg flex-1">
+                            <h3 class="font-bold" data-zh-cn="完全实施" data-zh-tw="完全實施" data-en="Full Implementation">完全实施</h3>
+                            <p class="text-sm mt-2" data-zh-cn="2028/29学年起：正式实行两年居港规定，受养人签证持有人需在课程开始前两年内居住于香港才能享受本地生待遇。" data-zh-tw="2028/29學年起：正式實行兩年居港規定，受養人簽證持有人需在課程開始前兩年內居住於香港才能享受本地生待遇。" data-en="From 2028/29 academic year: Full implementation of two-year residency requirement, dependent visa holders must reside in HK within two years before course commencement to enjoy local student treatment.">2028/29学年起：正式实行两年居港规定，受养人签证持有人需在课程开始前两年内居住于香港才能享受本地生待遇。</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 總結 -->
-    <div class="section-container gradient-bg">
-        <div class="container mx-auto px-6 text-center text-white">
-            <div class="max-w-4xl mx-auto">
-                <div class="icon-circle mx-auto mb-8">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                <h2 class="text-4xl font-bold mb-8">政策要點總結</h2>
-                
-                <div class="grid md:grid-cols-2 gap-8 mb-8">
-                    <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-6">
-                        <h3 class="text-2xl font-semibold mb-4">
-                            <i class="fas fa-key mr-3"></i>關鍵變化
-                        </h3>
-                        <ul class="text-left space-y-2 text-lg">
-                            <li>• 設立兩個學費類別</li>
-                            <li>• 受養人須居港兩年</li>
-                            <li>• 工作簽證持有人不獲資助</li>
-                            <li>• 設過渡安排減緩影響</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-6">
-                        <h3 class="text-2xl font-semibold mb-4">
-                            <i class="fas fa-target mr-3"></i>政策目標
-                        </h3>
-                        <ul class="text-left space-y-2 text-lg">
-                            <li>• 確保公帑用得其所</li>
-                            <li>• 保障本地學生權益</li>
-                            <li>• 平衡各方利益</li>
-                            <li>• 促進教育公平</li>
-                        </ul>
-                    </div>
+    <!-- 总结与建议 -->
+    <div class="gradient-bg text-white p-8">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-6 text-center" data-zh-cn="📋 政策要点总结与建议" data-zh-tw="📋 政策要點總結與建議" data-en="📋 Policy Summary and Recommendations">📋 政策要点总结与建议</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white bg-opacity-10 p-6 rounded-lg">
+                    <h3 class="font-bold mb-4" data-zh-cn="🎯 政策核心要点" data-zh-tw="🎯 政策核心要點" data-en="🎯 Key Policy Points">🎯 政策核心要点</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-300 mt-1 mr-2"></i>
+                            <span data-zh-cn="设立两个学费类别，明确本地生资格标准" data-zh-tw="設立兩個學費類別，明確本地生資格標準" data-en="Establish two fee categories, clarify local student qualification standards">设立两个学费类别，明确本地生资格标准</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-300 mt-1 mr-2"></i>
+                            <span data-zh-cn="受养人需居港满2年才能享受本地生待遇" data-zh-tw="受養人需居港滿2年才能享受本地生待遇" data-en="Dependents must reside in HK for 2 years to enjoy local student treatment">受养人需居港满2年才能享受本地生待遇</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-300 mt-1 mr-2"></i>
+                            <span data-zh-cn="工作签证等持有人不再符合本地生资格" data-zh-tw="工作簽證等持有人不再符合本地生資格" data-en="Work visa holders no longer qualify as local students">工作签证等持有人不再符合本地生资格</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-300 mt-1 mr-2"></i>
+                            <span data-zh-cn="设立过渡期，2027/28学年先实行1年居港要求" data-zh-tw="設立過渡期，2027/28學年先實行1年居港要求" data-en="Transitional period: 1-year residency requirement for 2027/28 academic year">设立过渡期，2027/28学年先实行1年居港要求</span>
+                        </li>
+                    </ul>
                 </div>
                 
-                <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-6">
-                    <p class="text-xl mb-4">
-                        <i class="fas fa-info-circle mr-3"></i>
-                        <strong>資料來源：</strong>香港特別行政區政府新聞公報
-                    </p>
-                    <p class="text-lg">
-                        <i class="fas fa-link mr-3"></i>
-                        <a href="https://www.info.gov.hk/gia/general/202507/31/P2025073100288.htm" class="underline hover:text-yellow-300" target="_blank">
-                            https://www.info.gov.hk/gia/general/202507/31/P2025073100288.htm
-                        </a>
-                    </p>
+                <div class="bg-white bg-opacity-10 p-6 rounded-lg">
+                    <h3 class="font-bold mb-4" data-zh-cn="💡 给家长的建议" data-zh-tw="💡 給家長的建議" data-en="💡 Advice for Parents">💡 给家长的建议</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-start">
+                            <i class="fas fa-lightbulb text-yellow-300 mt-1 mr-2"></i>
+                            <span data-zh-cn="提前规划：确保子女满足居港时间要求" data-zh-tw="提前規劃：確保子女滿足居港時間要求" data-en="Plan ahead: ensure children meet HK residency requirements">提前规划：确保子女满足居港时间要求</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-lightbulb text-yellow-300 mt-1 mr-2"></i>
+                            <span data-zh-cn="重视学术表现：Non-JUPAS申请竞争更激烈" data-zh-tw="重視學術表現：Non-JUPAS申請競爭更激烈" data-en="Focus on academics: Non-JUPAS applications are more competitive">重视学术表现：Non-JUPAS申请竞争更激烈</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-lightbulb text-yellow-300 mt-1 mr-2"></i>
+                            <span data-zh-cn="财务准备：预算更高的教育成本" data-zh-tw="財務準備：預算更高的教育成本" data-en="Financial preparation: budget for higher education costs">财务准备：预算更高的教育成本</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-lightbulb text-yellow-300 mt-1 mr-2"></i>
+                            <span data-zh-cn="多元规划：考虑海外升学等替代方案" data-zh-tw="多元規劃：考慮海外升學等替代方案" data-en="Diversified planning: consider overseas education alternatives">多元规划：考虑海外升学等替代方案</span>
+                        </li>
+                    </ul>
                 </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <p class="text-lg opacity-90" data-zh-cn="本政策旨在确保公帑善用，维护教育公平，为香港培养真正扎根的人才" data-zh-tw="本政策旨在確保公帑善用，維護教育公平，為香港培養真正紮根的人才" data-en="This policy aims to ensure prudent use of public funds, maintain educational fairness, and cultivate talents truly rooted in Hong Kong">本政策旨在确保公帑善用，维护教育公平，为香港培养真正扎根的人才</p>
             </div>
         </div>
     </div>
 
+    <script>
+        // 语言切换功能
+        let currentLang = 'zh-cn';
+        
+        function switchLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('bg-blue-500', 'text-white');
+                btn.classList.add('bg-gray-300', 'text-gray-700');
+            });
+            event.target.classList.remove('bg-gray-300', 'text-gray-700');
+            event.target.classList.add('bg-blue-500', 'text-white');
+            
+            document.querySelectorAll('[data-' + lang + ']').forEach(element => {
+                element.textContent = element.getAttribute('data-' + lang);
+            });
+            
+            // 更新图表
+            updateCharts(lang);
+        }
+
+        // 图表配置
+        function updateCharts(lang) {
+            const labels = {
+                'zh-cn': {
+                    localStudents: '本地生',
+                    nonLocalStudents: '非本地生',
+                    categoryI: '第I类别学费',
+                    categoryII: '第II类别学费',
+                    admissionRate: '录取率 (%)',
+                    fees: '学费 (HK$)',
+                    jupasRate: 'JUPAS录取率: 38.2%',
+                    nonJupasRate: '非联招录取率: ~15%',
+                    localFee: '本地生学费',
+                    nonLocalFee: '非本地生学费'
+                },
+                'zh-tw': {
+                    localStudents: '本地生',
+                    nonLocalStudents: '非本地生',
+                    categoryI: '第I類別學費',
+                    categoryII: '第II類別學費',
+                    admissionRate: '錄取率 (%)',
+                    fees: '學費 (HK$)',
+                    jupasRate: 'JUPAS錄取率: 38.2%',
+                    nonJupasRate: '非聯招錄取率: ~15%',
+                    localFee: '本地生學費',
+                    nonLocalFee: '非本地生學費'
+                },
+                'en': {
+                    localStudents: 'Local Students',
+                    nonLocalStudents: 'Non-local Students',
+                    categoryI: 'Category I Fees',
+                    categoryII: 'Category II Fees',
+                    admissionRate: 'Admission Rate (%)',
+                    fees: 'Fees (HK$)',
+                    jupasRate: 'JUPAS Rate: 38.2%',
+                    nonJupasRate: 'Non-JUPAS Rate: ~15%',
+                    localFee: 'Local Student Fees',
+                    nonLocalFee: 'Non-local Student Fees'
+                }
+            };
+            
+            // 录取率对比图表
+            const admissionChart = Chart.getChart('admissionChart');
+            if (admissionChart) admissionChart.destroy();
+            
+            new Chart(document.getElementById('admissionChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: [labels[lang].jupasRate, labels[lang].nonJupasRate],
+                    datasets: [{
+                        data: [38.2, 15],
+                        backgroundColor: ['#10B981', '#EF4444'],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+            
+            // 学费对比图表
+            const feeChart = Chart.getChart('feeChart');
+            if (feeChart) feeChart.destroy();
+            
+            new Chart(document.getElementById('feeChart'), {
+                type: 'bar',
+                data: {
+                    labels: [labels[lang].localFee, labels[lang].nonLocalFee],
+                    datasets: [{
+                        data: [42100, 170000],
+                        backgroundColor: ['#10B981', '#EF4444'],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return 'HK$' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // 初始化图表
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCharts('zh-cn');
+        });
+    </script>
 </body>
 </html>
