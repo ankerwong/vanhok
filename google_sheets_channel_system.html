@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Sheets集成渠道管理系统</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .sync-indicator {
+            animation: pulse 2s infinite;
+        }
+        .offline-indicator {
+            background-color: #ef4444;
+        }
+        .online-indicator {
+            background-color: #10b981;
+        }
+        .syncing-indicator {
+            background-color: #f59e0b;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .spinning {
+            animation: spin 1s linear infinite;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .custom-scrollbar {
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e0 #f7fafc;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f7fafc;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #cbd5e0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <i class="fas fa-chart-line text-blue-600 text-2xl mr-3"></i>
+                    <h1 class="text-xl font-semibold text-gray-900">渠道跟进监控系统</h1>
+                    <span class="ml-2 text-sm text-gray-500">Google Sheets集成版</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- Sync Status Indicator -->
+                    <div id="syncStatus" class="flex items-center">
+                        <div id="syncIndicator" class="w-3 h-3 rounded-full online-indicator mr-2"></div>
+                        <span id="syncText" class="text-sm text-gray-600">已连接</span>
+                        <i id="syncIcon" class="fas fa-sync-alt ml-2 text-gray-400 cursor-pointer" onclick="manualSync()"></i>
+                    </div>
+                    <!-- Google Sheets Link -->
+                    <a id="sheetsLink" href="#" target="_blank" class="text-blue-600 hover:text-blue-800">
+                        <i class="fab fa-google text-lg"></i>
+                    </a>
+                    <!-- Export Button -->
+                    <button onclick="exportData()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm">
+                        <i class="fas fa-download mr-2"></i>导出数据
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="bg-white border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex space-x-8">
+                <button class="tab-button py-4 px-1 border-b-2 border-blue-500 text-blue-600 font-medium text-sm" onclick="showTab('dashboard')">
+                    <i class="fas fa-tachometer-alt mr-2"></i>数据概览
+                </button>
+                <button class="tab-button py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm" onclick="showTab('channels')">
+                    <i class="fas fa-users mr-2"></i>渠道管理
+                </button>
+                <button class="tab-button py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm" onclick="showTab('dataEntry')">
+                    <i class="fas fa-plus-circle mr-2"></i>数据录入
+                </button>
+                <button class="tab-button py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm" onclick="showTab('analysis')">
+                    <i class="fas fa-chart-bar mr-2"></i>数据分析
+                </button>
+                <button class="tab-button py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm" onclick="showTab('sync')">
+                    <i class="fab fa-google mr-2"></i>同步设置
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-database text-blue-600 text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">总数据量</p>
+                            <p id="totalData" class="text-2xl font-semibold text-gray-900">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-clock text-yellow-600 text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">待跟进</p>
+                            <p id="pendingFollow" class="text-2xl font-semibold text-gray-900">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-check-circle text-green-600 text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">已成交</p>
+                            <p id="completedDeals" class="text-2xl font-semibold text-gray-900">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-sync-alt text-purple-600 text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">同步状态</p>
+                            <p id="lastSyncTime" class="text-sm font-semibold text-gray-900">未同步</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <!-- Data Allocation Chart -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">数据分配统计</h3>
+                    <div class="mb-4">
+                        <select id="allocationPeriod" onchange="updateAllocationChart()" class="border border-gray-300 rounded-md px-3 py-2 text-sm">
+                            <option value="day">今日</option>
+                            <option value="week">本周</option>
+                            <option value="month">本月</option>
+                            <option value="year">本年</option>
+                        </select>
+                    </div>
+                    <canvas id="allocationChart" style="height: 300px;"></canvas>
+                </div>
+                
+                <!-- Channel Performance Chart -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">渠道表现对比</h3>
+                    <canvas id="performanceChart" style="height: 300px;"></canvas>
+                </div>
+            </div>
+
+            <!-- Recent Activities -->
+            <div class="bg-white rounded-lg shadow">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900">最近活动</h3>
+                </div>
+                <div class="divide-y divide-gray-200">
+                    <div id="recentActivities" class="p-6">
+                        <p class="text-gray-500 text-center">暂无活动记录</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Channels Tab -->
+        <div id="channels" class="tab-content">
+            <div class="bg-white rounded-lg shadow">
+                <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                    <h3 class="text-lg font-semibold text-gray-900">渠道管理</h3>
+                    <button onclick="addChannel()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">
+                        <i class="fas fa-plus mr-2"></i>添加渠道
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">渠道名称</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">联系人</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">返佣比例</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">反馈时效</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">状态</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="channelsTable" class="bg-white divide-y divide-gray-200">
+                            <!-- Dynamic content -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Entry Tab -->
+        <div id="dataEntry" class="tab-content">
+            <div class="bg-white rounded-lg shadow">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900">数据录入</h3>
+                </div>
+                <div class="p-6">
+                    <form id="dataEntryForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Basic Info -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">家长姓名</label>
+                            <input type="text" id="parentName" class="w-full border border-gray-300 rounded-md px-3 py-2" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">联系电话</label>
+                            <input type="tel" id="phone" class="w-full border border-gray-300 rounded-md px-3 py-2" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">学生年级</label>
+                            <select id="grade" class="w-full border border-gray-300 rounded-md px-3 py-2">
+                                <option value="">请选择年级</option>
+                                <option value="小学一年级">小学一年级</option>
+                                <option value="小学二年级">小学二年级</option>
+                                <option value="小学三年级">小学三年级</option>
+                                <option value="小学四年级">小学四年级</option>
+                                <option value="小学五年级">小学五年级</option>
+                                <option value="小学六年级">小学六年级</option>
+                                <option value="初一">初一</option>
+                                <option value="初二">初二</option>
+                                <option value="初三">初三</option>
+                                <option value="高一">高一</option>
+                                <option value="高二">高二</option>
+                                <option value="高三">高三</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">咨询类目</label>
+                            <input type="text" id="subject" class="w-full border border-gray-300 rounded-md px-3 py-2" placeholder="如：数学一对一">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">分配渠道</label>
+                            <select id="channel" class="w-full border border-gray-300 rounded-md px-3 py-2" onchange="updateChannelContact()">
+                                <option value="">请选择渠道</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">渠道联系人</label>
+                            <input type="text" id="channelContact" class="w-full border border-gray-300 rounded-md px-3 py-2" readonly>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">下次跟进时间</label>
+                            <input type="datetime-local" id="nextFollowUp" class="w-full border border-gray-300 rounded-md px-3 py-2">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">当前状态</label>
+                            <select id="status" class="w-full border border-gray-300 rounded-md px-3 py-2">
+                                <option value="待联系">待联系</option>
+                                <option value="已联系">已联系</option>
+                                <option value="跟进中">跟进中</option>
+                                <option value="已成交">已成交</option>
+                                <option value="无效">无效</option>
+                            </select>
+                        </div>
+                        <!-- Notes -->
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">我方备注</label>
+                            <textarea id="ourNotes" rows="3" class="w-full border border-gray-300 rounded-md px-3 py-2" placeholder="记录客户情况、跟进策略等"></textarea>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">渠道反馈备注</label>
+                            <textarea id="channelFeedback" rows="3" class="w-full border border-gray-300 rounded-md px-3 py-2" placeholder="记录渠道方的反馈内容"></textarea>
+                        </div>
+                        <!-- Deal Info -->
+                        <div id="dealInfo" style="display: none;" class="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">成交金额</label>
+                                <input type="number" id="dealAmount" class="w-full border border-gray-300 rounded-md px-3 py-2" onchange="calculateCommission()">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">返佣比例</label>
+                                <input type="text" id="commissionRate" class="w-full border border-gray-300 rounded-md px-3 py-2" readonly>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">返佣金额</label>
+                                <input type="text" id="commissionAmount" class="w-full border border-gray-300 rounded-md px-3 py-2" readonly>
+                            </div>
+                        </div>
+                        <!-- Submit Button -->
+                        <div class="md:col-span-2">
+                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md">
+                                <i class="fas fa-save mr-2"></i>保存数据
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Data List -->
+            <div class="mt-8 bg-white rounded-lg shadow">
+                <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                    <h3 class="text-lg font-semibold text-gray-900">数据列表</h3>
+                    <div class="flex space-x-2">
+                        <input type="search" id="searchData" placeholder="搜索..." class="border border-gray-300 rounded-md px-3 py-2 text-sm" onkeyup="filterData()">
+                        <select id="filterStatus" onchange="filterData()" class="border border-gray-300 rounded-md px-3 py-2 text-sm">
+                            <option value="">所有状态</option>
+                            <option value="待联系">待联系</option>
+                            <option value="已联系">已联系</option>
+                            <option value="跟进中">跟进中</option>
+                            <option value="已成交">已成交</option>
+                            <option value="无效">无效</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="overflow-x-auto custom-scrollbar" style="max-height: 600px;">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50 sticky top-0">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">编号</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">家长姓名</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">电话</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">年级</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">渠道</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">状态</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">反馈时长</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">下次跟进</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataTable" class="bg-white divide-y divide-gray-200">
+                            <!-- Dynamic content -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analysis Tab -->
+        <div id="analysis" class="tab-content">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <!-- Feedback Time Analysis -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">反馈时效分析</h3>
+                    <canvas id="feedbackTimeChart" style="height: 300px;"></canvas>
+                </div>
+                
+                <!-- Conversion Rate Analysis -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">转化率分析</h3>
+                    <canvas id="conversionChart" style="height: 300px;"></canvas>
+                </div>
+            </div>
+
+            <!-- Channel Performance Table -->
+            <div class="bg-white rounded-lg shadow">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900">渠道表现详情</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">渠道名称</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">数据量</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">平均反馈时间</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">成交数量</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">成交率</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">总成交金额</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">总返佣</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">综合评分</th>
+                            </tr>
+                        </thead>
+                        <tbody id="performanceTable" class="bg-white divide-y divide-gray-200">
+                            <!-- Dynamic content -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sync Settings Tab -->
+        <div id="sync" class="tab-content">
+            <div class="max-w-4xl">
+                <!-- Google Sheets Configuration -->
+                <div class="bg-white rounded-lg shadow mb-6">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-900">Google Sheets配置</h3>
+                    </div>
+                    <div class="p-6">
+                        <form id="sheetsConfig">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Google Apps Script URL</label>
+                                    <input type="url" id="appsScriptUrl" class="w-full border border-gray-300 rounded-md px-3 py-2" placeholder="https://script.google.com/macros/s/...">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">表格ID</label>
+                                    <input type="text" id="spreadsheetId" class="w-full border border-gray-300 rounded-md px-3 py-2" placeholder="1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs...">
+                                </div>
+                                <div class="md:col-span-2">
+                                    <button type="button" onclick="testConnection()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md mr-4">
+                                        <i class="fas fa-plug mr-2"></i>测试连接
+                                    </button>
+                                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md">
+                                        <i class="fas fa-save mr-2"></i>保存配置
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Sync Controls -->
+                <div class="bg-white rounded-lg shadow mb-6">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-900">同步控制</h3>
+                    </div>
+                    <div class="p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <button onclick="syncToSheets()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md">
+                                <i class="fas fa-upload mr-2"></i>同步到表格
+                            </button>
+                            <button onclick="syncFromSheets()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md">
+                                <i class="fas fa-download mr-2"></i>从表格同步
+                            </button>
+                            <button onclick="fullSync()" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md">
+                                <i class="fas fa-sync mr-2"></i>双向同步
+                            </button>
+                        </div>
+                        <div class="mt-4">
+                            <label class="flex items-center">
+                                <input type="checkbox" id="autoSync" class="mr-2">
+                                <span class="text-sm text-gray-700">启用自动同步（每5分钟）</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sync Log -->
+                <div class="bg-white rounded-lg shadow">
+                    <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-gray-900">同步日志</h3>
+                        <button onclick="clearSyncLog()" class="text-red-600 hover:text-red-800 text-sm">
+                            <i class="fas fa-trash mr-1"></i>清空日志
+                        </button>
+                    </div>
+                    <div id="syncLog" class="p-6 max-h-96 overflow-y-auto custom-scrollbar">
+                        <p class="text-gray-500 text-center">暂无同步记录</p>
+                    </div>
+                </div>
+
+                <!-- Setup Instructions -->
+                <div class="bg-blue-50 rounded-lg p-6 mt-6">
+                    <h4 class="text-lg font-semibold text-blue-900 mb-4">
+                        <i class="fas fa-info-circle mr-2"></i>配置说明
+                    </h4>
+                    <div class="space-y-4 text-sm text-blue-800">
+                        <p><strong>步骤1：</strong> 创建Google Sheets表格并按照系统字段设置表头</p>
+                        <p><strong>步骤2：</strong> 创建Google Apps Script项目作为API代理</p>
+                        <p><strong>步骤3：</strong> 复制Apps Script的Web应用URL到上方配置</p>
+                        <p><strong>步骤4：</strong> 输入Google Sheets的表格ID</p>
+                        <p><strong>步骤5：</strong> 测试连接并保存配置</p>
+                        <p class="text-blue-600">
+                            <i class="fas fa-external-link-alt mr-1"></i>
+                            <a href="#" onclick="showSetupGuide()" class="underline">查看详细配置指南</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal for Channel Form -->
+    <div id="channelModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen px-4">
+            <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 id="channelModalTitle" class="text-lg font-semibold text-gray-900">添加渠道</h3>
+                </div>
+                <div class="p-6">
+                    <form id="channelForm">
+                        <input type="hidden" id="channelId">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">渠道名称</label>
+                                <input type="text" id="channelName" class="w-full border border-gray-300 rounded-md px-3 py-2" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">联系人</label>
+                                <input type="text" id="channelContactPerson" class="w-full border border-gray-300 rounded-md px-3 py-2" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">返佣比例 (%)</label>
+                                <input type="number" id="channelCommission" class="w-full border border-gray-300 rounded-md px-3 py-2" step="0.1" min="0" max="100">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">预期反馈时效 (小时)</label>
+                                <input type="number" id="channelFeedbackTime" class="w-full border border-gray-300 rounded-md px-3 py-2" min="1">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">状态</label>
+                                <select id="channelStatus" class="w-full border border-gray-300 rounded-md px-3 py-2">
+                                    <option value="active">活跃</option>
+                                    <option value="inactive">暂停</option>
+                                    <option value="testing">测试中</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mt-6 flex justify-end space-x-3">
+                            <button type="button" onclick="closeChannelModal()" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">取消</button>
+                            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">保存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-4 right-4 bg-green-600 text-white px-6 py-3 rounded-md shadow-lg hidden z-50">
+        <div class="flex items-center">
+            <i class="fas fa-check mr-2"></i>
+            <span id="toastMessage"></span>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let channels = JSON.parse(localStorage.getItem('channels')) || [];
+        let dataEntries = JSON.parse(localStorage.getItem('dataEntries')) || [];
+        let syncConfig = JSON.parse(localStorage.getItem('syncConfig')) || {};
+        let syncLog = JSON.parse(localStorage.getItem('syncLog')) || [];
+        let autoSyncInterval = null;
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+
+        function initializeApp() {
+            loadChannels();
+            loadData();
+            updateDashboard();
+            updateChannelOptions();
+            updateSyncStatus();
+            setupEventListeners();
+            
+            // Load sync config
+            if (syncConfig.appsScriptUrl) {
+                document.getElementById('appsScriptUrl').value = syncConfig.appsScriptUrl;
+            }
+            if (syncConfig.spreadsheetId) {
+                document.getElementById('spreadsheetId').value = syncConfig.spreadsheetId;
+                document.getElementById('sheetsLink').href = `https://docs.google.com/spreadsheets/d/${syncConfig.spreadsheetId}/edit`;
+            }
+            if (syncConfig.autoSync) {
+                document.getElementById('autoSync').checked = true;
+                startAutoSync();
+            }
+        }
+
+        function setupEventListeners() {
+            // Data entry form
+            document.getElementById('dataEntryForm').addEventListener('submit', handleDataSubmit);
+            document.getElementById('status').addEventListener('change', toggleDealInfo);
+            
+            // Channel form
+            document.getElementById('channelForm').addEventListener('submit', handleChannelSubmit);
+            
+            // Sync config form
+            document.getElementById('sheetsConfig').addEventListener('submit', handleSyncConfigSubmit);
+            
+            // Auto sync checkbox
+            document.getElementById('autoSync').addEventListener('change', function() {
+                if (this.checked) {
+                    startAutoSync();
+                } else {
+                    stopAutoSync();
+                }
+                saveSyncConfig();
+            });
+        }
+
+        // Tab management
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Update tab buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('border-blue-500', 'text-blue-600');
+                btn.classList.add('border-transparent', 'text-gray-500');
+            });
+            
+            event.target.classList.remove('border-transparent', 'text-gray-500');
+            event.target.classList.add('border-blue-500', 'text-blue-600');
+            
+            // Update charts when switching to analysis tab
+            if (tabName === 'analysis') {
+                setTimeout(() => {
+                    updateAnalysisCharts();
+                }, 100);
+            }
+            
+            // Update dashboard when switching to dashboard tab
+            if (tabName === 'dashboard') {
+                setTimeout(() => {
+                    updateDashboardCharts();
+                }, 100);
+            }
+        }
+
+        // Channel management
+        function addChannel() {
+            document.getElementById('channelModalTitle').textContent = '添加渠道';
+            document.getElementById('channelForm').reset();
+            document.getElementById('channelId').value = '';
+            document.getElementById('channelModal').classList.remove('hidden');
+        }
+
+        function editChannel(index) {
+            const channel = channels[index];
+            document.getElementById('channelModalTitle').textContent = '编辑渠道';
+            document.getElementById('channelId').value = index;
+            document.getElementById('channelName').value = channel.name;
+            document.getElementById('channelContactPerson').value = channel.contact;
+            document.getElementById('channelCommission').value = channel.commission;
+            document.getElementById('channelFeedbackTime').value = channel.feedbackTime;
+            document.getElementById('channelStatus').value = channel.status;
+            document.getElementById('channelModal').classList.remove('hidden');
+        }
+
+        function deleteChannel(index) {
+            if (confirm('确定要删除这个渠道吗？')) {
+                channels.splice(index, 1);
+                saveChannels();
+                loadChannels();
+                updateChannelOptions();
+                showToast('渠道已删除');
+            }
+        }
+
+        function closeChannelModal() {
+            document.getElementById('channelModal').classList.add('hidden');
+        }
+
+        function handleChannelSubmit(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('channelName').value,
+                contact: document.getElementById('channelContactPerson').value,
+                commission: parseFloat(document.getElementById('channelCommission').value) || 0,
+                feedbackTime: parseInt(document.getElementById('channelFeedbackTime').value) || 24,
+                status: document.getElementById('channelStatus').value,
+                createdAt: new Date().toISOString()
+            };
+            
+            const channelId = document.getElementById('channelId').value;
+            
+            if (channelId === '') {
+                // Add new channel
+                formData.id = Date.now().toString();
+                channels.push(formData);
+                showToast('渠道添加成功');
+            } else {
+                // Edit existing channel
+                formData.id = channels[channelId].id;
+                formData.createdAt = channels[channelId].createdAt;
+                channels[channelId] = formData;
+                showToast('渠道更新成功');
+            }
+            
+            saveChannels();
+            loadChannels();
+            updateChannelOptions();
+            closeChannelModal();
+        }
+
+        function loadChannels() {
+            const tbody = document.getElementById('channelsTable');
+            tbody.innerHTML = '';
+            
+            channels.forEach((channel, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${channel.name}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${channel.contact}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${channel.commission}%</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${channel.feedbackTime}小时</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(channel.status)}">
+                            ${getStatusText(channel.status)}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <button onclick="editChannel(${index})" class="text-indigo-600 hover:text-indigo-900 mr-4">编辑</button>
+                        <button onclick="deleteChannel(${index})" class="text-red-600 hover:text-red-900">删除</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function getStatusColor(status) {
+            switch(status) {
+                case 'active': return 'bg-green-100 text-green-800';
+                case 'inactive': return 'bg-red-100 text-red-800';
+                case 'testing': return 'bg-yellow-100 text-yellow-800';
+                default: return 'bg-gray-100 text-gray-800';
+            }
+        }
+
+        function getStatusText(status) {
+            switch(status) {
+                case 'active': return '活跃';
+                case 'inactive': return '暂停';
+                case 'testing': return '测试中';
+                default: return '未知';
+            }
+        }
+
+        function updateChannelOptions() {
+            const select = document.getElementById('channel');
+            select.innerHTML = '<option value="">请选择渠道</option>';
+            
+            channels.filter(c => c.status === 'active' || c.status === 'testing').forEach(channel => {
+                const option = document.createElement('option');
+                option.value = channel.name;
+                option.textContent = channel.name;
+                option.dataset.contact = channel.contact;
+                option.dataset.commission = channel.commission;
+                select.appendChild(option);
+            });
+        }
+
+        function updateChannelContact() {
+            const select = document.getElementById('channel');
+            const contactInput = document.getElementById('channelContact');
+            const commissionInput = document.getElementById('commissionRate');
+            
+            if (select.selectedIndex > 0) {
+                const option = select.options[select.selectedIndex];
+                contactInput.value = option.dataset.contact || '';
+                commissionInput.value = (option.dataset.commission || 0) + '%';
+            } else {
+                contactInput.value = '';
+                commissionInput.value = '';
+            }
+        }
+
+        // Data entry management
+        function handleDataSubmit(e) {
+            e.preventDefault();
+            
+            const formData = {
+                id: Date.now().toString(),
+                parentName: document.getElementById('parentName').value,
+                phone: document.getElementById('phone').value,
+                grade: document.getElementById('grade').value,
+                subject: document.getElementById('subject').value,
+                channel: document.getElementById('channel').value,
+                channelContact: document.getElementById('channelContact').value,
+                nextFollowUp: document.getElementById('nextFollowUp').value,
+                status: document.getElementById('status').value,
+                ourNotes: document.getElementById('ourNotes').value,
+                channelFeedback: document.getElementById('channelFeedback').value,
+                dealAmount: parseFloat(document.getElementById('dealAmount').value) || 0,
+                commissionRate: document.getElementById('commissionRate').value,
+                commissionAmount: parseFloat(document.getElementById('commissionAmount').value) || 0,
+                assignedAt: new Date().toISOString(),
+                feedbackAt: null,
+                feedbackDuration: null,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            };
+            
+            dataEntries.push(formData);
+            saveData();
+            loadData();
+            updateDashboard();
+            document.getElementById('dataEntryForm').reset();
+            toggleDealInfo();
+            showToast('数据保存成功');
+            
+            // Auto sync if enabled
+            if (syncConfig.autoSync && syncConfig.appsScriptUrl) {
+                syncToSheets();
+            }
+        }
+
+        function toggleDealInfo() {
+            const status = document.getElementById('status').value;
+            const dealInfo = document.getElementById('dealInfo');
+            
+            if (status === '已成交') {
+                dealInfo.style.display = 'block';
+            } else {
+                dealInfo.style.display = 'none';
+            }
+        }
+
+        function calculateCommission() {
+            const dealAmount = parseFloat(document.getElementById('dealAmount').value) || 0;
+            const commissionRate = parseFloat(document.getElementById('commissionRate').value) || 0;
+            const commissionAmount = dealAmount * (commissionRate / 100);
+            
+            document.getElementById('commissionAmount').value = commissionAmount.toFixed(2);
+        }
+
+        function loadData() {
+            const tbody = document.getElementById('dataTable');
+            tbody.innerHTML = '';
+            
+            dataEntries.forEach((entry, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">${entry.id.slice(-6)}</td>
+                    <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">${entry.parentName}</td>
+                    <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">${entry.phone}</td>
+                    <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">${entry.grade}</td>
+                    <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">${entry.channel}</td>
+                    <td class="px-4 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getDataStatusColor(entry.status)}">
+                            ${entry.status}
+                        </span>
+                    </td>
+                    <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">${entry.feedbackDuration || '-'}</td>
+                    <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">${formatDate(entry.nextFollowUp) || '-'}</td>
+                    <td class="px-4 py-4 whitespace-nowrap text-sm font-medium">
+                        <button onclick="editData(${index})" class="text-indigo-600 hover:text-indigo-900 mr-2">编辑</button>
+                        <button onclick="deleteData(${index})" class="text-red-600 hover:text-red-900">删除</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function getDataStatusColor(status) {
+            switch(status) {
+                case '待联系': return 'bg-yellow-100 text-yellow-800';
+                case '已联系': return 'bg-blue-100 text-blue-800';
+                case '跟进中': return 'bg-purple-100 text-purple-800';
+                case '已成交': return 'bg-green-100 text-green-800';
+                case '无效': return 'bg-red-100 text-red-800';
+                default: return 'bg-gray-100 text-gray-800';
+            }
+        }
+
+        function editData(index) {
+            // Implementation for editing data
+            showToast('编辑功能开发中...');
+        }
+
+        function deleteData(index) {
+            if (confirm('确定要删除这条数据吗？')) {
+                dataEntries.splice(index, 1);
+                saveData();
+                loadData();
+                updateDashboard();
+                showToast('数据已删除');
+            }
+        }
+
+        function filterData() {
+            const searchTerm = document.getElementById('searchData').value.toLowerCase();
+            const statusFilter = document.getElementById('filterStatus').value;
+            const tbody = document.getElementById('dataTable');
+            
+            Array.from(tbody.children).forEach(row => {
+                const text = row.textContent.toLowerCase();
+                const status = row.children[5].textContent.trim();
+                
+                const matchesSearch = text.includes(searchTerm);
+                const matchesStatus = !statusFilter || status === statusFilter;
+                
+                row.style.display = matchesSearch && matchesStatus ? '' : 'none';
+            });
+        }
+
+        // Dashboard updates
+        function updateDashboard() {
+            // Update stats cards
+            document.getElementById('totalData').textContent = dataEntries.length;
+            document.getElementById('pendingFollow').textContent = dataEntries.filter(e => e.status === '待联系' || e.status === '跟进中').length;
+            document.getElementById('completedDeals').textContent = dataEntries.filter(e => e.status === '已成交').length;
+            
+            // Update charts
+            updateDashboardCharts();
+            updateRecentActivities();
+        }
+
+        function updateDashboardCharts() {
+            updateAllocationChart();
+            updatePerformanceChart();
+        }
+
+        function updateAllocationChart() {
+            const period = document.getElementById('allocationPeriod').value;
+            const ctx = document.getElementById('allocationChart').getContext('2d');
+            
+            // Calculate data based on period
+            const channelData = {};
+            const now = new Date();
+            
+            dataEntries.forEach(entry => {
+                const entryDate = new Date(entry.assignedAt);
+                let include = false;
+                
+                switch(period) {
+                    case 'day':
+                        include = entryDate.toDateString() === now.toDateString();
+                        break;
+                    case 'week':
+                        const weekStart = new Date(now);
+                        weekStart.setDate(now.getDate() - now.getDay());
+                        include = entryDate >= weekStart;
+                        break;
+                    case 'month':
+                        include = entryDate.getMonth() === now.getMonth() && entryDate.getFullYear() === now.getFullYear();
+                        break;
+                    case 'year':
+                        include = entryDate.getFullYear() === now.getFullYear();
+                        break;
+                }
+                
+                if (include) {
+                    channelData[entry.channel] = (channelData[entry.channel] || 0) + 1;
+                }
+            });
+            
+            // Destroy existing chart
+            if (window.allocationChart) {
+                window.allocationChart.destroy();
+            }
+            
+            window.allocationChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(channelData),
+                    datasets: [{
+                        data: Object.values(channelData),
+                        backgroundColor: [
+                            '#3B82F6', '#EF4444', '#10B981', '#F59E0B', '#8B5CF6',
+                            '#EC4899', '#6B7280', '#F97316', '#06B6D4', '#84CC16'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        function updatePerformanceChart() {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            
+            // Calculate channel performance
+            const channelStats = {};
+            
+            channels.forEach(channel => {
+                const channelEntries = dataEntries.filter(e => e.channel === channel.name);
+                const totalEntries = channelEntries.length;
+                const completedDeals = channelEntries.filter(e => e.status === '已成交').length;
+                const conversionRate = totalEntries > 0 ? (completedDeals / totalEntries * 100) : 0;
+                
+                channelStats[channel.name] = {
+                    total: totalEntries,
+                    completed: completedDeals,
+                    rate: conversionRate
+                };
+            });
+            
+            // Destroy existing chart
+            if (window.performanceChart) {
+                window.performanceChart.destroy();
+            }
+            
+            window.performanceChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(channelStats),
+                    datasets: [{
+                        label: '数据量',
+                        data: Object.values(channelStats).map(s => s.total),
+                        backgroundColor: '#3B82F6',
+                        yAxisID: 'y'
+                    }, {
+                        label: '成交率 (%)',
+                        data: Object.values(channelStats).map(s => s.rate),
+                        backgroundColor: '#10B981',
+                        type: 'line',
+                        yAxisID: 'y1'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            grid: {
+                                drawOnChartArea: false,
+                            },
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateRecentActivities() {
+            const container = document.getElementById('recentActivities');
+            const recentEntries = dataEntries
+                .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
+                .slice(0, 5);
+            
+            if (recentEntries.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center">暂无活动记录</p>';
+                return;
+            }
+            
+            container.innerHTML = recentEntries.map(entry => `
+                <div class="flex items-center py-3">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-user-plus text-blue-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-900">
+                            新增客户：${entry.parentName}
+                        </p>
+                        <p class="text-sm text-gray-500">
+                            渠道：${entry.channel} | 状态：${entry.status}
+                        </p>
+                        <p class="text-xs text-gray-400">
+                            ${formatDate(entry.createdAt)}
+                        </p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Analysis charts
+        function updateAnalysisCharts() {
+            updateFeedbackTimeChart();
+            updateConversionChart();
+            updatePerformanceTable();
+        }
+
+        function updateFeedbackTimeChart() {
+            const ctx = document.getElementById('feedbackTimeChart').getContext('2d');
+            
+            // Calculate average feedback time by channel
+            const channelFeedbackTimes = {};
+            
+            channels.forEach(channel => {
+                const channelEntries = dataEntries.filter(e => e.channel === channel.name && e.feedbackDuration);
+                if (channelEntries.length > 0) {
+                    const avgTime = channelEntries.reduce((sum, e) => sum + parseFloat(e.feedbackDuration || 0), 0) / channelEntries.length;
+                    channelFeedbackTimes[channel.name] = avgTime;
+                }
+            });
+            
+            // Destroy existing chart
+            if (window.feedbackTimeChart) {
+                window.feedbackTimeChart.destroy();
+            }
+            
+            window.feedbackTimeChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(channelFeedbackTimes),
+                    datasets: [{
+                        label: '平均反馈时间 (小时)',
+                        data: Object.values(channelFeedbackTimes),
+                        backgroundColor: '#F59E0B'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: '时间 (小时)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateConversionChart() {
+            const ctx = document.getElementById('conversionChart').getContext('2d');
+            
+            // Calculate conversion rates by channel
+            const channelConversions = {};
+            
+            channels.forEach(channel => {
+                const channelEntries = dataEntries.filter(e => e.channel === channel.name);
+                const totalEntries = channelEntries.length;
+                const completedDeals = channelEntries.filter(e => e.status === '已成交').length;
+                const conversionRate = totalEntries > 0 ? (completedDeals / totalEntries * 100) : 0;
+                
+                channelConversions[channel.name] = conversionRate;
+            });
+            
+            // Destroy existing chart
+            if (window.conversionChart) {
+                window.conversionChart.destroy();
+            }
+            
+            window.conversionChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: Object.keys(channelConversions),
+                    datasets: [{
+                        label: '转化率 (%)',
+                        data: Object.values(channelConversions),
+                        backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                        borderColor: '#10B981',
+                        pointBackgroundColor: '#10B981'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+        }
+
+        function updatePerformanceTable() {
+            const tbody = document.getElementById('performanceTable');
+            tbody.innerHTML = '';
+            
+            channels.forEach(channel => {
+                const channelEntries = dataEntries.filter(e => e.channel === channel.name);
+                const totalEntries = channelEntries.length;
+                const completedDeals = channelEntries.filter(e => e.status === '已成交').length;
+                const conversionRate = totalEntries > 0 ? (completedDeals / totalEntries * 100).toFixed(1) : '0.0';
+                const totalAmount = channelEntries.reduce((sum, e) => sum + (e.dealAmount || 0), 0);
+                const totalCommission = channelEntries.reduce((sum, e) => sum + (e.commissionAmount || 0), 0);
+                const avgFeedbackTime = channelEntries.filter(e => e.feedbackDuration).length > 0 
+                    ? (channelEntries.reduce((sum, e) => sum + parseFloat(e.feedbackDuration || 0), 0) / channelEntries.filter(e => e.feedbackDuration).length).toFixed(1) 
+                    : '-';
+                
+                // Calculate comprehensive score
+                const score = calculateChannelScore(channel, channelEntries, conversionRate, avgFeedbackTime);
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${channel.name}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${totalEntries}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${avgFeedbackTime}小时</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${completedDeals}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${conversionRate}%</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">¥${totalAmount.toFixed(2)}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">¥${totalCommission.toFixed(2)}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getScoreColor(score)}">
+                            ${score}分
+                        </span>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function calculateChannelScore(channel, entries, conversionRate, avgFeedbackTime) {
+            let score = 0;
+            
+            // Conversion rate score (40%)
+            score += Math.min(parseFloat(conversionRate) * 2, 40);
+            
+            // Feedback time score (30%)
+            if (avgFeedbackTime !== '-') {
+                const feedbackScore = Math.max(30 - parseFloat(avgFeedbackTime), 0);
+                score += Math.min(feedbackScore, 30);
+            }
+            
+            // Data volume score (20%)
+            const volumeScore = Math.min(entries.length, 20);
+            score += volumeScore;
+            
+            // Status bonus (10%)
+            if (channel.status === 'active') {
+                score += 10;
+            } else if (channel.status === 'testing') {
+                score += 5;
+            }
+            
+            return Math.round(score);
+        }
+
+        function getScoreColor(score) {
+            if (score >= 80) return 'bg-green-100 text-green-800';
+            if (score >= 60) return 'bg-yellow-100 text-yellow-800';
+            return 'bg-red-100 text-red-800';
+        }
+
+        // Google Sheets sync functions
+        function handleSyncConfigSubmit(e) {
+            e.preventDefault();
+            
+            syncConfig.appsScriptUrl = document.getElementById('appsScriptUrl').value;
+            syncConfig.spreadsheetId = document.getElementById('spreadsheetId').value;
+            
+            saveSyncConfig();
+            
+            if (syncConfig.spreadsheetId) {
+                document.getElementById('sheetsLink').href = `https://docs.google.com/spreadsheets/d/${syncConfig.spreadsheetId}/edit`;
+            }
+            
+            showToast('同步配置已保存');
+        }
+
+        function testConnection() {
+            if (!syncConfig.appsScriptUrl) {
+                showToast('请先配置 Apps Script URL', 'error');
+                return;
+            }
+            
+            updateSyncStatus('syncing', '测试连接...');
+            
+            fetch(syncConfig.appsScriptUrl + '?action=test', {
+                method: 'GET',
+                mode: 'cors'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    updateSyncStatus('online', '连接成功');
+                    showToast('连接测试成功');
+                    logSync('连接测试', '成功', '与 Google Sheets 连接正常');
+                } else {
+                    throw new Error(data.error || '连接失败');
+                }
+            })
+            .catch(error => {
+                updateSyncStatus('offline', '连接失败');
+                showToast('连接测试失败: ' + error.message, 'error');
+                logSync('连接测试', '失败', error.message);
+            });
+        }
+
+        function syncToSheets() {
+            if (!syncConfig.appsScriptUrl) {
+                showToast('请先配置同步设置', 'error');
+                return;
+            }
+            
+            updateSyncStatus('syncing', '同步到表格...');
+            
+            const syncData = {
+                channels: channels,
+                dataEntries: dataEntries
+            };
+            
+            fetch(syncConfig.appsScriptUrl, {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: 'syncToSheets',
+                    data: syncData
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    updateSyncStatus('online', '同步完成');
+                    showToast('数据已同步到 Google Sheets');
+                    logSync('上传同步', '成功', `同步了 ${dataEntries.length} 条数据`);
+                    updateLastSyncTime();
+                } else {
+                    throw new Error(data.error || '同步失败');
+                }
+            })
+            .catch(error => {
+                updateSyncStatus('offline', '同步失败');
+                showToast('同步失败: ' + error.message, 'error');
+                logSync('上传同步', '失败', error.message);
+            });
+        }
+
+        function syncFromSheets() {
+            if (!syncConfig.appsScriptUrl) {
+                showToast('请先配置同步设置', 'error');
+                return;
+            }
+            
+            updateSyncStatus('syncing', '从表格同步...');
+            
+            fetch(syncConfig.appsScriptUrl + '?action=syncFromSheets', {
+                method: 'GET',
+                mode: 'cors'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && data.data) {
+                    // Merge data from sheets
+                    if (data.data.channels) {
+                        channels = data.data.channels;
+                        saveChannels();
+                        loadChannels();
+                        updateChannelOptions();
+                    }
+                    
+                    if (data.data.dataEntries) {
+                        dataEntries = data.data.dataEntries;
+                        saveData();
+                        loadData();
+                        updateDashboard();
+                    }
+                    
+                    updateSyncStatus('online', '同步完成');
+                    showToast('数据已从 Google Sheets 同步');
+                    logSync('下载同步', '成功', `同步了 ${data.data.dataEntries?.length || 0} 条数据`);
+                    updateLastSyncTime();
+                } else {
+                    throw new Error(data.error || '同步失败');
+                }
+            })
+            .catch(error => {
+                updateSyncStatus('offline', '同步失败');
+                showToast('从表格同步失败: ' + error.message, 'error');
+                logSync('下载同步', '失败', error.message);
+            });
+        }
+
+        function fullSync() {
+            syncToSheets();
+            setTimeout(() => {
+                syncFromSheets();
+            }, 2000);
+        }
+
+        function manualSync() {
+            const icon = document.getElementById('syncIcon');
+            icon.classList.add('spinning');
+            
+            fullSync();
+            
+            setTimeout(() => {
+                icon.classList.remove('spinning');
+            }, 3000);
+        }
+
+        function startAutoSync() {
+            if (autoSyncInterval) {
+                clearInterval(autoSyncInterval);
+            }
+            
+            autoSyncInterval = setInterval(() => {
+                if (syncConfig.appsScriptUrl) {
+                    fullSync();
+                }
+            }, 5 * 60 * 1000); // 5 minutes
+        }
+
+        function stopAutoSync() {
+            if (autoSyncInterval) {
+                clearInterval(autoSyncInterval);
+                autoSyncInterval = null;
+            }
+        }
+
+        function updateSyncStatus(status, text) {
+            const indicator = document.getElementById('syncIndicator');
+            const statusText = document.getElementById('syncText');
+            
+            indicator.className = 'w-3 h-3 rounded-full ' + 
+                (status === 'online' ? 'online-indicator' : 
+                 status === 'offline' ? 'offline-indicator' : 
+                 'syncing-indicator sync-indicator');
+            
+            statusText.textContent = text;
+        }
+
+        function updateLastSyncTime() {
+            const now = new Date();
+            document.getElementById('lastSyncTime').textContent = formatDate(now.toISOString());
+        }
+
+        function logSync(action, status, message) {
+            const logEntry = {
+                timestamp: new Date().toISOString(),
+                action: action,
+                status: status,
+                message: message
+            };
+            
+            syncLog.unshift(logEntry);
+            
+            // Keep only last 50 entries
+            if (syncLog.length > 50) {
+                syncLog = syncLog.slice(0, 50);
+            }
+            
+            saveSyncLog();
+            updateSyncLogDisplay();
+        }
+
+        function updateSyncLogDisplay() {
+            const container = document.getElementById('syncLog');
+            
+            if (syncLog.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center">暂无同步记录</p>';
+                return;
+            }
+            
+            container.innerHTML = syncLog.map(entry => `
+                <div class="flex items-center justify-between py-2 border-b border-gray-100 last:border-b-0">
+                    <div class="flex items-center">
+                        <i class="fas ${entry.status === '成功' ? 'fa-check-circle text-green-600' : 'fa-times-circle text-red-600'} mr-2"></i>
+                        <div>
+                            <span class="font-medium text-sm">${entry.action}</span>
+                            <p class="text-xs text-gray-500">${entry.message}</p>
+                        </div>
+                    </div>
+                    <span class="text-xs text-gray-400">${formatDate(entry.timestamp)}</span>
+                </div>
+            `).join('');
+        }
+
+        function clearSyncLog() {
+            if (confirm('确定要清空同步日志吗？')) {
+                syncLog = [];
+                saveSyncLog();
+                updateSyncLogDisplay();
+                showToast('同步日志已清空');
+            }
+        }
+
+        function showSetupGuide() {
+            // Implementation for showing detailed setup guide
+            showToast('详细配置指南功能开发中...');
+        }
+
+        // Data persistence functions
+        function saveChannels() {
+            localStorage.setItem('channels', JSON.stringify(channels));
+        }
+
+        function saveData() {
+            localStorage.setItem('dataEntries', JSON.stringify(dataEntries));
+        }
+
+        function saveSyncConfig() {
+            syncConfig.autoSync = document.getElementById('autoSync').checked;
+            localStorage.setItem('syncConfig', JSON.stringify(syncConfig));
+        }
+
+        function saveSyncLog() {
+            localStorage.setItem('syncLog', JSON.stringify(syncLog));
+        }
+
+        // Export function
+        function exportData() {
+            const exportData = {
+                channels: channels,
+                dataEntries: dataEntries,
+                exportDate: new Date().toISOString()
+            };
+            
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `channel_data_${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            
+            showToast('数据导出成功');
+        }
+
+        // Utility functions
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            
+            const date = new Date(dateString);
+            return date.toLocaleString('zh-CN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toastMessage.textContent = message;
+            
+            if (type === 'error') {
+                toast.className = 'fixed top-4 right-4 bg-red-600 text-white px-6 py-3 rounded-md shadow-lg z-50';
+            } else {
+                toast.className = 'fixed top-4 right-4 bg-green-600 text-white px-6 py-3 rounded-md shadow-lg z-50';
+            }
+            
+            toast.classList.remove('hidden');
+            
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        // Initialize sync log display on load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateSyncLogDisplay();
+        });
+    </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"968e52ec6af3e69a","serverTiming":{"name":{"cfExtPri":true,"cfEdge":true,"cfOrigin":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.7.0","token":"4edd5f8ec12a48cfa682ab8261b80a79"}' crossorigin="anonymous"></script>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDnsyjLITZ6KV%2FJUNN6epVhxK3SCB%2FhykAyfNVT1u2q6eGrn%2B6Z6j1xqtnXznRC%2BSi%2B42rRroGpb26Ud9Xh0vQC8wjVnPbDM05uRYkBM%2F5BtspN8nQKrhiZidguRZFQA8508A6GARQsyxt85zmNw6QHxAL1707Wj%2F%2FHfjlRn5NgzaQJOty4E8TROV6D2xzHu5%2FYABAedzb4JaRQSR1OXmy7rvvYNrLbWinm8HzwadIdTMvCYYbPJ%2Bfdia4ESou5kY%2FHkZBiZXf55nZmVWMCNwiW%2FvTrTLere9anlzly9%2F4s9RIlmvhjpCypnPsfQ2jWCsxYQWCIv4Uk9NJDGJAwxIF6sJZOIB4%2BjucaQrNfkstoUeq8yho1Qheau1drEYzJh94FILTmKynxhCo5oqyqdL0%2Fu7coIFL3cNQC9xfqBc5yNT5AMIp2yXika8VRsimoXGCQqFGMYahHrp0hr4S30wkMZEi2BfZQM2xV%2F0M41O12qejh%2BnEGKSotbCIanS%2Frkkd2J%2BNbiGRR%2FveYEpGB%2Bh%2FeU%3D";
+        window.__genspark_locale = "zh-CN";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDnsyjLITZ6KV/JUNN6epVhxK3SCB/hykAyfNVT1u2q6eGrn+6Z6j1xqtnXznRC+Si+42rRroGpb26Ud9Xh0vQC8wjVnPbDM05uRYkBM/5BtspN8nQKrhiZidguRZFQA8508A6GARQsyxt85zmNw6QHxAL1707Wj//HfjlRn5NgzaQJOty4E8TROV6D2xzHu5/YABAedzb4JaRQSR1OXmy7rvvYNrLbWinm8HzwadIdTMvCYYbPJ+fdia4ESou5kY/HkZBiZXf55nZmVWMCNwiW/vTrTLere9anlzly9/4s9RIlmvhjpCypnPsfQ2jWCsxYQWCIv4Uk9NJDGJAwxIF6sJZOIB4+jucaQrNfkstoUeq8yho1Qheau1drEYzJh94FILTmKynxhCo5oqyqdL0/u7coIFL3cNQC9xfqBc5yNT5AMIp2yXika8VRsimoXGCQqFGMYahHrp0hr4S30wkMZEi2BfZQM2xV/0M41O12qejh+nEGKSotbCIanS/rkkd2J+NbiGRR/veYEpGB+h/eU=";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    
