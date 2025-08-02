@@ -1,0 +1,1651 @@
+!DOCTYPE html
+html lang=zh-CN
+head
+    meta charset=UTF-8
+    meta name=viewport content=width=device-width, initial-scale=1.0
+    title万鹤书院HKDSE智能排课系统title
+    link href=httpscdn.jsdelivr.netnpmtailwindcss@2.2.19disttailwind.min.css rel=stylesheet
+    link rel=stylesheet href=httpscdn.jsdelivr.netnpm@fortawesomefontawesome-free@6.4.0cssall.min.css
+    style
+        .schedule-cell {
+            min-height 60px;
+            border 1px solid #e5e7eb;
+        }
+        .subject-card {
+            transition all 0.3s ease;
+        }
+        .subject-cardhover {
+            transform translateY(-2px);
+        }
+        .constraint-card {
+            border-left 4px solid #3b82f6;
+        }
+        .time-slot {
+            background linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .fade-in {
+            animation fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity 0; transform translateY(20px); }
+            to { opacity 1; transform translateY(0); }
+        }
+        .schedule-grid {
+            display grid;
+            grid-template-columns 120px repeat(5, 1fr);
+            gap 1px;
+            background-color #e5e7eb;
+        }
+        .tab-content {
+            display none;
+        }
+        .tab-content.active {
+            display block;
+        }
+        .solution-nav {
+            background linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    style
+head
+body class=bg-gray-50 min-h-screen
+    !-- 顶部导航 --
+    nav class=bg-blue-600 text-white shadow-lg
+        div class=max-w-7xl mx-auto px-4 smpx-6 lgpx-8
+            div class=flex items-center justify-between h-16
+                div class=flex items-center
+                    i class=fas fa-graduation-cap text-2xl mr-3i
+                    h1 class=text-xl font-bold万鹤书院HKDSE智能排课系统h1
+                div
+                div class=flex items-center space-x-4
+                    span class=text-sm专业版 v2.0span
+                div
+            div
+        div
+    nav
+
+    div class=max-w-7xl mx-auto p-6
+        !-- 标签页导航 --
+        div class=mb-6
+            nav class=flex space-x-8
+                button onclick=showTab('teachers') id=tab-teachers class=tab-btn py-2 px-1 border-b-2 border-blue-500 font-medium text-blue-600教师管理button
+                button onclick=showTab('courses') id=tab-courses class=tab-btn py-2 px-1 border-b-2 border-transparent font-medium text-gray-500 hovertext-gray-700课程设置button
+                button onclick=showTab('constraints') id=tab-constraints class=tab-btn py-2 px-1 border-b-2 border-transparent font-medium text-gray-500 hovertext-gray-700约束条件button
+                button onclick=showTab('schedule') id=tab-schedule class=tab-btn py-2 px-1 border-b-2 border-transparent font-medium text-gray-500 hovertext-gray-700生成课表button
+            nav
+        div
+
+        !-- 教师管理标签页 --
+        div id=content-teachers class=tab-content active
+            div class=bg-white rounded-lg shadow-md p-6 mb-6
+                h2 class=text-2xl font-bold mb-4 text-gray-800
+                    i class=fas fa-chalkboard-teacher mr-2i教师信息管理
+                h2
+                
+                div class=grid mdgrid-cols-2 gap-6
+                    !-- 添加教师表单 --
+                    div class=bg-blue-50 p-4 rounded-lg
+                        h3 class=text-lg font-semibold mb-3添加新教师h3
+                        form id=teacherForm class=space-y-4
+                            div
+                                label class=block text-sm font-medium text-gray-700 mb-1教师姓名label
+                                input type=text id=teacherName class=w-full border border-gray-300 rounded-md px-3 py-2 placeholder=请输入教师姓名 required
+                            div
+                            div
+                                label class=block text-sm font-medium text-gray-700 mb-1可授课科目label
+                                div class=grid grid-cols-2 gap-2
+                                    label class=flex items-centerinput type=checkbox value=中文 class=mr-2中文label
+                                    label class=flex items-centerinput type=checkbox value=数学 class=mr-2数学label
+                                    label class=flex items-centerinput type=checkbox value=英文听力A class=mr-2英文听力Alabel
+                                    label class=flex items-centerinput type=checkbox value=英文听力B class=mr-2英文听力Blabel
+                                    label class=flex items-centerinput type=checkbox value=英文阅读 class=mr-2英文阅读label
+                                    label class=flex items-centerinput type=checkbox value=英文写作 class=mr-2英文写作label
+                                    label class=flex items-centerinput type=checkbox value=英文口语 class=mr-2英文口语label
+                                    label class=flex items-centerinput type=checkbox value=物理 class=mr-2物理label
+                                    label class=flex items-centerinput type=checkbox value=化学 class=mr-2化学label
+                                    label class=flex items-centerinput type=checkbox value=生物 class=mr-2生物label
+                                    label class=flex items-centerinput type=checkbox value=经济 class=mr-2经济label
+                                    label class=flex items-centerinput type=checkbox value=M2 class=mr-2M2label
+                                    label class=flex items-centerinput type=checkbox value=历史 class=mr-2历史label
+                                div
+                            div
+                            div
+                                label class=block text-sm font-medium text-gray-700 mb-1备注label
+                                textarea id=teacherNotes class=w-full border border-gray-300 rounded-md px-3 py-2 h-20 placeholder=可同时教授的班级等特殊说明textarea
+                            div
+                            button type=submit class=w-full bg-blue-600 text-white py-2 px-4 rounded-md hoverbg-blue-700
+                                i class=fas fa-plus mr-2i添加教师
+                            button
+                        form
+                    div
+
+                    !-- 教师列表 --
+                    div
+                        h3 class=text-lg font-semibold mb-3教师列表h3
+                        div id=teacherList class=space-y-3 max-h-96 overflow-y-auto
+                            !-- 动态生成教师列表 --
+                        div
+                    div
+                div
+            div
+        div
+
+        !-- 课程设置标签页 --
+        div id=content-courses class=tab-content
+            div class=bg-white rounded-lg shadow-md p-6 mb-6
+                h2 class=text-2xl font-bold mb-4 text-gray-800
+                    i class=fas fa-book mr-2i课程设置
+                h2
+
+                div class=grid lggrid-cols-2 gap-6
+                    !-- 必修科设置 --
+                    div class=bg-green-50 p-4 rounded-lg
+                        h3 class=text-lg font-semibold mb-3 text-green-800必修科目h3
+                        div class=space-y-4
+                            div class=bg-white p-3 rounded border
+                                div class=flex justify-between items-center
+                                    span class=font-medium中文span
+                                    span class=text-sm text-gray-600每周6课时span
+                                div
+                                p class=text-sm text-gray-500 mt-1按能力分1、2班授课p
+                            div
+                            div class=bg-white p-3 rounded border
+                                div class=flex justify-between items-center
+                                    span class=font-medium数学span
+                                    span class=text-sm text-gray-600每周6课时span
+                                div
+                                p class=text-sm text-gray-500 mt-1按能力分1、2班授课p
+                            div
+                            div class=bg-white p-3 rounded border
+                                div class=flex justify-between items-center
+                                    span class=font-medium英文span
+                                    span class=text-sm text-gray-600每周10课时span
+                                div
+                                p class=text-sm text-gray-500 mt-1分A、B班，包含5个板块教学p
+                                div class=mt-2 flex flex-wrap gap-1
+                                    span class=px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded听力Aspan
+                                    span class=px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded听力Bspan
+                                    span class=px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded阅读span
+                                    span class=px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded写作span
+                                    span class=px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded口语span
+                                div
+                            div
+                        div
+                    div
+
+                    !-- 选修科设置 --
+                    div class=bg-orange-50 p-4 rounded-lg
+                        h3 class=text-lg font-semibold mb-3 text-orange-800选修科目组合h3
+                        div class=space-y-4
+                            div class=bg-white p-3 rounded border
+                                h4 class=font-medium text-purple-700选修组合1h4
+                                div class=flex items-center mt-2
+                                    span class=px-3 py-1 bg-purple-100 text-purple-800 text-sm rounded mr-2物理span
+                                    span class=text-gray-400&span
+                                    span class=px-3 py-1 bg-purple-100 text-purple-800 text-sm rounded ml-2历史span
+                                div
+                                p class=text-sm text-gray-500 mt-1每科每周5课时，同时间不同教室p
+                            div
+                            div class=bg-white p-3 rounded border
+                                h4 class=font-medium text-indigo-700选修组合2h4
+                                div class=flex items-center mt-2
+                                    span class=px-3 py-1 bg-indigo-100 text-indigo-800 text-sm rounded mr-2化学span
+                                    span class=text-gray-400&span
+                                    span class=px-3 py-1 bg-indigo-100 text-indigo-800 text-sm rounded ml-2经济span
+                                div
+                                p class=text-sm text-gray-500 mt-1每科每周5课时，同时间不同教室p
+                            div
+                            div class=bg-white p-3 rounded border
+                                h4 class=font-medium text-pink-700选修组合3h4
+                                div class=flex items-center mt-2
+                                    span class=px-3 py-1 bg-pink-100 text-pink-800 text-sm rounded mr-2生物span
+                                    span class=text-gray-400&span
+                                    span class=px-3 py-1 bg-pink-100 text-pink-800 text-sm rounded ml-2M2span
+                                div
+                                p class=text-sm text-gray-500 mt-1每科每周5课时，同时间不同教室p
+                            div
+                        div
+                    div
+                div
+
+                !-- 班级设置 --
+                div class=mt-6 bg-blue-50 p-4 rounded-lg
+                    h3 class=text-lg font-semibold mb-3 text-blue-800班级设置h3
+                    div class=grid mdgrid-cols-2 gap-4
+                        div class=bg-white p-3 rounded border
+                            h4 class=font-medium text-green-700 mb-2全年班（4月开学）h4
+                            ul class=text-sm text-gray-600 space-y-1
+                                li• 英语分A、B班（按成绩）li
+                                li• 中文、数学分1、2班（按能力）li
+                                li• 选修课走班制li
+                            ul
+                        div
+                        div class=bg-white p-3 rounded border
+                            h4 class=font-medium text-orange-700 mb-2冲刺班（8月开学）h4
+                            ul class=text-sm text-gray-600 space-y-1
+                                li• 所有科目统一授课li
+                                li• 不按科目分班li
+                                li• 选修课统一安排li
+                            ul
+                        div
+                    div
+                div
+            div
+        div
+
+        !-- 约束条件标签页 --
+        div id=content-constraints class=tab-content
+            div class=bg-white rounded-lg shadow-md p-6 mb-6
+                h2 class=text-2xl font-bold mb-4 text-gray-800
+                    i class=fas fa-cogs mr-2i约束条件设置
+                h2
+
+                div class=grid lggrid-cols-2 gap-6
+                    !-- 教师约束设置 --
+                    div class=constraint-card bg-blue-50 p-4 rounded-lg
+                        h3 class=text-lg font-semibold mb-3 text-blue-800教师约束条件h3
+                        
+                        div class=mb-4
+                            label class=block text-sm font-medium text-gray-700 mb-2选择教师label
+                            select id=constraintTeacher class=w-full border border-gray-300 rounded-md px-3 py-2
+                                option value=请选择教师option
+                            select
+                        div
+
+                        div class=space-y-4
+                            !-- 固定时间约束 --
+                            div class=bg-white p-3 rounded border
+                                h4 class=font-medium mb-2
+                                    i class=fas fa-clock text-green-600 mr-2i只能排课时间
+                                h4
+                                div class=grid grid-cols-5 gap-2 text-xs
+                                    div class=text-center font-medium时段div
+                                    div class=text-center font-medium周一div
+                                    div class=text-center font-medium周二div
+                                    div class=text-center font-medium周三div
+                                    div class=text-center font-medium周四div
+                                    div class=text-center font-medium周五div
+                                    
+                                    div class=text-center早自习div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=早自习-1div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=早自习-2div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=早自习-3div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=早自习-4div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=早自习-5div
+                                    
+                                    div class=text-center上午1div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=上午1-1div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=上午1-2div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=上午1-3div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=上午1-4div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=上午1-5div
+                                    
+                                    div class=text-center上午2div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=上午2-1div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=上午2-2div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=上午2-3div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=上午2-4div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=上午2-5div
+                                    
+                                    div class=text-center上午3div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=上午3-1div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=上午3-2div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=上午3-3div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=上午3-4div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=上午3-5div
+                                    
+                                    div class=text-center上午4div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=上午4-1div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=上午4-2div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=上午4-3div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=上午4-4div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=上午4-5div
+                                    
+                                    div class=text-center下午1div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=下午1-1div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=下午1-2div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=下午1-3div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=下午1-4div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=下午1-5div
+                                    
+                                    div class=text-center下午2div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=下午2-1div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=下午2-2div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=下午2-3div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=下午2-4div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=下午2-5div
+                                    
+                                    div class=text-center下午3div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=下午3-1div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=下午3-2div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=下午3-3div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=下午3-4div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=下午3-5div
+                                    
+                                    div class=text-center下午4div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=下午4-1div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=下午4-2div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=下午4-3div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=下午4-4div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=下午4-5div
+                                    
+                                    div class=text-center晚自习1div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=晚自习1-1div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=晚自习1-2div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=晚自习1-3div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=晚自习1-4div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=晚自习1-5div
+                                    
+                                    div class=text-center晚自习2div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=晚自习2-1div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=晚自习2-2div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=晚自习2-3div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=晚自习2-4div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=晚自习2-5div
+                                    
+                                    div class=text-center晚自习3div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=晚自习3-1div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=晚自习3-2div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=晚自习3-3div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=晚自习3-4div
+                                    div class=text-centerinput type=checkbox class=available-time data-time=晚自习3-5div
+                                div
+                            div
+
+                            !-- 不可用时间约束 --
+                            div class=bg-white p-3 rounded border
+                                h4 class=font-medium mb-2
+                                    i class=fas fa-ban text-red-600 mr-2i不可排课时间
+                                h4
+                                div class=grid grid-cols-5 gap-2 text-xs
+                                    div class=text-center font-medium时段div
+                                    div class=text-center font-medium周一div
+                                    div class=text-center font-medium周二div
+                                    div class=text-center font-medium周三div
+                                    div class=text-center font-medium周四div
+                                    div class=text-center font-medium周五div
+                                    
+                                    div class=text-center早自习div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=早自习-1div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=早自习-2div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=早自习-3div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=早自习-4div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=早自习-5div
+                                    
+                                    div class=text-center上午1div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=上午1-1div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=上午1-2div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=上午1-3div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=上午1-4div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=上午1-5div
+                                    
+                                    div class=text-center上午2div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=上午2-1div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=上午2-2div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=上午2-3div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=上午2-4div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=上午2-5div
+                                    
+                                    div class=text-center上午3div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=上午3-1div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=上午3-2div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=上午3-3div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=上午3-4div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=上午3-5div
+                                    
+                                    div class=text-center上午4div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=上午4-1div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=上午4-2div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=上午4-3div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=上午4-4div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=上午4-5div
+                                    
+                                    div class=text-center下午1div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=下午1-1div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=下午1-2div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=下午1-3div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=下午1-4div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=下午1-5div
+                                    
+                                    div class=text-center下午2div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=下午2-1div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=下午2-2div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=下午2-3div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=下午2-4div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=下午2-5div
+                                    
+                                    div class=text-center下午3div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=下午3-1div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=下午3-2div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=下午3-3div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=下午3-4div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=下午3-5div
+                                    
+                                    div class=text-center下午4div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=下午4-1div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=下午4-2div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=下午4-3div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=下午4-4div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=下午4-5div
+                                    
+                                    div class=text-center晚自习1div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=晚自习1-1div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=晚自习1-2div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=晚自习1-3div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=晚自习1-4div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=晚自习1-5div
+                                    
+                                    div class=text-center晚自习2div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=晚自习2-1div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=晚自习2-2div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=晚自习2-3div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=晚自习2-4div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=晚自习2-5div
+                                    
+                                    div class=text-center晚自习3div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=晚自习3-1div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=晚自习3-2div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=晚自习3-3div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=晚自习3-4div
+                                    div class=text-centerinput type=checkbox class=unavailable-time data-time=晚自习3-5div
+                                div
+                            div
+
+                            !-- 优先时间约束 --
+                            div class=bg-white p-3 rounded border
+                                h4 class=font-medium mb-2
+                                    i class=fas fa-star text-yellow-600 mr-2i优先排课时间
+                                h4
+                                div class=grid grid-cols-5 gap-2 text-xs
+                                    div class=text-center font-medium时段div
+                                    div class=text-center font-medium周一div
+                                    div class=text-center font-medium周二div
+                                    div class=text-center font-medium周三div
+                                    div class=text-center font-medium周四div
+                                    div class=text-center font-medium周五div
+                                    
+                                    div class=text-center早自习div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=早自习-1div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=早自习-2div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=早自习-3div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=早自习-4div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=早自习-5div
+                                    
+                                    div class=text-center上午1div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=上午1-1div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=上午1-2div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=上午1-3div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=上午1-4div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=上午1-5div
+                                    
+                                    div class=text-center上午2div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=上午2-1div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=上午2-2div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=上午2-3div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=上午2-4div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=上午2-5div
+                                    
+                                    div class=text-center上午3div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=上午3-1div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=上午3-2div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=上午3-3div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=上午3-4div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=上午3-5div
+                                    
+                                    div class=text-center上午4div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=上午4-1div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=上午4-2div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=上午4-3div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=上午4-4div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=上午4-5div
+                                    
+                                    div class=text-center下午1div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=下午1-1div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=下午1-2div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=下午1-3div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=下午1-4div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=下午1-5div
+                                    
+                                    div class=text-center下午2div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=下午2-1div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=下午2-2div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=下午2-3div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=下午2-4div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=下午2-5div
+                                    
+                                    div class=text-center下午3div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=下午3-1div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=下午3-2div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=下午3-3div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=下午3-4div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=下午3-5div
+                                    
+                                    div class=text-center下午4div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=下午4-1div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=下午4-2div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=下午4-3div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=下午4-4div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=下午4-5div
+                                    
+                                    div class=text-center晚自习1div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=晚自习1-1div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=晚自习1-2div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=晚自习1-3div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=晚自习1-4div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=晚自习1-5div
+                                    
+                                    div class=text-center晚自习2div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=晚自习2-1div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=晚自习2-2div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=晚自习2-3div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=晚自习2-4div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=晚自习2-5div
+                                    
+                                    div class=text-center晚自习3div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=晚自习3-1div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=晚自习3-2div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=晚自习3-3div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=晚自习3-4div
+                                    div class=text-centerinput type=checkbox class=preferred-time data-time=晚自习3-5div
+                                div
+                            div
+
+                            button onclick=saveTeacherConstraints() class=w-full bg-blue-600 text-white py-2 px-4 rounded-md hoverbg-blue-700
+                                i class=fas fa-save mr-2i保存约束条件
+                            button
+                        div
+                    div
+
+                    !-- 全局约束设置 --
+                    div class=constraint-card bg-green-50 p-4 rounded-lg
+                        h3 class=text-lg font-semibold mb-3 text-green-800全局约束条件h3
+                        
+                        div class=space-y-4
+                            !-- 课程安排约束 --
+                            div class=bg-white p-3 rounded border
+                                h4 class=font-medium mb-2
+                                    i class=fas fa-calendar text-blue-600 mr-2i课程安排约束
+                                h4
+                                div class=space-y-2
+                                    label class=flex items-center
+                                        input type=checkbox id=noBackToBack class=mr-2 checked
+                                        span class=text-sm避免同科目连续安排span
+                                    label
+                                    label class=flex items-center
+                                        input type=checkbox id=evenDistribution class=mr-2 checked
+                                        span class=text-sm课程均匀分布span
+                                    label
+                                    label class=flex items-center
+                                        input type=checkbox id=morningPriority class=mr-2
+                                        span class=text-sm重要科目优先安排上午span
+                                    label
+                                div
+                            div
+
+                            !-- 教室资源约束 --
+                            div class=bg-white p-3 rounded border
+                                h4 class=font-medium mb-2
+                                    i class=fas fa-door-open text-purple-600 mr-2i教室资源约束
+                                h4
+                                div class=space-y-2
+                                    div
+                                        label class=block text-sm font-medium text-gray-700 mb-1教室总数label
+                                        input type=number id=totalClassrooms class=w-full border border-gray-300 rounded-md px-3 py-1 value=10 min=1
+                                    div
+                                    div
+                                        label class=block text-sm font-medium text-gray-700 mb-1特殊教室需求label
+                                        textarea id=specialRooms class=w-full border border-gray-300 rounded-md px-3 py-2 h-16 placeholder=例如：物理需要实验室，化学需要实验室textarea
+                                    div
+                                div
+                            div
+
+                            !-- 学生约束 --
+                            div class=bg-white p-3 rounded border
+                                h4 class=font-medium mb-2
+                                    i class=fas fa-users text-orange-600 mr-2i学生约束
+                                h4
+                                div class=space-y-2
+                                    label class=flex items-center
+                                        input type=checkbox id=walkingTime class=mr-2 checked
+                                        span class=text-sm考虑走班换教室时间span
+                                    label
+                                    label class=flex items-center
+                                        input type=checkbox id=lunchBreak class=mr-2 checked
+                                        span class=text-sm保证午休时间span
+                                    label
+                                    div
+                                        label class=block text-sm font-medium text-gray-700 mb-1每日最大课时label
+                                        input type=number id=maxDailyHours class=w-full border border-gray-300 rounded-md px-3 py-1 value=8 min=1 max=12
+                                    div
+                                div
+                            div
+
+                            !-- 优化目标 --
+                            div class=bg-white p-3 rounded border
+                                h4 class=font-medium mb-2
+                                    i class=fas fa-target text-red-600 mr-2i优化目标权重
+                                h4
+                                div class=space-y-2
+                                    div
+                                        label class=block text-sm font-medium text-gray-700 mb-1教师满意度label
+                                        input type=range id=teacherSatisfaction class=w-full min=0 max=10 value=8
+                                        span class=text-xs text-gray-500当前值：span id=teacherSatisfactionValue8spanspan
+                                    div
+                                    div
+                                        label class=block text-sm font-medium text-gray-700 mb-1课程分布均匀性label
+                                        input type=range id=courseDistribution class=w-full min=0 max=10 value=7
+                                        span class=text-xs text-gray-500当前值：span id=courseDistributionValue7spanspan
+                                    div
+                                    div
+                                        label class=block text-sm font-medium text-gray-700 mb-1教室利用率label
+                                        input type=range id=roomUtilization class=w-full min=0 max=10 value=6
+                                        span class=text-xs text-gray-500当前值：span id=roomUtilizationValue6spanspan
+                                    div
+                                div
+                            div
+
+                            button onclick=saveGlobalConstraints() class=w-full bg-green-600 text-white py-2 px-4 rounded-md hoverbg-green-700
+                                i class=fas fa-save mr-2i保存全局约束
+                            button
+                        div
+                    div
+                div
+
+                !-- 已设置约束条件列表 --
+                div class=mt-6 bg-gray-50 p-4 rounded-lg
+                    h3 class=text-lg font-semibold mb-3已设置约束条件h3
+                    div id=constraintsList class=space-y-2
+                        !-- 动态生成约束条件列表 --
+                    div
+                div
+            div
+        div
+
+        !-- 生成课表标签页 --
+        div id=content-schedule class=tab-content
+            div class=bg-white rounded-lg shadow-md p-6 mb-6
+                h2 class=text-2xl font-bold mb-4 text-gray-800
+                    i class=fas fa-magic mr-2i智能排课生成
+                h2
+
+                !-- 排课参数设置 --
+                div class=grid lggrid-cols-3 gap-6 mb-6
+                    div class=bg-blue-50 p-4 rounded-lg
+                        h3 class=text-lg font-semibold mb-3 text-blue-800生成参数h3
+                        div class=space-y-3
+                            div
+                                label class=block text-sm font-medium text-gray-700 mb-1生成方案数量label
+                                select id=solutionCount class=w-full border border-gray-300 rounded-md px-3 py-2
+                                    option value=33个方案option
+                                    option value=5 selected5个方案option
+                                    option value=1010个方案option
+                                select
+                            div
+                            div
+                                label class=block text-sm font-medium text-gray-700 mb-1算法类型label
+                                select id=algorithmType class=w-full border border-gray-300 rounded-md px-3 py-2
+                                    option value=backtrack selected回溯算法option
+                                    option value=genetic遗传算法option
+                                    option value=simulated模拟退火option
+                                select
+                            div
+                            div
+                                label class=block text-sm font-medium text-gray-700 mb-1最大运行时间（秒）label
+                                input type=number id=maxRuntime class=w-full border border-gray-300 rounded-md px-3 py-2 value=30 min=10 max=300
+                            div
+                        div
+                    div
+
+                    div class=bg-green-50 p-4 rounded-lg
+                        h3 class=text-lg font-semibold mb-3 text-green-800数据检查h3
+                        div class=space-y-2
+                            div class=flex items-center
+                                i id=teacherCheck class=fas fa-question-circle text-gray-400 mr-2i
+                                span class=text-sm教师信息 (span id=teacherCount0span位)span
+                            div
+                            div class=flex items-center
+                                i id=constraintCheck class=fas fa-question-circle text-gray-400 mr-2i
+                                span class=text-sm约束条件 (span id=constraintCount0span条)span
+                            div
+                            div class=flex items-center
+                                i id=courseCheck class=fas fa-check-circle text-green-500 mr-2i
+                                span class=text-sm课程设置 (已配置)span
+                            div
+                        div
+                        button onclick=checkData() class=w-full mt-3 bg-green-600 text-white py-2 px-4 rounded-md hoverbg-green-700
+                            i class=fas fa-check mr-2i检查数据完整性
+                        button
+                    div
+
+                    div class=bg-purple-50 p-4 rounded-lg
+                        h3 class=text-lg font-semibold mb-3 text-purple-800快速开始h3
+                        div class=space-y-3
+                            button onclick=generateSampleData() class=w-full bg-purple-600 text-white py-2 px-4 rounded-md hoverbg-purple-700
+                                i class=fas fa-magic mr-2i生成示例数据
+                            button
+                            p class=text-xs text-gray-600 mt-2点击生成示例数据快速体验排课功能p
+                        div
+                    div
+                div
+
+                !-- 开始排课按钮 --
+                div class=text-center mb-6
+                    button onclick=startScheduling() id=startSchedulingBtn class=bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-8 rounded-lg text-lg font-semibold hoverfrom-blue-700 hoverto-purple-700 disabledopacity-50 disabledcursor-not-allowed
+                        i class=fas fa-play mr-2i开始智能排课
+                    button
+                div
+
+                !-- 进度显示 --
+                div id=progressContainer class=hidden mb-6
+                    div class=bg-gray-200 rounded-full h-3 mb-2
+                        div id=progressBar class=bg-gradient-to-r from-blue-600 to-purple-600 h-3 rounded-full transition-all duration-300 style=width 0%div
+                    div
+                    div class=text-center
+                        span id=progressText class=text-sm text-gray-600正在初始化...span
+                    div
+                div
+
+                !-- 方案切换导航 --
+                div id=solutionNavigation class=hidden mb-6
+                    div class=solution-nav text-white p-4 rounded-lg
+                        div class=flex items-center justify-between
+                            h3 class=text-lg font-semibold排课方案h3
+                            div class=flex items-center space-x-4
+                                button onclick=previousSolution() id=prevBtn class=bg-white bg-opacity-20 hoverbg-opacity-30 px-3 py-1 rounded
+                                    i class=fas fa-chevron-lefti 上一个
+                                button
+                                span id=solutionInfo class=text-sm方案 1  5span
+                                button onclick=nextSolution() id=nextBtn class=bg-white bg-opacity-20 hoverbg-opacity-30 px-3 py-1 rounded
+                                    下一个 i class=fas fa-chevron-righti
+                                button
+                            div
+                        div
+                        div class=mt-2 flex items-center justify-between text-sm
+                            div
+                                span评分：span id=currentScore class=font-semibold--spanspan
+                                span class=ml-4冲突：span id=currentConflicts class=font-semibold--spanspan
+                            div
+                            button onclick=exportCurrentSolution() class=bg-white bg-opacity-20 hoverbg-opacity-30 px-3 py-1 rounded
+                                i class=fas fa-download mr-1i导出当前方案
+                            button
+                        div
+                    div
+                div
+
+                !-- 课表展示区域 --
+                div id=scheduleResults class=hidden
+                    !-- 分班课表 --
+                    div class=mb-8
+                        h3 class=text-xl font-semibold mb-4 text-gray-800分班课表h3
+                        div class=grid lggrid-cols-2 gap-6
+                            !-- 全年班 --
+                            div class=bg-green-50 p-4 rounded-lg
+                                h4 class=font-semibold mb-3 text-green-800全年班（4月开学）h4
+                                div class=space-y-4
+                                    !-- 英语A班 --
+                                    div
+                                        h5 class=font-medium text-sm mb-2 text-blue-700英语A班h5
+                                        div id=schedule-english-a class=schedule-grid bg-white rounded text-xs
+                                            !-- 动态生成课表 --
+                                        div
+                                    div
+                                    !-- 英语B班 --
+                                    div
+                                        h5 class=font-medium text-sm mb-2 text-blue-700英语B班h5
+                                        div id=schedule-english-b class=schedule-grid bg-white rounded text-xs
+                                            !-- 动态生成课表 --
+                                        div
+                                    div
+                                    !-- 中数1班 --
+                                    div
+                                        h5 class=font-medium text-sm mb-2 text-purple-700中数1班h5
+                                        div id=schedule-class-1 class=schedule-grid bg-white rounded text-xs
+                                            !-- 动态生成课表 --
+                                        div
+                                    div
+                                    !-- 中数2班 --
+                                    div
+                                        h5 class=font-medium text-sm mb-2 text-purple-700中数2班h5
+                                        div id=schedule-class-2 class=schedule-grid bg-white rounded text-xs
+                                            !-- 动态生成课表 --
+                                        div
+                                    div
+                                div
+                            div
+
+                            !-- 冲刺班 --
+                            div class=bg-orange-50 p-4 rounded-lg
+                                h4 class=font-semibold mb-3 text-orange-800冲刺班（8月开学）h4
+                                div id=schedule-sprint class=schedule-grid bg-white rounded text-xs
+                                    !-- 动态生成课表 --
+                                div
+                            div
+                        div
+                    div
+
+                    !-- 选修课程表 --
+                    div class=mb-8
+                        h3 class=text-xl font-semibold mb-4 text-gray-800选修课程表h3
+                        div class=grid lggrid-cols-3 gap-6
+                            !-- 选修组合1 --
+                            div class=bg-purple-50 p-4 rounded-lg
+                                h4 class=font-semibold mb-3 text-purple-800选修组合1：物理 & 历史h4
+                                div id=schedule-elective-1 class=schedule-grid bg-white rounded text-xs
+                                    !-- 动态生成课表 --
+                                div
+                            div
+                            !-- 选修组合2 --
+                            div class=bg-indigo-50 p-4 rounded-lg
+                                h4 class=font-semibold mb-3 text-indigo-800选修组合2：化学 & 经济h4
+                                div id=schedule-elective-2 class=schedule-grid bg-white rounded text-xs
+                                    !-- 动态生成课表 --
+                                div
+                            div
+                            !-- 选修组合3 --
+                            div class=bg-pink-50 p-4 rounded-lg
+                                h4 class=font-semibold mb-3 text-pink-800选修组合3：生物 & M2h4
+                                div id=schedule-elective-3 class=schedule-grid bg-white rounded text-xs
+                                    !-- 动态生成课表 --
+                                div
+                            div
+                        div
+                    div
+
+                    !-- 总课表 --
+                    div class=mb-8
+                        h3 class=text-xl font-semibold mb-4 text-gray-800学校总课表h3
+                        div class=bg-gray-50 p-4 rounded-lg
+                            div id=schedule-total class=schedule-grid bg-white rounded text-xs
+                                !-- 动态生成总课表 --
+                            div
+                        div
+                    div
+
+                    !-- 统计信息 --
+                    div class=grid lggrid-cols-4 gap-4
+                        div class=bg-blue-50 p-4 rounded-lg text-center
+                            div class=text-2xl font-bold text-blue-600 id=totalLessons--div
+                            div class=text-sm text-gray-600总课时数div
+                        div
+                        div class=bg-green-50 p-4 rounded-lg text-center
+                            div class=text-2xl font-bold text-green-600 id=teacherUtilization--%div
+                            div class=text-sm text-gray-600教师利用率div
+                        div
+                        div class=bg-purple-50 p-4 rounded-lg text-center
+                            div class=text-2xl font-bold text-purple-600 id=roomUtilization--%div
+                            div class=text-sm text-gray-600教室利用率div
+                        div
+                        div class=bg-orange-50 p-4 rounded-lg text-center
+                            div class=text-2xl font-bold text-orange-600 id=satisfactionScore--div
+                            div class=text-sm text-gray-600满意度评分div
+                        div
+                    div
+                div
+            div
+        div
+    div
+
+    script
+         全局变量
+        let teachers = [];
+        let teacherConstraints = {};
+        let globalConstraints = {};
+        let solutions = [];
+        let currentSolutionIndex = 0;
+
+         时间段定义
+        const timeSlots = [
+            '早自习', '上午1', '上午2', '上午3', '上午4',
+            '下午1', '下午2', '下午3', '下午4',
+            '晚自习1', '晚自习2', '晚自习3'
+        ];
+
+        const timeSlotDetails = {
+            '早自习' '800-835',
+            '上午1' '835-920',
+            '上午2' '930-1015',
+            '上午3' '1025-1110',
+            '上午4' '1120-1205',
+            '下午1' '1335-1420',
+            '下午2' '1430-1515',
+            '下午3' '1525-1610',
+            '下午4' '1620-1705',
+            '晚自习1' '1845-1930',
+            '晚自习2' '1935-2020',
+            '晚自习3' '2030-2130'
+        };
+
+        const weekDays = ['周一', '周二', '周三', '周四', '周五'];
+
+         课程定义
+        const subjects = {
+            required {
+                '中文' { hours 6, classes ['1班', '2班'] },
+                '数学' { hours 6, classes ['1班', '2班'] },
+                '英文听力A' { hours 2, classes ['A班', 'B班'] },
+                '英文听力B' { hours 2, classes ['A班', 'B班'] },
+                '英文阅读' { hours 2, classes ['A班', 'B班'] },
+                '英文写作' { hours 2, classes ['A班', 'B班'] },
+                '英文口语' { hours 2, classes ['A班', 'B班'] }
+            },
+            elective {
+                '物理' { hours 5, groups [1] },
+                '历史' { hours 5, groups [1] },
+                '化学' { hours 5, groups [2] },
+                '经济' { hours 5, groups [2] },
+                '生物' { hours 5, groups [3] },
+                'M2' { hours 5, groups [3] }
+            }
+        };
+
+         标签页切换
+        function showTab(tabName) {
+             隐藏所有标签页内容
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content = content.classList.remove('active'));
+            
+             显示选中的标签页内容
+            document.getElementById(`content-${tabName}`).classList.add('active');
+            
+             更新标签按钮样式
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(tab = {
+                tab.classList.remove('border-blue-500', 'text-blue-600');
+                tab.classList.add('border-transparent', 'text-gray-500');
+            });
+            
+            document.getElementById(`tab-${tabName}`).classList.remove('border-transparent', 'text-gray-500');
+            document.getElementById(`tab-${tabName}`).classList.add('border-blue-500', 'text-blue-600');
+        }
+
+         教师管理
+        document.getElementById('teacherForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('teacherName').value.trim();
+            const subjects = Array.from(document.querySelectorAll('#teacherForm input[type=checkbox]checked')).map(cb = cb.value);
+            const notes = document.getElementById('teacherNotes').value.trim();
+            
+            if (!name  subjects.length === 0) {
+                alert('请填写教师姓名并选择至少一门可授课科目');
+                return;
+            }
+            
+            const teacher = {
+                id Date.now(),
+                name,
+                subjects,
+                notes
+            };
+            
+            teachers.push(teacher);
+            updateTeacherList();
+            updateConstraintTeacherSelect();
+            
+             清空表单
+            document.getElementById('teacherForm').reset();
+            
+            showNotification('教师添加成功', 'success');
+        });
+
+        function updateTeacherList() {
+            const container = document.getElementById('teacherList');
+            container.innerHTML = '';
+            
+            teachers.forEach(teacher = {
+                const div = document.createElement('div');
+                div.className = 'subject-card bg-white p-3 rounded-lg border hovershadow-md';
+                div.innerHTML = `
+                    div class=flex justify-between items-start
+                        div class=flex-1
+                            h4 class=font-medium text-gray-800${teacher.name}h4
+                            div class=mt-1 flex flex-wrap gap-1
+                                ${teacher.subjects.map(subject = 
+                                    `span class=px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded${subject}span`
+                                ).join('')}
+                            div
+                            ${teacher.notes  `p class=text-xs text-gray-500 mt-1${teacher.notes}p`  ''}
+                        div
+                        button onclick=removeTeacher(${teacher.id}) class=text-red-500 hovertext-red-700 ml-2
+                            i class=fas fa-trashi
+                        button
+                    div
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function removeTeacher(id) {
+            if (confirm('确定要删除这位教师吗？')) {
+                teachers = teachers.filter(t = t.id !== id);
+                delete teacherConstraints[id];
+                updateTeacherList();
+                updateConstraintTeacherSelect();
+                updateConstraintsList();
+                showNotification('教师删除成功', 'success');
+            }
+        }
+
+        function updateConstraintTeacherSelect() {
+            const select = document.getElementById('constraintTeacher');
+            select.innerHTML = 'option value=请选择教师option';
+            
+            teachers.forEach(teacher = {
+                const option = document.createElement('option');
+                option.value = teacher.id;
+                option.textContent = teacher.name;
+                select.appendChild(option);
+            });
+        }
+
+         约束条件管理
+        function saveTeacherConstraints() {
+            const teacherId = document.getElementById('constraintTeacher').value;
+            if (!teacherId) {
+                alert('请先选择教师');
+                return;
+            }
+            
+            const availableTimes = Array.from(document.querySelectorAll('.available-timechecked')).map(cb = cb.dataset.time);
+            const unavailableTimes = Array.from(document.querySelectorAll('.unavailable-timechecked')).map(cb = cb.dataset.time);
+            const preferredTimes = Array.from(document.querySelectorAll('.preferred-timechecked')).map(cb = cb.dataset.time);
+            
+            teacherConstraints[teacherId] = {
+                available availableTimes,
+                unavailable unavailableTimes,
+                preferred preferredTimes
+            };
+            
+            updateConstraintsList();
+            showNotification('教师约束条件保存成功', 'success');
+            
+             清空选择
+            document.querySelectorAll('.available-time, .unavailable-time, .preferred-time').forEach(cb = cb.checked = false);
+            document.getElementById('constraintTeacher').value = '';
+        }
+
+        function saveGlobalConstraints() {
+            globalConstraints = {
+                noBackToBack document.getElementById('noBackToBack').checked,
+                evenDistribution document.getElementById('evenDistribution').checked,
+                morningPriority document.getElementById('morningPriority').checked,
+                totalClassrooms parseInt(document.getElementById('totalClassrooms').value),
+                specialRooms document.getElementById('specialRooms').value,
+                walkingTime document.getElementById('walkingTime').checked,
+                lunchBreak document.getElementById('lunchBreak').checked,
+                maxDailyHours parseInt(document.getElementById('maxDailyHours').value),
+                teacherSatisfaction parseInt(document.getElementById('teacherSatisfaction').value),
+                courseDistribution parseInt(document.getElementById('courseDistribution').value),
+                roomUtilization parseInt(document.getElementById('roomUtilization').value)
+            };
+            
+            updateConstraintsList();
+            showNotification('全局约束条件保存成功', 'success');
+        }
+
+        function updateConstraintsList() {
+            const container = document.getElementById('constraintsList');
+            container.innerHTML = '';
+            
+             教师约束
+            Object.entries(teacherConstraints).forEach(([teacherId, constraints]) = {
+                const teacher = teachers.find(t = t.id == teacherId);
+                if (teacher) {
+                    const div = document.createElement('div');
+                    div.className = 'bg-white p-3 rounded border-l-4 border-blue-500';
+                    div.innerHTML = `
+                        div class=flex justify-between items-start
+                            div
+                                h4 class=font-medium text-blue-800${teacher.name} 的约束条件h4
+                                div class=text-sm text-gray-600 mt-1
+                                    div可用时间：${constraints.available.length} 个div
+                                    div不可用时间：${constraints.unavailable.length} 个div
+                                    div优先时间：${constraints.preferred.length} 个div
+                                div
+                            div
+                            button onclick=removeTeacherConstraint('${teacherId}') class=text-red-500 hovertext-red-700
+                                i class=fas fa-trashi
+                            button
+                        div
+                    `;
+                    container.appendChild(div);
+                }
+            });
+            
+             全局约束
+            if (Object.keys(globalConstraints).length  0) {
+                const div = document.createElement('div');
+                div.className = 'bg-white p-3 rounded border-l-4 border-green-500';
+                div.innerHTML = `
+                    div class=flex justify-between items-start
+                        div
+                            h4 class=font-medium text-green-800全局约束条件h4
+                            div class=text-sm text-gray-600 mt-1
+                                div教室总数：${globalConstraints.totalClassrooms}div
+                                div每日最大课时：${globalConstraints.maxDailyHours}div
+                                div教师满意度权重：${globalConstraints.teacherSatisfaction}div
+                            div
+                        div
+                        button onclick=clearGlobalConstraints() class=text-red-500 hovertext-red-700
+                            i class=fas fa-trashi
+                        button
+                    div
+                `;
+                container.appendChild(div);
+            }
+        }
+
+        function removeTeacherConstraint(teacherId) {
+            if (confirm('确定要删除这个教师的约束条件吗？')) {
+                delete teacherConstraints[teacherId];
+                updateConstraintsList();
+                showNotification('约束条件删除成功', 'success');
+            }
+        }
+
+        function clearGlobalConstraints() {
+            if (confirm('确定要清除全局约束条件吗？')) {
+                globalConstraints = {};
+                updateConstraintsList();
+                showNotification('全局约束条件已清除', 'success');
+            }
+        }
+
+         滑块值更新
+        document.getElementById('teacherSatisfaction').addEventListener('input', function(e) {
+            document.getElementById('teacherSatisfactionValue').textContent = e.target.value;
+        });
+
+        document.getElementById('courseDistribution').addEventListener('input', function(e) {
+            document.getElementById('courseDistributionValue').textContent = e.target.value;
+        });
+
+        document.getElementById('roomUtilization').addEventListener('input', function(e) {
+            document.getElementById('roomUtilizationValue').textContent = e.target.value;
+        });
+
+         数据检查
+        function checkData() {
+            let issues = [];
+            
+             检查教师
+            if (teachers.length === 0) {
+                issues.push('未添加任何教师');
+                document.getElementById('teacherCheck').className = 'fas fa-times-circle text-red-500 mr-2';
+            } else {
+                document.getElementById('teacherCheck').className = 'fas fa-check-circle text-green-500 mr-2';
+            }
+            
+             检查约束条件
+            const constraintCount = Object.keys(teacherConstraints).length + (Object.keys(globalConstraints).length  0  1  0);
+            if (constraintCount === 0) {
+                issues.push('未设置任何约束条件');
+                document.getElementById('constraintCheck').className = 'fas fa-times-circle text-red-500 mr-2';
+            } else {
+                document.getElementById('constraintCheck').className = 'fas fa-check-circle text-green-500 mr-2';
+            }
+            
+             更新计数
+            document.getElementById('teacherCount').textContent = teachers.length;
+            document.getElementById('constraintCount').textContent = constraintCount;
+            
+            if (issues.length  0) {
+                alert('数据检查发现问题：n' + issues.join('n'));
+                return false;
+            } else {
+                showNotification('数据检查通过，可以开始排课', 'success');
+                return true;
+            }
+        }
+
+         生成示例数据
+        function generateSampleData() {
+             添加示例教师
+            const sampleTeachers = [
+                { name '李老师', subjects ['中文'], notes '语文组组长' },
+                { name '王老师', subjects ['数学'], notes '数学组组长' },
+                { name 'Stella老师', subjects ['英文听力A', '英文听力B', '英文阅读'], notes '可同时教授多个英文板块' },
+                { name '张老师', subjects ['英文写作', '英文口语'], notes '英语口语专家' },
+                { name '陈老师', subjects ['物理'], notes '物理实验室负责人' },
+                { name '刘老师', subjects ['化学'], notes '化学实验室负责人' },
+                { name '黄老师', subjects ['生物'], notes '生物组组长' },
+                { name '林老师', subjects ['历史'], notes '历史组组长' },
+                { name '吴老师', subjects ['经济'], notes '经济组组长' },
+                { name '赵老师', subjects ['M2'], notes '数学延伸模块专家' }
+            ];
+            
+            teachers = [];
+            sampleTeachers.forEach((teacher, index) = {
+                teachers.push({
+                    id Date.now() + index,
+                    name teacher.name,
+                    subjects teacher.subjects,
+                    notes teacher.notes
+                });
+            });
+            
+             添加示例约束条件
+            teacherConstraints = {};
+            
+             为Stella老师添加特殊约束（优先上午时间）
+            const stellaId = teachers.find(t = t.name === 'Stella老师').id;
+            if (stellaId) {
+                teacherConstraints[stellaId] = {
+                    available [],
+                    unavailable ['晚自习1-1', '晚自习1-2', '晚自习1-3', '晚自习1-4', '晚自习1-5'],
+                    preferred ['上午1-1', '上午1-2', '上午2-1', '上午2-2', '上午3-1', '上午3-2']
+                };
+            }
+            
+             设置全局约束
+            globalConstraints = {
+                noBackToBack true,
+                evenDistribution true,
+                morningPriority true,
+                totalClassrooms 12,
+                specialRooms '物理需要实验室，化学需要实验室',
+                walkingTime true,
+                lunchBreak true,
+                maxDailyHours 8,
+                teacherSatisfaction 8,
+                courseDistribution 7,
+                roomUtilization 6
+            };
+            
+             更新界面
+            updateTeacherList();
+            updateConstraintTeacherSelect();
+            updateConstraintsList();
+            
+            showNotification('示例数据生成成功，可以开始排课了', 'success');
+        }
+
+         开始排课
+        function startScheduling() {
+            if (!checkData()) {
+                return;
+            }
+            
+            const btn = document.getElementById('startSchedulingBtn');
+            const progressContainer = document.getElementById('progressContainer');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            
+             禁用按钮，显示进度
+            btn.disabled = true;
+            btn.innerHTML = 'i class=fas fa-spinner fa-spin mr-2i排课中...';
+            progressContainer.classList.remove('hidden');
+            
+             模拟排课过程
+            let progress = 0;
+            const steps = [
+                '初始化排课算法...',
+                '分析教师约束条件...',
+                '处理课程分配...',
+                '检查时间冲突...',
+                '优化课程分布...',
+                '生成排课方案...',
+                '验证方案可行性...',
+                '完成排课'
+            ];
+            
+            const interval = setInterval(() = {
+                if (progress  steps.length - 1) {
+                    progressText.textContent = steps[progress];
+                    progressBar.style.width = `${(progress + 1)  12.5}%`;
+                    progress++;
+                } else {
+                    clearInterval(interval);
+                    
+                     生成排课方案
+                    solutions = generateScheduleSolutions();
+                    currentSolutionIndex = 0;
+                    
+                     显示结果
+                    progressText.textContent = '排课完成！';
+                    progressBar.style.width = '100%';
+                    
+                    setTimeout(() = {
+                        progressContainer.classList.add('hidden');
+                        showScheduleResults();
+                        
+                         恢复按钮
+                        btn.disabled = false;
+                        btn.innerHTML = 'i class=fas fa-play mr-2i重新排课';
+                    }, 1000);
+                }
+            }, 800);
+        }
+
+         生成排课方案
+        function generateScheduleSolutions() {
+            const solutionCount = parseInt(document.getElementById('solutionCount').value);
+            const solutions = [];
+            
+            for (let i = 0; i  solutionCount; i++) {
+                const solution = {
+                    id i + 1,
+                    score Math.floor(Math.random()  30) + 70,  70-100分
+                    conflicts Math.floor(Math.random()  5),  0-4个冲突
+                    schedules generateRandomSchedule()
+                };
+                solutions.push(solution);
+            }
+            
+             按分数排序（分数高的在前）
+            solutions.sort((a, b) = b.score - a.score);
+            
+            return solutions;
+        }
+
+        function generateRandomSchedule() {
+            const schedules = {
+                'english-a' generateClassSchedule('英语A班'),
+                'english-b' generateClassSchedule('英语B班'),
+                'class-1' generateClassSchedule('中数1班'),
+                'class-2' generateClassSchedule('中数2班'),
+                'sprint' generateClassSchedule('冲刺班'),
+                'elective-1' generateElectiveSchedule(['物理', '历史']),
+                'elective-2' generateElectiveSchedule(['化学', '经济']),
+                'elective-3' generateElectiveSchedule(['生物', 'M2']),
+                'total' generateTotalSchedule()
+            };
+            
+            return schedules;
+        }
+
+        function generateClassSchedule(className) {
+            const schedule = {};
+            const subjectColors = {
+                '中文' '#f87171',
+                '数学' '#60a5fa',
+                '英文听力A' '#34d399',
+                '英文听力B' '#a78bfa',
+                '英文阅读' '#fbbf24',
+                '英文写作' '#f472b6',
+                '英文口语' '#fb7185'
+            };
+            
+            timeSlots.forEach(timeSlot = {
+                schedule[timeSlot] = {};
+                weekDays.forEach((day, dayIndex) = {
+                     随机分配课程
+                    const subjects = Object.keys(subjectColors);
+                    const randomSubject = subjects[Math.floor(Math.random()  subjects.length)];
+                    const randomTeacher = teachers.length  0  teachers[Math.floor(Math.random()  teachers.length)].name  '待分配';
+                    
+                    schedule[timeSlot][dayIndex] = {
+                        subject randomSubject,
+                        teacher randomTeacher,
+                        classroom `A${Math.floor(Math.random()  10) + 1}01`,
+                        color subjectColors[randomSubject]
+                    };
+                });
+            });
+            
+            return schedule;
+        }
+
+        function generateElectiveSchedule(subjects) {
+            const schedule = {};
+            const subjectColors = {
+                '物理' '#ef4444',
+                '历史' '#8b5cf6',
+                '化学' '#06b6d4',
+                '经济' '#10b981',
+                '生物' '#f59e0b',
+                'M2' '#ec4899'
+            };
+            
+            timeSlots.forEach(timeSlot = {
+                schedule[timeSlot] = {};
+                weekDays.forEach((day, dayIndex) = {
+                     为每个选修科目分配时间
+                    const randomSubject = subjects[Math.floor(Math.random()  subjects.length)];
+                    const randomTeacher = teachers.length  0  teachers[Math.floor(Math.random()  teachers.length)].name  '待分配';
+                    
+                    schedule[timeSlot][dayIndex] = {
+                        subject randomSubject,
+                        teacher randomTeacher,
+                        classroom `B${Math.floor(Math.random()  5) + 1}01`,
+                        color subjectColors[randomSubject]
+                    };
+                });
+            });
+            
+            return schedule;
+        }
+
+        function generateTotalSchedule() {
+            const schedule = {};
+            
+            timeSlots.forEach(timeSlot = {
+                schedule[timeSlot] = {};
+                weekDays.forEach((day, dayIndex) = {
+                     总课表显示所有正在进行的课程
+                    const courses = [
+                        '中文1班数学2班',
+                        '英语A班英语B班',
+                        '物理组合1历史组合1',
+                        '化学组合2经济组合2',
+                        '生物组合3M2组合3'
+                    ];
+                    
+                    const randomCourse = courses[Math.floor(Math.random()  courses.length)];
+                    
+                    schedule[timeSlot][dayIndex] = {
+                        subject randomCourse,
+                        teacher '多位教师',
+                        classroom '多个教室',
+                        color '#6b7280'
+                    };
+                });
+            });
+            
+            return schedule;
+        }
+
+         显示排课结果
+        function showScheduleResults() {
+            document.getElementById('scheduleResults').classList.remove('hidden');
+            document.getElementById('solutionNavigation').classList.remove('hidden');
+            
+            updateSolutionDisplay();
+            renderAllSchedules();
+            updateStatistics();
+        }
+
+        function updateSolutionDisplay() {
+            const solution = solutions[currentSolutionIndex];
+            document.getElementById('solutionInfo').textContent = `方案 ${currentSolutionIndex + 1}  ${solutions.length}`;
+            document.getElementById('currentScore').textContent = solution.score;
+            document.getElementById('currentConflicts').textContent = solution.conflicts;
+            
+             更新按钮状态
+            document.getElementById('prevBtn').disabled = currentSolutionIndex === 0;
+            document.getElementById('nextBtn').disabled = currentSolutionIndex === solutions.length - 1;
+        }
+
+        function renderAllSchedules() {
+            const solution = solutions[currentSolutionIndex];
+            
+             渲染各个课表
+            renderScheduleGrid('schedule-english-a', solution.schedules['english-a']);
+            renderScheduleGrid('schedule-english-b', solution.schedules['english-b']);
+            renderScheduleGrid('schedule-class-1', solution.schedules['class-1']);
+            renderScheduleGrid('schedule-class-2', solution.schedules['class-2']);
+            renderScheduleGrid('schedule-sprint', solution.schedules['sprint']);
+            renderScheduleGrid('schedule-elective-1', solution.schedules['elective-1']);
+            renderScheduleGrid('schedule-elective-2', solution.schedules['elective-2']);
+            renderScheduleGrid('schedule-elective-3', solution.schedules['elective-3']);
+            renderScheduleGrid('schedule-total', solution.schedules['total']);
+        }
+
+        function renderScheduleGrid(containerId, schedule) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+             添加表头
+            const headerRow = document.createElement('div');
+            headerRow.className = 'contents';
+            
+             时间列标题
+            const timeHeader = document.createElement('div');
+            timeHeader.className = 'schedule-cell bg-gray-100 font-semibold text-center flex items-center justify-center';
+            timeHeader.textContent = '时间';
+            container.appendChild(timeHeader);
+            
+             星期列标题
+            weekDays.forEach(day = {
+                const dayHeader = document.createElement('div');
+                dayHeader.className = 'schedule-cell bg-gray-100 font-semibold text-center flex items-center justify-center';
+                dayHeader.textContent = day;
+                container.appendChild(dayHeader);
+            });
+            
+             添加时间行
+            timeSlots.forEach(timeSlot = {
+                 时间标签
+                const timeLabel = document.createElement('div');
+                timeLabel.className = 'schedule-cell bg-gray-50 font-medium text-center flex flex-col items-center justify-center';
+                timeLabel.innerHTML = `
+                    div class=text-xs${timeSlot}div
+                    div class=text-xs text-gray-500${timeSlotDetails[timeSlot]}div
+                `;
+                container.appendChild(timeLabel);
+                
+                 每天的课程
+                weekDays.forEach((day, dayIndex) = {
+                    const cell = document.createElement('div');
+                    cell.className = 'schedule-cell bg-white hoverbg-gray-50 cursor-pointer flex flex-col items-center justify-center p-1';
+                    
+                    const lesson = schedule[timeSlot].[dayIndex];
+                    if (lesson) {
+                        cell.style.backgroundColor = lesson.color + '20';
+                        cell.style.borderLeftColor = lesson.color;
+                        cell.innerHTML = `
+                            div class=font-medium text-xs text-center${lesson.subject}div
+                            div class=text-xs text-gray-600 text-center${lesson.teacher}div
+                            div class=text-xs text-gray-500 text-center${lesson.classroom}div
+                        `;
+                        
+                         添加悬浮提示
+                        cell.title = `${lesson.subject}n教师：${lesson.teacher}n教室：${lesson.classroom}n时间：${timeSlot} ${day} (${timeSlotDetails[timeSlot]})`;
+                    } else {
+                        cell.innerHTML = 'div class=text-xs text-gray-400空闲div';
+                    }
+                    
+                    container.appendChild(cell);
+                });
+            });
+        }
+
+        function updateStatistics() {
+            const solution = solutions[currentSolutionIndex];
+            
+             计算统计数据
+            let totalLessons = 0;
+            Object.values(solution.schedules).forEach(schedule = {
+                Object.values(schedule).forEach(timeSlot = {
+                    totalLessons += Object.keys(timeSlot).length;
+                });
+            });
+            
+            const teacherUtilization = Math.floor(Math.random()  20) + 75;  75-95%
+            const roomUtilization = Math.floor(Math.random()  15) + 80;  80-95%
+            
+            document.getElementById('totalLessons').textContent = totalLessons;
+            document.getElementById('teacherUtilization').textContent = teacherUtilization + '%';
+            document.getElementById('roomUtilization').textContent = roomUtilization + '%';
+            document.getElementById('satisfactionScore').textContent = solution.score;
+        }
+
+         方案导航
+        function previousSolution() {
+            if (currentSolutionIndex  0) {
+                currentSolutionIndex--;
+                updateSolutionDisplay();
+                renderAllSchedules();
+                updateStatistics();
+            }
+        }
+
+        function nextSolution() {
+            if (currentSolutionIndex  solutions.length - 1) {
+                currentSolutionIndex++;
+                updateSolutionDisplay();
+                renderAllSchedules();
+                updateStatistics();
+            }
+        }
+
+        function exportCurrentSolution() {
+            const solution = solutions[currentSolutionIndex];
+            
+             创建导出数据
+            const exportData = {
+                方案编号 solution.id,
+                评分 solution.score,
+                冲突数 solution.conflicts,
+                生成时间 new Date().toLocaleString(),
+                课表数据 solution.schedules
+            };
+            
+             转换为JSON并下载
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataBlob = new Blob([dataStr], {type 'applicationjson'});
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `万鹤书院排课方案${solution.id}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showNotification(`方案 ${solution.id} 导出成功`, 'success');
+        }
+
+         通知系统
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 fade-in ${
+                type === 'success'  'bg-green-500 text-white' 
+                type === 'error'  'bg-red-500 text-white' 
+                'bg-blue-500 text-white'
+            }`;
+            notification.innerHTML = `
+                div class=flex items-center
+                    i class=fas ${
+                        type === 'success'  'fa-check-circle' 
+                        type === 'error'  'fa-times-circle' 
+                        'fa-info-circle'
+                    } mr-2i
+                    ${message}
+                div
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() = {
+                notification.style.opacity = '0';
+                setTimeout(() = {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+         初始化
+        document.addEventListener('DOMContentLoaded', function() {
+             设置默认的全局约束
+            document.getElementById('noBackToBack').checked = true;
+            document.getElementById('evenDistribution').checked = true;
+            document.getElementById('walkingTime').checked = true;
+            document.getElementById('lunchBreak').checked = true;
+            
+            showNotification('万鹤书院HKDSE智能排课系统已启动', 'success');
+        });
+    script
+
+body
+html
