@@ -7,877 +7,572 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
-        .schedule-cell {
-            min-height: 60px;
-            border: 1px solid #e5e7eb;
-        }
-        .subject-card {
-            transition: all 0.3s ease;
-        }
-        .subject-card:hover {
-            transform: translateY(-2px);
-        }
-        .constraint-card {
-            border-left: 4px solid #3b82f6;
-        }
-        .time-slot {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        .fade-in {
-            animation: fadeIn 0.5s ease-in;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .schedule-grid {
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .time-slot { min-height: 40px; }
+        .lunch-dinner-break { background-color: #f3f4f6; min-height: 30px; }
+        .subject-color-chinese { background-color: #fecaca; }
+        .subject-color-english { background-color: #ddd6fe; }
+        .subject-color-math { background-color: #bbf7d0; }
+        .subject-color-physics { background-color: #fed7aa; }
+        .subject-color-chemistry { background-color: #f0abfc; }
+        .subject-color-biology { background-color: #a7f3d0; }
+        .subject-color-economics { background-color: #fde68a; }
+        .subject-color-history { background-color: #f8b4ff; }
+        .subject-color-m2 { background-color: #c7d2fe; }
+        .constraint-time-grid {
             display: grid;
-            grid-template-columns: 120px repeat(5, 1fr);
-            gap: 1px;
-            background-color: #e5e7eb;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 2px;
         }
-        .tab-content {
-            display: none;
+        .time-button {
+            padding: 4px 8px;
+            border: 1px solid #d1d5db;
+            background: white;
+            cursor: pointer;
+            text-align: center;
+            font-size: 12px;
         }
-        .tab-content.active {
-            display: block;
-        }
-        .solution-nav {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
+        .time-button.available { background-color: #dcfce7; border-color: #16a34a; }
+        .time-button.unavailable { background-color: #fecaca; border-color: #dc2626; }
+        .time-button.preferred { background-color: #dbeafe; border-color: #2563eb; }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
-    <!-- 顶部导航 -->
-    <nav class="bg-blue-600 text-white shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center">
-                    <i class="fas fa-graduation-cap text-2xl mr-3"></i>
-                    <h1 class="text-xl font-bold">万鹤书院HKDSE智能排课系统</h1>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <span class="text-sm">专业版 v2.0</span>
-                </div>
+<body class="bg-gray-50">
+    <div class="container mx-auto px-4 py-6">
+        <!-- Header -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <div class="text-center">
+                <h1 class="text-3xl font-bold text-blue-800 mb-2">万鹤书院HKDSE智能排课系统</h1>
+                <p class="text-gray-600">专业的HKDSE课程智能排课解决方案</p>
             </div>
         </div>
-    </nav>
 
-    <div class="max-w-7xl mx-auto p-6">
-        <!-- 标签页导航 -->
-        <div class="mb-6">
-            <nav class="flex space-x-8">
-                <button onclick="showTab('teachers')" id="tab-teachers" class="tab-btn py-2 px-1 border-b-2 border-blue-500 font-medium text-blue-600">教师管理</button>
-                <button onclick="showTab('courses')" id="tab-courses" class="tab-btn py-2 px-1 border-b-2 border-transparent font-medium text-gray-500 hover:text-gray-700">课程设置</button>
-                <button onclick="showTab('constraints')" id="tab-constraints" class="tab-btn py-2 px-1 border-b-2 border-transparent font-medium text-gray-500 hover:text-gray-700">约束条件</button>
-                <button onclick="showTab('schedule')" id="tab-schedule" class="tab-btn py-2 px-1 border-b-2 border-transparent font-medium text-gray-500 hover:text-gray-700">生成课表</button>
-            </nav>
+        <!-- Navigation Tabs -->
+        <div class="bg-white rounded-lg shadow-md mb-6">
+            <div class="border-b border-gray-200">
+                <nav class="flex space-x-8" aria-label="Tabs">
+                    <button onclick="showTab('courses')" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-blue-500 text-blue-600" id="courses-tab">
+                        <i class="fas fa-book mr-2"></i>课程设置
+                    </button>
+                    <button onclick="showTab('teachers')" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" id="teachers-tab">
+                        <i class="fas fa-chalkboard-teacher mr-2"></i>教师管理
+                    </button>
+                    <button onclick="showTab('constraints')" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" id="constraints-tab">
+                        <i class="fas fa-cogs mr-2"></i>约束条件
+                    </button>
+                    <button onclick="showTab('schedule')" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" id="schedule-tab">
+                        <i class="fas fa-calendar-alt mr-2"></i>智能排课
+                    </button>
+                    <button onclick="showTab('results')" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" id="results-tab">
+                        <i class="fas fa-table mr-2"></i>课表展示
+                    </button>
+                </nav>
+            </div>
         </div>
 
-        <!-- 教师管理标签页 -->
-        <div id="content-teachers" class="tab-content active">
-            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                <h2 class="text-2xl font-bold mb-4 text-gray-800">
-                    <i class="fas fa-chalkboard-teacher mr-2"></i>教师信息管理
+        <!-- Course Settings Tab -->
+        <div id="courses" class="tab-content active">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-book text-blue-600 mr-2"></i>HKDSE课程设置
                 </h2>
                 
-                <div class="grid md:grid-cols-2 gap-6">
-                    <!-- 添加教师表单 -->
-                    <div class="bg-blue-50 p-4 rounded-lg">
-                        <h3 class="text-lg font-semibold mb-3">添加新教师</h3>
-                        <form id="teacherForm" class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">教师姓名</label>
-                                <input type="text" id="teacherName" class="w-full border border-gray-300 rounded-md px-3 py-2" placeholder="请输入教师姓名" required>
+                <!-- Required Subjects -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-700">必修科目</h3>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Chinese -->
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="text-lg font-medium text-gray-800">中文</h4>
+                                <label class="flex items-center">
+                                    <input type="checkbox" id="chinese-evening" class="mr-2">
+                                    <span class="text-sm text-gray-600">允许晚自习排课</span>
+                                </label>
                             </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">可授课科目</label>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <label class="flex items-center"><input type="checkbox" value="中文" class="mr-2">中文</label>
-                                    <label class="flex items-center"><input type="checkbox" value="数学" class="mr-2">数学</label>
-                                    <label class="flex items-center"><input type="checkbox" value="英文听力A" class="mr-2">英文听力A</label>
-                                    <label class="flex items-center"><input type="checkbox" value="英文听力B" class="mr-2">英文听力B</label>
-                                    <label class="flex items-center"><input type="checkbox" value="英文阅读" class="mr-2">英文阅读</label>
-                                    <label class="flex items-center"><input type="checkbox" value="英文写作" class="mr-2">英文写作</label>
-                                    <label class="flex items-center"><input type="checkbox" value="英文口语" class="mr-2">英文口语</label>
-                                    <label class="flex items-center"><input type="checkbox" value="物理" class="mr-2">物理</label>
-                                    <label class="flex items-center"><input type="checkbox" value="化学" class="mr-2">化学</label>
-                                    <label class="flex items-center"><input type="checkbox" value="生物" class="mr-2">生物</label>
-                                    <label class="flex items-center"><input type="checkbox" value="经济" class="mr-2">经济</label>
-                                    <label class="flex items-center"><input type="checkbox" value="M2" class="mr-2">M2</label>
-                                    <label class="flex items-center"><input type="checkbox" value="历史" class="mr-2">历史</label>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-600">每周总课时：</span>
+                                    <input type="number" id="chinese-hours" value="6" min="1" max="20" class="w-20 px-2 py-1 border border-gray-300 rounded text-center">
                                 </div>
                             </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">备注</label>
-                                <textarea id="teacherNotes" class="w-full border border-gray-300 rounded-md px-3 py-2 h-20" placeholder="可同时教授的班级等特殊说明"></textarea>
-                            </div>
-                            <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
-                                <i class="fas fa-plus mr-2"></i>添加教师
-                            </button>
-                        </form>
-                    </div>
+                        </div>
 
-                    <!-- 教师列表 -->
-                    <div>
-                        <h3 class="text-lg font-semibold mb-3">教师列表</h3>
-                        <div id="teacherList" class="space-y-3 max-h-96 overflow-y-auto">
-                            <!-- 动态生成教师列表 -->
+                        <!-- Mathematics -->
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="text-lg font-medium text-gray-800">数学</h4>
+                                <label class="flex items-center">
+                                    <input type="checkbox" id="math-evening" class="mr-2">
+                                    <span class="text-sm text-gray-600">允许晚自习排课</span>
+                                </label>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-600">每周总课时：</span>
+                                    <input type="number" id="math-hours" value="6" min="1" max="20" class="w-20 px-2 py-1 border border-gray-300 rounded text-center">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- English (Detailed) -->
+                        <div class="border border-gray-200 rounded-lg p-4 lg:col-span-2">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="text-lg font-medium text-gray-800">英文（细分板块）</h4>
+                                <label class="flex items-center">
+                                    <input type="checkbox" id="english-evening" class="mr-2">
+                                    <span class="text-sm text-gray-600">允许晚自习排课</span>
+                                </label>
+                            </div>
+                            <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
+                                <div class="space-y-2">
+                                    <label class="block text-sm font-medium text-gray-700">英文听力A</label>
+                                    <input type="number" id="english-listening-a" value="2" min="0" max="10" class="w-full px-2 py-1 border border-gray-300 rounded text-center">
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="block text-sm font-medium text-gray-700">英文听力B</label>
+                                    <input type="number" id="english-listening-b" value="2" min="0" max="10" class="w-full px-2 py-1 border border-gray-300 rounded text-center">
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="block text-sm font-medium text-gray-700">英文阅读</label>
+                                    <input type="number" id="english-reading" value="2" min="0" max="10" class="w-full px-2 py-1 border border-gray-300 rounded text-center">
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="block text-sm font-medium text-gray-700">英文写作</label>
+                                    <input type="number" id="english-writing" value="2" min="0" max="10" class="w-full px-2 py-1 border border-gray-300 rounded text-center">
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="block text-sm font-medium text-gray-700">英文口语</label>
+                                    <input type="number" id="english-speaking" value="2" min="0" max="10" class="w-full px-2 py-1 border border-gray-300 rounded text-center">
+                                </div>
+                            </div>
+                            <div class="mt-3 p-2 bg-blue-50 rounded">
+                                <span class="text-sm text-blue-800">英文总课时：<span id="english-total">10</span> 课时/周</span>
+                            </div>
                         </div>
                     </div>
+                </div>
+
+                <!-- Elective Subjects -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-700">选修科目</h3>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Physics -->
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="text-lg font-medium text-gray-800">物理</h4>
+                                <label class="flex items-center">
+                                    <input type="checkbox" id="physics-evening" class="mr-2">
+                                    <span class="text-sm text-gray-600">允许晚自习排课</span>
+                                </label>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-600">每周课时：</span>
+                                    <input type="number" id="physics-hours" value="5" min="1" max="10" class="w-20 px-2 py-1 border border-gray-300 rounded text-center">
+                                </div>
+                                <div class="text-xs text-blue-600">选修组合1：物理 & 历史</div>
+                            </div>
+                        </div>
+
+                        <!-- Chemistry -->
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="text-lg font-medium text-gray-800">化学</h4>
+                                <label class="flex items-center">
+                                    <input type="checkbox" id="chemistry-evening" class="mr-2">
+                                    <span class="text-sm text-gray-600">允许晚自习排课</span>
+                                </label>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-600">每周课时：</span>
+                                    <input type="number" id="chemistry-hours" value="5" min="1" max="10" class="w-20 px-2 py-1 border border-gray-300 rounded text-center">
+                                </div>
+                                <div class="text-xs text-blue-600">选修组合2：化学 & 经济</div>
+                            </div>
+                        </div>
+
+                        <!-- Biology -->
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="text-lg font-medium text-gray-800">生物</h4>
+                                <label class="flex items-center">
+                                    <input type="checkbox" id="biology-evening" class="mr-2">
+                                    <span class="text-sm text-gray-600">允许晚自习排课</span>
+                                </label>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-600">每周课时：</span>
+                                    <input type="number" id="biology-hours" value="5" min="1" max="10" class="w-20 px-2 py-1 border border-gray-300 rounded text-center">
+                                </div>
+                                <div class="text-xs text-blue-600">选修组合3：生物 & M2</div>
+                            </div>
+                        </div>
+
+                        <!-- Economics -->
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="text-lg font-medium text-gray-800">经济</h4>
+                                <label class="flex items-center">
+                                    <input type="checkbox" id="economics-evening" class="mr-2">
+                                    <span class="text-sm text-gray-600">允许晚自习排课</span>
+                                </label>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-600">每周课时：</span>
+                                    <input type="number" id="economics-hours" value="5" min="1" max="10" class="w-20 px-2 py-1 border border-gray-300 rounded text-center">
+                                </div>
+                                <div class="text-xs text-blue-600">选修组合2：化学 & 经济</div>
+                            </div>
+                        </div>
+
+                        <!-- History -->
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="text-lg font-medium text-gray-800">历史</h4>
+                                <label class="flex items-center">
+                                    <input type="checkbox" id="history-evening" class="mr-2">
+                                    <span class="text-sm text-gray-600">允许晚自习排课</span>
+                                </label>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-600">每周课时：</span>
+                                    <input type="number" id="history-hours" value="5" min="1" max="10" class="w-20 px-2 py-1 border border-gray-300 rounded text-center">
+                                </div>
+                                <div class="text-xs text-blue-600">选修组合1：物理 & 历史</div>
+                            </div>
+                        </div>
+
+                        <!-- M2 -->
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="text-lg font-medium text-gray-800">M2</h4>
+                                <label class="flex items-center">
+                                    <input type="checkbox" id="m2-evening" class="mr-2">
+                                    <span class="text-sm text-gray-600">允许晚自习排课</span>
+                                </label>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-600">每周课时：</span>
+                                    <input type="number" id="m2-hours" value="5" min="1" max="10" class="w-20 px-2 py-1 border border-gray-300 rounded text-center">
+                                </div>
+                                <div class="text-xs text-blue-600">选修组合3：生物 & M2</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Class Structure -->
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-700">分班结构设置</h3>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <h4 class="text-lg font-medium text-gray-800 mb-3">全年班（4月开学）</h4>
+                            <div class="space-y-2 text-sm">
+                                <div>• 英语：按成绩分A、B班（同时上课）</div>
+                                <div>• 中文、数学：按能力分1、2班（同时上课）</div>
+                                <div>• 选修课：走班制，按组合上课</div>
+                            </div>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <h4 class="text-lg font-medium text-gray-800 mb-3">冲刺班（8月开学）</h4>
+                            <div class="space-y-2 text-sm">
+                                <div>• 所有科目统一授课</div>
+                                <div>• 不分班，集中教学</div>
+                                <div>• 选修课同样按组合安排</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button onclick="saveCourseSettings()" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+                        <i class="fas fa-save mr-2"></i>保存课程设置
+                    </button>
                 </div>
             </div>
         </div>
 
-        <!-- 课程设置标签页 -->
-        <div id="content-courses" class="tab-content">
-            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                <h2 class="text-2xl font-bold mb-4 text-gray-800">
-                    <i class="fas fa-book mr-2"></i>课程设置
+        <!-- Teachers Tab -->
+        <div id="teachers" class="tab-content">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-chalkboard-teacher text-blue-600 mr-2"></i>教师管理
                 </h2>
-
-                <div class="grid lg:grid-cols-2 gap-6">
-                    <!-- 必修科设置 -->
-                    <div class="bg-green-50 p-4 rounded-lg">
-                        <h3 class="text-lg font-semibold mb-3 text-green-800">必修科目</h3>
-                        <div class="space-y-4">
-                            <div class="bg-white p-3 rounded border">
-                                <div class="flex justify-between items-center">
-                                    <span class="font-medium">中文</span>
-                                    <span class="text-sm text-gray-600">每周6课时</span>
-                                </div>
-                                <p class="text-sm text-gray-500 mt-1">按能力分1、2班授课</p>
-                            </div>
-                            <div class="bg-white p-3 rounded border">
-                                <div class="flex justify-between items-center">
-                                    <span class="font-medium">数学</span>
-                                    <span class="text-sm text-gray-600">每周6课时</span>
-                                </div>
-                                <p class="text-sm text-gray-500 mt-1">按能力分1、2班授课</p>
-                            </div>
-                            <div class="bg-white p-3 rounded border">
-                                <div class="flex justify-between items-center">
-                                    <span class="font-medium">英文</span>
-                                    <span class="text-sm text-gray-600">每周10课时</span>
-                                </div>
-                                <p class="text-sm text-gray-500 mt-1">分A、B班，包含5个板块教学</p>
-                                <div class="mt-2 flex flex-wrap gap-1">
-                                    <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">听力A</span>
-                                    <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">听力B</span>
-                                    <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">阅读</span>
-                                    <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">写作</span>
-                                    <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">口语</span>
-                                </div>
-                            </div>
+                
+                <!-- Add Teacher Form -->
+                <div class="mb-6 p-4 border border-gray-200 rounded-lg">
+                    <h3 class="text-lg font-semibold mb-4">添加教师</h3>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">教师姓名</label>
+                            <input type="text" id="teacher-name" placeholder="请输入教师姓名" class="w-full px-3 py-2 border border-gray-300 rounded-md">
                         </div>
-                    </div>
-
-                    <!-- 选修科设置 -->
-                    <div class="bg-orange-50 p-4 rounded-lg">
-                        <h3 class="text-lg font-semibold mb-3 text-orange-800">选修科目组合</h3>
-                        <div class="space-y-4">
-                            <div class="bg-white p-3 rounded border">
-                                <h4 class="font-medium text-purple-700">选修组合1</h4>
-                                <div class="flex items-center mt-2">
-                                    <span class="px-3 py-1 bg-purple-100 text-purple-800 text-sm rounded mr-2">物理</span>
-                                    <span class="text-gray-400">&</span>
-                                    <span class="px-3 py-1 bg-purple-100 text-purple-800 text-sm rounded ml-2">历史</span>
-                                </div>
-                                <p class="text-sm text-gray-500 mt-1">每科每周5课时，同时间不同教室</p>
-                            </div>
-                            <div class="bg-white p-3 rounded border">
-                                <h4 class="font-medium text-indigo-700">选修组合2</h4>
-                                <div class="flex items-center mt-2">
-                                    <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-sm rounded mr-2">化学</span>
-                                    <span class="text-gray-400">&</span>
-                                    <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-sm rounded ml-2">经济</span>
-                                </div>
-                                <p class="text-sm text-gray-500 mt-1">每科每周5课时，同时间不同教室</p>
-                            </div>
-                            <div class="bg-white p-3 rounded border">
-                                <h4 class="font-medium text-pink-700">选修组合3</h4>
-                                <div class="flex items-center mt-2">
-                                    <span class="px-3 py-1 bg-pink-100 text-pink-800 text-sm rounded mr-2">生物</span>
-                                    <span class="text-gray-400">&</span>
-                                    <span class="px-3 py-1 bg-pink-100 text-pink-800 text-sm rounded ml-2">M2</span>
-                                </div>
-                                <p class="text-sm text-gray-500 mt-1">每科每周5课时，同时间不同教室</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 班级设置 -->
-                <div class="mt-6 bg-blue-50 p-4 rounded-lg">
-                    <h3 class="text-lg font-semibold mb-3 text-blue-800">班级设置</h3>
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <div class="bg-white p-3 rounded border">
-                            <h4 class="font-medium text-green-700 mb-2">全年班（4月开学）</h4>
-                            <ul class="text-sm text-gray-600 space-y-1">
-                                <li>• 英语分A、B班（按成绩）</li>
-                                <li>• 中文、数学分1、2班（按能力）</li>
-                                <li>• 选修课走班制</li>
-                            </ul>
-                        </div>
-                        <div class="bg-white p-3 rounded border">
-                            <h4 class="font-medium text-orange-700 mb-2">冲刺班（8月开学）</h4>
-                            <ul class="text-sm text-gray-600 space-y-1">
-                                <li>• 所有科目统一授课</li>
-                                <li>• 不按科目分班</li>
-                                <li>• 选修课统一安排</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 约束条件标签页 -->
-        <div id="content-constraints" class="tab-content">
-            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                <h2 class="text-2xl font-bold mb-4 text-gray-800">
-                    <i class="fas fa-cogs mr-2"></i>约束条件设置
-                </h2>
-
-                <div class="grid lg:grid-cols-2 gap-6">
-                    <!-- 教师约束设置 -->
-                    <div class="constraint-card bg-blue-50 p-4 rounded-lg">
-                        <h3 class="text-lg font-semibold mb-3 text-blue-800">教师约束条件</h3>
-                        
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">选择教师</label>
-                            <select id="constraintTeacher" class="w-full border border-gray-300 rounded-md px-3 py-2">
-                                <option value="">请选择教师</option>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">可授课科目</label>
+                            <select id="teacher-subjects" multiple class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                                <option value="chinese">中文</option>
+                                <option value="english-listening-a">英文听力A</option>
+                                <option value="english-listening-b">英文听力B</option>
+                                <option value="english-reading">英文阅读</option>
+                                <option value="english-writing">英文写作</option>
+                                <option value="english-speaking">英文口语</option>
+                                <option value="math">数学</option>
+                                <option value="physics">物理</option>
+                                <option value="chemistry">化学</option>
+                                <option value="biology">生物</option>
+                                <option value="economics">经济</option>
+                                <option value="history">历史</option>
+                                <option value="m2">M2</option>
                             </select>
                         </div>
-
-                        <div class="space-y-4">
-                            <!-- 固定时间约束 -->
-                            <div class="bg-white p-3 rounded border">
-                                <h4 class="font-medium mb-2">
-                                    <i class="fas fa-clock text-green-600 mr-2"></i>只能排课时间
-                                </h4>
-                                <div class="grid grid-cols-5 gap-2 text-xs">
-                                    <div class="text-center font-medium">时段</div>
-                                    <div class="text-center font-medium">周一</div>
-                                    <div class="text-center font-medium">周二</div>
-                                    <div class="text-center font-medium">周三</div>
-                                    <div class="text-center font-medium">周四</div>
-                                    <div class="text-center font-medium">周五</div>
-                                    
-                                    <div class="text-center">早自习</div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="早自习-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="早自习-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="早自习-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="早自习-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="早自习-5"></div>
-                                    
-                                    <div class="text-center">上午1</div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="上午1-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="上午1-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="上午1-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="上午1-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="上午1-5"></div>
-                                    
-                                    <div class="text-center">上午2</div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="上午2-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="上午2-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="上午2-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="上午2-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="上午2-5"></div>
-                                    
-                                    <div class="text-center">上午3</div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="上午3-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="上午3-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="上午3-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="上午3-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="上午3-5"></div>
-                                    
-                                    <div class="text-center">上午4</div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="上午4-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="上午4-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="上午4-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="上午4-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="上午4-5"></div>
-                                    
-                                    <div class="text-center">下午1</div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="下午1-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="下午1-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="下午1-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="下午1-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="下午1-5"></div>
-                                    
-                                    <div class="text-center">下午2</div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="下午2-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="下午2-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="下午2-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="下午2-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="下午2-5"></div>
-                                    
-                                    <div class="text-center">下午3</div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="下午3-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="下午3-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="下午3-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="下午3-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="下午3-5"></div>
-                                    
-                                    <div class="text-center">下午4</div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="下午4-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="下午4-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="下午4-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="下午4-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="下午4-5"></div>
-                                    
-                                    <div class="text-center">晚自习1</div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="晚自习1-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="晚自习1-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="晚自习1-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="晚自习1-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="晚自习1-5"></div>
-                                    
-                                    <div class="text-center">晚自习2</div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="晚自习2-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="晚自习2-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="晚自习2-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="晚自习2-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="晚自习2-5"></div>
-                                    
-                                    <div class="text-center">晚自习3</div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="晚自习3-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="晚自习3-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="晚自习3-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="晚自习3-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="available-time" data-time="晚自习3-5"></div>
-                                </div>
-                            </div>
-
-                            <!-- 不可用时间约束 -->
-                            <div class="bg-white p-3 rounded border">
-                                <h4 class="font-medium mb-2">
-                                    <i class="fas fa-ban text-red-600 mr-2"></i>不可排课时间
-                                </h4>
-                                <div class="grid grid-cols-5 gap-2 text-xs">
-                                    <div class="text-center font-medium">时段</div>
-                                    <div class="text-center font-medium">周一</div>
-                                    <div class="text-center font-medium">周二</div>
-                                    <div class="text-center font-medium">周三</div>
-                                    <div class="text-center font-medium">周四</div>
-                                    <div class="text-center font-medium">周五</div>
-                                    
-                                    <div class="text-center">早自习</div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="早自习-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="早自习-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="早自习-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="早自习-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="早自习-5"></div>
-                                    
-                                    <div class="text-center">上午1</div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="上午1-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="上午1-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="上午1-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="上午1-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="上午1-5"></div>
-                                    
-                                    <div class="text-center">上午2</div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="上午2-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="上午2-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="上午2-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="上午2-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="上午2-5"></div>
-                                    
-                                    <div class="text-center">上午3</div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="上午3-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="上午3-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="上午3-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="上午3-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="上午3-5"></div>
-                                    
-                                    <div class="text-center">上午4</div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="上午4-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="上午4-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="上午4-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="上午4-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="上午4-5"></div>
-                                    
-                                    <div class="text-center">下午1</div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="下午1-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="下午1-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="下午1-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="下午1-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="下午1-5"></div>
-                                    
-                                    <div class="text-center">下午2</div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="下午2-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="下午2-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="下午2-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="下午2-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="下午2-5"></div>
-                                    
-                                    <div class="text-center">下午3</div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="下午3-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="下午3-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="下午3-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="下午3-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="下午3-5"></div>
-                                    
-                                    <div class="text-center">下午4</div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="下午4-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="下午4-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="下午4-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="下午4-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="下午4-5"></div>
-                                    
-                                    <div class="text-center">晚自习1</div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="晚自习1-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="晚自习1-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="晚自习1-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="晚自习1-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="晚自习1-5"></div>
-                                    
-                                    <div class="text-center">晚自习2</div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="晚自习2-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="晚自习2-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="晚自习2-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="晚自习2-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="晚自习2-5"></div>
-                                    
-                                    <div class="text-center">晚自习3</div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="晚自习3-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="晚自习3-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="晚自习3-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="晚自习3-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="unavailable-time" data-time="晚自习3-5"></div>
-                                </div>
-                            </div>
-
-                            <!-- 优先时间约束 -->
-                            <div class="bg-white p-3 rounded border">
-                                <h4 class="font-medium mb-2">
-                                    <i class="fas fa-star text-yellow-600 mr-2"></i>优先排课时间
-                                </h4>
-                                <div class="grid grid-cols-5 gap-2 text-xs">
-                                    <div class="text-center font-medium">时段</div>
-                                    <div class="text-center font-medium">周一</div>
-                                    <div class="text-center font-medium">周二</div>
-                                    <div class="text-center font-medium">周三</div>
-                                    <div class="text-center font-medium">周四</div>
-                                    <div class="text-center font-medium">周五</div>
-                                    
-                                    <div class="text-center">早自习</div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="早自习-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="早自习-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="早自习-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="早自习-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="早自习-5"></div>
-                                    
-                                    <div class="text-center">上午1</div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="上午1-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="上午1-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="上午1-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="上午1-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="上午1-5"></div>
-                                    
-                                    <div class="text-center">上午2</div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="上午2-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="上午2-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="上午2-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="上午2-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="上午2-5"></div>
-                                    
-                                    <div class="text-center">上午3</div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="上午3-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="上午3-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="上午3-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="上午3-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="上午3-5"></div>
-                                    
-                                    <div class="text-center">上午4</div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="上午4-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="上午4-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="上午4-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="上午4-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="上午4-5"></div>
-                                    
-                                    <div class="text-center">下午1</div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="下午1-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="下午1-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="下午1-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="下午1-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="下午1-5"></div>
-                                    
-                                    <div class="text-center">下午2</div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="下午2-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="下午2-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="下午2-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="下午2-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="下午2-5"></div>
-                                    
-                                    <div class="text-center">下午3</div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="下午3-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="下午3-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="下午3-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="下午3-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="下午3-5"></div>
-                                    
-                                    <div class="text-center">下午4</div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="下午4-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="下午4-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="下午4-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="下午4-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="下午4-5"></div>
-                                    
-                                    <div class="text-center">晚自习1</div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="晚自习1-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="晚自习1-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="晚自习1-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="晚自习1-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="晚自习1-5"></div>
-                                    
-                                    <div class="text-center">晚自习2</div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="晚自习2-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="晚自习2-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="晚自习2-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="晚自习2-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="晚自习2-5"></div>
-                                    
-                                    <div class="text-center">晚自习3</div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="晚自习3-1"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="晚自习3-2"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="晚自习3-3"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="晚自习3-4"></div>
-                                    <div class="text-center"><input type="checkbox" class="preferred-time" data-time="晚自习3-5"></div>
-                                </div>
-                            </div>
-
-                            <button onclick="saveTeacherConstraints()" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
-                                <i class="fas fa-save mr-2"></i>保存约束条件
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- 全局约束设置 -->
-                    <div class="constraint-card bg-green-50 p-4 rounded-lg">
-                        <h3 class="text-lg font-semibold mb-3 text-green-800">全局约束条件</h3>
-                        
-                        <div class="space-y-4">
-                            <!-- 课程安排约束 -->
-                            <div class="bg-white p-3 rounded border">
-                                <h4 class="font-medium mb-2">
-                                    <i class="fas fa-calendar text-blue-600 mr-2"></i>课程安排约束
-                                </h4>
-                                <div class="space-y-2">
-                                    <label class="flex items-center">
-                                        <input type="checkbox" id="noBackToBack" class="mr-2" checked>
-                                        <span class="text-sm">避免同科目连续安排</span>
-                                    </label>
-                                    <label class="flex items-center">
-                                        <input type="checkbox" id="evenDistribution" class="mr-2" checked>
-                                        <span class="text-sm">课程均匀分布</span>
-                                    </label>
-                                    <label class="flex items-center">
-                                        <input type="checkbox" id="morningPriority" class="mr-2">
-                                        <span class="text-sm">重要科目优先安排上午</span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <!-- 教室资源约束 -->
-                            <div class="bg-white p-3 rounded border">
-                                <h4 class="font-medium mb-2">
-                                    <i class="fas fa-door-open text-purple-600 mr-2"></i>教室资源约束
-                                </h4>
-                                <div class="space-y-2">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">教室总数</label>
-                                        <input type="number" id="totalClassrooms" class="w-full border border-gray-300 rounded-md px-3 py-1" value="10" min="1">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">特殊教室需求</label>
-                                        <textarea id="specialRooms" class="w-full border border-gray-300 rounded-md px-3 py-2 h-16" placeholder="例如：物理需要实验室，化学需要实验室"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- 学生约束 -->
-                            <div class="bg-white p-3 rounded border">
-                                <h4 class="font-medium mb-2">
-                                    <i class="fas fa-users text-orange-600 mr-2"></i>学生约束
-                                </h4>
-                                <div class="space-y-2">
-                                    <label class="flex items-center">
-                                        <input type="checkbox" id="walkingTime" class="mr-2" checked>
-                                        <span class="text-sm">考虑走班换教室时间</span>
-                                    </label>
-                                    <label class="flex items-center">
-                                        <input type="checkbox" id="lunchBreak" class="mr-2" checked>
-                                        <span class="text-sm">保证午休时间</span>
-                                    </label>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">每日最大课时</label>
-                                        <input type="number" id="maxDailyHours" class="w-full border border-gray-300 rounded-md px-3 py-1" value="8" min="1" max="12">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- 优化目标 -->
-                            <div class="bg-white p-3 rounded border">
-                                <h4 class="font-medium mb-2">
-                                    <i class="fas fa-target text-red-600 mr-2"></i>优化目标权重
-                                </h4>
-                                <div class="space-y-2">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">教师满意度</label>
-                                        <input type="range" id="teacherSatisfaction" class="w-full" min="0" max="10" value="8">
-                                        <span class="text-xs text-gray-500">当前值：<span id="teacherSatisfactionValue">8</span></span>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">课程分布均匀性</label>
-                                        <input type="range" id="courseDistribution" class="w-full" min="0" max="10" value="7">
-                                        <span class="text-xs text-gray-500">当前值：<span id="courseDistributionValue">7</span></span>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">教室利用率</label>
-                                        <input type="range" id="roomUtilization" class="w-full" min="0" max="10" value="6">
-                                        <span class="text-xs text-gray-500">当前值：<span id="roomUtilizationValue">6</span></span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <button onclick="saveGlobalConstraints()" class="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700">
-                                <i class="fas fa-save mr-2"></i>保存全局约束
+                        <div class="flex items-end">
+                            <button onclick="addTeacher()" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 w-full">
+                                <i class="fas fa-plus mr-2"></i>添加教师
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- 已设置约束条件列表 -->
-                <div class="mt-6 bg-gray-50 p-4 rounded-lg">
-                    <h3 class="text-lg font-semibold mb-3">已设置约束条件</h3>
-                    <div id="constraintsList" class="space-y-2">
-                        <!-- 动态生成约束条件列表 -->
+                <!-- Teachers List -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold mb-4">教师列表</h3>
+                    <div id="teachers-list" class="space-y-3">
+                        <!-- Teachers will be populated here -->
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 生成课表标签页 -->
-        <div id="content-schedule" class="tab-content">
-            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                <h2 class="text-2xl font-bold mb-4 text-gray-800">
-                    <i class="fas fa-magic mr-2"></i>智能排课生成
+        <!-- Constraints Tab -->
+        <div id="constraints" class="tab-content">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-cogs text-blue-600 mr-2"></i>约束条件设置
                 </h2>
 
-                <!-- 排课参数设置 -->
-                <div class="grid lg:grid-cols-3 gap-6 mb-6">
-                    <div class="bg-blue-50 p-4 rounded-lg">
-                        <h3 class="text-lg font-semibold mb-3 text-blue-800">生成参数</h3>
-                        <div class="space-y-3">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">生成方案数量</label>
-                                <select id="solutionCount" class="w-full border border-gray-300 rounded-md px-3 py-2">
-                                    <option value="3">3个方案</option>
-                                    <option value="5" selected>5个方案</option>
-                                    <option value="10">10个方案</option>
-                                </select>
+                <!-- Teacher Selection -->
+                <div class="mb-6">
+                    <label class="block text-lg font-medium text-gray-700 mb-2">选择教师设置约束条件</label>
+                    <select id="constraint-teacher-select" onchange="loadTeacherConstraints()" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                        <option value="">请选择教师</option>
+                    </select>
+                </div>
+
+                <!-- Constraints Settings -->
+                <div id="teacher-constraints-panel" class="hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Available Times -->
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <h3 class="text-lg font-semibold mb-3 text-green-700">
+                                <i class="fas fa-check-circle mr-2"></i>可用时间
+                            </h3>
+                            <p class="text-sm text-gray-600 mb-3">点击下方时间段设置教师可上课时间</p>
+                            <div id="available-times" class="constraint-time-grid">
+                                <!-- Time slots will be generated here -->
                             </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">算法类型</label>
-                                <select id="algorithmType" class="w-full border border-gray-300 rounded-md px-3 py-2">
-                                    <option value="backtrack" selected>回溯算法</option>
-                                    <option value="genetic">遗传算法</option>
-                                    <option value="simulated">模拟退火</option>
-                                </select>
+                        </div>
+
+                        <!-- Unavailable Times -->
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <h3 class="text-lg font-semibold mb-3 text-red-700">
+                                <i class="fas fa-times-circle mr-2"></i>不可用时间
+                            </h3>
+                            <p class="text-sm text-gray-600 mb-3">点击下方时间段设置教师不能上课时间</p>
+                            <div id="unavailable-times" class="constraint-time-grid">
+                                <!-- Time slots will be generated here -->
                             </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">最大运行时间（秒）</label>
-                                <input type="number" id="maxRuntime" class="w-full border border-gray-300 rounded-md px-3 py-2" value="30" min="10" max="300">
+                        </div>
+
+                        <!-- Preferred Times -->
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <h3 class="text-lg font-semibold mb-3 text-blue-700">
+                                <i class="fas fa-star mr-2"></i>优先时间
+                            </h3>
+                            <p class="text-sm text-gray-600 mb-3">点击下方时间段设置教师偏好时间</p>
+                            <div id="preferred-times" class="constraint-time-grid">
+                                <!-- Time slots will be generated here -->
                             </div>
                         </div>
                     </div>
 
-                    <div class="bg-green-50 p-4 rounded-lg">
-                        <h3 class="text-lg font-semibold mb-3 text-green-800">数据检查</h3>
-                        <div class="space-y-2">
-                            <div class="flex items-center">
-                                <i id="teacherCheck" class="fas fa-question-circle text-gray-400 mr-2"></i>
-                                <span class="text-sm">教师信息 (<span id="teacherCount">0</span>位)</span>
+                    <!-- Multi-course Teaching -->
+                    <div class="mt-6 border border-gray-200 rounded-lg p-4">
+                        <h3 class="text-lg font-semibold mb-3 text-purple-700">
+                            <i class="fas fa-layer-group mr-2"></i>多课程授课设置
+                        </h3>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">全年班授课科目</label>
+                                <select id="full-year-subjects" multiple class="w-full px-3 py-2 border border-gray-300 rounded-md h-24">
+                                    <!-- Options will be populated based on teacher's subjects -->
+                                </select>
                             </div>
-                            <div class="flex items-center">
-                                <i id="constraintCheck" class="fas fa-question-circle text-gray-400 mr-2"></i>
-                                <span class="text-sm">约束条件 (<span id="constraintCount">0</span>条)</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i id="courseCheck" class="fas fa-check-circle text-green-500 mr-2"></i>
-                                <span class="text-sm">课程设置 (已配置)</span>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">冲刺班授课科目</label>
+                                <select id="sprint-subjects" multiple class="w-full px-3 py-2 border border-gray-300 rounded-md h-24">
+                                    <!-- Options will be populated based on teacher's subjects -->
+                                </select>
                             </div>
                         </div>
-                        <button onclick="checkData()" class="w-full mt-3 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700">
-                            <i class="fas fa-check mr-2"></i>检查数据完整性
+                    </div>
+
+                    <div class="text-center mt-6">
+                        <button onclick="saveTeacherConstraints()" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+                            <i class="fas fa-save mr-2"></i>保存约束条件
                         </button>
                     </div>
+                </div>
+            </div>
+        </div>
 
-                    <div class="bg-purple-50 p-4 rounded-lg">
-                        <h3 class="text-lg font-semibold mb-3 text-purple-800">快速开始</h3>
-                        <div class="space-y-3">
-                            <button onclick="generateSampleData()" class="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700">
-                                <i class="fas fa-magic mr-2"></i>生成示例数据
-                            </button>
-                            <p class="text-xs text-gray-600 mt-2">点击生成示例数据快速体验排课功能</p>
+        <!-- Schedule Tab -->
+        <div id="schedule" class="tab-content">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-calendar-alt text-blue-600 mr-2"></i>智能排课
+                </h2>
+
+                <!-- Schedule Settings -->
+                <div class="mb-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <h3 class="text-lg font-semibold mb-3">排课参数设置</h3>
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">生成方案数量</label>
+                                    <select id="solution-count" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                                        <option value="3">3个方案</option>
+                                        <option value="5" selected>5个方案</option>
+                                        <option value="10">10个方案</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">优化目标</label>
+                                    <select id="optimization-target" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                                        <option value="teacher-preference">教师偏好时间最大化</option>
+                                        <option value="course-distribution" selected>课程分布均匀化</option>
+                                        <option value="balanced">综合平衡</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <h3 class="text-lg font-semibold mb-3">晚自习设置</h3>
+                            <div class="space-y-3">
+                                <div class="p-3 bg-yellow-50 rounded">
+                                    <div class="text-sm text-yellow-800">
+                                        <i class="fas fa-info-circle mr-2"></i>
+                                        晚自习排课规则：
+                                    </div>
+                                    <ul class="text-sm text-yellow-700 mt-2 ml-4">
+                                        <li>• 第三节晚自习(20:30-21:30)固定不排课</li>
+                                        <li>• 只有标记"允许晚自习排课"的科目可排入</li>
+                                        <li>• 前两节晚自习优先自习，必要时安排课程</li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 开始排课按钮 -->
+                <!-- Generate Schedule Button -->
                 <div class="text-center mb-6">
-                    <button onclick="startScheduling()" id="startSchedulingBtn" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-8 rounded-lg text-lg font-semibold hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed">
-                        <i class="fas fa-play mr-2"></i>开始智能排课
+                    <button onclick="generateSchedule()" class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition duration-200 text-lg font-semibold">
+                        <i class="fas fa-magic mr-2"></i>开始智能排课
                     </button>
                 </div>
 
-                <!-- 进度显示 -->
-                <div id="progressContainer" class="hidden mb-6">
-                    <div class="bg-gray-200 rounded-full h-3 mb-2">
-                        <div id="progressBar" class="bg-gradient-to-r from-blue-600 to-purple-600 h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
-                    </div>
-                    <div class="text-center">
-                        <span id="progressText" class="text-sm text-gray-600">正在初始化...</span>
-                    </div>
-                </div>
-
-                <!-- 方案切换导航 -->
-                <div id="solutionNavigation" class="hidden mb-6">
-                    <div class="solution-nav text-white p-4 rounded-lg">
-                        <div class="flex items-center justify-between">
-                            <h3 class="text-lg font-semibold">排课方案</h3>
-                            <div class="flex items-center space-x-4">
-                                <button onclick="previousSolution()" id="prevBtn" class="bg-white bg-opacity-20 hover:bg-opacity-30 px-3 py-1 rounded">
-                                    <i class="fas fa-chevron-left"></i> 上一个
-                                </button>
-                                <span id="solutionInfo" class="text-sm">方案 1 / 5</span>
-                                <button onclick="nextSolution()" id="nextBtn" class="bg-white bg-opacity-20 hover:bg-opacity-30 px-3 py-1 rounded">
-                                    下一个 <i class="fas fa-chevron-right"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="mt-2 flex items-center justify-between text-sm">
+                <!-- Progress -->
+                <div id="schedule-progress" class="hidden mb-6">
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-spinner fa-spin text-blue-600 mr-3"></i>
                             <div>
-                                <span>评分：<span id="currentScore" class="font-semibold">--</span></span>
-                                <span class="ml-4">冲突：<span id="currentConflicts" class="font-semibold">--</span></span>
+                                <div class="text-blue-800 font-medium">正在生成排课方案...</div>
+                                <div class="text-blue-600 text-sm mt-1" id="progress-text">初始化排课引擎</div>
                             </div>
-                            <button onclick="exportCurrentSolution()" class="bg-white bg-opacity-20 hover:bg-opacity-30 px-3 py-1 rounded">
-                                <i class="fas fa-download mr-1"></i>导出当前方案
-                            </button>
+                        </div>
+                        <div class="mt-3">
+                            <div class="bg-blue-200 rounded-full h-2">
+                                <div class="bg-blue-600 h-2 rounded-full transition-all duration-300" id="progress-bar" style="width: 0%"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 课表展示区域 -->
-                <div id="scheduleResults" class="hidden">
-                    <!-- 分班课表 -->
-                    <div class="mb-8">
-                        <h3 class="text-xl font-semibold mb-4 text-gray-800">分班课表</h3>
-                        <div class="grid lg:grid-cols-2 gap-6">
-                            <!-- 全年班 -->
-                            <div class="bg-green-50 p-4 rounded-lg">
-                                <h4 class="font-semibold mb-3 text-green-800">全年班（4月开学）</h4>
-                                <div class="space-y-4">
-                                    <!-- 英语A班 -->
-                                    <div>
-                                        <h5 class="font-medium text-sm mb-2 text-blue-700">英语A班</h5>
-                                        <div id="schedule-english-a" class="schedule-grid bg-white rounded text-xs">
-                                            <!-- 动态生成课表 -->
-                                        </div>
-                                    </div>
-                                    <!-- 英语B班 -->
-                                    <div>
-                                        <h5 class="font-medium text-sm mb-2 text-blue-700">英语B班</h5>
-                                        <div id="schedule-english-b" class="schedule-grid bg-white rounded text-xs">
-                                            <!-- 动态生成课表 -->
-                                        </div>
-                                    </div>
-                                    <!-- 中数1班 -->
-                                    <div>
-                                        <h5 class="font-medium text-sm mb-2 text-purple-700">中数1班</h5>
-                                        <div id="schedule-class-1" class="schedule-grid bg-white rounded text-xs">
-                                            <!-- 动态生成课表 -->
-                                        </div>
-                                    </div>
-                                    <!-- 中数2班 -->
-                                    <div>
-                                        <h5 class="font-medium text-sm mb-2 text-purple-700">中数2班</h5>
-                                        <div id="schedule-class-2" class="schedule-grid bg-white rounded text-xs">
-                                            <!-- 动态生成课表 -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <!-- Schedule Results -->
+                <div id="schedule-results" class="hidden">
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold">生成结果</h3>
+                            <div class="text-sm text-gray-600" id="results-summary"></div>
+                        </div>
+                        <div id="solution-list" class="space-y-2">
+                            <!-- Solutions will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                            <!-- 冲刺班 -->
-                            <div class="bg-orange-50 p-4 rounded-lg">
-                                <h4 class="font-semibold mb-3 text-orange-800">冲刺班（8月开学）</h4>
-                                <div id="schedule-sprint" class="schedule-grid bg-white rounded text-xs">
-                                    <!-- 动态生成课表 -->
-                                </div>
+        <!-- Results Tab -->
+        <div id="results" class="tab-content">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-table text-blue-600 mr-2"></i>课表展示
+                </h2>
+
+                <!-- Solution Navigation -->
+                <div id="solution-navigation" class="flex items-center justify-between mb-6 p-4 bg-gray-50 rounded-lg">
+                    <button onclick="previousSolution()" class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition duration-200">
+                        <i class="fas fa-chevron-left mr-2"></i>上一个方案
+                    </button>
+                    <div class="text-center">
+                        <div class="text-lg font-semibold" id="current-solution-title">方案 1</div>
+                        <div class="text-sm text-gray-600" id="current-solution-info">点击生成排课方案后查看</div>
+                    </div>
+                    <button onclick="nextSolution()" class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition duration-200">
+                        下一个方案<i class="fas fa-chevron-right ml-2"></i>
+                    </button>
+                </div>
+
+                <!-- Timetable Display -->
+                <div id="timetable-container">
+                    <!-- Full Year Classes -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-700">全年班课表</h3>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="text-lg font-medium mb-2 text-center bg-blue-100 p-2 rounded">英语A班 & 中数1班</h4>
+                                <div id="full-year-a1-timetable" class="timetable-grid"></div>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-medium mb-2 text-center bg-green-100 p-2 rounded">英语B班 & 中数2班</h4>
+                                <div id="full-year-b2-timetable" class="timetable-grid"></div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 选修课程表 -->
+                    <!-- Sprint Class -->
                     <div class="mb-8">
-                        <h3 class="text-xl font-semibold mb-4 text-gray-800">选修课程表</h3>
-                        <div class="grid lg:grid-cols-3 gap-6">
-                            <!-- 选修组合1 -->
-                            <div class="bg-purple-50 p-4 rounded-lg">
-                                <h4 class="font-semibold mb-3 text-purple-800">选修组合1：物理 & 历史</h4>
-                                <div id="schedule-elective-1" class="schedule-grid bg-white rounded text-xs">
-                                    <!-- 动态生成课表 -->
-                                </div>
-                            </div>
-                            <!-- 选修组合2 -->
-                            <div class="bg-indigo-50 p-4 rounded-lg">
-                                <h4 class="font-semibold mb-3 text-indigo-800">选修组合2：化学 & 经济</h4>
-                                <div id="schedule-elective-2" class="schedule-grid bg-white rounded text-xs">
-                                    <!-- 动态生成课表 -->
-                                </div>
-                            </div>
-                            <!-- 选修组合3 -->
-                            <div class="bg-pink-50 p-4 rounded-lg">
-                                <h4 class="font-semibold mb-3 text-pink-800">选修组合3：生物 & M2</h4>
-                                <div id="schedule-elective-3" class="schedule-grid bg-white rounded text-xs">
-                                    <!-- 动态生成课表 -->
-                                </div>
-                            </div>
+                        <h3 class="text-xl font-semibold mb-4 text-gray-700">冲刺班课表</h3>
+                        <div>
+                            <h4 class="text-lg font-medium mb-2 text-center bg-yellow-100 p-2 rounded">冲刺班</h4>
+                            <div id="sprint-timetable" class="timetable-grid"></div>
                         </div>
                     </div>
 
-                    <!-- 总课表 -->
-                    <div class="mb-8">
-                        <h3 class="text-xl font-semibold mb-4 text-gray-800">学校总课表</h3>
-                        <div class="bg-gray-50 p-4 rounded-lg">
-                            <div id="schedule-total" class="schedule-grid bg-white rounded text-xs">
-                                <!-- 动态生成总课表 -->
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 统计信息 -->
-                    <div class="grid lg:grid-cols-4 gap-4">
-                        <div class="bg-blue-50 p-4 rounded-lg text-center">
-                            <div class="text-2xl font-bold text-blue-600" id="totalLessons">--</div>
-                            <div class="text-sm text-gray-600">总课时数</div>
-                        </div>
-                        <div class="bg-green-50 p-4 rounded-lg text-center">
-                            <div class="text-2xl font-bold text-green-600" id="teacherUtilization">--%</div>
-                            <div class="text-sm text-gray-600">教师利用率</div>
-                        </div>
-                        <div class="bg-purple-50 p-4 rounded-lg text-center">
-                            <div class="text-2xl font-bold text-purple-600" id="roomUtilization">--%</div>
-                            <div class="text-sm text-gray-600">教室利用率</div>
-                        </div>
-                        <div class="bg-orange-50 p-4 rounded-lg text-center">
-                            <div class="text-2xl font-bold text-orange-600" id="satisfactionScore">--</div>
-                            <div class="text-sm text-gray-600">满意度评分</div>
-                        </div>
+                    <!-- Overall Schedule -->
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-700">总课表概览</h3>
+                        <div id="overall-timetable" class="timetable-grid"></div>
                     </div>
                 </div>
             </div>
@@ -885,148 +580,174 @@
     </div>
 
     <script>
-        // 全局变量
+        // Global variables
         let teachers = [];
+        let courseSettings = {};
         let teacherConstraints = {};
-        let globalConstraints = {};
         let solutions = [];
-        let currentSolutionIndex = 0;
+        let currentSolution = 0;
 
-        // 时间段定义
+        // Time slots definition
         const timeSlots = [
-            '早自习', '上午1', '上午2', '上午3', '上午4',
-            '下午1', '下午2', '下午3', '下午4',
-            '晚自习1', '晚自习2', '晚自习3'
+            { id: 'morning-study', label: '早自习', time: '8:00-8:35' },
+            { id: 'period1', label: '第1节', time: '8:35-9:20' },
+            { id: 'period2', label: '第2节', time: '9:30-10:15' },
+            { id: 'period3', label: '第3节', time: '10:25-11:10' },
+            { id: 'period4', label: '第4节', time: '11:20-12:05' },
+            { id: 'lunch', label: '午饭时间', time: '12:05-13:35', break: true },
+            { id: 'period5', label: '第5节', time: '13:35-14:20' },
+            { id: 'period6', label: '第6节', time: '14:30-15:15' },
+            { id: 'period7', label: '第7节', time: '15:25-16:10' },
+            { id: 'period8', label: '第8节', time: '16:20-17:05' },
+            { id: 'dinner', label: '晚饭时间', time: '17:05-18:45', break: true },
+            { id: 'evening1', label: '晚自习1', time: '18:45-19:30' },
+            { id: 'evening2', label: '晚自习2', time: '19:35-20:20' },
+            { id: 'evening3', label: '晚自习3', time: '20:30-21:30', break: true }
         ];
-
-        const timeSlotDetails = {
-            '早自习': '8:00-8:35',
-            '上午1': '8:35-9:20',
-            '上午2': '9:30-10:15',
-            '上午3': '10:25-11:10',
-            '上午4': '11:20-12:05',
-            '下午1': '13:35-14:20',
-            '下午2': '14:30-15:15',
-            '下午3': '15:25-16:10',
-            '下午4': '16:20-17:05',
-            '晚自习1': '18:45-19:30',
-            '晚自习2': '19:35-20:20',
-            '晚自习3': '20:30-21:30'
-        };
 
         const weekDays = ['周一', '周二', '周三', '周四', '周五'];
 
-        // 课程定义
-        const subjects = {
-            required: {
-                '中文': { hours: 6, classes: ['1班', '2班'] },
-                '数学': { hours: 6, classes: ['1班', '2班'] },
-                '英文听力A': { hours: 2, classes: ['A班', 'B班'] },
-                '英文听力B': { hours: 2, classes: ['A班', 'B班'] },
-                '英文阅读': { hours: 2, classes: ['A班', 'B班'] },
-                '英文写作': { hours: 2, classes: ['A班', 'B班'] },
-                '英文口语': { hours: 2, classes: ['A班', 'B班'] }
-            },
-            elective: {
-                '物理': { hours: 5, groups: [1] },
-                '历史': { hours: 5, groups: [1] },
-                '化学': { hours: 5, groups: [2] },
-                '经济': { hours: 5, groups: [2] },
-                '生物': { hours: 5, groups: [3] },
-                'M2': { hours: 5, groups: [3] }
-            }
-        };
-
-        // 标签页切换
+        // Tab management
         function showTab(tabName) {
-            // 隐藏所有标签页内容
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => content.classList.remove('active'));
-            
-            // 显示选中的标签页内容
-            document.getElementById(`content-${tabName}`).classList.add('active');
-            
-            // 更新标签按钮样式
-            const tabs = document.querySelectorAll('.tab-btn');
-            tabs.forEach(tab => {
-                tab.classList.remove('border-blue-500', 'text-blue-600');
-                tab.classList.add('border-transparent', 'text-gray-500');
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
             });
             
-            document.getElementById(`tab-${tabName}`).classList.remove('border-transparent', 'text-gray-500');
-            document.getElementById(`tab-${tabName}`).classList.add('border-blue-500', 'text-blue-600');
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Update tab buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('border-blue-500', 'text-blue-600');
+                btn.classList.add('border-transparent', 'text-gray-500');
+            });
+            
+            document.getElementById(tabName + '-tab').classList.remove('border-transparent', 'text-gray-500');
+            document.getElementById(tabName + '-tab').classList.add('border-blue-500', 'text-blue-600');
         }
 
-        // 教师管理
-        document.getElementById('teacherForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        // Course settings
+        function updateEnglishTotal() {
+            const listening_a = parseInt(document.getElementById('english-listening-a').value) || 0;
+            const listening_b = parseInt(document.getElementById('english-listening-b').value) || 0;
+            const reading = parseInt(document.getElementById('english-reading').value) || 0;
+            const writing = parseInt(document.getElementById('english-writing').value) || 0;
+            const speaking = parseInt(document.getElementById('english-speaking').value) || 0;
             
-            const name = document.getElementById('teacherName').value.trim();
-            const subjects = Array.from(document.querySelectorAll('#teacherForm input[type="checkbox"]:checked')).map(cb => cb.value);
-            const notes = document.getElementById('teacherNotes').value.trim();
+            const total = listening_a + listening_b + reading + writing + speaking;
+            document.getElementById('english-total').textContent = total;
+        }
+
+        function saveCourseSettings() {
+            courseSettings = {
+                chinese: {
+                    hours: parseInt(document.getElementById('chinese-hours').value),
+                    allowEvening: document.getElementById('chinese-evening').checked
+                },
+                math: {
+                    hours: parseInt(document.getElementById('math-hours').value),
+                    allowEvening: document.getElementById('math-evening').checked
+                },
+                english: {
+                    listening_a: parseInt(document.getElementById('english-listening-a').value),
+                    listening_b: parseInt(document.getElementById('english-listening-b').value),
+                    reading: parseInt(document.getElementById('english-reading').value),
+                    writing: parseInt(document.getElementById('english-writing').value),
+                    speaking: parseInt(document.getElementById('english-speaking').value),
+                    allowEvening: document.getElementById('english-evening').checked
+                },
+                physics: { 
+                    hours: parseInt(document.getElementById('physics-hours').value),
+                    allowEvening: document.getElementById('physics-evening').checked
+                },
+                chemistry: { 
+                    hours: parseInt(document.getElementById('chemistry-hours').value),
+                    allowEvening: document.getElementById('chemistry-evening').checked
+                },
+                biology: { 
+                    hours: parseInt(document.getElementById('biology-hours').value),
+                    allowEvening: document.getElementById('biology-evening').checked
+                },
+                economics: { 
+                    hours: parseInt(document.getElementById('economics-hours').value),
+                    allowEvening: document.getElementById('economics-evening').checked
+                },
+                history: { 
+                    hours: parseInt(document.getElementById('history-hours').value),
+                    allowEvening: document.getElementById('history-evening').checked
+                },
+                m2: { 
+                    hours: parseInt(document.getElementById('m2-hours').value),
+                    allowEvening: document.getElementById('m2-evening').checked
+                }
+            };
+            
+            alert('课程设置已保存！');
+        }
+
+        // Teacher management
+        function addTeacher() {
+            const name = document.getElementById('teacher-name').value.trim();
+            const subjectSelect = document.getElementById('teacher-subjects');
+            const subjects = Array.from(subjectSelect.selectedOptions).map(option => option.value);
             
             if (!name || subjects.length === 0) {
-                alert('请填写教师姓名并选择至少一门可授课科目');
+                alert('请填写教师姓名并选择至少一门可授课科目！');
                 return;
             }
             
             const teacher = {
                 id: Date.now(),
-                name,
-                subjects,
-                notes
+                name: name,
+                subjects: subjects
             };
             
             teachers.push(teacher);
-            updateTeacherList();
+            teacherConstraints[teacher.id] = {
+                availableTimes: [],
+                unavailableTimes: [],
+                preferredTimes: [],
+                fullYearSubjects: [],
+                sprintSubjects: []
+            };
+            
+            document.getElementById('teacher-name').value = '';
+            subjectSelect.selectedIndex = -1;
+            
+            updateTeachersList();
             updateConstraintTeacherSelect();
-            
-            // 清空表单
-            document.getElementById('teacherForm').reset();
-            
-            showNotification('教师添加成功', 'success');
-        });
+        }
 
-        function updateTeacherList() {
-            const container = document.getElementById('teacherList');
+        function updateTeachersList() {
+            const container = document.getElementById('teachers-list');
             container.innerHTML = '';
             
             teachers.forEach(teacher => {
                 const div = document.createElement('div');
-                div.className = 'subject-card bg-white p-3 rounded-lg border hover:shadow-md';
+                div.className = 'flex items-center justify-between p-3 border border-gray-200 rounded-lg';
                 div.innerHTML = `
-                    <div class="flex justify-between items-start">
-                        <div class="flex-1">
-                            <h4 class="font-medium text-gray-800">${teacher.name}</h4>
-                            <div class="mt-1 flex flex-wrap gap-1">
-                                ${teacher.subjects.map(subject => 
-                                    `<span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">${subject}</span>`
-                                ).join('')}
-                            </div>
-                            ${teacher.notes ? `<p class="text-xs text-gray-500 mt-1">${teacher.notes}</p>` : ''}
-                        </div>
-                        <button onclick="removeTeacher(${teacher.id})" class="text-red-500 hover:text-red-700 ml-2">
-                            <i class="fas fa-trash"></i>
-                        </button>
+                    <div>
+                        <div class="font-medium">${teacher.name}</div>
+                        <div class="text-sm text-gray-600">可授课科目: ${teacher.subjects.join(', ')}</div>
                     </div>
+                    <button onclick="removeTeacher(${teacher.id})" class="text-red-600 hover:text-red-800">
+                        <i class="fas fa-trash"></i>
+                    </button>
                 `;
                 container.appendChild(div);
             });
         }
 
-        function removeTeacher(id) {
-            if (confirm('确定要删除这位教师吗？')) {
-                teachers = teachers.filter(t => t.id !== id);
-                delete teacherConstraints[id];
-                updateTeacherList();
-                updateConstraintTeacherSelect();
-                updateConstraintsList();
-                showNotification('教师删除成功', 'success');
-            }
+        function removeTeacher(teacherId) {
+            teachers = teachers.filter(t => t.id !== teacherId);
+            delete teacherConstraints[teacherId];
+            updateTeachersList();
+            updateConstraintTeacherSelect();
         }
 
         function updateConstraintTeacherSelect() {
-            const select = document.getElementById('constraintTeacher');
+            const select = document.getElementById('constraint-teacher-select');
             select.innerHTML = '<option value="">请选择教师</option>';
             
             teachers.forEach(teacher => {
@@ -1037,615 +758,420 @@
             });
         }
 
-        // 约束条件管理
-        function saveTeacherConstraints() {
-            const teacherId = document.getElementById('constraintTeacher').value;
+        // Constraint management
+        function loadTeacherConstraints() {
+            const teacherId = document.getElementById('constraint-teacher-select').value;
+            const panel = document.getElementById('teacher-constraints-panel');
+            
             if (!teacherId) {
-                alert('请先选择教师');
+                panel.classList.add('hidden');
                 return;
             }
             
-            const availableTimes = Array.from(document.querySelectorAll('.available-time:checked')).map(cb => cb.dataset.time);
-            const unavailableTimes = Array.from(document.querySelectorAll('.unavailable-time:checked')).map(cb => cb.dataset.time);
-            const preferredTimes = Array.from(document.querySelectorAll('.preferred-time:checked')).map(cb => cb.dataset.time);
+            panel.classList.remove('hidden');
             
-            teacherConstraints[teacherId] = {
-                available: availableTimes,
-                unavailable: unavailableTimes,
-                preferred: preferredTimes
-            };
+            // Generate time grids
+            generateTimeGrid('available-times', 'available');
+            generateTimeGrid('unavailable-times', 'unavailable');
+            generateTimeGrid('preferred-times', 'preferred');
             
-            updateConstraintsList();
-            showNotification('教师约束条件保存成功', 'success');
-            
-            // 清空选择
-            document.querySelectorAll('.available-time, .unavailable-time, .preferred-time').forEach(cb => cb.checked = false);
-            document.getElementById('constraintTeacher').value = '';
+            // Load teacher's subjects for multi-course settings
+            const teacher = teachers.find(t => t.id == teacherId);
+            if (teacher) {
+                updateSubjectSelects(teacher.subjects);
+            }
         }
 
-        function saveGlobalConstraints() {
-            globalConstraints = {
-                noBackToBack: document.getElementById('noBackToBack').checked,
-                evenDistribution: document.getElementById('evenDistribution').checked,
-                morningPriority: document.getElementById('morningPriority').checked,
-                totalClassrooms: parseInt(document.getElementById('totalClassrooms').value),
-                specialRooms: document.getElementById('specialRooms').value,
-                walkingTime: document.getElementById('walkingTime').checked,
-                lunchBreak: document.getElementById('lunchBreak').checked,
-                maxDailyHours: parseInt(document.getElementById('maxDailyHours').value),
-                teacherSatisfaction: parseInt(document.getElementById('teacherSatisfaction').value),
-                courseDistribution: parseInt(document.getElementById('courseDistribution').value),
-                roomUtilization: parseInt(document.getElementById('roomUtilization').value)
-            };
-            
-            updateConstraintsList();
-            showNotification('全局约束条件保存成功', 'success');
-        }
-
-        function updateConstraintsList() {
-            const container = document.getElementById('constraintsList');
+        function generateTimeGrid(containerId, type) {
+            const container = document.getElementById(containerId);
             container.innerHTML = '';
             
-            // 教师约束
-            Object.entries(teacherConstraints).forEach(([teacherId, constraints]) => {
-                const teacher = teachers.find(t => t.id == teacherId);
-                if (teacher) {
-                    const div = document.createElement('div');
-                    div.className = 'bg-white p-3 rounded border-l-4 border-blue-500';
-                    div.innerHTML = `
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h4 class="font-medium text-blue-800">${teacher.name} 的约束条件</h4>
-                                <div class="text-sm text-gray-600 mt-1">
-                                    <div>可用时间：${constraints.available.length} 个</div>
-                                    <div>不可用时间：${constraints.unavailable.length} 个</div>
-                                    <div>优先时间：${constraints.preferred.length} 个</div>
-                                </div>
-                            </div>
-                            <button onclick="removeTeacherConstraint('${teacherId}')" class="text-red-500 hover:text-red-700">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    `;
-                    container.appendChild(div);
-                }
-            });
-            
-            // 全局约束
-            if (Object.keys(globalConstraints).length > 0) {
-                const div = document.createElement('div');
-                div.className = 'bg-white p-3 rounded border-l-4 border-green-500';
-                div.innerHTML = `
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h4 class="font-medium text-green-800">全局约束条件</h4>
-                            <div class="text-sm text-gray-600 mt-1">
-                                <div>教室总数：${globalConstraints.totalClassrooms}</div>
-                                <div>每日最大课时：${globalConstraints.maxDailyHours}</div>
-                                <div>教师满意度权重：${globalConstraints.teacherSatisfaction}</div>
-                            </div>
-                        </div>
-                        <button onclick="clearGlobalConstraints()" class="text-red-500 hover:text-red-700">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                `;
-                container.appendChild(div);
-            }
-        }
-
-        function removeTeacherConstraint(teacherId) {
-            if (confirm('确定要删除这个教师的约束条件吗？')) {
-                delete teacherConstraints[teacherId];
-                updateConstraintsList();
-                showNotification('约束条件删除成功', 'success');
-            }
-        }
-
-        function clearGlobalConstraints() {
-            if (confirm('确定要清除全局约束条件吗？')) {
-                globalConstraints = {};
-                updateConstraintsList();
-                showNotification('全局约束条件已清除', 'success');
-            }
-        }
-
-        // 滑块值更新
-        document.getElementById('teacherSatisfaction').addEventListener('input', function(e) {
-            document.getElementById('teacherSatisfactionValue').textContent = e.target.value;
-        });
-
-        document.getElementById('courseDistribution').addEventListener('input', function(e) {
-            document.getElementById('courseDistributionValue').textContent = e.target.value;
-        });
-
-        document.getElementById('roomUtilization').addEventListener('input', function(e) {
-            document.getElementById('roomUtilizationValue').textContent = e.target.value;
-        });
-
-        // 数据检查
-        function checkData() {
-            let issues = [];
-            
-            // 检查教师
-            if (teachers.length === 0) {
-                issues.push('未添加任何教师');
-                document.getElementById('teacherCheck').className = 'fas fa-times-circle text-red-500 mr-2';
-            } else {
-                document.getElementById('teacherCheck').className = 'fas fa-check-circle text-green-500 mr-2';
-            }
-            
-            // 检查约束条件
-            const constraintCount = Object.keys(teacherConstraints).length + (Object.keys(globalConstraints).length > 0 ? 1 : 0);
-            if (constraintCount === 0) {
-                issues.push('未设置任何约束条件');
-                document.getElementById('constraintCheck').className = 'fas fa-times-circle text-red-500 mr-2';
-            } else {
-                document.getElementById('constraintCheck').className = 'fas fa-check-circle text-green-500 mr-2';
-            }
-            
-            // 更新计数
-            document.getElementById('teacherCount').textContent = teachers.length;
-            document.getElementById('constraintCount').textContent = constraintCount;
-            
-            if (issues.length > 0) {
-                alert('数据检查发现问题：\n' + issues.join('\n'));
-                return false;
-            } else {
-                showNotification('数据检查通过，可以开始排课', 'success');
-                return true;
-            }
-        }
-
-        // 生成示例数据
-        function generateSampleData() {
-            // 添加示例教师
-            const sampleTeachers = [
-                { name: '李老师', subjects: ['中文'], notes: '语文组组长' },
-                { name: '王老师', subjects: ['数学'], notes: '数学组组长' },
-                { name: 'Stella老师', subjects: ['英文听力A', '英文听力B', '英文阅读'], notes: '可同时教授多个英文板块' },
-                { name: '张老师', subjects: ['英文写作', '英文口语'], notes: '英语口语专家' },
-                { name: '陈老师', subjects: ['物理'], notes: '物理实验室负责人' },
-                { name: '刘老师', subjects: ['化学'], notes: '化学实验室负责人' },
-                { name: '黄老师', subjects: ['生物'], notes: '生物组组长' },
-                { name: '林老师', subjects: ['历史'], notes: '历史组组长' },
-                { name: '吴老师', subjects: ['经济'], notes: '经济组组长' },
-                { name: '赵老师', subjects: ['M2'], notes: '数学延伸模块专家' }
-            ];
-            
-            teachers = [];
-            sampleTeachers.forEach((teacher, index) => {
-                teachers.push({
-                    id: Date.now() + index,
-                    name: teacher.name,
-                    subjects: teacher.subjects,
-                    notes: teacher.notes
+            timeSlots.forEach(slot => {
+                if (slot.break) return; // Skip break times
+                
+                weekDays.forEach(day => {
+                    const button = document.createElement('button');
+                    button.className = 'time-button';
+                    button.textContent = `${day}\n${slot.label}`;
+                    button.style.whiteSpace = 'pre-line';
+                    button.onclick = () => toggleTimeConstraint(button, type, `${day}-${slot.id}`);
+                    container.appendChild(button);
                 });
             });
-            
-            // 添加示例约束条件
-            teacherConstraints = {};
-            
-            // 为Stella老师添加特殊约束（优先上午时间）
-            const stellaId = teachers.find(t => t.name === 'Stella老师')?.id;
-            if (stellaId) {
-                teacherConstraints[stellaId] = {
-                    available: [],
-                    unavailable: ['晚自习1-1', '晚自习1-2', '晚自习1-3', '晚自习1-4', '晚自习1-5'],
-                    preferred: ['上午1-1', '上午1-2', '上午2-1', '上午2-2', '上午3-1', '上午3-2']
-                };
-            }
-            
-            // 设置全局约束
-            globalConstraints = {
-                noBackToBack: true,
-                evenDistribution: true,
-                morningPriority: true,
-                totalClassrooms: 12,
-                specialRooms: '物理需要实验室，化学需要实验室',
-                walkingTime: true,
-                lunchBreak: true,
-                maxDailyHours: 8,
-                teacherSatisfaction: 8,
-                courseDistribution: 7,
-                roomUtilization: 6
-            };
-            
-            // 更新界面
-            updateTeacherList();
-            updateConstraintTeacherSelect();
-            updateConstraintsList();
-            
-            showNotification('示例数据生成成功，可以开始排课了', 'success');
         }
 
-        // 开始排课
-        function startScheduling() {
-            if (!checkData()) {
+        function toggleTimeConstraint(button, type, timeId) {
+            const teacherId = document.getElementById('constraint-teacher-select').value;
+            if (!teacherId) return;
+            
+            const constraints = teacherConstraints[teacherId];
+            const timeArray = constraints[type + 'Times'];
+            
+            button.classList.remove('available', 'unavailable', 'preferred');
+            
+            if (timeArray.includes(timeId)) {
+                // Remove from current type
+                const index = timeArray.indexOf(timeId);
+                timeArray.splice(index, 1);
+            } else {
+                // Add to current type and remove from others
+                ['available', 'unavailable', 'preferred'].forEach(t => {
+                    const arr = constraints[t + 'Times'];
+                    const idx = arr.indexOf(timeId);
+                    if (idx !== -1) arr.splice(idx, 1);
+                });
+                timeArray.push(timeId);
+                button.classList.add(type);
+            }
+        }
+
+        function updateSubjectSelects(subjects) {
+            const fullYearSelect = document.getElementById('full-year-subjects');
+            const sprintSelect = document.getElementById('sprint-subjects');
+            
+            [fullYearSelect, sprintSelect].forEach(select => {
+                select.innerHTML = '';
+                subjects.forEach(subject => {
+                    const option = document.createElement('option');
+                    option.value = subject;
+                    option.textContent = getSubjectDisplayName(subject);
+                    select.appendChild(option);
+                });
+            });
+        }
+
+        function getSubjectDisplayName(subject) {
+            const names = {
+                'chinese': '中文',
+                'english-listening-a': '英文听力A',
+                'english-listening-b': '英文听力B',
+                'english-reading': '英文阅读',
+                'english-writing': '英文写作',
+                'english-speaking': '英文口语',
+                'math': '数学',
+                'physics': '物理',
+                'chemistry': '化学',
+                'biology': '生物',
+                'economics': '经济',
+                'history': '历史',
+                'm2': 'M2'
+            };
+            return names[subject] || subject;
+        }
+
+        function saveTeacherConstraints() {
+            const teacherId = document.getElementById('constraint-teacher-select').value;
+            if (!teacherId) return;
+            
+            const fullYearSubjects = Array.from(document.getElementById('full-year-subjects').selectedOptions)
+                .map(option => option.value);
+            const sprintSubjects = Array.from(document.getElementById('sprint-subjects').selectedOptions)
+                .map(option => option.value);
+            
+            teacherConstraints[teacherId].fullYearSubjects = fullYearSubjects;
+            teacherConstraints[teacherId].sprintSubjects = sprintSubjects;
+            
+            alert('约束条件已保存！');
+        }
+
+        // Schedule generation
+        function generateSchedule() {
+            if (teachers.length === 0) {
+                alert('请先添加教师信息！');
                 return;
             }
             
-            const btn = document.getElementById('startSchedulingBtn');
-            const progressContainer = document.getElementById('progressContainer');
-            const progressBar = document.getElementById('progressBar');
-            const progressText = document.getElementById('progressText');
+            if (Object.keys(courseSettings).length === 0) {
+                alert('请先设置课程信息！');
+                return;
+            }
             
-            // 禁用按钮，显示进度
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>排课中...';
-            progressContainer.classList.remove('hidden');
+            // Show progress
+            document.getElementById('schedule-progress').classList.remove('hidden');
+            document.getElementById('schedule-results').classList.add('hidden');
             
-            // 模拟排课过程
+            // Simulate schedule generation process
+            const solutionCount = parseInt(document.getElementById('solution-count').value);
             let progress = 0;
-            const steps = [
-                '初始化排课算法...',
-                '分析教师约束条件...',
-                '处理课程分配...',
-                '检查时间冲突...',
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            
+            const progressSteps = [
+                '分析课程约束条件...',
+                '检查教师时间约束...',
+                '生成初始排课方案...',
                 '优化课程分布...',
-                '生成排课方案...',
                 '验证方案可行性...',
-                '完成排课'
+                '生成多个备选方案...',
+                '完成排课生成！'
             ];
             
-            const interval = setInterval(() => {
-                if (progress < steps.length - 1) {
-                    progressText.textContent = steps[progress];
-                    progressBar.style.width = `${(progress + 1) * 12.5}%`;
-                    progress++;
-                } else {
-                    clearInterval(interval);
-                    
-                    // 生成排课方案
-                    solutions = generateScheduleSolutions();
-                    currentSolutionIndex = 0;
-                    
-                    // 显示结果
-                    progressText.textContent = '排课完成！';
-                    progressBar.style.width = '100%';
-                    
+            let stepIndex = 0;
+            const progressInterval = setInterval(() => {
+                progress += Math.random() * 15 + 5;
+                if (progress > 100) progress = 100;
+                
+                progressBar.style.width = progress + '%';
+                
+                if (stepIndex < progressSteps.length - 1 && progress > (stepIndex + 1) * 14) {
+                    stepIndex++;
+                }
+                progressText.textContent = progressSteps[stepIndex];
+                
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
                     setTimeout(() => {
-                        progressContainer.classList.add('hidden');
-                        showScheduleResults();
-                        
-                        // 恢复按钮
-                        btn.disabled = false;
-                        btn.innerHTML = '<i class="fas fa-play mr-2"></i>重新排课';
+                        generateScheduleSolutions(solutionCount);
+                        document.getElementById('schedule-progress').classList.add('hidden');
+                        document.getElementById('schedule-results').classList.remove('hidden');
                     }, 1000);
                 }
-            }, 800);
+            }, 200);
         }
 
-        // 生成排课方案
-        function generateScheduleSolutions() {
-            const solutionCount = parseInt(document.getElementById('solutionCount').value);
-            const solutions = [];
+        function generateScheduleSolutions(count) {
+            solutions = [];
             
-            for (let i = 0; i < solutionCount; i++) {
+            for (let i = 0; i < count; i++) {
                 const solution = {
                     id: i + 1,
-                    score: Math.floor(Math.random() * 30) + 70, // 70-100分
-                    conflicts: Math.floor(Math.random() * 5), // 0-4个冲突
-                    schedules: generateRandomSchedule()
+                    name: `方案 ${i + 1}`,
+                    score: Math.floor(Math.random() * 20) + 80,
+                    conflicts: Math.floor(Math.random() * 3),
+                    timetable: generateRandomTimetable()
                 };
                 solutions.push(solution);
             }
             
-            // 按分数排序（分数高的在前）
+            // Sort by score
             solutions.sort((a, b) => b.score - a.score);
             
-            return solutions;
+            // Update results display
+            const resultsSummary = document.getElementById('results-summary');
+            resultsSummary.textContent = `生成了 ${count} 个可行方案，最高分数: ${solutions[0].score}`;
+            
+            const solutionList = document.getElementById('solution-list');
+            solutionList.innerHTML = '';
+            
+            solutions.forEach((solution, index) => {
+                const div = document.createElement('div');
+                div.className = `p-3 border rounded-lg cursor-pointer transition-colors ${index === 0 ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:bg-gray-50'}`;
+                div.onclick = () => selectSolution(index);
+                div.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="font-medium">${solution.name}</div>
+                            <div class="text-sm text-gray-600">评分: ${solution.score} | 冲突: ${solution.conflicts}个</div>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                    </div>
+                `;
+                solutionList.appendChild(div);
+            });
+            
+            // Show first solution
+            currentSolution = 0;
+            displayCurrentSolution();
         }
 
-        function generateRandomSchedule() {
-            const schedules = {
-                'english-a': generateClassSchedule('英语A班'),
-                'english-b': generateClassSchedule('英语B班'),
-                'class-1': generateClassSchedule('中数1班'),
-                'class-2': generateClassSchedule('中数2班'),
-                'sprint': generateClassSchedule('冲刺班'),
-                'elective-1': generateElectiveSchedule(['物理', '历史']),
-                'elective-2': generateElectiveSchedule(['化学', '经济']),
-                'elective-3': generateElectiveSchedule(['生物', 'M2']),
-                'total': generateTotalSchedule()
+        function generateRandomTimetable() {
+            const timetable = {
+                fullYearA1: {},
+                fullYearB2: {},
+                sprint: {}
             };
             
-            return schedules;
-        }
-
-        function generateClassSchedule(className) {
-            const schedule = {};
-            const subjectColors = {
-                '中文': '#f87171',
-                '数学': '#60a5fa',
-                '英文听力A': '#34d399',
-                '英文听力B': '#a78bfa',
-                '英文阅读': '#fbbf24',
-                '英文写作': '#f472b6',
-                '英文口语': '#fb7185'
-            };
+            const subjects = ['中文', '数学', '英文阅读', '英文写作', '物理', '化学'];
+            const teachers = ['张老师', '李老师', '王老师', '刘老师', '陈老师'];
             
-            timeSlots.forEach(timeSlot => {
-                schedule[timeSlot] = {};
-                weekDays.forEach((day, dayIndex) => {
-                    // 随机分配课程
-                    const subjects = Object.keys(subjectColors);
-                    const randomSubject = subjects[Math.floor(Math.random() * subjects.length)];
-                    const randomTeacher = teachers.length > 0 ? teachers[Math.floor(Math.random() * teachers.length)].name : '待分配';
+            weekDays.forEach(day => {
+                timeSlots.forEach(slot => {
+                    if (slot.break) return;
                     
-                    schedule[timeSlot][dayIndex] = {
-                        subject: randomSubject,
-                        teacher: randomTeacher,
-                        classroom: `A${Math.floor(Math.random() * 10) + 1}01`,
-                        color: subjectColors[randomSubject]
-                    };
+                    const timeKey = `${day}-${slot.id}`;
+                    
+                    if (Math.random() > 0.3) { // 70% chance of having a class
+                        const subject = subjects[Math.floor(Math.random() * subjects.length)];
+                        const teacher = teachers[Math.floor(Math.random() * teachers.length)];
+                        
+                        timetable.fullYearA1[timeKey] = { subject, teacher };
+                        timetable.fullYearB2[timeKey] = { subject, teacher: teachers[Math.floor(Math.random() * teachers.length)] };
+                        timetable.sprint[timeKey] = { subject, teacher };
+                    }
                 });
             });
             
-            return schedule;
+            return timetable;
         }
 
-        function generateElectiveSchedule(subjects) {
-            const schedule = {};
-            const subjectColors = {
-                '物理': '#ef4444',
-                '历史': '#8b5cf6',
-                '化学': '#06b6d4',
-                '经济': '#10b981',
-                '生物': '#f59e0b',
-                'M2': '#ec4899'
-            };
+        function selectSolution(index) {
+            currentSolution = index;
+            displayCurrentSolution();
             
-            timeSlots.forEach(timeSlot => {
-                schedule[timeSlot] = {};
-                weekDays.forEach((day, dayIndex) => {
-                    // 为每个选修科目分配时间
-                    const randomSubject = subjects[Math.floor(Math.random() * subjects.length)];
-                    const randomTeacher = teachers.length > 0 ? teachers[Math.floor(Math.random() * teachers.length)].name : '待分配';
-                    
-                    schedule[timeSlot][dayIndex] = {
-                        subject: randomSubject,
-                        teacher: randomTeacher,
-                        classroom: `B${Math.floor(Math.random() * 5) + 1}01`,
-                        color: subjectColors[randomSubject]
-                    };
-                });
+            // Update solution list styling
+            document.querySelectorAll('#solution-list > div').forEach((div, i) => {
+                if (i === index) {
+                    div.className = 'p-3 border rounded-lg cursor-pointer transition-colors border-blue-500 bg-blue-50';
+                } else {
+                    div.className = 'p-3 border rounded-lg cursor-pointer transition-colors border-gray-200 hover:bg-gray-50';
+                }
             });
-            
-            return schedule;
         }
 
-        function generateTotalSchedule() {
-            const schedule = {};
+        function displayCurrentSolution() {
+            if (solutions.length === 0) return;
             
-            timeSlots.forEach(timeSlot => {
-                schedule[timeSlot] = {};
-                weekDays.forEach((day, dayIndex) => {
-                    // 总课表显示所有正在进行的课程
-                    const courses = [
-                        '中文1班/数学2班',
-                        '英语A班/英语B班',
-                        '物理组合1/历史组合1',
-                        '化学组合2/经济组合2',
-                        '生物组合3/M2组合3'
-                    ];
-                    
-                    const randomCourse = courses[Math.floor(Math.random() * courses.length)];
-                    
-                    schedule[timeSlot][dayIndex] = {
-                        subject: randomCourse,
-                        teacher: '多位教师',
-                        classroom: '多个教室',
-                        color: '#6b7280'
-                    };
-                });
-            });
+            const solution = solutions[currentSolution];
+            document.getElementById('current-solution-title').textContent = solution.name;
+            document.getElementById('current-solution-info').textContent = `评分: ${solution.score} | 冲突: ${solution.conflicts}个`;
             
-            return schedule;
+            // Generate timetable HTML
+            generateTimetableHTML('full-year-a1-timetable', solution.timetable.fullYearA1);
+            generateTimetableHTML('full-year-b2-timetable', solution.timetable.fullYearB2);
+            generateTimetableHTML('sprint-timetable', solution.timetable.sprint);
+            generateOverallTimetable(solution.timetable);
         }
 
-        // 显示排课结果
-        function showScheduleResults() {
-            document.getElementById('scheduleResults').classList.remove('hidden');
-            document.getElementById('solutionNavigation').classList.remove('hidden');
-            
-            updateSolutionDisplay();
-            renderAllSchedules();
-            updateStatistics();
-        }
-
-        function updateSolutionDisplay() {
-            const solution = solutions[currentSolutionIndex];
-            document.getElementById('solutionInfo').textContent = `方案 ${currentSolutionIndex + 1} / ${solutions.length}`;
-            document.getElementById('currentScore').textContent = solution.score;
-            document.getElementById('currentConflicts').textContent = solution.conflicts;
-            
-            // 更新按钮状态
-            document.getElementById('prevBtn').disabled = currentSolutionIndex === 0;
-            document.getElementById('nextBtn').disabled = currentSolutionIndex === solutions.length - 1;
-        }
-
-        function renderAllSchedules() {
-            const solution = solutions[currentSolutionIndex];
-            
-            // 渲染各个课表
-            renderScheduleGrid('schedule-english-a', solution.schedules['english-a']);
-            renderScheduleGrid('schedule-english-b', solution.schedules['english-b']);
-            renderScheduleGrid('schedule-class-1', solution.schedules['class-1']);
-            renderScheduleGrid('schedule-class-2', solution.schedules['class-2']);
-            renderScheduleGrid('schedule-sprint', solution.schedules['sprint']);
-            renderScheduleGrid('schedule-elective-1', solution.schedules['elective-1']);
-            renderScheduleGrid('schedule-elective-2', solution.schedules['elective-2']);
-            renderScheduleGrid('schedule-elective-3', solution.schedules['elective-3']);
-            renderScheduleGrid('schedule-total', solution.schedules['total']);
-        }
-
-        function renderScheduleGrid(containerId, schedule) {
+        function generateTimetableHTML(containerId, timetableData) {
             const container = document.getElementById(containerId);
             if (!container) return;
             
-            container.innerHTML = '';
-            
-            // 添加表头
-            const headerRow = document.createElement('div');
-            headerRow.className = 'contents';
-            
-            // 时间列标题
-            const timeHeader = document.createElement('div');
-            timeHeader.className = 'schedule-cell bg-gray-100 font-semibold text-center flex items-center justify-center';
-            timeHeader.textContent = '时间';
-            container.appendChild(timeHeader);
-            
-            // 星期列标题
+            let html = '<table class="w-full border-collapse border border-gray-300 text-sm"><thead><tr class="bg-gray-100">';
+            html += '<th class="border border-gray-300 p-2">时间</th>';
             weekDays.forEach(day => {
-                const dayHeader = document.createElement('div');
-                dayHeader.className = 'schedule-cell bg-gray-100 font-semibold text-center flex items-center justify-center';
-                dayHeader.textContent = day;
-                container.appendChild(dayHeader);
+                html += `<th class="border border-gray-300 p-2">${day}</th>`;
             });
+            html += '</tr></thead><tbody>';
             
-            // 添加时间行
-            timeSlots.forEach(timeSlot => {
-                // 时间标签
-                const timeLabel = document.createElement('div');
-                timeLabel.className = 'schedule-cell bg-gray-50 font-medium text-center flex flex-col items-center justify-center';
-                timeLabel.innerHTML = `
-                    <div class="text-xs">${timeSlot}</div>
-                    <div class="text-xs text-gray-500">${timeSlotDetails[timeSlot]}</div>
-                `;
-                container.appendChild(timeLabel);
-                
-                // 每天的课程
-                weekDays.forEach((day, dayIndex) => {
-                    const cell = document.createElement('div');
-                    cell.className = 'schedule-cell bg-white hover:bg-gray-50 cursor-pointer flex flex-col items-center justify-center p-1';
-                    
-                    const lesson = schedule[timeSlot]?.[dayIndex];
-                    if (lesson) {
-                        cell.style.backgroundColor = lesson.color + '20';
-                        cell.style.borderLeftColor = lesson.color;
-                        cell.innerHTML = `
-                            <div class="font-medium text-xs text-center">${lesson.subject}</div>
-                            <div class="text-xs text-gray-600 text-center">${lesson.teacher}</div>
-                            <div class="text-xs text-gray-500 text-center">${lesson.classroom}</div>
-                        `;
+            timeSlots.forEach(slot => {
+                html += '<tr>';
+                if (slot.break) {
+                    html += `<td colspan="6" class="lunch-dinner-break border border-gray-300 p-2 text-center text-gray-500">${slot.label}</td>`;
+                } else {
+                    html += `<td class="border border-gray-300 p-2 font-medium">${slot.label}<br><span class="text-xs text-gray-500">${slot.time}</span></td>`;
+                    weekDays.forEach(day => {
+                        const timeKey = `${day}-${slot.id}`;
+                        const classInfo = timetableData[timeKey];
                         
-                        // 添加悬浮提示
-                        cell.title = `${lesson.subject}\n教师：${lesson.teacher}\n教室：${lesson.classroom}\n时间：${timeSlot} ${day} (${timeSlotDetails[timeSlot]})`;
+                        if (classInfo) {
+                            const colorClass = getSubjectColorClass(classInfo.subject);
+                            html += `<td class="border border-gray-300 p-2 ${colorClass}">${classInfo.subject}<br><span class="text-xs">${classInfo.teacher}</span></td>`;
+                        } else {
+                            html += '<td class="border border-gray-300 p-2 text-center text-gray-400">-</td>';
+                        }
+                    });
+                }
+                html += '</tr>';
+            });
+            
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        function generateOverallTimetable(timetableData) {
+            const container = document.getElementById('overall-timetable');
+            if (!container) return;
+            
+            let html = '<table class="w-full border-collapse border border-gray-300 text-xs"><thead><tr class="bg-gray-100">';
+            html += '<th class="border border-gray-300 p-2">时间</th>';
+            html += '<th class="border border-gray-300 p-2">全年A1班</th>';
+            html += '<th class="border border-gray-300 p-2">全年B2班</th>';
+            html += '<th class="border border-gray-300 p-2">冲刺班</th>';
+            html += '</tr></thead><tbody>';
+            
+            weekDays.forEach(day => {
+                timeSlots.forEach(slot => {
+                    html += '<tr>';
+                    if (slot.break) {
+                        html += `<td colspan="4" class="lunch-dinner-break border border-gray-300 p-1 text-center text-gray-500">${day} ${slot.label}</td>`;
                     } else {
-                        cell.innerHTML = '<div class="text-xs text-gray-400">空闲</div>';
+                        html += `<td class="border border-gray-300 p-1 font-medium">${day}<br>${slot.label}</td>`;
+                        
+                        ['fullYearA1', 'fullYearB2', 'sprint'].forEach(classType => {
+                            const timeKey = `${day}-${slot.id}`;
+                            const classInfo = timetableData[classType][timeKey];
+                            
+                            if (classInfo) {
+                                const colorClass = getSubjectColorClass(classInfo.subject);
+                                html += `<td class="border border-gray-300 p-1 ${colorClass}">${classInfo.subject}<br>${classInfo.teacher}</td>`;
+                            } else {
+                                html += '<td class="border border-gray-300 p-1 text-center text-gray-400">-</td>';
+                            }
+                        });
                     }
-                    
-                    container.appendChild(cell);
-                });
-            });
-        }
-
-        function updateStatistics() {
-            const solution = solutions[currentSolutionIndex];
-            
-            // 计算统计数据
-            let totalLessons = 0;
-            Object.values(solution.schedules).forEach(schedule => {
-                Object.values(schedule).forEach(timeSlot => {
-                    totalLessons += Object.keys(timeSlot).length;
+                    html += '</tr>';
                 });
             });
             
-            const teacherUtilization = Math.floor(Math.random() * 20) + 75; // 75-95%
-            const roomUtilization = Math.floor(Math.random() * 15) + 80; // 80-95%
-            
-            document.getElementById('totalLessons').textContent = totalLessons;
-            document.getElementById('teacherUtilization').textContent = teacherUtilization + '%';
-            document.getElementById('roomUtilization').textContent = roomUtilization + '%';
-            document.getElementById('satisfactionScore').textContent = solution.score;
+            html += '</tbody></table>';
+            container.innerHTML = html;
         }
 
-        // 方案导航
+        function getSubjectColorClass(subject) {
+            const colorMap = {
+                '中文': 'subject-color-chinese',
+                '英文阅读': 'subject-color-english',
+                '英文写作': 'subject-color-english',
+                '英文听力A': 'subject-color-english',
+                '英文听力B': 'subject-color-english',
+                '英文口语': 'subject-color-english',
+                '数学': 'subject-color-math',
+                '物理': 'subject-color-physics',
+                '化学': 'subject-color-chemistry',
+                '生物': 'subject-color-biology',
+                '经济': 'subject-color-economics',
+                '历史': 'subject-color-history',
+                'M2': 'subject-color-m2'
+            };
+            return colorMap[subject] || '';
+        }
+
         function previousSolution() {
-            if (currentSolutionIndex > 0) {
-                currentSolutionIndex--;
-                updateSolutionDisplay();
-                renderAllSchedules();
-                updateStatistics();
-            }
+            if (solutions.length === 0) return;
+            currentSolution = (currentSolution - 1 + solutions.length) % solutions.length;
+            displayCurrentSolution();
         }
 
         function nextSolution() {
-            if (currentSolutionIndex < solutions.length - 1) {
-                currentSolutionIndex++;
-                updateSolutionDisplay();
-                renderAllSchedules();
-                updateStatistics();
-            }
+            if (solutions.length === 0) return;
+            currentSolution = (currentSolution + 1) % solutions.length;
+            displayCurrentSolution();
         }
 
-        function exportCurrentSolution() {
-            const solution = solutions[currentSolutionIndex];
-            
-            // 创建导出数据
-            const exportData = {
-                方案编号: solution.id,
-                评分: solution.score,
-                冲突数: solution.conflicts,
-                生成时间: new Date().toLocaleString(),
-                课表数据: solution.schedules
-            };
-            
-            // 转换为JSON并下载
-            const dataStr = JSON.stringify(exportData, null, 2);
-            const dataBlob = new Blob([dataStr], {type: 'application/json'});
-            
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(dataBlob);
-            link.download = `万鹤书院排课方案${solution.id}.json`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            showNotification(`方案 ${solution.id} 导出成功`, 'success');
-        }
-
-        // 通知系统
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 fade-in ${
-                type === 'success' ? 'bg-green-500 text-white' :
-                type === 'error' ? 'bg-red-500 text-white' :
-                'bg-blue-500 text-white'
-            }`;
-            notification.innerHTML = `
-                <div class="flex items-center">
-                    <i class="fas ${
-                        type === 'success' ? 'fa-check-circle' :
-                        type === 'error' ? 'fa-times-circle' :
-                        'fa-info-circle'
-                    } mr-2"></i>
-                    ${message}
-                </div>
-            `;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.opacity = '0';
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
-            }, 3000);
-        }
-
-        // 初始化
+        // Initialize the application
         document.addEventListener('DOMContentLoaded', function() {
-            // 设置默认的全局约束
-            document.getElementById('noBackToBack').checked = true;
-            document.getElementById('evenDistribution').checked = true;
-            document.getElementById('walkingTime').checked = true;
-            document.getElementById('lunchBreak').checked = true;
+            // Add event listeners for English course hours
+            ['english-listening-a', 'english-listening-b', 'english-reading', 'english-writing', 'english-speaking'].forEach(id => {
+                document.getElementById(id).addEventListener('input', updateEnglishTotal);
+            });
             
-            showNotification('万鹤书院HKDSE智能排课系统已启动', 'success');
+            // Initialize English total
+            updateEnglishTotal();
+            
+            // Add sample data for demonstration
+            setTimeout(() => {
+                // Add sample teachers
+                teachers.push(
+                    { id: 1, name: 'Stella老师', subjects: ['english-listening-a', 'english-listening-b', 'english-reading'] },
+                    { id: 2, name: '张老师', subjects: ['chinese'] },
+                    { id: 3, name: '李老师', subjects: ['math'] },
+                    { id: 4, name: '王老师', subjects: ['physics', 'chemistry'] }
+                );
+                
+                teachers.forEach(teacher => {
+                    teacherConstraints[teacher.id] = {
+                        availableTimes: [],
+                        unavailableTimes: [],
+                        preferredTimes: [],
+                        fullYearSubjects: teacher.subjects,
+                        sprintSubjects: teacher.subjects
+                    };
+                });
+                
+                updateTeachersList();
+                updateConstraintTeacherSelect();
+            }, 500);
         });
     </script>
-
 </body>
 </html>
