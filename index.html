@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Repository Index</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2em; }
+        ul { list-style: none; padding: 0; }
+        li { margin: 0.5em 0; }
+        a { text-decoration: none; color: #007acc; }
+        a:hover { text-decoration: underline; }
+        .folder { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Repository Index</h1>
+    <ul id="directory-list"></ul>
+
+    <script>
+        // CONFIGURATION
+        const username = "YOUR_GITHUB_USERNAME";
+        const repo = "YOUR_REPO_NAME";
+        const branch = "main"; // or "master" or your default branch
+
+        // GitHub API URL for contents of root directory
+        const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/?ref=${branch}`;
+        // Your Github Pages URL
+        const baseUrl = `https://${username}.github.io/${repo}/`;
+
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const list = document.getElementById('directory-list');
+                data.forEach(item => {
+                    const li = document.createElement('li');
+                    const link = document.createElement('a');
+                    if (item.type === "dir") {
+                        link.textContent = "📁 " + item.name + "/";
+                        link.href = baseUrl + item.name + "/";
+                        link.className = "folder";
+                    } else {
+                        link.textContent = item.name;
+                        link.href = baseUrl + item.name;
+                        link.target = "_blank";
+                    }
+                    li.appendChild(link);
+                    list.appendChild(li);
+                });
+            })
+            .catch(error => {
+                document.getElementById('directory-list').innerHTML = "<li>Error loading directory contents.</li>";
+                console.error(error);
+            });
+    </script>
+</body>
+</html>
