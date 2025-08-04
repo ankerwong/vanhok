@@ -1,54 +1,145 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>Repository Index</title>
+    <title>万鹤书院信息发布页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        body { font-family: Arial, sans-serif; margin: 2em; }
-        ul { list-style: none; padding: 0; }
-        li { margin: 0.5em 0; }
-        a { text-decoration: none; color: #007acc; }
-        a:hover { text-decoration: underline; }
-        .folder { font-weight: bold; }
+        body {
+            background: #f7f9fa;
+            font-family: 'Noto Sans SC', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #3e70c9;
+            color: white;
+            padding: 32px 0 20px 0;
+            text-align: center;
+            letter-spacing: 4px;
+            box-shadow: 0 4px 10px rgba(62,112,201,0.08);
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.2em;
+            letter-spacing: 4px;
+        }
+        main {
+            max-width: 600px;
+            margin: 32px auto 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 16px rgba(62,112,201,0.10);
+            padding: 36px 28px 28px 28px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+        a {
+            text-decoration: none;
+            color: #2156ae;
+            transition: color 0.2s;
+        }
+        a:hover {
+            color: #13408b;
+            text-decoration: underline;
+        }
+        .folder {
+            font-weight: bold;
+            color: #333;
+            font-size: 1.08em;
+        }
+        .emoji-folder {
+            margin-right: 4px;
+        }
+        .note {
+            color: #888;
+            font-size: 0.97em;
+            text-align: right;
+            margin-top: -8px;
+            margin-bottom: 22px;
+        }
     </style>
 </head>
 <body>
-    <h1>Repository Index</h1>
-    <ul id="directory-list"></ul>
-
+    <header>
+        <h1>万鹤书院信息发布页</h1>
+        <div class="note">仅显示每组页面最新版本</div>
+    </header>
+    <main>
+        <ul id="directory-list"></ul>
+    </main>
     <script>
-        // CONFIGURATION
-        const username = "ankerwong";
-        const repo = "vanhok";
-        const branch = "main"; // or "master" or your default branch
+        // 配置
+        const username = "YOUR_GITHUB_USERNAME"; // 修改为你的GitHub用户名
+        const repo = "YOUR_REPO_NAME"; // 修改为你的仓库名
+        const branch = "main"; // 如果主分支不是main请修改
 
-        // GitHub API URL for contents of root directory
         const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/?ref=${branch}`;
-        // Your Github Pages URL
         const baseUrl = `https://${username}.github.io/${repo}/`;
+
+        // 获取版本号函数，如fuduban2025.html的2025
+        function extractVersion(filename) {
+            const match = filename.match(/(\d{4,})\.html$/i);
+            return match ? parseInt(match[1]) : null;
+        }
+        // 获取主文件名，不含年份
+        function baseName(filename) {
+            return filename.replace(/\d{4,}\.html$/i, '').replace(/\.html$/i, '');
+        }
 
         fetch(apiUrl)
             .then(response => response.json())
-            .then(data => {
-                const list = document.getElementById('directory-list');
-                data.forEach(item => {
-                    const li = document.createElement('li');
-                    const link = document.createElement('a');
-                    if (item.type === "dir") {
-                        link.textContent = "📁 " + item.name + "/";
-                        link.href = baseUrl + item.name + "/";
-                        link.className = "folder";
-                    } else {
-                        link.textContent = item.name;
-                        link.href = baseUrl + item.name;
-                        link.target = "_blank";
+            .then(items => {
+                // 只保留文件和文件夹
+                const files = items.filter(item => item.type === 'file' && item.name.endsWith('.html'));
+                const dirs = items.filter(item => item.type === 'dir');
+
+                // 文件去重，只显示每组最新版本
+                const latestFiles = {};
+                files.forEach(file => {
+                    const name = baseName(file.name);
+                    const version = extractVersion(file.name) || 0;
+                    if (!latestFiles[name] || version > latestFiles[name].version) {
+                        latestFiles[name] = {
+                            name: file.name,
+                            url: baseUrl + file.name,
+                            version: version
+                        };
                     }
-                    li.appendChild(link);
-                    list.appendChild(li);
+                });
+
+                // 渲染文件
+                const ul = document.getElementById('directory-list');
+                // 文件夹优先
+                dirs.forEach(dir => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.textContent = "📁 " + dir.name + "/";
+                    a.href = baseUrl + dir.name + "/";
+                    a.className = "folder";
+                    li.appendChild(a);
+                    ul.appendChild(li);
+                });
+                // 文件
+                Object.values(latestFiles).sort((a, b) => a.name.localeCompare(b.name)).forEach(file => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.textContent = file.name;
+                    a.href = file.url;
+                    a.target = "_blank";
+                    li.appendChild(a);
+                    ul.appendChild(li);
                 });
             })
             .catch(error => {
-                document.getElementById('directory-list').innerHTML = "<li>Error loading directory contents.</li>";
+                document.getElementById('directory-list').innerHTML = "<li>获取目录失败，请刷新重试。</li>";
                 console.error(error);
             });
     </script>
