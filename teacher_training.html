@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>万鹤书院合作教师管理制度理解测试</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        .crane-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .question-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid #667eea;
+        }
+        .question-card:hover {
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+            transform: translateY(-2px);
+        }
+        .option-button {
+            transition: all 0.3s ease;
+            border: 2px solid #e2e8f0;
+        }
+        .option-button:hover {
+            border-color: #667eea;
+            background-color: #f8fafc;
+        }
+        .option-button.correct {
+            border-color: #10b981;
+            background-color: #ecfdf5;
+            color: #065f46;
+        }
+        .option-button.incorrect {
+            border-color: #ef4444;
+            background-color: #fef2f2;
+            color: #991b1b;
+        }
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+        .crane-icon {
+            color: #667eea;
+        }
+        .redline-highlight {
+            background-color: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .completion-certificate {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        .completion-border {
+            border: 3px solid #ffd700;
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Header -->
+        <div class="crane-bg text-white p-8 rounded-lg shadow-lg mb-8">
+            <div class="flex items-center justify-center mb-4">
+                <i class="fas fa-graduation-cap text-4xl mr-4"></i>
+                <h1 class="text-3xl font-bold">万鹤书院</h1>
+            </div>
+            <h2 class="text-xl text-center opacity-90">合作教师管理制度理解测试</h2>
+            <p class="text-center mt-2 opacity-80">确保每位合作教师充分理解我们的管理制度与合作理念</p>
+        </div>
+
+        <!-- 制度展示页面 -->
+        <div id="rulesPage" class="bg-white rounded-lg shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800 flex items-center">
+                <i class="fas fa-scroll mr-3 crane-icon"></i>
+                万鹤书院合作教师管理制度
+            </h2>
+            
+            <div class="space-y-6 text-gray-700">
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h3 class="font-semibold text-lg mb-2 text-blue-800">致亲爱的合作教师们</h3>
+                    <p class="leading-relaxed">欢迎加入万鹤书院的教师团队！作为我们重要的合作伙伴，您的专业能力和敬业精神是我们共同成功的基础。本制度旨在建立良好的合作关系，确保教学质量，维护双方利益。</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <h4 class="font-semibold mb-3 text-green-800 flex items-center">
+                            <i class="fas fa-user-tie mr-2"></i>
+                            教师形象与职业素养
+                        </h4>
+                        <ul class="space-y-2 text-sm">
+                            <li>• 着装得体，颜色不限，注意整洁</li>
+                            <li>• 男教师：保持头发和指甲整洁</li>
+                            <li>• 女教师：化淡妆，注意仪表管理</li>
+                            <li>• 注意个人卫生和体味管理</li>
+                            <li>• 佩戴工牌，体现专业形象</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-purple-50 p-4 rounded-lg">
+                        <h4 class="font-semibold mb-3 text-purple-800 flex items-center">
+                            <i class="fas fa-chalkboard-teacher mr-2"></i>
+                            教学质量管理
+                        </h4>
+                        <ul class="space-y-2 text-sm">
+                            <li>• 提前了解学生需求，制定教学计划</li>
+                            <li>• 授课前提前5-10分钟到达准备</li>
+                            <li>• 教案需提前两天提交审核</li>
+                            <li>• 课后48小时内完成反馈填写</li>
+                            <li>• 按照统一教学大纲执行</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-yellow-50 p-4 rounded-lg">
+                        <h4 class="font-semibold mb-3 text-yellow-800 flex items-center">
+                            <i class="fas fa-comments mr-2"></i>
+                            师生沟通规范
+                        </h4>
+                        <ul class="space-y-2 text-sm">
+                            <li>• 使用企业微信添加学生联系方式</li>
+                            <li>• 所有沟通需通过机构指定渠道</li>
+                            <li>• 课程调整需通过教务部统一安排</li>
+                            <li>• 发现学生其他需求需告知教务</li>
+                            <li>• 维护良好的师生关系</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-cyan-50 p-4 rounded-lg">
+                        <h4 class="font-semibold mb-3 text-cyan-800 flex items-center">
+                            <i class="fas fa-users mr-2"></i>
+                            机构活动参与
+                        </h4>
+                        <ul class="space-y-2 text-sm">
+                            <li>• 积极参加教研会议</li>
+                            <li>• 参与消防演练等安全活动</li>
+                            <li>• 参加年度团建活动</li>
+                            <li>• 协助学生活动开展</li>
+                            <li>• 配合机构统一安排</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-orange-50 p-4 rounded-lg">
+                    <h4 class="font-semibold mb-3 text-orange-800 flex items-center">
+                        <i class="fas fa-shield-alt mr-2"></i>
+                        保密协议与商业道德
+                    </h4>
+                    <p class="text-sm mb-2">作为合作教师，您需要严格遵守保密义务，保护学生隐私和机构商业机密：</p>
+                    <ul class="space-y-2 text-sm">
+                        <li>• 不得泄露学生个人信息及家庭情况</li>
+                        <li>• 保护教学材料和教研资料</li>
+                        <li>• 不得转移学生至校外辅导</li>
+                        <li>• 维护机构声誉和商业利益</li>
+                        <li>• 遵循基本商业道德准则</li>
+                    </ul>
+                </div>
+
+                <div class="redline-highlight">
+                    <h4 class="font-semibold mb-3 text-red-800 flex items-center">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>
+                        红线行为（零容忍）
+                    </h4>
+                    <p class="text-sm mb-3 font-semibold">以下行为属于严重违规，将面临严厉处罚：</p>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle text-red-500 mr-2 mt-1"></i>
+                            <span>私自添加学生/家长微信或其他联系方式</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle text-red-500 mr-2 mt-1"></i>
+                            <span>引导学生进行私下补课或校外辅导</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle text-red-500 mr-2 mt-1"></i>
+                            <span>介绍学生给其他非本机构教师</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle text-red-500 mr-2 mt-1"></i>
+                            <span>以"直接找我和去机构一样"为由截留学生</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle text-red-500 mr-2 mt-1"></i>
+                            <span>泄露学生个人信息或机构商业机密</span>
+                        </li>
+                    </ul>
+                    
+                    <div class="mt-4 p-3 bg-red-100 rounded">
+                        <p class="text-sm font-semibold text-red-800">红线行为处罚措施：</p>
+                        <ul class="text-sm text-red-700 mt-2 space-y-1">
+                            <li>• 第一次发现：警告 + 扣除当月50%课时费</li>
+                            <li>• 第二次发现：立即停止合作 + 不发剩余课时费 + 保留追究法律损失权利</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="font-semibold mb-3 text-gray-800 flex items-center">
+                        <i class="fas fa-balance-scale mr-2"></i>
+                        普通违规行为处理
+                    </h4>
+                    <p class="text-sm mb-2">对于以下行为，我们将采取相应的教育和提醒措施：</p>
+                    <ul class="space-y-2 text-sm">
+                        <li>• 未及时沟通教学计划及结果</li>
+                        <li>• 私自调课（未经教务同意）</li>
+                        <li>• 未按时汇报教学内容</li>
+                        <li>• 使用未经审核的教学材料</li>
+                    </ul>
+                    <p class="text-xs text-gray-600 mt-2">处理方式：第一次口头提醒，第二次书面警告，第三次扣除当月10%课时费</p>
+                </div>
+
+                <div class="bg-indigo-50 p-4 rounded-lg">
+                    <h4 class="font-semibold mb-3 text-indigo-800 flex items-center">
+                        <i class="fas fa-handshake mr-2"></i>
+                        合作共赢理念
+                    </h4>
+                    <p class="text-sm leading-relaxed">我们相信，通过建立清晰的合作规范，能够为教师提供更好的教学环境，为学生提供更优质的教育服务。让我们携手共进，为教育事业贡献我们的力量！</p>
+                </div>
+            </div>
+
+            <div class="mt-8 p-4 bg-blue-100 rounded-lg">
+                <h4 class="font-semibold mb-4 text-blue-800 text-center">制度确认</h4>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">请输入"已知悉"确认您已仔细阅读并理解以上制度：</label>
+                        <input type="text" id="confirmInput" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="请输入：已知悉">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">请输入您的姓名：</label>
+                        <input type="text" id="teacherName" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="请输入您的姓名">
+                    </div>
+                    <button onclick="startQuiz()" class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors font-semibold">
+                        开始测试
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 测试页面 -->
+        <div id="quizPage" class="bg-white rounded-lg shadow-lg p-8 mb-8 hidden">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+                    <i class="fas fa-clipboard-check mr-3 crane-icon"></i>
+                    理解测试
+                </h2>
+                <div class="text-sm text-gray-600">
+                    <span id="currentQuestion">1</span> / 20
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <div class="bg-gray-200 rounded-full h-2">
+                    <div id="progressBar" class="bg-blue-600 h-2 rounded-full progress-bar" style="width: 5%"></div>
+                </div>
+            </div>
+
+            <div id="questionContainer" class="question-card bg-white p-6 rounded-lg shadow-md mb-6">
+                <!-- 题目内容将由JavaScript动态生成 -->
+            </div>
+
+            <div class="flex justify-between">
+                <button onclick="previousQuestion()" id="prevBtn" class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition-colors disabled:opacity-50" disabled>
+                    <i class="fas fa-arrow-left mr-2"></i>上一题
+                </button>
+                <button onclick="nextQuestion()" id="nextBtn" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50" disabled>
+                    下一题<i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- 完成页面 -->
+        <div id="completionPage" class="bg-white rounded-lg shadow-lg p-8 hidden">
+            <div class="completion-certificate">
+                <div class="completion-border">
+                    <i class="fas fa-trophy text-6xl mb-4 text-yellow-300"></i>
+                    <h2 class="text-3xl font-bold mb-4">恭喜完成测试！</h2>
+                    <div class="text-xl mb-6">
+                        <p class="mb-2">🎉 测试完成时间：<span id="completionTime"></span></p>
+                        <p class="mb-2">👨‍🏫 教师姓名：<span id="displayTeacherName"></span></p>
+                        <p class="mb-2">✅ 测试结果：全部答对 (20/20)</p>
+                    </div>
+                    <div class="bg-white bg-opacity-20 p-4 rounded-lg mb-6">
+                        <h3 class="text-lg font-semibold mb-2">测试完成证明</h3>
+                        <p class="text-sm">该教师已完全理解万鹤书院合作教师管理制度，</p>
+                        <p class="text-sm">具备了良好的职业道德素养和规范意识。</p>
+                    </div>
+                    <div class="flex items-center justify-center space-x-4 text-sm">
+                        <i class="fas fa-check-circle text-green-300"></i>
+                        <span>此页面可截图保存作为完成证明</span>
+                        <i class="fas fa-camera text-blue-300"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center">
+                <button onclick="restartQuiz()" class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                    <i class="fas fa-redo mr-2"></i>重新开始测试
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let teacherName = '';
+        
+        const questions = [
+            {
+                question: "关于万鹤书院合作教师的着装要求，以下哪项是正确的？",
+                options: [
+                    "必须穿着黑色服装，不能穿牛仔裤和吊带",
+                    "着装得体即可，颜色不限，男教师注意头发和指甲整洁，女教师化淡妆并注意仪表管理",
+                    "只要干净整洁就行，没有其他特殊要求",
+                    "必须穿正装，不能有任何休闲装扮"
+                ],
+                correct: 1,
+                explanation: "万鹤书院对教师着装要求相对宽松，着装得体、颜色不限，但要求男教师保持头发和指甲整洁，女教师化淡妆并注意个人仪表管理，体现专业教师形象。"
+            },
+            {
+                question: "合作教师在授课前需要提前多长时间到达上课地点？",
+                options: [
+                    "准时到达即可",
+                    "提前5-10分钟到达做好准备",
+                    "提前15分钟到达",
+                    "提前30分钟到达"
+                ],
+                correct: 1,
+                explanation: "合作教师需要提前5-10分钟到达上课地点做好准备，这样可以确保课程顺利开始，也体现了对学生的尊重和职业素养。"
+            },
+            {
+                question: "教案和教学材料需要提前多长时间提交审核？",
+                options: [
+                    "课前1天提交",
+                    "课前2天提交",
+                    "课前3天提交",
+                    "随时提交都可以"
+                ],
+                correct: 1,
+                explanation: "教案和教学材料需要至少提前2天提交到教务邮箱或微信进行审核，确保教学内容符合机构标准，只有审核通过后才能进行授课。"
+            },
+            {
+                question: "学生要求更改上课时间时，合作教师应该如何处理？",
+                options: [
+                    "直接与学生协商确定新时间",
+                    "先告知教务部，由教务部统一协调安排",
+                    "拒绝学生的更改请求",
+                    "让学生直接联系教务部"
+                ],
+                correct: 1,
+                explanation: "当学生提出更改上课时间时，合作教师不能直接确定，需要先将情况告知教务部，由教务部分别与学员和老师沟通协调，确定合适的时间后再分别通知双方。"
+            },
+            {
+                question: "关于添加学生联系方式的规定，以下哪项是正确的？",
+                options: [
+                    "可以用私人微信添加学生",
+                    "必须使用企业微信添加学生",
+                    "不能添加任何学生联系方式",
+                    "只能添加家长联系方式"
+                ],
+                correct: 1,
+                explanation: "合作教师如需添加学生联系方式，必须使用企业微信，严禁使用私人账户添加学员。使用私人账户添加学员视为侵犯公司商业秘密，属于重大违纪行为。"
+            },
+            {
+                question: "合作教师需要遵守哪些保密义务？",
+                options: [
+                    "只需要保护学生个人信息",
+                    "只需要保护教学材料",
+                    "保护学生信息、教学材料、教研资料等所有商业机密",
+                    "没有特殊保密要求"
+                ],
+                correct: 2,
+                explanation: "合作教师有严格的保密义务，包括但不限于：学生个人信息、学生个人及家庭情况、其他教师个人信息、教学教辅资料、教研资料、升学申请资料以及其他商业机密。"
+            },
+            {
+                question: "以下哪种行为属于红线行为？",
+                options: [
+                    "忘记提前汇报教学内容",
+                    "私自添加学生微信进行沟通",
+                    "上课时间迟到5分钟",
+                    "使用未经审核的教学材料"
+                ],
+                correct: 1,
+                explanation: "私自添加学生微信属于红线行为，将面临严厉处罚。第一次发现将警告并扣除当月50%课时费，第二次发现将立即停止合作并不发剩余课时费。"
+            },
+            {
+                question: "合作教师如果发现学生有其他科目的学习需求，应该怎么做？",
+                options: [
+                    "直接推荐其他老师给学生",
+                    "建议学生自己寻找其他老师",
+                    "告知机构教务及销售老师，让他们及时跟进",
+                    "忽略学生的其他需求"
+                ],
+                correct: 2,
+                explanation: "当发现学生有其他科目学习需求时，应该及时告知机构的教务及销售老师，让他们专业地跟进处理，这样既能满足学生需求，又维护了机构的整体利益。"
+            },
+            {
+                question: "关于投诉处理的规定，以下哪项是正确的？",
+                options: [
+                    "投诉与教师无关",
+                    "只有严重投诉才需要教师承担责任",
+                    "因教师个人原因引起的投诉、不满及退费，均由该教师承担相应责任",
+                    "所有投诉都由机构承担责任"
+                ],
+                correct: 2,
+                explanation: "合作教师必须对学生的教学过程和质量负责。凡因授课教师个人原因引起学生的投诉、不满及退费情况时，均由该教师承担相应责任，体现了权责对等的原则。"
+            },
+            {
+                question: "万鹤书院鼓励合作教师参与哪些机构活动？",
+                options: [
+                    "只参加教学相关的会议",
+                    "只参加消防演练",
+                    "只参加年度团建活动",
+                    "积极参加消防演练、教研会议、年度团建、学生活动等各类机构活动"
+                ],
+                correct: 3,
+                explanation: "万鹤书院鼓励合作教师积极参与各类机构活动，包括消防演练、教研会议、年度团建、学生活动等，这有助于增强团队凝聚力，提升教师的归属感和专业水平。"
+            },
+            {
+                question: "某天您发现自己的个人兼职工作时间与机构安排的重要课程发生冲突，个人兼职的收入更高。作为合作教师，您应该如何处理？",
+                options: [
+                    "选择收入更高的个人兼职，让机构安排其他老师代课",
+                    "优先保障机构课程，及时与教务沟通个人情况，寻求合理解决方案",
+                    "同时接受两个工作，尽量协调时间",
+                    "让学生自己选择是否需要调课"
+                ],
+                correct: 1,
+                explanation: "作为合作教师，应当优先保障机构课程的教学质量。当出现时间冲突时，应及时与教务部沟通，寻求合理的解决方案，体现对机构和学生的责任心。"
+            },
+            {
+                question: "一位家长私下联系您，希望您能够为他们的孩子提供私人补课服务，并愿意支付比机构更高的费用。您应该如何应对？",
+                options: [
+                    "同意提供私人补课，因为收入更高",
+                    "拒绝并解释机构政策，引导家长通过正当渠道安排额外课程",
+                    "同意但要求家长保密",
+                    "转介绍给其他非机构教师"
+                ],
+                correct: 1,
+                explanation: "面对私人补课的诱惑，合作教师应当坚持职业道德，拒绝并向家长解释机构政策，引导家长通过正当渠道安排额外课程，维护机构利益和自身职业操守。"
+            },
+            {
+                question: "合作教师在教学过程中应该遵循什么原则？",
+                options: [
+                    "只按照自己的教学方法进行",
+                    "完全按照学生要求调整教学内容",
+                    "按照万鹤书院的教学计划、教学大纲等教学文件进行教学",
+                    "随意选择教学内容"
+                ],
+                correct: 2,
+                explanation: "合作教师必须按照万鹤书院的教学计划、教学大纲等教学文件进行教学，认真备课并讲好每一节课，确保教学质量符合机构标准。"
+            },
+            {
+                question: "以下哪些行为都属于红线行为？",
+                options: [
+                    "迟到、早退、使用未审核教材",
+                    "私加微信、引导私下补课、介绍学生给其他老师",
+                    "忘记汇报教学内容、私自调课",
+                    "不参加机构活动、不填写反馈表"
+                ],
+                correct: 1,
+                explanation: "红线行为包括：私自添加学生微信、引导学生私下补课、介绍学生给其他非本机构老师、截留学生、泄露商业机密等，这些行为将面临严厉处罚。"
+            },
+            {
+                question: "关于无故旷课的处罚规定，以下哪项是正确的？",
+                options: [
+                    "无故旷课罚款500元",
+                    "无故旷课罚款1000元",
+                    "无故旷课只给予警告",
+                    "无故旷课不予处罚"
+                ],
+                correct: 1,
+                explanation: "根据管理制度，合作教师不得无故旷课。如有特殊情况需至少提前一天申请。无故旷课将面临1000元的罚款，体现了对教学纪律的严格要求。"
+            },
+            {
+                question: "合作教师在参与机构工作时，应该秉承什么样的态度？",
+                options: [
+                    "完全按照个人想法行事",
+                    "只关注自己的教学任务",
+                    "积极配合机构管理，维护机构声誉和利益",
+                    "保持中立，不参与机构事务"
+                ],
+                correct: 2,
+                explanation: "合作教师应该积极配合机构的各项管理工作，维护万鹤书院的声誉和利益，这是建立良好合作关系的基础，也是职业道德的体现。"
+            },
+            {
+                question: "某位合作教师因为与学生建立了良好关系，开始在课外时间为学生提供免费的学习指导，这种做法是否合适？",
+                options: [
+                    "非常合适，体现了教师的奉献精神",
+                    "不合适，应该通过机构正当渠道提供额外服务",
+                    "只要不收费就没有问题",
+                    "可以继续，但要告知机构"
+                ],
+                correct: 1,
+                explanation: "即使是免费的课外指导，也应该通过机构的正当渠道进行，避免私下接触可能带来的各种风险和误解，同时也保护了教师和学生双方的利益。"
+            },
+            {
+                question: "关于课后反馈的重要性和要求，以下哪项是正确的？",
+                options: [
+                    "课后反馈可填可不填，不影响薪酬",
+                    "课后反馈必须在下课后48小时内填写，是薪酬计算的重要依据",
+                    "课后反馈只需要简单记录学生出勤情况",
+                    "课后反馈一周内填写即可"
+                ],
+                correct: 1,
+                explanation: "课后反馈非常重要，是薪酬计算的重要依据。合作教师必须在下课后48小时内完成填写，超过时间后填写将视为无效，影响薪酬结算。"
+            },
+            {
+                question: "万鹤书院制定这些管理制度的根本目的是什么？",
+                options: [
+                    "限制教师的自由度",
+                    "增加教师的工作负担",
+                    "保证教学质量，维护双方利益，建立良好的合作关系",
+                    "显示机构的权威性"
+                ],
+                correct: 2,
+                explanation: "万鹤书院制定管理制度的根本目的是保证教学质量，维护学生、教师和机构的共同利益，建立长期稳定的合作关系，实现共同发展。"
+            },
+            {
+                question: "作为万鹤书院的合作教师，您认为最重要的职业素养是什么？",
+                options: [
+                    "只要教学水平高就足够了",
+                    "只要与学生关系好就可以",
+                    "专业能力与职业道德并重，始终以机构和学生利益为重",
+                    "只要按时完成教学任务就行"
+                ],
+                correct: 2,
+                explanation: "作为合作教师，最重要的是专业能力与职业道德并重。既要有过硬的教学本领，更要有良好的职业操守，始终以机构和学生的长远利益为重，这是建立信任和实现共赢的基础。"
+            }
+        ];
+
+        function startQuiz() {
+            const confirmText = document.getElementById('confirmInput').value.trim();
+            const name = document.getElementById('teacherName').value.trim();
+            
+            if (confirmText !== '已知悉') {
+                alert('请准确输入"已知悉"以确认您已阅读理解制度');
+                return;
+            }
+            
+            if (!name) {
+                alert('请输入您的姓名');
+                return;
+            }
+            
+            teacherName = name;
+            document.getElementById('rulesPage').classList.add('hidden');
+            document.getElementById('quizPage').classList.remove('hidden');
+            
+            currentQuestionIndex = 0;
+            userAnswers = new Array(questions.length).fill(-1);
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            const question = questions[currentQuestionIndex];
+            const container = document.getElementById('questionContainer');
+            
+            container.innerHTML = `
+                <h3 class="text-lg font-semibold mb-4">第 ${currentQuestionIndex + 1} 题</h3>
+                <p class="text-gray-800 mb-6">${question.question}</p>
+                <div class="space-y-3">
+                    ${question.options.map((option, index) => `
+                        <button 
+                            class="option-button w-full p-4 text-left rounded-lg border-2 hover:border-blue-500 transition-colors ${getUserAnswerClass(index)}"
+                            onclick="selectAnswer(${index})"
+                            ${userAnswers[currentQuestionIndex] !== -1 ? 'disabled' : ''}
+                        >
+                            <span class="font-medium">${String.fromCharCode(65 + index)}.</span> ${option}
+                        </button>
+                    `).join('')}
+                </div>
+                ${userAnswers[currentQuestionIndex] !== -1 ? `
+                    <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+                        <h4 class="font-semibold text-blue-800 mb-2">解析：</h4>
+                        <p class="text-sm text-blue-700">${question.explanation}</p>
+                    </div>
+                ` : ''}
+            `;
+            
+            updateProgress();
+            updateNavigationButtons();
+        }
+
+        function getUserAnswerClass(optionIndex) {
+            const userAnswer = userAnswers[currentQuestionIndex];
+            const correctAnswer = questions[currentQuestionIndex].correct;
+            
+            if (userAnswer === -1) return '';
+            
+            if (optionIndex === correctAnswer) {
+                return 'correct';
+            } else if (optionIndex === userAnswer && userAnswer !== correctAnswer) {
+                return 'incorrect';
+            }
+            
+            return '';
+        }
+
+        function selectAnswer(optionIndex) {
+            const correctAnswer = questions[currentQuestionIndex].correct;
+            
+            if (optionIndex === correctAnswer) {
+                userAnswers[currentQuestionIndex] = optionIndex;
+                displayQuestion();
+            } else {
+                // 显示错误提示但不保存答案，允许重新选择
+                const buttons = document.querySelectorAll('.option-button');
+                buttons[optionIndex].classList.add('incorrect');
+                setTimeout(() => {
+                    buttons[optionIndex].classList.remove('incorrect');
+                }, 1000);
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+        }
+
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentQuestionIndex === 0;
+            
+            if (currentQuestionIndex === questions.length - 1) {
+                if (userAnswers[currentQuestionIndex] !== -1) {
+                    nextBtn.textContent = '完成测试';
+                    nextBtn.innerHTML = '<i class="fas fa-check mr-2"></i>完成测试';
+                    nextBtn.disabled = false;
+                } else {
+                    nextBtn.disabled = true;
+                }
+            } else {
+                nextBtn.innerHTML = '下一题<i class="fas fa-arrow-right ml-2"></i>';
+                nextBtn.disabled = userAnswers[currentQuestionIndex] === -1;
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                displayQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                displayQuestion();
+            } else {
+                completeQuiz();
+            }
+        }
+
+        function completeQuiz() {
+            // 检查是否所有题目都已回答
+            const allAnswered = userAnswers.every(answer => answer !== -1);
+            
+            if (!allAnswered) {
+                alert('请完成所有题目后再提交');
+                return;
+            }
+            
+            // 显示完成页面
+            document.getElementById('quizPage').classList.add('hidden');
+            document.getElementById('completionPage').classList.remove('hidden');
+            
+            // 设置完成信息
+            const now = new Date();
+            const completionTime = now.toLocaleString('zh-CN');
+            document.getElementById('completionTime').textContent = completionTime;
+            document.getElementById('displayTeacherName').textContent = teacherName;
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            userAnswers = new Array(questions.length).fill(-1);
+            teacherName = '';
+            
+            document.getElementById('completionPage').classList.add('hidden');
+            document.getElementById('rulesPage').classList.remove('hidden');
+            
+            // 清空输入框
+            document.getElementById('confirmInput').value = '';
+            document.getElementById('teacherName').value = '';
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 页面加载完成后的初始化操作
+        });
+    </script>
+</body>
+</html>
