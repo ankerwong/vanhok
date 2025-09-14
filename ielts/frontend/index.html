@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanhok IELTS Mock Test | Professional English Language Assessment</title>
+    <meta name="description" content="Practice IELTS with authentic mock tests by Vanhok. Complete exam simulation with AI-powered writing assessment and instant scoring.">
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <img src="images/vanhok-logo.png" alt="Vanhok" class="brand-logo" onerror="this.style.display='none';">
+                    <div class="brand-text">
+                        <h1 class="brand-name">Vanhok</h1>
+                        <p class="brand-subtitle">IELTS Excellence Center</p>
+                    </div>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#home" class="nav-link active">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#about" class="nav-link">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#features" class="nav-link">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contact" class="nav-link">Contact</a>
+                    </li>
+                </ul>
+                <div class="nav-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1 class="hero-title">
+                            Master Your <span class="highlight">IELTS</span> Success
+                        </h1>
+                        <p class="hero-description">
+                            Experience authentic IELTS practice with our comprehensive mock test platform. 
+                            Get instant AI-powered feedback and detailed performance analysis.
+                        </p>
+                        <div class="hero-stats">
+                            <div class="stat-item">
+                                <span class="stat-number">10,000+</span>
+                                <span class="stat-label">Students Tested</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">95%</span>
+                                <span class="stat-label">Score Improvement</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">24/7</span>
+                                <span class="stat-label">Available</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-actions">
+                        <button class="cta-primary" onclick="startTest()">
+                            <i class="fas fa-play-circle"></i>
+                            Start Mock Test
+                        </button>
+                        <button class="cta-secondary" onclick="showDemo()">
+                            <i class="fas fa-eye"></i>
+                            View Demo
+                        </button>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="test-preview">
+                        <div class="preview-header">
+                            <div class="preview-brand">
+                                <span class="vanhok-badge">Powered by Vanhok</span>
+                            </div>
+                            <div class="preview-timer">
+                                <i class="fas fa-clock"></i>
+                                <span>2:30:00</span>
+                            </div>
+                        </div>
+                        <div class="preview-content">
+                            <h3>IELTS Academic Test</h3>
+                            <div class="test-sections">
+                                <div class="section-card">
+                                    <i class="fas fa-headphones"></i>
+                                    <span>Listening</span>
+                                    <span class="duration">30 min</span>
+                                </div>
+                                <div class="section-card">
+                                    <i class="fas fa-book"></i>
+                                    <span>Reading</span>
+                                    <span class="duration">60 min</span>
+                                </div>
+                                <div class="section-card">
+                                    <i class="fas fa-pen"></i>
+                                    <span>Writing</span>
+                                    <span class="duration">60 min</span>
+                                </div>
+                                <div class="section-card">
+                                    <i class="fas fa-microphone"></i>
+                                    <span>Speaking</span>
+                                    <span class="duration">15 min</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Test Options Section -->
+        <section id="test-options" class="test-options">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Choose Your Test Mode</h2>
+                    <p>Select from our comprehensive range of IELTS practice options</p>
+                </div>
+                <div class="test-grid">
+                    <div class="test-card full-test">
+                        <div class="test-header">
+                            <i class="fas fa-trophy"></i>
+                            <h3>Complete Mock Test</h3>
+                            <span class="duration">2.5 hours</span>
+                        </div>
+                        <div class="test-details">
+                            <ul class="features-list">
+                                <li><i class="fas fa-check"></i> All 4 sections included</li>
+                                <li><i class="fas fa-check"></i> Realistic exam conditions</li>
+                                <li><i class="fas fa-check"></i> AI writing assessment</li>
+                                <li><i class="fas fa-check"></i> Detailed score report</li>
+                                <li><i class="fas fa-check"></i> Performance analytics</li>
+                            </ul>
+                            <button class="test-btn" onclick="startFullTest()">
+                                Start Full Test
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="test-card section-test">
+                        <div class="test-header">
+                            <i class="fas fa-puzzle-piece"></i>
+                            <h3>Practice by Section</h3>
+                            <span class="duration">15-60 min</span>
+                        </div>
+                        <div class="test-details">
+                            <div class="section-buttons">
+                                <button class="section-btn listening" onclick="startSectionTest('listening')">
+                                    <i class="fas fa-headphones"></i>
+                                    <span>Listening</span>
+                                    <small>30 minutes</small>
+                                </button>
+                                <button class="section-btn reading" onclick="startSectionTest('reading')">
+                                    <i class="fas fa-book"></i>
+                                    <span>Reading</span>
+                                    <small>60 minutes</small>
+                                </button>
+                                <button class="section-btn writing" onclick="startSectionTest('writing')">
+                                    <i class="fas fa-pen"></i>
+                                    <span>Writing</span>
+                                    <small>60 minutes</small>
+                                </button>
+                                <button class="section-btn speaking" onclick="startSectionTest('speaking')">
+                                    <i class="fas fa-microphone"></i>
+                                    <span>Speaking</span>
+                                    <small>15 minutes</small>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Why Choose Vanhok IELTS?</h2>
+                    <p>Advanced technology meets expert pedagogy for optimal learning outcomes</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3>AI-Powered Assessment</h3>
+                        <p>Advanced artificial intelligence provides detailed feedback on writing and speaking performance with human-level accuracy.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Real-time Analytics</h3>
+                        <p>Track your progress with comprehensive performance analytics and personalized improvement recommendations.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h3>Authentic Materials</h3>
+                        <p>Practice with genuine IELTS-style questions created by certified examiners and language experts.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>Instant Results</h3>
+                        <p>Get immediate scoring and feedback upon test completion with detailed explanations and band descriptors.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>Multi-Device Support</h3>
+                        <p>Practice anytime, anywhere with our responsive platform optimized for desktop, tablet, and mobile devices.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Secure & Reliable</h3>
+                        <p>Enterprise-grade security ensures your data is protected while maintaining 99.9% uptime reliability.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2>About Vanhok IELTS Excellence Center</h2>
+                        <p class="about-description">
+                            Vanhok is a leading educational technology company specializing in English language assessment and preparation. 
+                            With over a decade of experience in language education, we have developed cutting-edge solutions that help 
+                            students achieve their IELTS goals efficiently and effectively.
+                        </p>
+                        <div class="about-features">
+                            <div class="about-feature">
+                                <i class="fas fa-users"></i>
+                                <div>
+                                    <h4>Expert Team</h4>
+                                    <p>Certified IELTS examiners and experienced educators</p>
+                                </div>
+                            </div>
+                            <div class="about-feature">
+                                <i class="fas fa-globe"></i>
+                                <div>
+                                    <h4>Global Reach</h4>
+                                    <p>Serving students in over 50 countries worldwide</p>
+                                </div>
+                            </div>
+                            <div class="about-feature">
+                                <i class="fas fa-award"></i>
+                                <div>
+                                    <h4>Proven Results</h4>
+                                    <p>95% of our students improve their band scores</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-visual">
+                        <div class="stats-container">
+                            <div class="stat-box">
+                                <span class="stat-number">50,000+</span>
+                                <span class="stat-label">Students Served</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-number">98%</span>
+                                <span class="stat-label">Satisfaction Rate</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-number">15+</span>
+                                <span class="stat-label">Years Experience</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>Vanhok</h3>
+                    <p>Your partner in IELTS success. Excellence through innovation.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Info</h4>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>info@vanhok.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+1 (555) 123-4567</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Education Center, Global Campus</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Vanhok Education Technology. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="loading-content">
+            <div class="vanhok-logo-loading">Vanhok</div>
+            <div class="loading-spinner"></div>
+            <p class="loading-text">Preparing your IELTS mock test...</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+</body>
+</html>
