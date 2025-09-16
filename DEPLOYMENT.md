@@ -11,8 +11,9 @@
 
 ✅ **GitHub Pages**: 已配置并部署成功  
 ✅ **Jekyll配置**: 已优化，排除后端文件  
-✅ **静态资源**: 前端文件已正确部署  
-✅ **路由配置**: /ielts 路径已可用
+✅ **静态资源**: 前端文件已正确部署到 /ielts/ 目录  
+✅ **路由配置**: /ielts 路径已可用  
+🔧 **部署修复**: 已复制frontend文件到ielts根目录解决404问题
 
 ### 📋 部署问题修复记录
 
@@ -34,6 +35,14 @@
 **解决方案**:
 - 重新配置GitHub凭据
 - 使用合适的访问令牌
+
+#### 问题4: /ielts/ 路径404错误
+**症状**: https://ankerwong.github.io/vanhok/ielts/ 显示404  
+**原因**: GitHub Pages需要直接访问index.html文件  
+**解决方案**:
+- 复制frontend文件到ielts/根目录
+- 更新Jekyll配置包含静态资源
+- 修改JavaScript支持GitHub Pages环境
 
 ### 🛠️ 配置文件说明
 
