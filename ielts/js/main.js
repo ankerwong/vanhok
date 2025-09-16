@@ -2,7 +2,12 @@
 
 class IELTSMockTest {
     constructor() {
-        this.API_BASE = window.location.origin + '/api';
+        // Detect if running on GitHub Pages or local server
+        const isGitHubPages = window.location.hostname === 'ankerwong.github.io';
+        this.API_BASE = isGitHubPages ? 
+            'https://3001-ikyp6x1d3mbzuq3x8kgwq-6532622b.e2b.dev/api' : 
+            window.location.origin + '/api';
+        this.isStaticMode = isGitHubPages;
         this.currentSession = null;
         this.currentSection = null;
         this.currentQuestionIndex = 0;
@@ -18,6 +23,49 @@ class IELTSMockTest {
         this.initEventListeners();
         this.initNavigation();
         this.initResponsiveFeatures();
+        
+        // Show notification if running in static mode
+        if (this.isStaticMode) {
+            this.showStaticModeNotification();
+        }
+    }
+
+    showStaticModeNotification() {
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #2C5AA0, #4A90E2);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 10000;
+            max-width: 350px;
+            font-family: 'Inter', sans-serif;
+        `;
+        notification.innerHTML = `
+            <div style="font-weight: 600; margin-bottom: 8px;">
+                🎯 IELTS Demo Mode
+            </div>
+            <div style="font-size: 0.9em; line-height: 1.4;">
+                You're viewing the demo version. For full functionality with AI grading, 
+                <a href="https://3001-ikyp6x1d3mbzuq3x8kgwq-6532622b.e2b.dev" 
+                   style="color: #F39C12; text-decoration: underline;"
+                   target="_blank">visit the complete platform</a>.
+            </div>
+            <button onclick="this.parentElement.remove()" 
+                    style="position: absolute; top: 5px; right: 8px; background: none; border: none; color: white; font-size: 16px; cursor: pointer;">×</button>
+        `;
+        document.body.appendChild(notification);
+        
+        // Auto-hide after 8 seconds
+        setTimeout(() => {
+            if (notification.parentElement) {
+                notification.remove();
+            }
+        }, 8000);
     }
 
     initEventListeners() {
