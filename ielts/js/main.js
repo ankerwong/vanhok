@@ -502,6 +502,47 @@ class IELTSMockTest {
         
         // Create and show test interface
         this.createTestInterface(section);
+        
+        // For demo mode, show a demo notice
+        if (this.isStaticMode) {
+            this.showDemoTestNotice();
+        }
+    }
+
+    showDemoTestNotice() {
+        setTimeout(() => {
+            const notice = document.createElement('div');
+            notice.style.cssText = `
+                position: fixed;
+                top: 80px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: linear-gradient(135deg, #F39C12, #E67E22);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(243, 156, 18, 0.3);
+                z-index: 9999;
+                font-family: 'Inter', sans-serif;
+                font-size: 0.9rem;
+                text-align: center;
+            `;
+            notice.innerHTML = `
+                ${this.currentLang === 'zh' ? 
+                    '🎯 演示模式 - 这是一个功能演示界面' : 
+                    '🎯 Demo Mode - This is a functional demonstration'}
+                <button onclick="this.parentElement.remove()" 
+                        style="margin-left: 10px; background: none; border: none; color: white; font-size: 14px; cursor: pointer;">×</button>
+            `;
+            document.body.appendChild(notice);
+            
+            // Auto-hide after 4 seconds
+            setTimeout(() => {
+                if (notice.parentElement) {
+                    notice.remove();
+                }
+            }, 4000);
+        }, 500);
     }
 
     createTestInterface(section) {
