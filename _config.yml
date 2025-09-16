@@ -8,8 +8,18 @@ baseurl: /vanhok
 exclude:
   - node_modules/
   - ielts/backend/
+  - ielts/frontend/
   - ielts/logs/
+  - ielts/data/
   - ielts/ecosystem.config.js
+  - ielts/package*.json
   - "*.log"
   - "*.lock"
-  - package*.json
+
+# Include specific files for IELTS platform
+include:
+  - ielts/index.html
+  - ielts/css/
+  - ielts/js/
+  - ielts/images/
+  - ielts/audio/
