@@ -1,7 +1,151 @@
 // Vanhok IELTS Mock Test Platform - Main JavaScript
 
+// Language configurations
+const LANGUAGES = {
+    en: {
+        // Navigation & Header
+        nav_home: 'Home',
+        nav_about: 'About',
+        nav_features: 'Features',
+        nav_contact: 'Contact',
+        
+        // Hero Section
+        hero_title: 'Master Your <span class="highlight">IELTS</span> Success',
+        hero_description: 'Experience authentic IELTS practice with our comprehensive mock test platform. Get instant AI-powered feedback and detailed performance analysis.',
+        
+        // Buttons
+        btn_start_test: 'Start Mock Test',
+        btn_view_demo: 'View Demo',
+        btn_full_test: 'Start Full Test',
+        
+        // Test Sections
+        test_listening: 'Listening',
+        test_reading: 'Reading', 
+        test_writing: 'Writing',
+        test_speaking: 'Speaking',
+        
+        // Loading Messages
+        loading_demo_test: 'Loading IELTS demo test...',
+        loading_full_test: 'Initializing full IELTS mock test...',
+        
+        // Error Messages
+        error_start_test: 'Failed to start test. Please try again.',
+        
+        // Status Messages
+        demo_mode_title: '🎯 IELTS Demo Mode',
+        demo_mode_text: 'You\'re viewing the demo version. For full functionality with AI grading, visit the complete platform.',
+        
+        // Test Interface
+        question_navigator: 'Question Navigator',
+        finish_test: 'Finish Test',
+        next_question: 'Next',
+        prev_question: 'Previous',
+        flag_review: 'Flag for Review'
+    },
+    zh: {
+        // Navigation & Header  
+        nav_home: '首页',
+        nav_about: '关于我们',
+        nav_features: '功能特色',
+        nav_contact: '联系我们',
+        
+        // Hero Section
+        hero_title: '掌握您的<span class="highlight">雅思</span>成功',
+        hero_description: '通过我们全面的模拟考试平台体验真实的雅思练习。获得即时AI反馈和详细的表现分析。',
+        
+        // Buttons
+        btn_start_test: '开始模拟考试',
+        btn_view_demo: '查看演示',
+        btn_full_test: '开始完整测试',
+        
+        // Test Sections
+        test_listening: '听力',
+        test_reading: '阅读',
+        test_writing: '写作', 
+        test_speaking: '口语',
+        
+        // Loading Messages
+        loading_demo_test: '正在加载雅思演示测试...',
+        loading_full_test: '正在初始化完整雅思模拟考试...',
+        
+        // Error Messages
+        error_start_test: '启动测试失败，请重试。',
+        
+        // Status Messages
+        demo_mode_title: '🎯 雅思演示模式',
+        demo_mode_text: '您正在查看演示版本。如需AI批改等完整功能，请访问完整平台。',
+        
+        // Test Interface
+        question_navigator: '题目导航',
+        finish_test: '完成测试',
+        next_question: '下一题',
+        prev_question: '上一题',
+        flag_review: '标记复习'
+    }
+};
+
+// Demo questions data for offline mode
+const DEMO_QUESTIONS = {
+    listening: [
+        {
+            id: 'demo_l_001',
+            section: 1,
+            question_number: 1,
+            question_type: 'fill_blank',
+            question_text: 'Name: Sarah ____',
+            correct_answer: 'Thompson',
+            difficulty: 'easy'
+        },
+        {
+            id: 'demo_l_002', 
+            section: 1,
+            question_number: 2,
+            question_type: 'multiple_choice',
+            question_text: 'What type of accommodation is Sarah looking for?',
+            correct_answer: 'B',
+            options: ['A) Hotel', 'B) Shared apartment', 'C) Studio flat'],
+            difficulty: 'easy'
+        }
+    ],
+    reading: [
+        {
+            id: 'demo_r_001',
+            passage_title: 'The History of Chocolate',
+            passage_text: 'Chocolate has a rich and fascinating history that spans thousands of years. The ancient Mayans and Aztecs were among the first civilizations to cultivate cacao beans...',
+            question_number: 1,
+            question_type: 'true_false_not_given',
+            question_text: 'The Mayans used chocolate primarily for trade purposes.',
+            correct_answer: 'FALSE',
+            difficulty: 'medium'
+        }
+    ],
+    writing: [
+        {
+            id: 'demo_w_001',
+            task_number: 1,
+            question_type: 'chart_description',
+            question_text: 'The chart below shows the percentage of households in owned and rented accommodation in England and Wales between 1918 and 2011.',
+            word_limit: 150,
+            time_limit: 20,
+            difficulty: 'medium'
+        }
+    ],
+    speaking: [
+        {
+            id: 'demo_s_001',
+            part: 1,
+            question_type: 'personal_info',
+            question_text: 'Could you tell me your full name, please?',
+            difficulty: 'easy'
+        }
+    ]
+};
+
 class IELTSMockTest {
     constructor() {
+        // Language support
+        this.currentLang = localStorage.getItem('ielts_language') || 'en';
+        
         // Detect if running on GitHub Pages or local server
         const isGitHubPages = window.location.hostname === 'ankerwong.github.io';
         this.API_BASE = isGitHubPages ? 
@@ -20,6 +164,7 @@ class IELTSMockTest {
     }
 
     init() {
+        this.initLanguage();
         this.initEventListeners();
         this.initNavigation();
         this.initResponsiveFeatures();
@@ -28,6 +173,104 @@ class IELTSMockTest {
         if (this.isStaticMode) {
             this.showStaticModeNotification();
         }
+    }
+
+    initLanguage() {
+        // Create language switcher
+        this.createLanguageSwitcher();
+        // Apply initial language
+        this.updatePageLanguage();
+    }
+
+    createLanguageSwitcher() {
+        const navbar = document.querySelector('.nav-menu');
+        if (navbar) {
+            const langSwitcher = document.createElement('li');
+            langSwitcher.className = 'nav-item lang-switcher';
+            langSwitcher.innerHTML = `
+                <div class="language-toggle">
+                    <button class="lang-btn ${this.currentLang === 'en' ? 'active' : ''}" data-lang="en">EN</button>
+                    <button class="lang-btn ${this.currentLang === 'zh' ? 'active' : ''}" data-lang="zh">中文</button>
+                </div>
+            `;
+            navbar.appendChild(langSwitcher);
+
+            // Add event listeners
+            langSwitcher.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    this.switchLanguage(e.target.dataset.lang);
+                });
+            });
+        }
+    }
+
+    switchLanguage(lang) {
+        if (lang === this.currentLang) return;
+        
+        this.currentLang = lang;
+        localStorage.setItem('ielts_language', lang);
+        
+        // Update active button
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.lang === lang);
+        });
+        
+        // Update page content
+        this.updatePageLanguage();
+    }
+
+    getText(key) {
+        return LANGUAGES[this.currentLang][key] || LANGUAGES['en'][key] || key;
+    }
+
+    updatePageLanguage() {
+        // Update navigation
+        const navLinks = document.querySelectorAll('.nav-link');
+        if (navLinks.length >= 4) {
+            navLinks[0].textContent = this.getText('nav_home');
+            navLinks[1].textContent = this.getText('nav_about');  
+            navLinks[2].textContent = this.getText('nav_features');
+            navLinks[3].textContent = this.getText('nav_contact');
+        }
+
+        // Update hero section
+        const heroTitle = document.querySelector('.hero-title');
+        if (heroTitle) {
+            heroTitle.innerHTML = this.getText('hero_title');
+        }
+
+        const heroDesc = document.querySelector('.hero-description');
+        if (heroDesc) {
+            heroDesc.textContent = this.getText('hero_description');
+        }
+
+        // Update buttons
+        const startBtns = document.querySelectorAll('[onclick*="startTest"], [onclick*="startFullTest"]');
+        startBtns.forEach(btn => {
+            if (btn.textContent.includes('Start') || btn.textContent.includes('开始')) {
+                btn.innerHTML = `<i class="fas fa-play-circle"></i> ${this.getText('btn_start_test')}`;
+            }
+        });
+
+        const demoBtns = document.querySelectorAll('[onclick*="showDemo"]');
+        demoBtns.forEach(btn => {
+            btn.innerHTML = `<i class="fas fa-eye"></i> ${this.getText('btn_view_demo')}`;
+        });
+
+        // Update test sections
+        const sectionSpans = document.querySelectorAll('.section-card span:not(.duration)');
+        const sectionMappings = ['test_listening', 'test_reading', 'test_writing', 'test_speaking'];
+        sectionSpans.forEach((span, index) => {
+            if (index < sectionMappings.length) {
+                span.textContent = this.getText(sectionMappings[index]);
+            }
+        });
+    }
+
+    loadDemoQuestions() {
+        // Load demo questions for static mode
+        this.questions = DEMO_QUESTIONS;
+        console.log('Loaded demo questions for static mode');
     }
 
     showStaticModeNotification() {
@@ -47,13 +290,13 @@ class IELTSMockTest {
         `;
         notification.innerHTML = `
             <div style="font-weight: 600; margin-bottom: 8px;">
-                🎯 IELTS Demo Mode
+                ${this.getText('demo_mode_title')}
             </div>
             <div style="font-size: 0.9em; line-height: 1.4;">
-                You're viewing the demo version. For full functionality with AI grading, 
+                ${this.getText('demo_mode_text')}
                 <a href="https://3001-ikyp6x1d3mbzuq3x8kgwq-6532622b.e2b.dev" 
                    style="color: #F39C12; text-decoration: underline;"
-                   target="_blank">visit the complete platform</a>.
+                   target="_blank">${this.currentLang === 'zh' ? '完整平台' : 'complete platform'}</a>.
             </div>
             <button onclick="this.parentElement.remove()" 
                     style="position: absolute; top: 5px; right: 8px; background: none; border: none; color: white; font-size: 16px; cursor: pointer;">×</button>
@@ -151,15 +394,21 @@ class IELTSMockTest {
 
     // Test Management Functions
     async startFullTest() {
-        this.showLoading('Initializing full IELTS mock test...');
+        this.showLoading(this.isStaticMode ? 
+            this.getText('loading_demo_test') : 
+            this.getText('loading_full_test'));
         
         try {
-            // Create test session
-            const session = await this.createTestSession('full');
-            this.currentSession = session.sessionId;
-            
-            // Load all sections
-            await this.loadAllSections();
+            if (this.isStaticMode) {
+                // Static mode - use offline demo data
+                this.currentSession = 'demo-' + Date.now();
+                this.loadDemoQuestions();
+            } else {
+                // Online mode - use backend API
+                const session = await this.createTestSession('full');
+                this.currentSession = session.sessionId;
+                await this.loadAllSections();
+            }
             
             this.hideLoading();
             this.showTestInterface('listening');
@@ -167,21 +416,30 @@ class IELTSMockTest {
         } catch (error) {
             console.error('Error starting full test:', error);
             this.hideLoading();
-            this.showError('Failed to start test. Please try again.');
+            this.showError(this.getText('error_start_test'));
         }
     }
 
     async startSectionTest(section) {
-        this.showLoading(`Preparing ${section} test section...`);
+        const sectionName = this.getText(`test_${section}`);
+        this.showLoading(this.isStaticMode ? 
+            `${this.getText('loading_demo_test')} - ${sectionName}` : 
+            `Preparing ${sectionName} test section...`);
         
         try {
-            // Create test session for specific section
-            const session = await this.createTestSession(section);
-            this.currentSession = session.sessionId;
-            this.currentSection = section;
-            
-            // Load questions for this section
-            await this.loadSectionQuestions(section);
+            if (this.isStaticMode) {
+                // Static mode - use offline demo data
+                this.currentSession = 'demo-' + Date.now();
+                this.currentSection = section;
+                this.loadDemoQuestions();
+                this.questions = DEMO_QUESTIONS[section] || [];
+            } else {
+                // Online mode - use backend API
+                const session = await this.createTestSession(section);
+                this.currentSession = session.sessionId;
+                this.currentSection = section;
+                await this.loadSectionQuestions(section);
+            }
             
             this.hideLoading();
             this.showTestInterface(section);
@@ -189,7 +447,7 @@ class IELTSMockTest {
         } catch (error) {
             console.error(`Error starting ${section} test:`, error);
             this.hideLoading();
-            this.showError(`Failed to start ${section} test. Please try again.`);
+            this.showError(`${this.getText('error_start_test')} (${sectionName})`);
         }
     }
 
@@ -608,7 +866,71 @@ class IELTSMockTest {
     }
 
     showError(message) {
-        alert(message); // Temporary - should be replaced with a proper modal
+        const errorModal = document.createElement('div');
+        errorModal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10001;
+            font-family: 'Inter', sans-serif;
+        `;
+        
+        errorModal.innerHTML = `
+            <div style="
+                background: white;
+                border-radius: 12px;
+                padding: 30px;
+                max-width: 400px;
+                width: 90%;
+                text-align: center;
+                box-shadow: 0 16px 48px rgba(0,0,0,0.2);
+            ">
+                <div style="
+                    color: #E74C3C;
+                    font-size: 3rem;
+                    margin-bottom: 15px;
+                ">⚠️</div>
+                <h3 style="
+                    color: #2C3E50;
+                    margin-bottom: 15px;
+                    font-size: 1.3rem;
+                ">${this.currentLang === 'zh' ? '错误' : 'Error'}</h3>
+                <p style="
+                    color: #6C757D;
+                    margin-bottom: 25px;
+                    line-height: 1.5;
+                ">${message}</p>
+                <button onclick="this.parentElement.parentElement.remove()" style="
+                    background: #E74C3C;
+                    color: white;
+                    border: none;
+                    padding: 12px 24px;
+                    border-radius: 8px;
+                    font-size: 1rem;
+                    font-weight: 500;
+                    cursor: pointer;
+                    transition: background 0.2s;
+                " onmouseover="this.style.background='#C0392B'" 
+                   onmouseout="this.style.background='#E74C3C'">
+                    ${this.currentLang === 'zh' ? '确定' : 'OK'}
+                </button>
+            </div>
+        `;
+        
+        document.body.appendChild(errorModal);
+        
+        // Auto-remove after 5 seconds
+        setTimeout(() => {
+            if (errorModal.parentElement) {
+                errorModal.remove();
+            }
+        }, 5000);
     }
 
     showDemo() {
