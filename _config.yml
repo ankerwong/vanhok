@@ -1,0 +1,70 @@
+# Vanhok Website Configuration for GitHub Pages
+title: Vanhok Education Technology
+description: Professional education services and IELTS preparation platform
+url: https://ankerwong.github.io
+baseurl: /vanhok
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: jekyll-theme-minimal
+
+# Exclude files from processing
+exclude:
+  - ielts/backend/node_modules/
+  - ielts/node_modules/
+  - node_modules/
+  - "*.log"
+  - "*.pid"
+  - "*.seed"
+  - "*.lock"
+  - package.json
+  - package-lock.json
+  - npm-debug.log*
+  - yarn-debug.log*
+  - yarn-error.log*
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+  - .sass-cache/
+  - .jekyll-cache/
+  - .jekyll-metadata
+  - ielts/backend/
+  - ielts/logs/
+  - ielts/ecosystem.config.js
+  - ielts/backend/ielts_database.db
+
+# Include specific files
+include:
+  - ielts/frontend/
+  - ielts/README.md
+
+# Plugin settings
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# SEO settings
+author: Vanhok Education Technology
+twitter:
+  username: vanhok_edu
+  card: summary
+
+# Collections
+collections:
+  pages:
+    output: true
+    permalink: /:name/
+
+# Default values
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+  - scope:
+      path: "ielts"
+    values:
+      layout: "default"
