@@ -121,7 +121,13 @@
                 dirs.forEach(dir => {
                     const li = document.createElement('li');
                     const a = document.createElement('a');
-                    a.textContent = "📁 " + dir.name + "/";
+                    if (dir.name === 'ielts') {
+                        a.textContent = "🎯 " + dir.name + "/ - IELTS Mock Test Platform";
+                        a.style.color = "#e67e22";
+                        a.style.fontWeight = "bold";
+                    } else {
+                        a.textContent = "📁 " + dir.name + "/";
+                    }
                     a.href = baseUrl + dir.name + "/";
                     a.className = "folder";
                     li.appendChild(a);
