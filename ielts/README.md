@@ -1,292 +1,250 @@
-# Vanhok IELTS Mock Test Platform
+# 🎯 Vanhok IELTS - 专业雅思模拟考试平台
 
-A comprehensive IELTS (International English Language Testing System) mock test platform designed to provide authentic exam simulation with AI-powered assessment and instant scoring.
+基于 **Next.js + Supabase** 架构的现代化雅思测试平台，提供完整的听力、阅读、写作、口语四项测试功能。
 
-## 🎯 Project Overview
+## 🚀 项目概述
 
-This platform offers a complete IELTS testing experience, faithfully replicating the structure and timing of the actual IELTS exam. Built for Vanhok Education Technology, it combines modern web technologies with advanced AI assessment tools to provide students with accurate practice and feedback.
+这是一个完整的IELTS模拟考试系统，采用静态网站生成器架构，结合Supabase云数据库，为学生提供真实的考试体验和智能评分功能。
 
-## ✨ Key Features
+## ✨ 核心功能
 
-### 🎭 Complete IELTS Experience
-- **Full Mock Tests**: Complete 2.5-hour IELTS simulation
-- **Section Practice**: Individual section practice (Listening, Reading, Writing, Speaking)
-- **Authentic Timing**: Real exam time constraints with countdown timers
-- **Question Navigator**: Easy navigation between questions with progress tracking
+### 🎧 听力测试
+- ✅ **音频单次播放限制** - 模拟真实考试环境
+- ✅ **多种题型支持** - 填空题、选择题、匹配题
+- ✅ **实时答案保存** - 防止数据丢失
+- ✅ **自动评分系统** - IELTS官方评分标准
 
-### 🧠 AI-Powered Assessment
-- **Advanced Writing Analysis**: Detailed evaluation across all IELTS writing criteria
-  - Task Achievement/Response
-  - Coherence and Cohesion
-  - Lexical Resource
-  - Grammatical Range and Accuracy
-- **Instant Feedback**: Immediate scoring and detailed improvement suggestions
-- **Sophisticated Algorithms**: Vocabulary analysis, grammar checking, and coherence evaluation
+### 📖 阅读理解
+- ✅ **学术文章渲染** - 专业排版显示
+- ✅ **完整题型覆盖** - True/False/Not Given, 选择题, 填空题
+- ✅ **智能评分算法** - 考虑答案变体和容错
+- ✅ **阅读进度跟踪** - 实时显示完成状态
 
-### 📊 Comprehensive Scoring
-- **Official IELTS Band System**: Authentic 0-9 band scoring
-- **Detailed Breakdowns**: Individual scores for each section
-- **Performance Analytics**: Progress tracking and improvement insights
-- **Score Conversion**: Accurate conversion from raw scores to IELTS bands
+### ✍️ 写作测试
+- ✅ **双任务模式** - Task 1 图表描述 + Task 2 议论文
+- ✅ **实时字数统计** - 达到最低要求自动变色提示
+- ✅ **任务切换功能** - 便捷的Tab切换，支持快捷键
+- ✅ **智能评分预估** - 基于词汇、语法、结构的综合评估
 
-### 🎨 Professional Design
-- **Vanhok Branding**: Consistent brand identity throughout
-- **Responsive Interface**: Optimized for desktop, tablet, and mobile
-- **Modern UI/UX**: Clean, intuitive design focused on user experience
-- **Accessibility**: Designed with accessibility best practices
+### 🔐 用户认证系统
+- ✅ **安全注册登录** - Supabase Auth集成
+- ✅ **用户资料管理** - 个人信息和学习记录
+- ✅ **会话状态管理** - 跨页面状态保持
+- ✅ **数据隐私保护** - 行级安全策略（RLS）
 
-## 🏗️ Technical Architecture
+### 📊 进度追踪
+- ✅ **历史成绩记录** - 完整的测试历史
+- ✅ **最佳成绩统计** - 各单项和总分最高分
+- ✅ **学习数据分析** - 答题准确率、学习天数统计
+- ✅ **成绩趋势图表** - 可视化进步轨迹
 
-### Frontend
-- **HTML5/CSS3/JavaScript**: Modern vanilla web technologies
-- **Responsive Design**: Mobile-first responsive layout
-- **Real-time Interface**: Dynamic test interface with live updates
-- **Progressive Enhancement**: Graceful degradation across devices
+## 🏗️ 技术架构
 
-### Backend
-- **Node.js**: Runtime environment
-- **Express.js**: Web application framework
-- **SQLite**: Lightweight, embedded database
-- **RESTful API**: Clean API design for data exchange
-- **PM2**: Process management for production deployment
+### 前端技术栈
+```
+HTML5 + CSS3 + Vanilla JavaScript
+├── 响应式设计 (Mobile-First)
+├── 模块化JS架构
+├── 现代CSS Grid/Flexbox
+└── Progressive Enhancement
+```
 
-### AI Assessment Engine
-- **Natural Language Processing**: Advanced text analysis
-- **Machine Learning Algorithms**: Pattern recognition for scoring
-- **Multi-criteria Evaluation**: Comprehensive assessment framework
-- **Real-time Processing**: Instant feedback generation
+### 后端服务
+```
+Supabase (Backend as a Service)
+├── PostgreSQL 数据库
+├── 实时认证服务
+├── 行级安全策略 (RLS)
+└── 云存储服务
+```
 
-## 📁 Project Structure
+### 部署架构
+```
+GitHub Pages (静态托管)
+├── 静态文件服务
+├── 自定义域名支持
+├── HTTPS 自动配置
+└── CDN 全球加速
+```
+
+## 📁 项目结构
 
 ```
 ielts/
-├── frontend/                 # Frontend assets
-│   ├── index.html           # Main landing page
-│   ├── css/
-│   │   ├── styles.css       # Main stylesheet
-│   │   └── test-interface.css # Test interface styles
-│   ├── js/
-│   │   └── main.js          # Main JavaScript application
-│   ├── images/              # Image assets
-│   └── audio/               # Audio files for listening tests
-├── backend/                 # Backend application
-│   ├── server.js            # Express server
-│   ├── models/
-│   │   └── database.js      # Database management
-│   ├── utils/
-│   │   └── aiGrading.js     # AI assessment engine
-│   └── package.json         # Backend dependencies
-├── data/                    # Test data
-│   └── questions/
-│       └── sample_questions.js # Question bank
-├── logs/                    # Application logs
-├── ecosystem.config.js      # PM2 configuration
-└── README.md               # Project documentation
+├── index.html          # 主页面 - 应用入口
+├── styles.css          # 样式文件 - 完整UI设计
+├── config.js           # 配置文件 - Supabase设置
+├── auth.js            # 认证模块 - 用户管理
+├── app.js             # 主应用 - 核心逻辑
+├── listening.js       # 听力模块 - 音频测试
+├── reading.js         # 阅读模块 - 文章测试  
+├── writing.js         # 写作模块 - 作文测试
+├── database.sql       # 数据库架构 - 表结构定义
+└── README.md          # 项目文档
 ```
 
-## 🚀 Quick Start
+## 🎯 部署步骤
 
-### Prerequisites
-- Node.js 14.x or higher
-- npm or yarn package manager
+### 1. Supabase 数据库设置
 
-### Installation
+1. **创建 Supabase 项目**
+   - 访问 [supabase.com](https://supabase.com)
+   - 创建新项目并获取 API 密钥
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/ankerwong/vanhok.git
-   cd vanhok/ielts
+2. **执行数据库初始化**
+   ```sql
+   -- 在 Supabase SQL Editor 中执行
+   -- 复制 database.sql 中的所有内容并运行
    ```
 
-2. **Install dependencies**
-   ```bash
-   cd backend
-   npm install
-   ```
-
-3. **Start the server**
-   ```bash
-   # Development mode
-   npm start
+3. **配置存储桶**
+   ```sql
+   -- 创建音频文件存储桶
+   INSERT INTO storage.buckets (id, name, public) 
+   VALUES ('ielts-audio', 'ielts-audio', true);
    
-   # Production mode with PM2
-   npm run pm2:start
+   -- 创建图片存储桶
+   INSERT INTO storage.buckets (id, name, public) 
+   VALUES ('ielts-images', 'ielts-images', true);
    ```
 
-4. **Access the platform**
-   - Open your browser to `http://localhost:3001`
-   - The IELTS platform is available at the root path
+### 2. GitHub Pages 配置
 
-### Development Setup
+1. **上传文件到 GitHub 仓库**
+   ```bash
+   # 确保所有文件在 /ielts 目录下
+   git add ielts/
+   git commit -m "Deploy IELTS platform"
+   git push origin main
+   ```
 
-For development with auto-restart:
+2. **启用 GitHub Pages**
+   - 进入仓库 Settings → Pages
+   - 选择 Deploy from a branch
+   - 选择 main 分支 / root 目录
+
+3. **访问测试**
+   - 网站地址: `https://ankerwong.github.io/vanhok/ielts`
+   - 测试用户注册和登录功能
+
+## 🎮 使用指南
+
+### 用户注册流程
+1. 访问网站，点击右上角"登录"按钮
+2. 在弹窗中选择"注册"
+3. 填写邮箱、密码和姓名
+4. 系统自动创建用户档案
+
+### 测试流程
+1. **完整模拟考试**
+   - 点击"开始模拟考试" → 选择"完整模拟考试"
+   - 按顺序完成：听力(30分钟) → 阅读(60分钟) → 写作(60分钟)
+   - 系统自动计算总分
+
+2. **单项练习**
+   - 选择具体模块（听力/阅读/写作）
+   - 完成测试后查看详细分析
+   - 查看正确答案和解析
+
+### 成绩查看
+1. 点击导航栏"成绩查看"
+2. 查看最新成绩和历史记录
+3. 分析各项能力发展趋势
+
+## 🔧 开发指南
+
+### 本地开发环境
 ```bash
-cd backend
-npm install -g nodemon
-nodemon server.js
+# 1. 克隆仓库
+git clone https://github.com/ankerwong/vanhok.git
+cd vanhok/ielts
+
+# 2. 启动本地服务器
+python -m http.server 8000
+# 或使用 Node.js
+npx serve .
+
+# 3. 访问 http://localhost:8000
 ```
 
-## 📝 IELTS Test Sections
-
-### 🎧 Listening (30 minutes)
-- **Section 1**: Everyday conversation (e.g., booking accommodation)
-- **Section 2**: Monologue in everyday context (e.g., museum tour)
-- **Section 3**: Academic conversation (e.g., student discussion)
-- **Section 4**: Academic lecture or talk
-
-**Question Types**: Fill-in-the-blanks, Multiple choice, Matching, Map labeling
-
-### 📖 Reading (60 minutes)
-- **Passage 1**: General interest topic
-- **Passage 2**: Work-related topic
-- **Passage 3**: Academic text
-
-**Question Types**: True/False/Not Given, Multiple choice, Matching, Summary completion
-
-### ✍️ Writing (60 minutes)
-- **Task 1** (20 minutes, 150+ words): Chart/graph/diagram description
-- **Task 2** (40 minutes, 250+ words): Essay on given topic
-
-**Assessment Criteria**: Task Achievement, Coherence & Cohesion, Lexical Resource, Grammar & Accuracy
-
-### 🗣️ Speaking (11-14 minutes)
-- **Part 1**: Introduction and familiar topics
-- **Part 2**: Individual long turn (cue card)
-- **Part 3**: Two-way discussion
-
-## 🎯 AI Assessment Features
-
-### Writing Analysis
-- **Vocabulary Assessment**: Range, accuracy, and appropriateness
-- **Grammar Evaluation**: Complexity, accuracy, and variety
-- **Coherence Analysis**: Logical flow and organization
-- **Task Response**: Completeness and relevance
-
-### Scoring Algorithm
-- **Multi-dimensional Analysis**: Evaluates multiple linguistic features
-- **Comparative Scoring**: Benchmarked against IELTS standards
-- **Instant Feedback**: Real-time assessment with improvement suggestions
-- **Detailed Reporting**: Comprehensive breakdown of strengths and weaknesses
-
-## 🌐 API Endpoints
-
-### Test Management
-- `POST /api/test/session` - Create new test session
-- `GET /api/test/:section` - Fetch questions for specific section
-- `POST /api/test/submit-answer` - Submit answer for evaluation
-- `POST /api/test/complete` - Complete test and calculate scores
-
-### Assessment Services
-- `POST /api/writing/grade` - AI writing assessment
-- `GET /api/test/results/:sessionId` - Retrieve test results
-
-### System
-- `GET /health` - Health check endpoint
-
-## 📊 Database Schema
-
-### Core Tables
-- **users**: User accounts and profiles
-- **test_sessions**: Test instances and overall scores
-- **listening_questions**: Listening section question bank
-- **reading_questions**: Reading section question bank
-- **writing_questions**: Writing task prompts
-- **speaking_questions**: Speaking section prompts
-- **user_answers**: Individual answer records
-- **writing_feedback**: AI assessment results
-
-## 🔧 Configuration
-
-### Environment Variables
-```bash
-NODE_ENV=production
-PORT=3001
-```
-
-### PM2 Configuration
+### 自定义配置
 ```javascript
-{
-  name: 'vanhok-ielts-server',
-  script: './backend/server.js',
-  instances: 1,
-  autorestart: true,
-  max_memory_restart: '1G'
-}
+// config.js 中修改 Supabase 配置
+const SUPABASE_CONFIG = {
+    url: 'YOUR_SUPABASE_URL',
+    anon_key: 'YOUR_SUPABASE_ANON_KEY'
+};
 ```
 
-## 📱 Responsive Design
-
-- **Desktop**: Full-featured interface with side navigation
-- **Tablet**: Optimized layout with collapsible panels
-- **Mobile**: Streamlined interface for touch interaction
-- **Progressive Enhancement**: Core functionality works across all devices
-
-## 🔒 Security Features
-
-- **Input Validation**: Comprehensive server-side validation
-- **SQL Injection Protection**: Parameterized queries
-- **XSS Prevention**: Input sanitization and CSP headers
-- **Rate Limiting**: API endpoint protection
-- **Secure Headers**: Helmet.js security middleware
-
-## 🚀 Production Deployment
-
-### Using PM2
-```bash
-# Start application
-pm2 start ecosystem.config.js
-
-# Monitor processes
-pm2 status
-pm2 logs
-
-# Restart application
-pm2 restart vanhok-ielts-server
+### 添加新题目
+```javascript
+// 在相应的 JavaScript 文件中添加样题
+const newQuestion = {
+    id: 'Q001',
+    section: 1,
+    question_type: 'fill_blank',
+    question_text: '题目内容...',
+    correct_answer: '正确答案'
+};
 ```
 
-### Performance Optimization
-- **Caching**: Strategic caching for static assets
-- **Compression**: Gzip compression for responses
-- **Database Optimization**: Indexed queries and connection pooling
-- **Memory Management**: Efficient memory usage patterns
+## 📊 数据库架构
 
-## 📈 Performance Metrics
+### 核心表结构
+- **users** - 用户信息和学习统计
+- **test_sessions** - 测试会话和成绩记录
+- **listening_questions** - 听力题库
+- **reading_questions** - 阅读题库  
+- **writing_questions** - 写作题库
+- **user_answers** - 用户答题记录
+- **ai_grading_results** - AI评分结果
 
-- **Load Time**: < 3 seconds initial load
-- **Response Time**: < 500ms for API calls
-- **Concurrent Users**: Supports 100+ simultaneous test sessions
-- **Uptime**: 99.9% availability target
+### 安全策略
+- 行级安全 (RLS) 确保数据隐私
+- JWT 认证保护 API 访问
+- 用户只能访问自己的数据
 
-## 🤝 Contributing
+## 🚀 性能优化
 
-This is a proprietary project for Vanhok Education Technology. For internal development:
+### 前端优化
+- 模块化加载减少初始包大小
+- CSS 压缩和合并
+- 图片懒加载和优化
+- Service Worker 缓存策略
 
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open Pull Request
+### 数据库优化  
+- 关键字段创建索引
+- 查询结果缓存
+- 连接池管理
+- 定期数据清理
 
-## 📄 License
+## 🔮 未来规划
 
-© 2024 Vanhok Education Technology. All rights reserved.
+### 短期目标
+- [ ] 口语测试模块（录音功能）
+- [ ] 更多真题内容集成
+- [ ] 移动端 APP 版本
+- [ ] 离线模式支持
 
-This software is proprietary and confidential. Unauthorized copying, distribution, or use is strictly prohibited.
+### 长期目标  
+- [ ] AI 智能评分升级
+- [ ] 个性化学习路径
+- [ ] 实时在线考试
+- [ ] 多语言界面支持
 
-## 📞 Support
+## 📞 技术支持
 
-For technical support or questions:
-- **Email**: tech@vanhok.com
-- **Documentation**: Internal wiki
-- **Issues**: GitHub Issues (internal team only)
+- **项目仓库**: https://github.com/ankerwong/vanhok
+- **在线演示**: https://ankerwong.github.io/vanhok/ielts
+- **技术文档**: 查看本 README.md
+- **问题反馈**: 通过 GitHub Issues
 
-## 🏆 Acknowledgments
+## 📄 开源协议
 
-- **IELTS Content**: Based on official IELTS test formats and criteria
-- **Design System**: Vanhok brand guidelines and UI standards
-- **Assessment Framework**: Research-based evaluation methodologies
-- **Testing**: Comprehensive QA and user acceptance testing
+本项目采用 MIT 协议开源，欢迎贡献代码和建议。
 
 ---
 
-**Built with ❤️ by the Vanhok Development Team**
+**🎯 Built with ❤️ by Vanhok Education Technology Team**
+
+> 专业的IELTS备考平台，助力每一个学习者实现语言学习目标！
