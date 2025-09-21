@@ -1,0 +1,883 @@
+/* 基础样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans SC', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: #f8fafc;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* 页面头部 */
+.header {
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+    color: white;
+    padding: 20px 0;
+    box-shadow: 0 4px 20px rgba(30, 58, 138, 0.3);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.logo h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.logo h1 i {
+    color: #fbbf24;
+    margin-right: 10px;
+}
+
+.tagline {
+    font-size: 1rem;
+    opacity: 0.9;
+    font-weight: 300;
+}
+
+.contact-info .phone {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.contact-info .phone i {
+    font-size: 1.5rem;
+    color: #fbbf24;
+}
+
+.contact-info .phone div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.contact-info .phone span {
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+/* 主要标题区域 */
+.hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: white;
+    padding: 60px 0;
+    text-align: center;
+}
+
+.course-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    background: linear-gradient(45deg, #fbbf24, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.course-subtitle {
+    font-size: 1.3rem;
+    margin-bottom: 40px;
+    opacity: 0.9;
+    font-weight: 300;
+}
+
+.highlight-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.stat i {
+    font-size: 2.5rem;
+    color: #fbbf24;
+}
+
+.stat span {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.cta-button {
+    background: linear-gradient(45deg, #fbbf24, #f59e0b);
+    color: #1f2937;
+    border: none;
+    padding: 18px 36px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(251, 191, 36, 0.3);
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(251, 191, 36, 0.4);
+}
+
+/* 师资介绍 */
+.teacher-section {
+    margin: 60px 0;
+    padding: 40px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.teacher-section h3 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #1e3a8a;
+    text-align: center;
+}
+
+.teacher-section h3 i {
+    color: #fbbf24;
+    margin-right: 10px;
+}
+
+.teacher-card {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.teacher-photo {
+    flex-shrink: 0;
+}
+
+.teacher-photo img {
+    width: 200px;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.teacher-info {
+    flex: 1;
+    min-width: 300px;
+}
+
+.teacher-info h4 {
+    font-size: 1.8rem;
+    color: #1e3a8a;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.teacher-title {
+    font-size: 1.1rem;
+    color: #fbbf24;
+    margin-bottom: 25px;
+    font-weight: 500;
+}
+
+.teacher-achievements {
+    display: grid;
+    gap: 12px;
+}
+
+.achievement {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+}
+
+.achievement i {
+    color: #fbbf24;
+    font-size: 1.1rem;
+    width: 20px;
+}
+
+.achievement span {
+    font-size: 1rem;
+    color: #374151;
+}
+
+/* 课程信息 */
+.course-info {
+    margin: 60px 0;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 30px;
+}
+
+.info-card {
+    background: white;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.info-card h3 {
+    font-size: 1.6rem;
+    color: #1e3a8a;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-card h3 i {
+    color: #fbbf24;
+}
+
+.course-details {
+    display: grid;
+    gap: 20px;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: #f8fafc;
+    border-radius: 12px;
+    border-left: 4px solid #fbbf24;
+}
+
+.detail-item i {
+    color: #1e3a8a;
+    font-size: 1.3rem;
+    width: 25px;
+}
+
+.detail-item div {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-item strong {
+    color: #1f2937;
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+
+.detail-item span {
+    color: #6b7280;
+    font-size: 0.95rem;
+}
+
+/* 课程结构 */
+.course-structure {
+    display: grid;
+    gap: 15px;
+}
+
+.structure-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: #f8fafc;
+    border-radius: 12px;
+    border-left: 4px solid #1e3a8a;
+}
+
+.structure-item.break {
+    border-left-color: #fbbf24;
+    background: #fefbf3;
+}
+
+.time-badge {
+    background: #1e3a8a;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    min-width: 85px;
+    text-align: center;
+}
+
+.structure-item.break .time-badge {
+    background: #fbbf24;
+    color: #1f2937;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+}
+
+.content strong {
+    color: #1f2937;
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+
+.content span {
+    color: #6b7280;
+    font-size: 0.95rem;
+}
+
+/* 上课日期 */
+.schedule-section {
+    margin: 60px 0;
+    padding: 40px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.schedule-section h3 {
+    font-size: 1.8rem;
+    color: #1e3a8a;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.schedule-section h3 i {
+    color: #fbbf24;
+    margin-right: 10px;
+}
+
+.schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.month-schedule {
+    background: #f8fafc;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    border: 2px solid #e5e7eb;
+    transition: all 0.3s ease;
+}
+
+.month-schedule:hover {
+    border-color: #fbbf24;
+    box-shadow: 0 5px 20px rgba(251, 191, 36, 0.15);
+}
+
+.month-schedule h4 {
+    color: #1e3a8a;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.dates {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.date {
+    background: #1e3a8a;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    min-width: 40px;
+}
+
+/* 收费标准 */
+.pricing-section {
+    margin: 60px 0;
+}
+
+.pricing-card {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.pricing-section h3 {
+    font-size: 1.8rem;
+    color: #1e3a8a;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.pricing-section h3 i {
+    color: #fbbf24;
+    margin-right: 10px;
+}
+
+.price-main {
+    margin-bottom: 40px;
+}
+
+.price {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.currency {
+    font-size: 1.5rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.amount {
+    font-size: 4rem;
+    color: #1e3a8a;
+    font-weight: 700;
+}
+
+.period {
+    font-size: 1.2rem;
+    color: #6b7280;
+    font-weight: 400;
+}
+
+.price-desc {
+    color: #6b7280;
+    font-size: 1.1rem;
+}
+
+.offers h4 {
+    color: #1e3a8a;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+}
+
+.offer-list {
+    display: grid;
+    gap: 15px;
+    text-align: left;
+}
+
+.offer-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: #f8fafc;
+    border-radius: 12px;
+    border-left: 4px solid #fbbf24;
+}
+
+.offer-item i {
+    color: #1e3a8a;
+    font-size: 1.2rem;
+}
+
+.offer-item span {
+    color: #374151;
+}
+
+/* 退费政策 */
+.refund-section {
+    margin: 60px 0;
+    padding: 40px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.refund-section h3 {
+    font-size: 1.8rem;
+    color: #1e3a8a;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.refund-section h3 i {
+    color: #fbbf24;
+    margin-right: 10px;
+}
+
+.refund-policy {
+    display: grid;
+    gap: 25px;
+}
+
+.policy-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 20px;
+    background: #f8fafc;
+    border-radius: 12px;
+    border-left: 4px solid #1e3a8a;
+}
+
+.policy-item.highlight {
+    background: #ecfdf5;
+    border-left-color: #10b981;
+}
+
+.policy-item.highlight i {
+    color: #10b981;
+}
+
+.policy-item i {
+    color: #1e3a8a;
+    font-size: 1.2rem;
+    margin-top: 3px;
+}
+
+.policy-item div {
+    display: flex;
+    flex-direction: column;
+}
+
+.policy-item strong {
+    color: #1f2937;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.policy-item span {
+    color: #6b7280;
+}
+
+.policy-group {
+    display: grid;
+    gap: 15px;
+}
+
+.policy-group h4 {
+    color: #1e3a8a;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.notice {
+    background: #fef3c7;
+    padding: 25px;
+    border-radius: 12px;
+    border-left: 4px solid #fbbf24;
+}
+
+.notice h4 {
+    color: #92400e;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+.notice ul {
+    list-style: none;
+    padding: 0;
+}
+
+.notice li {
+    color: #92400e;
+    margin-bottom: 8px;
+    padding-left: 20px;
+    position: relative;
+}
+
+.notice li::before {
+    content: "•";
+    color: #fbbf24;
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+/* 联系方式 */
+.contact-section {
+    margin: 60px 0;
+    padding: 40px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.contact-section h3 {
+    font-size: 1.8rem;
+    color: #1e3a8a;
+    margin-bottom: 30px;
+}
+
+.contact-section h3 i {
+    color: #fbbf24;
+    margin-right: 10px;
+}
+
+.contact-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.contact-card {
+    padding: 30px;
+    background: #f8fafc;
+    border-radius: 15px;
+    border: 2px solid #e5e7eb;
+    transition: all 0.3s ease;
+}
+
+.contact-card:hover {
+    border-color: #fbbf24;
+    box-shadow: 0 5px 20px rgba(251, 191, 36, 0.15);
+}
+
+.contact-card i {
+    font-size: 2.5rem;
+    color: #1e3a8a;
+    margin-bottom: 15px;
+}
+
+.contact-card h4 {
+    color: #1f2937;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.phone-number {
+    display: block;
+    font-size: 1.5rem;
+    color: #fbbf24;
+    font-weight: 700;
+    text-decoration: none;
+    margin-bottom: 8px;
+    transition: color 0.3s ease;
+}
+
+.phone-number:hover {
+    color: #f59e0b;
+}
+
+.contact-card p {
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.primary-btn, .secondary-btn {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.primary-btn {
+    background: linear-gradient(45deg, #1e3a8a, #3b82f6);
+    color: white;
+    box-shadow: 0 8px 25px rgba(30, 58, 138, 0.3);
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(30, 58, 138, 0.4);
+}
+
+.secondary-btn {
+    background: linear-gradient(45deg, #fbbf24, #f59e0b);
+    color: #1f2937;
+    box-shadow: 0 8px 25px rgba(251, 191, 36, 0.3);
+}
+
+.secondary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(251, 191, 36, 0.4);
+}
+
+/* 页脚 */
+.footer {
+    background: #1f2937;
+    color: white;
+    padding: 40px 0 20px;
+    margin-top: 60px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.footer-logo h3 {
+    color: #fbbf24;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.footer-logo p {
+    color: #d1d5db;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.footer-contact h4 {
+    color: white;
+    margin-bottom: 15px;
+}
+
+.footer-contact p {
+    color: #d1d5db;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-contact i {
+    color: #fbbf24;
+    width: 16px;
+}
+
+.footer-bottom {
+    border-top: 1px solid #374151;
+    padding-top: 20px;
+    text-align: center;
+}
+
+.footer-bottom p {
+    color: #9ca3af;
+    font-size: 0.9rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .course-title {
+        font-size: 2.2rem;
+    }
+
+    .highlight-stats {
+        gap: 20px;
+    }
+
+    .stat i {
+        font-size: 2rem;
+    }
+
+    .teacher-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .teacher-photo img {
+        width: 180px;
+        height: 250px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .schedule-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .amount {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .course-title {
+        font-size: 1.8rem;
+    }
+
+    .course-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .info-card {
+        padding: 25px;
+    }
+
+    .teacher-section {
+        padding: 25px;
+    }
+
+    .schedule-section {
+        padding: 25px;
+    }
+
+    .pricing-card {
+        padding: 25px;
+    }
+
+    .refund-section {
+        padding: 25px;
+    }
+
+    .contact-section {
+        padding: 25px;
+    }
+
+    .amount {
+        font-size: 2.5rem;
+    }
+}
