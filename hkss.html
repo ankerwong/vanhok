@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>香港中学信息浏览平台 - Vanhok万鹤书院香港择校部</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* 头部样式 */
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 30px 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+        }
+
+        .brand-logo {
+            position: absolute;
+            top: 20px;
+            left: 40px;
+            font-size: 32px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+
+        .header .subtitle {
+            color: #764ba2;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .header .company-name {
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* 联系信息横幅 */
+        .contact-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .contact-item {
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .contact-item .icon {
+            font-size: 20px;
+        }
+
+        .contact-item .label {
+            opacity: 0.9;
+            margin-right: 5px;
+        }
+
+        .contact-item .value {
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .vanhok-brand {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            font-size: 24px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            z-index: 1000;
+            border: 3px solid #667eea;
+        }
+
+        /* 统计信息面板 */
+        .stats-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* 筛选面板 */
+        .filter-panel {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .filter-title {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filter-title::before {
+            content: '🔍';
+            font-size: 24px;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #666;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        /* 结果区域 */
+        .results-header {
+            background: white;
+            border-radius: 15px;
+            padding: 20px 30px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .results-count {
+            font-size: 18px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .results-count span {
+            color: #667eea;
+            font-size: 24px;
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 10px;
+        }
+
+        .view-btn {
+            padding: 8px 16px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 20px;
+        }
+
+        .view-btn.active {
+            background: #667eea;
+            border-color: #667eea;
+            color: white;
+        }
+
+        /* 卡片视图 */
+        .schools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .school-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .school-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .school-name {
+            font-size: 20px;
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .school-code {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .school-info {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .info-label {
+            color: #999;
+            min-width: 80px;
+        }
+
+        .info-value {
+            color: #333;
+            font-weight: 500;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 5px;
+        }
+
+        .tag-type1 {
+            background: #e0f2fe;
+            color: #0284c7;
+        }
+
+        .tag-type2 {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .tag-type3 {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        .tag-type4 {
+            background: #fce7f3;
+            color: #db2777;
+        }
+
+        .tag-type5 {
+            background: #f3e8ff;
+            color: #9333ea;
+        }
+
+        .tag-no-band {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .school-contact {
+            display: flex;
+            gap: 10px;
+            padding-top: 15px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .contact-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .contact-phone {
+            background: #10b981;
+            color: white;
+        }
+
+        .contact-phone:hover {
+            background: #059669;
+        }
+
+        .contact-web {
+            background: #667eea;
+            color: white;
+        }
+
+        .contact-web:hover {
+            background: #5568d3;
+        }
+
+        /* 表格视图 */
+        .table-view {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+
+        .table-view.active {
+            display: block;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1000px;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+
+        tbody tr {
+            transition: background 0.3s ease;
+        }
+
+        tbody tr:hover {
+            background: #f9fafb;
+        }
+
+        /* 列表视图 */
+        .list-view {
+            display: none;
+        }
+
+        .list-view.active {
+            display: block;
+        }
+
+        .school-list-item {
+            background: white;
+            border-radius: 15px;
+            padding: 20px 30px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr auto;
+            gap: 20px;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .school-list-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+        }
+
+        /* 无结果提示 */
+        .no-results {
+            background: white;
+            border-radius: 15px;
+            padding: 60px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .no-results-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .no-results-text {
+            font-size: 20px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .no-results-hint {
+            color: #999;
+            font-size: 14px;
+        }
+
+        /* 页脚 */
+        .footer {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            margin-top: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .footer .brand {
+            font-size: 28px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .footer .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .footer .contact-info-item {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .footer .contact-info-item strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .brand-logo {
+                position: static;
+                margin-bottom: 10px;
+                font-size: 24px;
+            }
+
+            .vanhok-brand {
+                display: none;
+            }
+
+            .contact-banner {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .schools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .school-list-item {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .stats-panel {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <div class="header">
+            <div class="brand-logo">VANHOK</div>
+            <h1>🎓 香港中学信息浏览平台</h1>
+            <div class="subtitle">Hong Kong Secondary Schools Directory</div>
+            <div class="company-name">Vanhok万鹤书院香港择校部 | Van Hok Academy HK School Selection Department</div>
+        </div>
+
+        <!-- 固定品牌标识 -->
+        <div class="vanhok-brand">VANHOK</div>
+
+        <!-- 联系信息横幅 -->
+        <div class="contact-banner">
+            <div class="contact-item">
+                <span class="icon">📞</span>
+                <span class="label">香港电话:</span>
+                <span class="value">+852 55155942</span>
+            </div>
+            <div class="contact-item">
+                <span class="icon">📱</span>
+                <span class="label">公众号:</span>
+                <span class="value">万鹤DSE</span>
+            </div>
+            <div class="contact-item">
+                <span class="icon">📕</span>
+                <span class="label">小红书:</span>
+                <span class="value">万鹤DSE教育</span>
+            </div>
+            <div class="contact-item">
+                <span class="icon">💬</span>
+                <span class="label">客服微信:</span>
+                <span class="value">MSS-Jc</span>
+            </div>
+        </div>
+
+        <!-- 统计信息 -->
+        <div class="stats-panel">
+            <div class="stat-card">
+                <div class="stat-number" id="totalSchools">0</div>
+                <div class="stat-label">学校总数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="filteredSchools">0</div>
+                <div class="stat-label">筛选结果</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalDistricts">0</div>
+                <div class="stat-label">覆盖地区</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalTypes">0</div>
+                <div class="stat-label">学校类型</div>
+            </div>
+        </div>
+
+        <!-- 筛选面板 -->
+        <div class="filter-panel">
+            <div class="filter-title">筛选条件</div>
+            <div class="filter-grid">
+                <div class="filter-group">
+                    <label>🔍 学校名称</label>
+                    <input type="text" id="searchName" placeholder="支持简体、繁体或英文缩写搜索..." oninput="realtimeSearch()">
+                </div>
+                <div class="filter-group">
+                    <label>📚 学校种类</label>
+                    <select id="filterType">
+                        <option value="">全部种类</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>📍 所属地区</label>
+                    <select id="filterDistrict">
+                        <option value="">全部地区</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>🏆 组别</label>
+                    <select id="filterBand">
+                        <option value="">全部组别</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>🌐 授课语言</label>
+                    <select id="filterLanguage">
+                        <option value="">全部语言</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>👥 学生性别</label>
+                    <select id="filterGender">
+                        <option value="">全部性别</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>🙏 宗教</label>
+                    <select id="filterReligion">
+                        <option value="">全部宗教</option>
+                    </select>
+                </div>
+            </div>
+            <div class="filter-actions">
+                <button class="btn btn-primary" onclick="applyFilters()">
+                    <span>🔍</span> 应用筛选
+                </button>
+                <button class="btn btn-secondary" onclick="resetFilters()">
+                    <span>🔄</span> 重置筛选
+                </button>
+            </div>
+        </div>
+
+        <!-- 结果头部 -->
+        <div class="results-header">
+            <div class="results-count">
+                找到 <span id="resultCount">0</span> 所学校
+            </div>
+            <div class="view-toggle">
+                <button class="view-btn active" onclick="switchView('card')" title="卡片视图">📱</button>
+                <button class="view-btn" onclick="switchView('list')" title="列表视图">📋</button>
+                <button class="view-btn" onclick="switchView('table')" title="表格视图">📊</button>
+            </div>
+        </div>
+
+        <!-- 卡片视图 -->
+        <div class="schools-grid" id="schoolsGrid"></div>
+
+        <!-- 列表视图 -->
+        <div class="list-view" id="listView"></div>
+
+        <!-- 表格视图 -->
+        <div class="table-view" id="tableView">
+            <table>
+                <thead>
+                    <tr>
+                        <th>学校名称</th>
+                        <th>学校代码</th>
+                        <th>种类</th>
+                        <th>所属地区</th>
+                        <th>组别</th>
+                        <th>授课语言</th>
+                        <th>学生性别</th>
+                        <th>宗教</th>
+                        <th>联系方式</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+
+        <!-- 页脚 -->
+        <div class="footer">
+            <div class="brand">VANHOK 万鹤书院</div>
+            <div style="font-size: 14px; margin-bottom: 15px;">
+                <strong style="color: #667eea;">香港择校部</strong> | 为您提供专业的香港学校信息服务 | 数据总数: <span id="footerTotal">0</span> 所
+            </div>
+            <div class="contact-info">
+                <div class="contact-info-item">
+                    <strong>📞 香港电话</strong>
+                    +852 55155942
+                </div>
+                <div class="contact-info-item">
+                    <strong>📱 公众号</strong>
+                    万鹤DSE
+                </div>
+                <div class="contact-info-item">
+                    <strong>📕 小红书</strong>
+                    万鹤DSE教育
+                </div>
+                <div class="contact-info-item">
+                    <strong>💬 客服微信</strong>
+                    MSS-Jc
+                </div>
+            </div>
+            <div style="margin-top: 20px; font-size: 12px; color: #999;">
+                © 2025 Vanhok万鹤书院香港择校部 | Van Hok Academy HK School Selection Department
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let schoolsData = [];
+        let filteredData = [];
+        let currentView = 'card';
+        
+        // 繁简体转换映射表
+        const t2sMap = {
+            '書':'书','學':'学','聖':'圣','會':'会','國':'国','語':'语','義':'义','藝':'艺','術':'术',
+            '東':'东','南':'南','北':'北','華':'华','僑':'侨','嶺':'岭','廣':'广','灣':'湾','島':'岛',
+            '區':'区','門':'门','關':'关','鳳':'凤','龍':'龙','鄉':'乡','縣':'县','覽':'览','館':'馆',
+            '業':'业','農':'农','漁':'渔','協':'协','聯':'联','團':'团','體':'体','際':'际','寶':'宝',
+            '實':'实','榮':'荣','麗':'丽','護':'护','醫':'医','療':'疗','養':'养','衞':'卫','綠':'绿',
+            '環':'环','樹':'树','園':'园','場':'场','樂':'乐','劇':'剧','讀':'读','寫':'写','師':'师',
+            '敎':'教','習':'习','練':'练','訓':'训','課':'课','級':'级','組':'组','員':'员','長':'长',
+            '幹':'干','職':'职','務':'务','專':'专','資':'资','產':'产','財':'财','經':'经','營':'营',
+            '銷':'销','貿':'贸','購':'购','質':'质','檢':'检','測':'测','驗':'验','證':'证','標':'标',
+            '準':'准','規':'规','則':'则','條':'条','項':'项','約':'约','議':'议','論':'论','談':'谈',
+            '詢':'询','問':'问','題':'题','復':'复','報':'报','導':'导','傳':'传','遞':'递','達':'达',
+            '運':'运','輸':'输','郵':'邮','電':'电','腦':'脑','網':'网','線':'线','絡':'络','開':'开',
+            '啟':'启','錄':'录','製':'制','創':'创','設':'设','計':'计','劃':'划','備':'备','辦':'办',
+            '續':'续','終':'终','結':'结','總':'总','統':'统','編':'编','號':'号','碼':'码','類':'类',
+            '種':'种','樣':'样','優':'优','強':'强','勝':'胜','贏':'赢','銀':'银','錢':'钱','價':'价',
+            '費':'费','稅':'税','舊':'旧','廠':'厂','廳':'厅','廟':'庙','應':'应','慶':'庆','匯':'汇',
+            '衛':'卫','機':'机','構':'构','聽':'听','變':'变','觀':'观','視':'视','覺':'觉','處':'处',
+            '眾':'众','齊':'齐','劉':'刘','張':'张','陳':'陈','楊':'杨','黃':'黄','趙':'赵','吳':'吴',
+            '週':'周','鄭':'郑','馮':'冯','陸':'陆','謝':'谢','蘇':'苏','葉':'叶','許':'许','呂':'吕',
+            '錢':'钱','鍾':'钟','譚':'谭','範':'范','鄧':'邓','藍':'蓝','駱':'骆','韋':'韦','嚴':'严',
+            '賴':'赖','莊':'庄','顏':'颜','龔':'龚','鮑':'鲍','畢':'毕','寧':'宁','盧':'卢','湯':'汤',
+            '溫':'温','竇':'窦','鐘':'钟','邱':'邱','裴':'裴','銜':'衔','齡':'龄','臺':'台','滬':'沪',
+            '皖':'皖','贛':'赣','閩':'闽','粵':'粤','瓊':'琼','貴':'贵','雲':'云','陝':'陕','遼':'辽',
+            '濟':'济','鐵':'铁','險':'险','礦':'矿','紡':'纺','織':'织','輕':'轻','車':'车','鋼':'钢',
+            '銅':'铜','鋁':'铝','錫':'锡','鉛':'铅','鋅':'锌','鑽':'钻','氣':'气','燈':'灯','爐':'炉',
+            '鹽':'盐','煙':'烟','醬':'酱','糧':'粮','絲':'丝','綢':'绸','緞':'缎','錦':'锦','絨':'绒',
+            '襪':'袜','褲':'裤','裝':'装','銮':'銮','樑':'梁','銶':'銶','琚':'琚','瑪':'玛','嘉':'嘉',
+            '勒':'勒','若':'若','瑟':'瑟','類':'类','斯':'斯','爾':'尔','菲':'菲','臘':'腊','撒':'撒',
+            '勿':'勿','羅':'罗','士':'士','提':'提','反':'反','女':'女','真':'真','光':'光','培':'培',
+            '僑':'侨','英':'英','華':'华','梁':'梁','沈':'沈','林':'林','文':'文','理':'理','高':'高',
+            '主':'主','教':'教','浸':'浸','信':'信','呂':'吕','明':'明','才':'才','工':'工','庇':'庇',
+            '佛':'佛','柴':'柴','馬':'马','登':'登','基':'基','金':'金','莊':'庄','月':'月','鞍':'鞍',
+            '山':'山','胡':'胡','振':'振','余':'余','德':'德','紀':'纪','念':'念','可':'可','風':'风',
+            '采':'采','何':'何','傳':'传','道':'道','覺':'觉','王':'王','肇':'肇','枝':'枝','紹':'绍',
+            '曾':'曾','璧':'璧','山':'山','鄧':'邓','肇':'肇','賢':'贤','桂':'桂','屏':'屏','韓':'韩',
+            '愈':'愈','鄒':'邹','魯':'鲁','迅':'迅','孫':'孙','逸':'逸','仙':'仙','彭':'彭','陽':'阳',
+            '禧':'禧','銘':'铭','偉':'伟','潘':'潘','宏':'宏','劉':'刘','皇':'皇','發':'发','甲':'甲',
+            '邨':'邨','啟':'启','崇':'崇','德':'德','育':'育','新':'新','亞':'亚','厘':'厘','畢':'毕',
+            '業':'业','中':'中','原':'原','慎':'慎','祥':'祥','黎':'黎','藹':'蔼','惠':'惠','芳':'芳',
+            '紀':'纪','華':'华','景':'景','嶺':'岭','鍾':'钟','逸':'逸','倫':'伦','達':'达','義':'义',
+            '金':'金','禧':'禧','顯':'显','奇':'奇','詹':'詹','卓':'卓','敬':'敬','謙':'谦','彪':'彪',
+            '鏡':'镜','耀':'耀','崙':'仑','泰':'泰','博':'博','簡':'简','尚':'尚','樸':'朴','圃':'圃',
+            '匯':'汇','才':'才','葉':'叶','紀':'纪','廖':'廖','寶':'宝','珊':'珊','麗':'丽','澤':'泽',
+            '琳':'琳','維':'维','澳':'澳','渡':'渡','楊':'杨','志':'志','勳':'勋','群':'群','儀':'仪',
+            '鳳':'凤','翎':'翎','素':'素','源':'源','漢':'汉','鑑':'鉴','泉':'泉','馮':'冯','漢':'汉',
+            '柱':'柱','芸':'芸','萱':'萱','蕙':'蕙','蘭':'兰','蓮':'莲','菊':'菊','梅':'梅','竹':'竹'
+        };
+        
+        // 繁体转简体
+        function toSimplified(text) {
+            if (!text) return '';
+            return text.split('').map(char => t2sMap[char] || char).join('');
+        }
+        
+        // 智能搜索匹配函数
+        function smartMatch(school, searchTerm) {
+            if (!searchTerm) return true;
+            
+            const term = searchTerm.toLowerCase().trim();
+            const schoolName = school['学校名称'] || '';
+            const schoolCode = (school['学校代码'] || '').toLowerCase();
+            
+            // 1. 英文代码精确匹配
+            if (schoolCode.includes(term)) {
+                return true;
+            }
+            
+            // 2. 学校名称原文匹配（繁体）
+            if (schoolName.toLowerCase().includes(term)) {
+                return true;
+            }
+            
+            // 3. 将搜索词转为简体后匹配
+            const termSimp = toSimplified(term);
+            const nameSimp = toSimplified(schoolName);
+            if (nameSimp.toLowerCase().includes(termSimp)) {
+                return true;
+            }
+            
+            // 4. 将学校名转为简体后与原搜索词匹配
+            if (nameSimp.toLowerCase().includes(term)) {
+                return true;
+            }
+            
+            return false;
+        }
+
+        // 学校种类对应的标签样式
+        const typeClasses = {
+            '官立': 'tag-type1',
+            '资助': 'tag-type2',
+            '資助': 'tag-type2',
+            '直资': 'tag-type3',
+            '直資': 'tag-type3',
+            '私立': 'tag-type4',
+            '按位津贴': 'tag-type5',
+            '按位津貼': 'tag-type5'
+        };
+
+        // 初始化
+        async function init() {
+            // 这里嵌入学校数据
+            schoolsData = [{"学校名称": "英皇書院", "学校代码": "kings", "种类": "官立", "所属地区": "中西區", "组别": "1A", "授课语言": "英中", "学生性别": "男校", "宗教": "無", "学校网址": "https://www.kings.edu.hk", "联系电话": "25470310"}, {"学校名称": "樂善堂梁銶琚書院", "学校代码": "lstlkkc", "种类": "資助", "所属地区": "中西區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://lstlkkc.edu.hk", "联系电话": "28587002"}, {"学校名称": "高主教書院", "学校代码": "raimondi", "种类": "資助", "所属地区": "中西區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "天主教", "学校网址": "https://www.raimondi.edu.hk", "联系电话": "25222159"}, {"学校名称": "聖嘉勒女書院", "学校代码": "stclare", "种类": "資助", "所属地区": "中西區", "组别": "1B", "授课语言": "英中", "学生性别": "女校", "宗教": "天主教", "学校网址": "http://www.stclare.edu.hk", "联系电话": "28171764"}, {"学校名称": "聖若瑟書院", "学校代码": "sjc", "种类": "資助", "所属地区": "中西區", "组别": "1B", "授课语言": "英中", "学生性别": "男校", "宗教": "天主教", "学校网址": "https://www.sjc.edu.hk", "联系电话": "36524888"}, {"学校名称": "聖類斯中學", "学校代码": "stlouis", "种类": "資助", "所属地区": "中西區", "组别": "1C", "授课语言": "英中", "学生性别": "男校", "宗教": "天主教", "学校网址": "http://www.stlouis.edu.hk", "联系电话": "25460117"}, {"学校名称": "香港聖瑪加利女書院", "学校代码": "smgchk", "种类": "直資", "所属地区": "沙田區", "组别": "3B", "授课语言": "英中", "学生性别": "女校", "宗教": "天主教", "学校网址": "https://www.smgchk.edu.hk", "联系电话": "25490301"}, {"学校名称": "聖保羅男女中學", "学校代码": "spcc", "种类": "直資", "所属地区": "中西區", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.spcc.edu.hk", "联系电话": "25231187"}, {"学校名称": "聖保羅書院", "学校代码": "spc", "种类": "直資", "所属地区": "中西區", "组别": "1A", "授课语言": "英中", "学生性别": "男校", "宗教": "基督教", "学校网址": "http://www.spc.edu.hk", "联系电话": "25462241"}, {"学校名称": "聖士提反堂中學", "学校代码": "sscc", "种类": "資助", "所属地区": "中西區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.sscc.edu.hk", "联系电话": "25466111"}, {"学校名称": "聖士提反女子中學", "学校代码": "ssgc", "种类": "資助", "所属地区": "中西區", "组别": "1A", "授课语言": "英中", "学生性别": "女校", "宗教": "基督教", "学校网址": "https://www.ssgc.edu.hk", "联系电话": "25492521"}, {"学校名称": "英華女學校", "学校代码": "ywgs", "种类": "資助", "所属地区": "中西區", "组别": "1A", "授课语言": "英中", "学生性别": "女校", "宗教": "基督教", "学校网址": "http://www.ywgs.edu.hk", "联系电话": "25463151"}, {"学校名称": "香港仔浸信會呂明才書院", "学校代码": "ablmcc", "种类": "資助", "所属地区": "南區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.ablmcc.edu.hk", "联系电话": "25526875"}, {"学校名称": "香港仔工業學校", "学校代码": "ats", "种类": "資助", "所属地区": "南區", "组别": "3B", "授课语言": "中中", "学生性别": "男校", "宗教": "天主教", "学校网址": "http://www.ats.edu.hk", "联系电话": "25524141"}, {"学校名称": "庇理羅士女子中學", "学校代码": "belilios", "种类": "官立", "所属地区": "東區", "组别": "1A", "授课语言": "英中", "学生性别": "女校", "宗教": "無", "学校网址": "https://www.bps.hk/", "联系电话": "25718018"}, {"学校名称": "佛教黃鳳翎中學", "学校代码": "bwflc", "种类": "資助", "所属地区": "灣仔區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "佛教", "学校网址": "https://www.bwflc.edu.hk", "联系电话": "25779485"}, {"学校名称": "明愛柴灣馬登基金中學", "学校代码": "ccm", "种类": "資助", "所属地区": "東區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "http://ccm.edu.hk", "联系电话": "25584133"}, {"学校名称": "明愛莊月明中學", "学校代码": "ccym", "种类": "資助", "所属地区": "南區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "http://www.ccym.edu.hk", "联系电话": "25510200"}, {"学校名称": "明愛馬鞍山中學", "学校代码": "cmos", "种类": "資助", "所属地区": "沙田區", "组别": "3C", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "https://www.cmos.edu.hk", "联系电话": "26419733"}, {"学校名称": "明愛胡振中書院", "学校代码": "cwcc", "种类": "資助", "所属地区": "離島區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "http://www.cwcc.edu.hk", "联系电话": "28172318"}, {"学校名称": "張振興伉儷書院", "学校代码": "cghc", "种类": "資助", "所属地区": "東區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "http://www.cghc.edu.hk", "联系电话": "25566081"}, {"学校名称": "金文泰中學", "学校代码": "clementi", "种类": "官立", "所属地区": "東區", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.clementi.edu.hk", "联系电话": "25706411"}, {"学校名称": "香港文理書院", "学校代码": "cognitiohk", "种类": "資助", "所属地区": "東區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.cognitiohk.edu.hk", "联系电话": "25567413"}, {"学校名称": "北角協同中學", "学校代码": "clsnp", "种类": "資助", "所属地区": "灣仔區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.clsnp.edu.hk", "联系电话": "25700331"}, {"学校名称": "孔聖堂禮仁書院", "学校代码": "chms", "种类": "直資", "所属地区": "灣仔區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.aich.edu.hk/", "联系电话": "25763415"}, {"学校名称": "炮台山循道衞理中學", "学校代码": "fhms", "种类": "資助", "所属地区": "東區", "组别": "无组别", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.fhms.edu.hk", "联系电话": "25107688"}, {"学校名称": "漢華中學", "学校代码": "honwah", "种类": "直資", "所属地区": "東區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.honwah.edu.hk", "联系电话": "28171746"}, {"学校名称": "香港航海學校", "学校代码": "hkss", "种类": "資助", "所属地区": "南區", "组别": "3C", "授课语言": "中中", "学生性别": "男校", "宗教": "無", "学校网址": "https://www.hkss.edu.hk", "联系电话": "28131561"}, {"学校名称": "香港真光書院", "学校代码": "hktlc", "种类": "資助", "所属地区": "南區", "组别": "2A", "授课语言": "中中", "学生性别": "女校", "宗教": "基督教", "学校网址": "http://www.hktlc.edu.hk", "联系电话": "28711214"}, {"学校名称": "何東中學", "学校代码": "hotungss", "种类": "官立", "所属地区": "灣仔區", "组别": "2C", "授课语言": "中中", "学生性别": "女校", "宗教": "無", "学校网址": "https://www.hotungss.edu.hk", "联系电话": "25775433"}, {"学校名称": "伊斯蘭脫維善紀念中學", "学校代码": "iktmc", "种类": "資助", "所属地区": "東區", "组别": "3A", "授课语言": "英中", "学生性别": "男女", "宗教": "回教", "学校网址": "http://www.iktmc.edu.hk", "联系电话": "25709066"}, {"学校名称": "蘇浙公學", "学校代码": "kccnpweb", "种类": "直資", "所属地区": "東區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.kcc.edu.hk/", "联系电话": "25702261"}, {"学校名称": "嶺南衡怡紀念中學", "学校代码": "lhymss", "种类": "資助", "所属地区": "東區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.lhymss.edu.hk", "联系电话": "25764852"}, {"学校名称": "嶺南中學", "学校代码": "lingnan", "种类": "資助", "所属地区": "東區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.lingnan.edu.hk", "联系电话": "28916966"}, {"学校名称": "閩僑中學", "学校代码": "mkc", "种类": "資助", "所属地区": "東區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.mkc.edu.hk", "联系电话": "25784523"}, {"学校名称": "保良局慧妍雅集書院", "学校代码": "plkwyc", "种类": "資助", "所属地区": "南區", "组别": "3C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.plkwyc.edu.hk", "联系电话": "25524332"}, {"学校名称": "寶血女子中學", "学校代码": "pbss", "种类": "資助", "所属地区": "東區", "组别": "2B", "授课语言": "中中", "学生性别": "女校", "宗教": "天主教", "学校网址": "https://www.pbss.edu.hk", "联系电话": "25704172"}, {"学校名称": "培僑中學", "学校代码": "pkms", "种类": "直資", "所属地区": "東區", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.pkms.edu.hk", "联系电话": "25662317"}, {"学校名称": "嘉諾撒培德書院", "学校代码": "ptcc", "种类": "資助", "所属地区": "南區", "组别": "2B", "授课语言": "中中", "学生性别": "女校", "宗教": "天主教", "学校网址": "https://www.ptcc.edu.hk", "联系电话": "25540780"}, {"学校名称": "培英中學", "学校代码": "puiying", "种类": "資助", "所属地区": "南區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.puiying.edu.hk", "联系电话": "25503632"}, {"学校名称": "皇仁書院", "学校代码": "qc", "种类": "官立", "所属地区": "灣仔區", "组别": "1A", "授课语言": "英中", "学生性别": "男校", "宗教": "無", "学校网址": "https://www.qc.edu.hk", "联系电话": "25761992"}, {"学校名称": "玫瑰崗中學", "学校代码": "rhs", "种类": "資助", "所属地区": "灣仔區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "http://www.rhs.edu.hk", "联系电话": "25720228"}, {"学校名称": "嘉諾撒聖心書院", "学校代码": "shcc", "种类": "資助", "所属地区": "南區", "组别": "1A", "授课语言": "英中", "学生性别": "女校", "宗教": "天主教", "学校网址": "http://www.shcc.edu.hk", "联系电话": "25506111"}, {"学校名称": "新會商會陳白沙紀念中學", "学校代码": "cpss", "种类": "資助", "所属地区": "南區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://cpss.edu.hk/", "联系电话": "25535324"}, {"学校名称": "聖公會呂明才中學", "学校代码": "skhlmc", "种类": "資助", "所属地区": "南區", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.skhlmc.edu.hk", "联系电话": "25514121"}, {"学校名称": "聖公會鄧肇堅中學", "学校代码": "tsk", "种类": "資助", "所属地区": "灣仔區", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.tsk.edu.hk", "联系电话": "25742326"}, {"学校名称": "聖伯多祿中學", "学校代码": "stpeter", "种类": "資助", "所属地区": "南區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "https://www.stpeter.edu.hk", "联系电话": "25520080"}, {"学校名称": "鄧肇堅維多利亞官立中學", "学校代码": "tskvgss", "种类": "官立", "所属地区": "灣仔區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.tskvgss.edu.hk/", "联系电话": "25736962"}, {"学校名称": "中華基金中學", "学校代码": "cfss", "种类": "直資", "所属地区": "東區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.cfss.edu.hk", "联系电话": "29047322"}, {"学校名称": "香港真光中學", "学校代码": "tlmshk", "种类": "資助", "所属地区": "灣仔區", "组别": "1B", "授课语言": "英中", "学生性别": "女校", "宗教": "基督教", "学校网址": "https://www.tlmshk.edu.hk", "联系电话": "25760703"}, {"学校名称": "東華三院馬振玉紀念中學", "学校代码": "cyma", "种类": "資助", "所属地区": "元朗區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.cyma.edu.hk", "联系电话": "24439833"}, {"学校名称": "東華三院李潤田紀念中學", "学校代码": "lcdmc", "种类": "資助", "所属地区": "灣仔區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.lcdmc.edu.hk", "联系电话": "25715422"}, {"学校名称": "余振強紀念第二中學", "学校代码": "yck2", "种类": "資助", "所属地区": "南區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "https://www.yck2.edu.hk", "联系电话": "25518285"}, {"学校名称": "嘉諾撒書院", "学校代码": "canossa", "种类": "資助", "所属地区": "東區", "组别": "1B", "授课语言": "英中", "学生性别": "女校", "宗教": "天主教", "学校网址": "https://www.canossa.edu.hk", "联系电话": "25630272"}, {"学校名称": "中華基督教會桂華山中學", "学校代码": "ccckws", "种类": "資助", "所属地区": "東區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.ccckws.edu.hk", "联系电话": "25711285"}, {"学校名称": "張祝珊英文中學", "学校代码": "ccsc", "种类": "資助", "所属地区": "東區", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.ccsc.edu.hk", "联系电话": "25706665"}, {"学校名称": "中華傳道會劉永生中學", "学校代码": "lws", "种类": "資助", "所属地区": "東區", "组别": "1C", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.lws.edu.hk", "联系电话": "27156333"}, {"学校名称": "福建中學小西灣", "学校代码": "fss", "种类": "資助", "所属地区": "東區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.fss.edu.hk", "联系电话": "25669223"}, {"学校名称": "顯理中學", "学校代码": "henrietta", "种类": "資助", "所属地区": "東區", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.henrietta.edu.hk", "联系电话": "25701466"}, {"学校名称": "香港中國婦女會中學", "学校代码": "hkcwcc", "种类": "資助", "所属地区": "東區", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.hkcwcc.edu.hk", "联系电话": "25684817"}, {"学校名称": "港島民生書院", "学校代码": "imsc", "种类": "資助", "所属地区": "東區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.imsc.edu.hk", "联系电话": "25671666"}, {"学校名称": "慈幼英文學校", "学校代码": "ssshk", "种类": "資助", "所属地区": "東區", "组别": "2B", "授课语言": "中中", "学生性别": "男校", "宗教": "天主教", "学校网址": "https://www.ssshk.edu.hk", "联系电话": "28843581"}, {"学校名称": "筲箕灣東官立中學", "学校代码": "sescampus", "种类": "官立", "所属地区": "東區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.skwegss.edu.hk/", "联系电话": "25602677"}, {"学校名称": "筲箕灣官立中學", "学校代码": "sgss", "种类": "官立", "所属地区": "東區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.sgss.edu.hk", "联系电话": "25603544"}, {"学校名称": "聖公會李福慶中學", "学校代码": "lfh", "种类": "資助", "所属地区": "東區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.lfh.edu.hk", "联系电话": "25605678"}, {"学校名称": "聖貞德中學", "学校代码": "sja", "种类": "資助", "所属地区": "東區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "http://www.sja.edu.hk", "联系电话": "25785984"}, {"学校名称": "聖馬可中學", "学校代码": "stmarks", "种类": "資助", "所属地区": "東區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.stmarks.edu.hk", "联系电话": "25601262"}, {"学校名称": "衞理中學", "学校代码": "mcw", "种类": "資助", "所属地区": "東區", "组别": "1C", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.mcw.edu.hk", "联系电话": "28967705"}, {"学校名称": "佛教何南金中學", "学校代码": "bhnkc", "种类": "資助", "所属地区": "觀塘區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "佛教", "学校网址": "http://www.bhnkc.edu.hk", "联系电话": "23400871"}, {"学校名称": "香港聖公會何明華會督中學", "学校代码": "bhss", "种类": "資助", "所属地区": "觀塘區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.bhss.edu.hk", "联系电话": "23479224"}, {"学校名称": "香港鄧鏡波書院", "学校代码": "hktkpc", "种类": "資助", "所属地区": "灣仔區", "组别": "2B", "授课语言": "中中", "学生性别": "男校", "宗教": "天主教", "学校网址": "https://www.hktkpc.edu.hk", "联系电话": "25272427"}, {"学校名称": "瑪利曼中學", "学校代码": "mss", "种类": "資助", "所属地区": "灣仔區", "组别": "1A", "授课语言": "英中", "学生性别": "女校", "宗教": "天主教", "学校网址": "http://www.mss.edu.hk", "联系电话": "25728221"}, {"学校名称": "萬鈞匯知中學", "学校代码": "qualiedcollege", "种类": "直資", "所属地区": "西貢區", "组别": "3C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.mkqc.edu.hk/", "联系电话": "27066969"}, {"学校名称": "聖保祿中學", "学校代码": "spss", "种类": "資助", "所属地区": "灣仔區", "组别": "1B", "授课语言": "英中", "学生性别": "女校", "宗教": "天主教", "学校网址": "http://www.spss.edu.hk", "联系电话": "25773836"}, {"学校名称": "佛教筏可紀念中學", "学校代码": "bfhmc", "种类": "直資", "所属地区": "離島區", "组别": "3C", "授课语言": "英中", "学生性别": "男女", "宗教": "佛教", "学校网址": "http://www.bfhmc.edu.hk", "联系电话": "29855365"}, {"学校名称": "佛教慧因法師紀念中學", "学校代码": "waiyan", "种类": "資助", "所属地区": "離島區", "组别": "3C", "授课语言": "中中", "学生性别": "男女", "宗教": "佛教", "学校网址": "http://www.waiyan.edu.hk", "联系电话": "29810188"}, {"学校名称": "明愛華德中書院", "学校代码": "ccvc", "种类": "直資", "所属地区": "離島區", "组别": "无组别", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "http://www.ccvc.edu.hk", "联系电话": "29888821"}, {"学校名称": "長洲官立中學", "学校代码": "ccgss", "种类": "官立", "所属地区": "離島區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.ccgss.edu.hk", "联系电话": "29810514"}, {"学校名称": "黃楚標中學", "学校代码": "wcbss", "种类": "資助", "所属地区": "離島區", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.wcbss.edu.hk", "联系电话": "21094005"}, {"学校名称": "可譽中學", "学校代码": "hoyu", "种类": "資助", "所属地区": "離島區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "儒釋道", "学校网址": "https://ss.hoyu.edu.hk/", "联系电话": "21091001"}, {"学校名称": "靈糧堂怡文中學", "学校代码": "llcew", "种类": "資助", "所属地区": "離島區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.llcew.edu.hk", "联系电话": "21094000"}, {"学校名称": "保良局馬錦明夫人章馥仙中學", "学校代码": "plkcfs", "种类": "資助", "所属地区": "離島區", "组别": "2A", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.plkcfs.edu.hk", "联系电话": "21091133"}, {"学校名称": "東涌天主教學校", "学校代码": "tccs", "种类": "資助", "所属地区": "離島區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "http://www.tccs.edu.hk", "联系电话": "21210884"}, {"学校名称": "港青基信書院", "学校代码": "ymcacc", "种类": "直資", "所属地区": "離島區", "组别": "2B", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.yhkcc.edu.hk", "联系电话": "29888123"}, {"学校名称": "佛教善德英文中學", "学校代码": "bstc", "种类": "資助", "所属地区": "葵青區", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "佛教", "学校网址": "https://www.bstc.edu.hk", "联系电话": "24212580"}, {"学校名称": "地利亞修女紀念學校(協和二中)", "学校代码": "mrck", "种类": "直資", "所属地区": "觀塘區", "组别": "3C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.deliahw2.edu.hk/", "联系电话": "23896299"}, {"学校名称": "陳南昌紀念中學", "学校代码": "cnc", "种类": "資助", "所属地区": "葵青區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.cnc.edu.hk", "联系电话": "27410326"}, {"学校名称": "荔景天主教中學", "学校代码": "lkcss", "种类": "資助", "所属地区": "葵青區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "http://www.lkcss.edu.hk", "联系电话": "27441610"}, {"学校名称": "嶺南鍾榮光博士紀念中學", "学校代码": "ldcwkmss", "种类": "資助", "所属地区": "葵青區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.ldcwkmss.edu.hk", "联系电话": "27439488"}, {"学校名称": "保良局唐乃勤初中書院", "学校代码": "plktnkjsc", "种类": "資助", "所属地区": "深水埗", "组别": "2C", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.plktnkjsc.edu.hk", "联系电话": "21945707"}, {"学校名称": "官立嘉道理爵士中學", "学校代码": "seksswk", "种类": "官立", "所属地区": "油尖旺", "组别": "3B", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://seksswk.edu.hk", "联系电话": "25761871"}, {"学校名称": "港大同學會書院", "学校代码": "hkugac", "种类": "直資", "所属地区": "南區", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.hkugac.edu.hk/", "联系电话": "28708815"}, {"学校名称": "聖士提反書院", "学校代码": "ssc", "种类": "直資", "所属地区": "南區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.ssc.edu.hk", "联系电话": "28130360"}, {"学校名称": "香港華仁書院", "学校代码": "wahyan", "种类": "資助", "所属地区": "灣仔區", "组别": "1A", "授课语言": "英中", "学生性别": "男校", "宗教": "天主教", "学校网址": "https://web.wahyan.edu.hk/", "联系电话": "25722251"}, {"学校名称": "中華基督教會公理書院", "学校代码": "cccklc", "种类": "直資", "所属地区": "灣仔區", "组别": "无组别", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.cccklc.edu.hk", "联系电话": "25775778"}, {"学校名称": "嘉諾撒聖方濟各書院", "学校代码": "sfcc", "种类": "資助", "所属地区": "灣仔區", "组别": "1C", "授课语言": "英中", "学生性别": "女校", "宗教": "天主教", "学校网址": "http://www.sfcc.edu.hk", "联系电话": "25872700"}, {"学校名称": "聖保祿學校", "学校代码": "spcs", "种类": "直資", "所属地区": "灣仔區", "组别": "1A", "授课语言": "英中", "学生性别": "女校", "宗教": "天主教", "学校网址": "http://www.spcs.edu.hk", "联系电话": "25761692"}, {"学校名称": "中華基督教會基智中學", "学校代码": "keichi", "种类": "資助", "所属地区": "觀塘區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.keichi.edu.hk", "联系电话": "23422954"}, {"学校名称": "中華基督教會蒙民偉書院", "学校代码": "cccmmwc", "种类": "資助", "所属地区": "觀塘區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.cccmmwc.edu.hk/", "联系电话": "27276372"}, {"学校名称": "地利亞修女紀念學校(協和)", "学校代码": "deliahw", "种类": "直資", "所属地区": "觀塘區", "组别": "3A", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.deliahw.edu.hk", "联系电话": "23423198"}, {"学校名称": "地利亞修女紀念學校(月華)", "学校代码": "dmsyw", "种类": "直資", "所属地区": "觀塘區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.dscke.edu.hk/", "联系电话": "23436168"}, {"学校名称": "聖道迦南書院", "学校代码": "stcc", "种类": "直資", "所属地区": "觀塘區", "组别": "2B", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.stcc.edu.hk", "联系电话": "23720033"}, {"学校名称": "五邑司徒浩中學", "学校代码": "szetoho", "种类": "資助", "所属地区": "觀塘區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.szetoho.edu.hk", "联系电话": "23405916"}, {"学校名称": "福建中學", "学校代码": "fukien", "种类": "直資", "所属地区": "觀塘區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.fms.edu.hk", "联系电话": "25781745"}, {"学校名称": "香港布廠商會朱石麟中學", "学校代码": "hkwmacsl", "种类": "資助", "所属地区": "觀塘區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.hkwmacsl.edu.hk", "联系电话": "27968323"}, {"学校名称": "高雷中學", "学校代码": "klss", "种类": "資助", "所属地区": "觀塘區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.klss.edu.hk", "联系电话": "23890213"}, {"学校名称": "觀塘官立中學", "学校代码": "ktgss", "种类": "官立", "所属地区": "觀塘區", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.ktgss.edu.hk", "联系电话": "23436220"}, {"学校名称": "觀塘功樂官立中學", "学校代码": "ktklgss", "种类": "官立", "所属地区": "觀塘區", "组别": "3B", "授课语言": "中中", "学生性别": "男校", "宗教": "無", "学校网址": "https://www.ktklgss.edu.hk", "联系电话": "23435059"}, {"学校名称": "觀塘瑪利諾書院", "学校代码": "ktmc", "种类": "資助", "所属地区": "觀塘區", "组别": "1B", "授课语言": "英中", "学生性别": "男校", "宗教": "天主教", "学校网址": "https://www.ktmc.edu.hk", "联系电话": "27171485"}, {"学校名称": "梁式芝書院", "学校代码": "lscc", "种类": "資助", "所属地区": "觀塘區", "组别": "2A", "授课语言": "英中", "学生性别": "女校", "宗教": "天主教", "学校网址": "https://www.lscc.edu.hk", "联系电话": "23496626"}, {"学校名称": "瑪利諾中學", "学校代码": "mssch", "种类": "資助", "所属地区": "觀塘區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "https://www.maryknoll.edu.hk/", "联系电话": "27583102"}, {"学校名称": "慕光英文書院", "学校代码": "mukuang", "种类": "直資", "所属地区": "觀塘區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.mukuang.edu.hk", "联系电话": "23412932"}, {"学校名称": "寧波公學", "学校代码": "npc", "种类": "資助", "所属地区": "觀塘區", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.npc.edu.hk", "联系电话": "23455633"}, {"学校名称": "寧波第二中學", "学校代码": "np2c", "种类": "資助", "所属地区": "觀塘區", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.np2c.edu.hk", "联系电话": "23467465"}, {"学校名称": "呂郭碧鳳中學", "学校代码": "lkpfc", "种类": "資助", "所属地区": "觀塘區", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.lkpfc.edu.hk", "联系电话": "23480103"}, {"学校名称": "天主教普照中學", "学校代码": "pochiu", "种类": "資助", "所属地区": "觀塘區", "组别": "3C", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "http://www.pochiu.edu.hk", "联系电话": "23479907"}, {"学校名称": "順利天主教中學", "学校代码": "slcss", "种类": "資助", "所属地区": "觀塘區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "天主教", "学校网址": "http://www.slcss.edu.hk", "联系电话": "23893082"}, {"学校名称": "聖言中學", "学校代码": "singyin", "种类": "資助", "所属地区": "觀塘區", "组别": "1B", "授课语言": "英中", "学生性别": "男校", "宗教": "天主教", "学校网址": "https://www.singyin.edu.hk", "联系电话": "23496281"}, {"学校名称": "聖公會基孝中學", "学校代码": "keihau", "种类": "資助", "所属地区": "觀塘區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.keihau.edu.hk", "联系电话": "23460252"}, {"学校名称": "聖公會梁季彜中學", "学校代码": "skhlkyss", "种类": "資助", "所属地区": "觀塘區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.skhlkyss.edu.hk", "联系电话": "27274321"}, {"学校名称": "聖安當女書院", "学校代码": "sagc", "种类": "資助", "所属地区": "觀塘區", "组别": "2C", "授课语言": "中中", "学生性别": "女校", "宗教": "天主教", "学校网址": "https://www.sagc.edu.hk", "联系电话": "23481379"}, {"学校名称": "聖傑靈女子中學", "学校代码": "scsg", "种类": "資助", "所属地区": "觀塘區", "组别": "1B", "授课语言": "英中", "学生性别": "女校", "宗教": "基督教", "学校网址": "http://www.scsg.edu.hk", "联系电话": "23456481"}, {"学校名称": "聖若瑟英文中學", "学校代码": "sjacs", "种类": "資助", "所属地区": "觀塘區", "组别": "1C", "授课语言": "英中", "学生性别": "男校", "宗教": "天主教", "学校网址": "https://www.sjacs.edu.hk", "联系电话": "37524500"}, {"学校名称": "藍田聖保祿中學", "学校代码": "spslt", "种类": "資助", "所属地区": "觀塘區", "组别": "1A", "授课语言": "英中", "学生性别": "女校", "宗教": "天主教", "学校网址": "https://www.spslt.edu.hk", "联系电话": "23472991"}, {"学校名称": "香港道教聯合會青松中學", "学校代码": "ccss", "种类": "資助", "所属地区": "觀塘區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "道教", "学校网址": "https://www.ccss.edu.hk", "联系电话": "27274315"}, {"学校名称": "基督教聖約教會堅樂中學", "学校代码": "holmglad", "种类": "資助", "所属地区": "觀塘區", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.holmglad.edu.hk", "联系电话": "27274311"}, {"学校名称": "滙基書院東九龍", "学校代码": "uccke", "种类": "直資", "所属地区": "觀塘區", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.uccke.edu.hk", "联系电话": "23436677"}, {"学校名称": "仁濟醫院羅陳楚思中學", "学校代码": "ychlccsc", "种类": "資助", "所属地区": "觀塘區", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.ychlccsc.edu.hk", "联系电话": "26821315"}, {"学校名称": "何明華會督銀禧中學", "学校代码": "bhjs", "种类": "資助", "所属地区": "九龍城", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.bhjs.edu.hk", "联系电话": "23363034"}, {"学校名称": "天主教鳴遠中學", "学校代码": "mingyuen", "种类": "資助", "所属地区": "西貢區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "http://www.mingyuen.edu.hk", "联系电话": "27027102"}, {"学校名称": "陳樹渠紀念中學", "学校代码": "cskms", "种类": "直資", "所属地区": "深水埗", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.cskms.edu.hk", "联系电话": "23800241"}, {"学校名称": "陳瑞祺喇沙書院", "学校代码": "csklsc", "种类": "資助", "所属地区": "九龍城", "组别": "2A", "授课语言": "英中", "学生性别": "男校", "宗教": "天主教", "学校网址": "https://www.csklsc.edu.hk", "联系电话": "27118175"}, {"学校名称": "佛教志蓮中學", "学校代码": "clbss", "种类": "資助", "所属地区": "黃大仙", "组别": "无组别", "授课语言": "中中", "学生性别": "男女", "宗教": "佛教", "学校网址": "http://www.clbss.edu.hk", "联系电话": "23218511"}, {"学校名称": "彩虹邨天主教英文中學", "学校代码": "choihung", "种类": "資助", "所属地区": "黃大仙", "组别": "2C", "授课语言": "中中", "学生性别": "男校", "宗教": "天主教", "学校网址": "http://www.choihung.edu.hk", "联系电话": "23203594"}, {"学校名称": "路德會協同中學", "学校代码": "cls", "种类": "資助", "所属地区": "深水埗", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.cls.edu.hk", "联系电话": "23808837"}, {"学校名称": "將軍澳香島中學", "学校代码": "tko-heungto", "种类": "直資", "所属地区": "西貢區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.tko.heungto.net", "联系电话": "26233039"}, {"学校名称": "香海正覺蓮社佛教正覺中學", "学校代码": "bckss", "种类": "資助", "所属地区": "西貢區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "佛教", "学校网址": "http://www.bckss.edu.hk", "联系电话": "22463383"}, {"学校名称": "港澳信義會慕德中學", "学校代码": "qmss", "种类": "資助", "所属地区": "西貢區", "组别": "1C", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.qmss.edu.hk", "联系电话": "27026509"}, {"学校名称": "黃棣珊紀念中學", "学校代码": "wtsmc", "种类": "資助", "所属地区": "深水埗", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.wtsmc.edu.hk", "联系电话": "27788982"}, {"学校名称": "寶血會上智英文書院", "学校代码": "htc", "种类": "資助", "所属地区": "深水埗", "组别": "1A", "授课语言": "英中", "学生性别": "女校", "宗教": "天主教", "学校网址": "http://www.htc.edu.hk", "联系电话": "27793220"}, {"学校名称": "何文田官立中學", "学校代码": "hgss", "种类": "官立", "所属地区": "九龍城", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.hmtgss.edu.hk", "联系电话": "27112680"}, {"学校名称": "圓玄學院第三中學", "学校代码": "hktayy3", "种类": "資助", "所属地区": "西貢區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "道教", "学校网址": "https://www.hktayy3.edu.hk", "联系电话": "21783223"}, {"学校名称": "賽馬會官立中學", "学校代码": "jcgss", "种类": "官立", "所属地区": "九龍城", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.jcgss.edu.hk", "联系电话": "23366761"}, {"学校名称": "景嶺書院", "学校代码": "kingling", "种类": "資助", "所属地区": "西貢區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.kingling.edu.hk", "联系电话": "27029602"}, {"学校名称": "樂善堂王仲銘中學", "学校代码": "lstwcm", "种类": "資助", "所属地区": "黃大仙", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.lstwcm.edu.hk", "联系电话": "23820002"}, {"学校名称": "馬陳端喜紀念中學", "学校代码": "mcdhmc", "种类": "資助", "所属地区": "西貢區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.mcdhmc.edu.hk", "联系电话": "27067477"}, {"学校名称": "聖母玫瑰書院", "学校代码": "olr", "种类": "資助", "所属地区": "深水埗", "组别": "1A", "授课语言": "英中", "学生性别": "女校", "宗教": "天主教", "学校网址": "https://www.olr.edu.hk", "联系电话": "23806468"}, {"学校名称": "寶覺中學", "学校代码": "pokok", "种类": "資助", "所属地区": "西貢區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "佛教", "学校网址": "http://www.pokok.edu.hk", "联系电话": "27022863"}, {"学校名称": "保良局甲子何玉清中學", "学校代码": "plk1984", "种类": "資助", "所属地区": "西貢區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.plk1984.edu.hk", "联系电话": "27037363"}, {"学校名称": "西貢崇真天主教學校", "学校代码": "sts", "种类": "資助", "所属地区": "西貢區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "https://www.sts.edu.hk", "联系电话": "27926712"}, {"学校名称": "華英中學", "学校代码": "waying", "种类": "資助", "所属地区": "九龍城", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.waying.edu.hk", "联系电话": "27607772"}, {"学校名称": "張沛松紀念中學", "学校代码": "cpc", "种类": "資助", "所属地区": "西貢區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.cpc.edu.hk", "联系电话": "27047002"}, {"学校名称": "創知中學", "学校代码": "wss", "种类": "直資", "所属地区": "九龍城", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.scientia.edu.hk/", "联系电话": "27144115"}, {"学校名称": "仁濟醫院靚次伯紀念中學", "学校代码": "lcp", "种类": "資助", "所属地区": "西貢區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.lcp.edu.hk", "联系电话": "27029033"}, {"学校名称": "迦密主恩中學", "学校代码": "cdgfss", "种类": "資助", "所属地区": "西貢區", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.cdgfss.edu.hk", "联系电话": "27010908"}, {"学校名称": "新界西貢坑口區鄭植之中學", "学校代码": "cccss", "种类": "資助", "所属地区": "西貢區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.cccss.edu.hk", "联系电话": "27198598"}, {"学校名称": "基督教宣道會宣基中學", "学校代码": "skss", "种类": "資助", "所属地区": "西貢區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.skss.edu.hk", "联系电话": "21916022"}, {"学校名称": "啟思中學", "学校代码": "css", "种类": "直資", "所属地区": "西貢區", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.css.edu.hk/", "联系电话": "23360233"}, {"学校名称": "播道書院", "学校代码": "evangel", "种类": "直資", "所属地区": "西貢區", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.evangel.edu.hk", "联系电话": "23661802"}, {"学校名称": "優才楊殷有娣書院", "学校代码": "gtcollege", "种类": "直資", "所属地区": "西貢區", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.gtcollege.edu.hk", "联系电话": "25356867"}, {"学校名称": "真道書院", "学校代码": "logosacademy", "种类": "直資", "所属地区": "西貢區", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.logos.edu.hk/", "联系电话": "23372123"}, {"学校名称": "保良局羅氏基金中學", "学校代码": "plklfc", "种类": "直資", "所属地区": "西貢區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.plklfc.edu.hk", "联系电话": "27018778"}, {"学校名称": "鄧英喜中學", "学校代码": "pohtyh", "种类": "資助", "所属地区": "西貢區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.pohtyh.edu.hk", "联系电话": "22463221"}, {"学校名称": "順德聯誼總會鄭裕彤中學", "学校代码": "cytss", "种类": "資助", "所属地区": "西貢區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.cyt.edu.hk/", "联系电话": "21910291"}, {"学校名称": "將軍澳官立中學", "学校代码": "tkogss", "种类": "官立", "所属地区": "西貢區", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.tkogss.edu.hk", "联系电话": "27040051"}, {"学校名称": "東華三院呂潤財紀念中學", "学校代码": "lycmc", "种类": "資助", "所属地区": "西貢區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.lycmc.edu.hk", "联系电话": "27060743"}, {"学校名称": "仁濟醫院王華湘中學", "学校代码": "ychwwsss", "种类": "資助", "所属地区": "西貢區", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.ychwwsss.edu.hk", "联系电话": "27060477"}, {"学校名称": "可立中學", "学校代码": "holap", "种类": "資助", "所属地区": "黃大仙", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "儒釋道", "学校网址": "http://www.holap.edu.hk", "联系电话": "23222229"}, {"学校名称": "佛教大雄中學", "学校代码": "bthc", "种类": "資助", "所属地区": "深水埗", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "佛教", "学校网址": "http://www.bthc.edu.hk", "联系电话": "23862988"}, {"学校名称": "中華基督教會銘賢書院", "学校代码": "cccmyc", "种类": "資助", "所属地区": "深水埗", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.cccmyc.edu.hk", "联系电话": "27784512"}, {"学校名称": "長沙灣天主教英文中學", "学校代码": "cswcss", "种类": "資助", "所属地区": "深水埗", "组别": "1C", "授课语言": "英中", "学生性别": "男校", "宗教": "天主教", "学校网址": "http://www.cswcss.edu.hk", "联系电话": "27415034"}, {"学校名称": "中聖書院", "学校代码": "chc", "种类": "直資", "所属地区": "深水埗", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.chc.edu.hk", "联系电话": "23864734"}, {"学校名称": "廠商會中學", "学校代码": "cmass", "种类": "資助", "所属地区": "深水埗", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.cmass.edu.hk", "联系电话": "27796851"}, {"学校名称": "地利亞修女紀念學校(百老匯)", "学校代码": "deliabw", "种类": "直資", "所属地区": "深水埗", "组别": "3C", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.deliabw.edu.hk", "联系电话": "27422028"}, {"学校名称": "地利亞修女紀念學校(吉利徑)", "学校代码": "dmsgp", "种类": "直資", "所属地区": "深水埗", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.dmsgp.edu.hk", "联系电话": "27415239"}, {"学校名称": "香島中學", "学校代码": "heungto", "种类": "直資", "所属地区": "深水埗", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.heungto.edu.hk", "联系电话": "27790182"}, {"学校名称": "九龍工業學校", "学校代码": "kts", "种类": "官立", "所属地区": "深水埗", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.kts.edu.hk", "联系电话": "23860737"}, {"学校名称": "瑪利諾神父教會學校", "学校代码": "mfs", "种类": "資助", "所属地区": "深水埗", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "天主教", "学校网址": "http://www.mfs.edu.hk", "联系电话": "27775117"}, {"学校名称": "天主教南華中學", "学校代码": "nwcss", "种类": "資助", "所属地区": "深水埗", "组别": "3C", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "https://www.nwcss.edu.hk", "联系电话": "27411174"}, {"学校名称": "保良局蔡繼有學校", "学校代码": "cky", "种类": "私立", "所属地区": "深水埗", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.cky.edu.hk", "联系电话": "21482052"}, {"学校名称": "莫慶堯中學", "学校代码": "smcc", "种类": "資助", "所属地区": "深水埗", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://smcc.edu.hk", "联系电话": "25775347"}, {"学校名称": "聖瑪加利男女英文中小學", "学校代码": "smcesps", "种类": "直資", "所属地区": "深水埗", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "天主教", "学校网址": "https://www.smcesps.edu.hk", "联系电话": "23966675"}, {"学校名称": "德貞女子中學", "学校代码": "tackching", "种类": "資助", "所属地区": "深水埗", "组别": "3A", "授课语言": "中中", "学生性别": "女校", "宗教": "天主教", "学校网址": "http://www.tackching.edu.hk", "联系电话": "27293211"}, {"学校名称": "德雅中學", "学校代码": "taknga", "种类": "資助", "所属地区": "深水埗", "组别": "1B", "授课语言": "英中", "学生性别": "女校", "宗教": "天主教", "学校网址": "http://www.taknga.edu.hk", "联系电话": "23803788"}, {"学校名称": "基督教崇真中學", "学校代码": "ttca", "种类": "直資", "所属地区": "深水埗", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.ttca.edu.hk", "联系电话": "27288727"}, {"学校名称": "東華三院張明添中學", "学校代码": "twghcmts", "种类": "資助", "所属地区": "深水埗", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.twghcmts.edu.hk", "联系电话": "27792986"}, {"学校名称": "滙基書院", "学校代码": "ucc", "种类": "按位津貼", "所属地区": "深水埗", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.ucc.edu.hk", "联系电话": "27778344"}, {"学校名称": "惠僑英文中學", "学校代码": "wkc", "种类": "直資", "所属地区": "深水埗", "组别": "3C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.wkc.edu.hk", "联系电话": "27776289"}, {"学校名称": "英華書院", "学校代码": "yingwa", "种类": "直資", "所属地区": "深水埗", "组别": "1A", "授课语言": "英中", "学生性别": "男校", "宗教": "基督教", "学校网址": "https://www.yingwa.edu.hk", "联系电话": "23368838"}, {"学校名称": "佛教覺光法師中學", "学校代码": "bkkss", "种类": "資助", "所属地区": "沙田區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "佛教", "学校网址": "https://www.bkkss.edu.hk", "联系电话": "26473737"}, {"学校名称": "佛教黃允畋中學", "学校代码": "bwwtc", "种类": "資助", "所属地区": "沙田區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "佛教", "学校网址": "http://bwwtc.edu.hk", "联系电话": "26058369"}, {"学校名称": "中華基督教會基協中學", "学校代码": "keiheep", "种类": "資助", "所属地区": "黃大仙", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.keiheep.edu.hk", "联系电话": "23204557"}, {"学校名称": "中華基督教會扶輪中學", "学校代码": "rotary", "种类": "資助", "所属地区": "黃大仙", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.rotary.edu.hk/", "联系电话": "23381971"}, {"学校名称": "馮堯敬紀念中學", "学校代码": "fyk", "种类": "資助", "所属地区": "沙田區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.fyk.edu.hk", "联系电话": "26404968"}, {"学校名称": "旅港開平商會中學", "学校代码": "hpccss", "种类": "資助", "所属地区": "九龍城", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.hpccss.edu.hk", "联系电话": "27123107"}, {"学校名称": "聖公會聖匠中學", "学校代码": "hcs", "种类": "資助", "所属地区": "九龍城", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.hcs.edu.hk", "联系电话": "23642730"}, {"学校名称": "聖母無玷聖心書院", "学校代码": "ihmc", "种类": "資助", "所属地区": "沙田區", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "天主教", "学校网址": "https://www.ihmc.edu.hk", "联系电话": "26471358"}, {"学校名称": "九龍三育中學", "学校代码": "ksyss", "种类": "直資", "所属地区": "油尖旺", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.ksyss.edu.hk", "联系电话": "23944081"}, {"学校名称": "喇沙書院", "学校代码": "lasalle", "种类": "資助", "所属地区": "九龍城", "组别": "1A", "授课语言": "英中", "学生性别": "男校", "宗教": "天主教", "学校网址": "https://www.lasalle.edu.hk", "联系电话": "23387171"}, {"学校名称": "麗澤中學", "学校代码": "laichack", "种类": "資助", "所属地区": "油尖旺", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.laichack.edu.hk", "联系电话": "27213086"}, {"学校名称": "樂道中學", "学校代码": "locktao", "种类": "資助", "所属地区": "沙田區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.locktao.edu.hk", "联系电话": "26021000"}, {"学校名称": "樂善堂楊葛小琳中學", "学校代码": "lstyoungkhl", "种类": "資助", "所属地区": "沙田區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.lstyoungkhl.edu.hk", "联系电话": "26056632"}, {"学校名称": "五育中學", "学校代码": "nyss", "种类": "資助", "所属地区": "沙田區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.nyss.edu.hk", "联系电话": "26921870"}, {"学校名称": "香港培道中學", "学校代码": "pooito", "种类": "資助", "所属地区": "九龍城", "组别": "1B", "授课语言": "中中", "学生性别": "女校", "宗教": "基督教", "学校网址": "http://www.pooito.edu.hk", "联系电话": "23361706"}, {"学校名称": "禮賢會彭學高紀念中學", "学校代码": "rhenishcollege", "种类": "資助", "所属地区": "九龍城", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.rcphkmc.edu.hk/", "联系电话": "23370283"}, {"学校名称": "沙田崇真中學", "学校代码": "sttss", "种类": "資助", "所属地区": "沙田區", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.sttss.edu.hk", "联系电话": "26073881"}, {"学校名称": "聖公會諸聖中學", "学校代码": "skhasms", "种类": "按位津貼", "所属地区": "油尖旺", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.skhasms.edu.hk", "联系电话": "27800147"}, {"学校名称": "聖芳濟書院", "学校代码": "sfxc", "种类": "資助", "所属地区": "油尖旺", "组别": "1B", "授课语言": "英中", "学生性别": "男校", "宗教": "天主教", "学校网址": "http://www.sfxc.edu.hk", "联系电话": "23932271"}, {"学校名称": "台山商會中學", "学校代码": "tsac", "种类": "資助", "所属地区": "沙田區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.tsac.edu.hk", "联系电话": "26487871"}, {"学校名称": "荃灣官立中學", "学校代码": "twgss", "种类": "官立", "所属地区": "荃灣區", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.twgss.edu.hk", "联系电话": "24903307"}, {"学校名称": "東華三院黃鳳翎中學", "学校代码": "twghwflc", "种类": "資助", "所属地区": "沙田區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.twghwflc.edu.hk", "联系电话": "26416238"}, {"学校名称": "東華三院邱金元中學", "学校代码": "twyky", "种类": "資助", "所属地区": "沙田區", "组别": "3C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.twyky.edu.hk", "联系电话": "26497385"}, {"学校名称": "華仁書院(九龍)", "学校代码": "wyk", "种类": "資助", "所属地区": "油尖旺", "组别": "1B", "授课语言": "英中", "学生性别": "男校", "宗教": "天主教", "学校网址": "https://www.wyk.edu.hk/", "联系电话": "23841038"}, {"学校名称": "仁濟醫院董之英紀念中學", "学校代码": "ychtcy", "种类": "資助", "所属地区": "沙田區", "组别": "3C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.ychtcy.edu.hk", "联系电话": "26409822"}, {"学校名称": "佛教孔仙洲紀念中學", "学校代码": "bhscmc", "种类": "資助", "所属地区": "黃大仙", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "佛教", "学校网址": "https://www.bhscmc.edu.hk", "联系电话": "23226915"}, {"学校名称": "中華基督教會協和書院", "学校代码": "ccchwc", "种类": "資助", "所属地区": "黃大仙", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.ccchwc.edu.hk", "联系电话": "23234265"}, {"学校名称": "九龍文理書院", "学校代码": "cckln", "种类": "資助", "所属地区": "九龍城", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.cckln.edu.hk", "联系电话": "23231741"}, {"学校名称": "德望學校", "学校代码": "ghs", "种类": "直資", "所属地区": "黃大仙", "组别": "1A", "授课语言": "英中", "学生性别": "女校", "宗教": "天主教", "学校网址": "http://www.ghs.edu.hk", "联系电话": "23210250"}, {"学校名称": "潔心林炳炎中學", "学校代码": "kitsam", "种类": "資助", "所属地区": "黃大仙", "组别": "2C", "授课语言": "中中", "学生性别": "女校", "宗教": "天主教", "学校网址": "https://www.kitsam.edu.hk", "联系电话": "23379594"}, {"学校名称": "李求恩紀念中學", "学校代码": "lkyms", "种类": "資助", "所属地区": "黃大仙", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.lkyms.edu.hk", "联系电话": "22596000"}, {"学校名称": "樂善堂余近卿中學", "学校代码": "ykh", "种类": "資助", "所属地区": "黃大仙", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.ykh.edu.hk", "联系电话": "23362657"}, {"学校名称": "龍翔官立中學", "学校代码": "lcgss", "种类": "官立", "所属地区": "黃大仙", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.lcgss.edu.hk", "联系电话": "23234202"}, {"学校名称": "天主教伍華中學", "学校代码": "ngwahsec", "种类": "資助", "所属地区": "黃大仙", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "https://www2.ngwahsec.edu.hk/", "联系电话": "23838077"}, {"学校名称": "聖母書院", "学校代码": "olc", "种类": "資助", "所属地区": "黃大仙", "组别": "1C", "授课语言": "英中", "学生性别": "女校", "宗教": "天主教", "学校网址": "https://www.olc.edu.hk", "联系电话": "23275860"}, {"学校名称": "五旬節聖潔會永光書院", "学校代码": "wingkwong", "种类": "資助", "所属地区": "黃大仙", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.wingkwong.edu.hk", "联系电话": "23370137"}, {"学校名称": "保良局何蔭棠中學", "学校代码": "plkchc", "种类": "資助", "所属地区": "黃大仙", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.plkchc.edu.hk", "联系电话": "26269930"}, {"学校名称": "保良局第一張永慶中學", "学校代码": "plkno1whc", "种类": "資助", "所属地区": "黃大仙", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.plkno1.edu.hk/", "联系电话": "23212167"}, {"学校名称": "救世軍卜維廉中學", "学校代码": "wbss", "种类": "資助", "所属地区": "黃大仙", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.wbss.edu.hk", "联系电话": "23269068"}, {"学校名称": "聖公會聖本德中學", "学校代码": "skhsbs", "种类": "資助", "所属地区": "黃大仙", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.skhsbs.edu.hk", "联系电话": "23200011"}, {"学校名称": "聖文德書院", "学校代码": "sbc", "种类": "資助", "所属地区": "黃大仙", "组别": "1C", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "https://www.sbc.edu.hk", "联系电话": "23238217"}, {"学校名称": "香港神託會培敦中學", "学校代码": "pooitun", "种类": "資助", "所属地区": "黃大仙", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.pooitun.edu.hk", "联系电话": "23265211"}, {"学校名称": "德愛中學", "学校代码": "takoi", "种类": "資助", "所属地区": "黃大仙", "组别": "1B", "授课语言": "英中", "学生性别": "女校", "宗教": "天主教", "学校网址": "https://www.takoi.edu.hk", "联系电话": "23238504"}, {"学校名称": "青年會書院", "学校代码": "ymca-coll", "种类": "資助", "所属地区": "沙田區", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.cymcac.edu.hk", "联系电话": "26419588"}, {"学校名称": "潮州會館中學", "学校代码": "ccass", "种类": "資助", "所属地区": "沙田區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.ccass.edu.hk", "联系电话": "26428383"}, {"学校名称": "宣道會鄭榮之中學", "学校代码": "cwgc", "种类": "資助", "所属地区": "沙田區", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.cwgc.edu.hk", "联系电话": "26049762"}, {"学校名称": "陳震夏中學", "学校代码": "cch", "种类": "資助", "所属地区": "沙田區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.cch.edu.hk", "联系电话": "26305006"}, {"学校名称": "協恩中學", "学校代码": "hys", "种类": "直資", "所属地区": "九龍城", "组别": "1A", "授课语言": "英中", "学生性别": "女校", "宗教": "基督教", "学校网址": "http://www.hys.edu.hk", "联系电话": "27110862"}, {"学校名称": "港九潮州公會馬松深中學", "学校代码": "mcsss", "种类": "資助", "所属地区": "沙田區", "组别": "3C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.mcsss.edu.hk", "联系电话": "26353633"}, {"学校名称": "九龍塘學校", "学校代码": "ktsss", "种类": "資助", "所属地区": "九龍城", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.ktsss.edu.hk", "联系电话": "23370680"}, {"学校名称": "九龍真光中學", "学校代码": "ktlms", "种类": "資助", "所属地区": "九龍城", "组别": "1B", "授课语言": "英中", "学生性别": "女校", "宗教": "基督教", "学校网址": "https://www.ktls.edu.hk/", "联系电话": "36550000"}, {"学校名称": "天主教郭得勝中學", "学校代码": "ktscss", "种类": "資助", "所属地区": "沙田區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "天主教", "学校网址": "https://www.ktscss.edu.hk", "联系电话": "26059033"}, {"学校名称": "馬鞍山聖若瑟中學", "学校代码": "mossjss", "种类": "資助", "所属地区": "沙田區", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "https://www.mossjss.edu.hk", "联系电话": "26339913"}, {"学校名称": "馬鞍山崇真中學", "学校代码": "mosttss", "种类": "資助", "所属地区": "沙田區", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.mosttss.edu.hk", "联系电话": "26404938"}, {"学校名称": "瑪利諾修院學校", "学校代码": "mcs", "种类": "資助", "所属地区": "九龍城", "组别": "1A", "授课语言": "英中", "学生性别": "女校", "宗教": "天主教", "学校网址": "http://www.mcs.edu.hk", "联系电话": "23362378"}, {"学校名称": "五旬節林漢光中學", "学校代码": "plhks", "种类": "資助", "所属地区": "沙田區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.plhks.edu.hk", "联系电话": "26488291"}, {"学校名称": "保良局朱敬文中學", "学校代码": "plkcwc", "种类": "資助", "所属地区": "沙田區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.plkcwc.edu.hk/", "联系电话": "26991031"}, {"学校名称": "博愛醫院陳楷紀念中學", "学校代码": "pohck", "种类": "資助", "所属地区": "沙田區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.pohck.edu.hk", "联系电话": "26044118"}, {"学校名称": "曾璧山(崇蘭)中學", "学校代码": "tpsss", "种类": "資助", "所属地区": "沙田區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.tpsslss.edu.hk/", "联系电话": "26404933"}, {"学校名称": "中華基督教會銘基書院", "学校代码": "cccmkc", "种类": "資助", "所属地区": "油尖旺", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://cccmkc.edu.hk", "联系电话": "23923963"}, {"学校名称": "拔萃女書院", "学校代码": "dgs", "种类": "直資", "所属地区": "油尖旺", "组别": "1A", "授课语言": "英中", "学生性别": "女校", "宗教": "基督教", "学校网址": "https://www.dgs.edu.hk", "联系电话": "22779100"}, {"学校名称": "基督教香港信義會信義中學", "学校代码": "lss", "种类": "資助", "所属地区": "油尖旺", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.lss.edu.hk", "联系电话": "27802291"}, {"学校名称": "港九潮州公會中學", "学校代码": "ccpass", "种类": "資助", "所属地区": "油尖旺", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.ccpass.edu.hk", "联系电话": "23964187"}, {"学校名称": "李國寶中學", "学校代码": "hkmadavidli", "种类": "直資", "所属地区": "油尖旺", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.hkmadavidli.edu.hk", "联系电话": "26269100"}, {"学校名称": "世界龍岡學校劉皇發中學", "学校代码": "lwfss", "种类": "資助", "所属地区": "油尖旺", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.lwfss.edu.hk", "联系电话": "23944186"}, {"学校名称": "循道中學", "学校代码": "mckln", "种类": "資助", "所属地区": "油尖旺", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.mckln.edu.hk", "联系电话": "23843543"}, {"学校名称": "天主教新民書院", "学校代码": "newman", "种类": "資助", "所属地区": "油尖旺", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "https://www.newman.edu.hk", "联系电话": "23857812"}, {"学校名称": "伊利沙伯中學", "学校代码": "qes", "种类": "官立", "所属地区": "油尖旺", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.qes.edu.hk", "联系电话": "23809621"}, {"学校名称": "嘉諾撒聖瑪利書院", "学校代码": "smcc-canossian", "种类": "資助", "所属地区": "油尖旺", "组别": "1A", "授课语言": "英中", "学生性别": "女校", "宗教": "天主教", "学校网址": "https://www.smcc.hk", "联系电话": "27242771"}, {"学校名称": "真光女書院", "学校代码": "tlgc", "种类": "資助", "所属地区": "油尖旺", "组别": "1B", "授课语言": "英中", "学生性别": "女校", "宗教": "基督教", "学校网址": "http://www.tlgc.edu.hk", "联系电话": "23851491"}, {"学校名称": "迦密中學", "学校代码": "carmelss", "种类": "資助", "所属地区": "九龍城", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.carmelss.edu.hk", "联系电话": "27149385"}, {"学校名称": "中華基督教會基道中學", "学校代码": "ccckeito", "种类": "資助", "所属地区": "九龍城", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.ccckeito.edu.hk", "联系电话": "26271028"}, {"学校名称": "東莞工商總會劉百樂中學", "学校代码": "lplss", "种类": "資助", "所属地区": "沙田區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://lplss.edu.hk", "联系电话": "26951158"}, {"学校名称": "民生書院", "学校代码": "munsang", "种类": "資助", "所属地区": "九龍城", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://munsang.edu.hk", "联系电话": "36553300"}, {"学校名称": "新亞中學", "学校代码": "nams", "种类": "資助", "所属地区": "九龍城", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.nams.edu.hk", "联系电话": "27112206"}, {"学校名称": "保良局胡忠中學", "学校代码": "plkwcc", "种类": "資助", "所属地区": "沙田區", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.plkwcc.edu.hk", "联系电话": "26415866"}, {"学校名称": "沙田官立中學", "学校代码": "stgss", "种类": "官立", "所属地区": "沙田區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.stgss.edu.hk", "联系电话": "26914744"}, {"学校名称": "聖公會聖三一堂中學", "学校代码": "skhhtcss", "种类": "資助", "所属地区": "九龍城", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.skhhtcss.edu.hk", "联系电话": "27144137"}, {"学校名称": "聖公會蔡功譜中學", "学校代码": "tkp", "种类": "資助", "所属地区": "九龍城", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://tkp.edu.hk", "联系电话": "27600463"}, {"学校名称": "鄧鏡波學校", "学校代码": "tangkingpo", "种类": "資助", "所属地区": "九龍城", "组别": "2B", "授课语言": "中中", "学生性别": "男校", "宗教": "天主教", "学校网址": "http://www.tangkingpo.edu.hk", "联系电话": "27125171"}, {"学校名称": "東華三院黃笏南中學", "学校代码": "twghwfns", "种类": "資助", "所属地区": "九龍城", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.twghwfns.edu.hk", "联系电话": "23369151"}, {"学校名称": "佛教葉紀南紀念中學", "学校代码": "byknmc", "种类": "資助", "所属地区": "葵青區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "佛教", "学校网址": "https://www.byknmc.edu.hk", "联系电话": "24953363"}, {"学校名称": "明愛聖若瑟中學", "学校代码": "csjss", "种类": "資助", "所属地区": "葵青區", "组别": "3C", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "http://www.csjss.edu.hk", "联系电话": "24331282"}, {"学校名称": "迦密愛禮信中學", "学校代码": "calfss", "种类": "資助", "所属地区": "葵青區", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.calfss.edu.hk", "联系电话": "27445117"}, {"学校名称": "中華基督教會全完中學", "学校代码": "chuenyuen", "种类": "資助", "所属地区": "葵青區", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.chuenyuen.edu.hk", "联系电话": "24205050"}, {"学校名称": "中華基督教會燕京書院", "学校代码": "yenching", "种类": "資助", "所属地区": "葵青區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.yenching.edu.hk", "联系电话": "23879988"}, {"学校名称": "中華傳道會安柱中學", "学校代码": "cneccc", "种类": "資助", "所属地区": "葵青區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.cneccc.edu.hk", "联系电话": "24230365"}, {"学校名称": "中華傳道會李賢堯紀念中學", "学校代码": "liymss", "种类": "資助", "所属地区": "葵青區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.liymss.edu.hk/", "联系电话": "24204141"}, {"学校名称": "棉紡會中學", "学校代码": "csa", "种类": "資助", "所属地区": "葵青區", "组别": "3C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.csa.edu.hk", "联系电话": "24220028"}, {"学校名称": "天主教母佑會蕭明中學", "学校代码": "dmhcsm", "种类": "資助", "所属地区": "葵青區", "组别": "1A", "授课语言": "英中", "学生性别": "女校", "宗教": "天主教", "学校网址": "https://cweb.dmhcsm.edu.hk/", "联系电话": "24241796"}, {"学校名称": "圓玄學院第一中學", "学校代码": "yy1", "种类": "資助", "所属地区": "葵青區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "道教", "学校网址": "http://www.yy1.edu.hk", "联系电话": "24271641"}, {"学校名称": "葵涌裘錦秋中學", "学校代码": "jcckc", "种类": "資助", "所属地区": "葵青區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.jccsskc.edu.hk", "联系电话": "24285858"}, {"学校名称": "葵涌蘇浙公學", "学校代码": "kcckc", "种类": "資助", "所属地区": "葵青區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.kcckc.edu.hk", "联系电话": "24202103"}, {"学校名称": "葵涌循道中學", "学校代码": "kcmc", "种类": "資助", "所属地区": "葵青區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.kcmc.edu.hk", "联系电话": "27450010"}, {"学校名称": "獅子會蔣翠琼中學", "学校代码": "lionscollege", "种类": "資助", "所属地区": "葵青區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.lchk.org/", "联系电话": "26147938"}, {"学校名称": "樂善堂顧超文中學", "学校代码": "lstkcmss", "种类": "資助", "所属地区": "葵青區", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.lstkcmss.edu.hk", "联系电话": "24295171"}, {"学校名称": "樂善堂梁植偉紀念中學", "学校代码": "lstlcw", "种类": "資助", "所属地区": "葵青區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.lstlcw.edu.hk", "联系电话": "24955890"}, {"学校名称": "保良局羅傑承(一九八三)中學", "学校代码": "plk83", "种类": "資助", "所属地区": "葵青區", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.plk83.edu.hk", "联系电话": "24977110"}, {"学校名称": "保祿六世書院", "学校代码": "ppaulvi", "种类": "資助", "所属地区": "葵青區", "组别": "1B", "授课语言": "英中", "学生性别": "女校", "宗教": "天主教", "学校网址": "https://www.ppaulvi.edu.hk", "联系电话": "24208155"}, {"学校名称": "皇仁舊生會中學", "学校代码": "qcobass", "种类": "資助", "所属地区": "葵青區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.qcobass.edu.hk", "联系电话": "24975688"}, {"学校名称": "天主教慈幼會伍少梅中學", "学校代码": "sdbnsm", "种类": "資助", "所属地区": "葵青區", "组别": "3A", "授课语言": "中中", "学生性别": "男校", "宗教": "天主教", "学校网址": "https://www.sdbnsm.edu.hk", "联系电话": "24258223"}, {"学校名称": "石籬天主教中學", "学校代码": "slc", "种类": "資助", "所属地区": "葵青區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "http://www.slc.edu.hk", "联系电话": "24291221"}, {"学校名称": "順德聯誼總會李兆基中學", "学校代码": "lskc", "种类": "資助", "所属地区": "葵青區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.lskc.edu.hk", "联系电话": "24294051"}, {"学校名称": "聖公會林護紀念中學", "学校代码": "lamwoo", "种类": "資助", "所属地区": "葵青區", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.lamwoo.edu.hk/", "联系电话": "24208893"}, {"学校名称": "李惠利中學", "学校代码": "lwlc", "种类": "資助", "所属地区": "葵青區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.lwlc.edu.hk", "联系电话": "24279121"}, {"学校名称": "東華三院伍若瑜夫人紀念中學", "学校代码": "twghwyyms", "种类": "資助", "所属地区": "葵青區", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.twghwyyms.edu.hk", "联系电话": "24285129"}, {"学校名称": "東華三院陳兆民中學", "学校代码": "twghczm", "种类": "資助", "所属地区": "葵青區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.twghczm.edu.hk", "联系电话": "24245318"}, {"学校名称": "東華三院吳祥川紀念中學", "学校代码": "twghscgms", "种类": "資助", "所属地区": "葵青區", "组别": "2A", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.twghscgms.edu.hk", "联系电话": "24950226"}, {"学校名称": "可風中學", "学校代码": "hofung", "种类": "資助", "所属地区": "荃灣區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "儒釋道", "学校网址": "https://www.hofung.edu.hk", "联系电话": "24253563"}, {"学校名称": "聖公會李炳中學", "学校代码": "liping", "种类": "資助", "所属地区": "荃灣區", "组别": "3C", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://liping.edu.hk", "联系电话": "24238806"}, {"学校名称": "東華三院鄺錫坤伉儷中學", "学校代码": "twghsksk", "种类": "資助", "所属地区": "屯門區", "组别": "无组别", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.twghsksk.edu.hk", "联系电话": "24699010"}, {"学校名称": "梁省德中學", "学校代码": "lstc", "种类": "資助", "所属地区": "荃灣區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.lstc.edu.hk", "联系电话": "24145151"}, {"学校名称": "廖寶珊紀念書院", "学校代码": "lpsmc", "种类": "資助", "所属地区": "荃灣區", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.lpsmc.edu.hk", "联系电话": "24996711"}, {"学校名称": "路德會呂明才中學", "学校代码": "llc", "种类": "資助", "所属地区": "荃灣區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.llc.edu.hk", "联系电话": "24920195"}, {"学校名称": "保良局李城璧中學", "学校代码": "plklsp", "种类": "資助", "所属地区": "荃灣區", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.plklsp.edu.hk", "联系电话": "24983393"}, {"学校名称": "保良局姚連生中學", "学校代码": "plkylsc", "种类": "資助", "所属地区": "荃灣區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.plkylsc.edu.hk", "联系电话": "24983331"}, {"学校名称": "王少清中學", "学校代码": "pocawsc", "种类": "資助", "所属地区": "荃灣區", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.pocawsc.edu.hk/", "联系电话": "24140157"}, {"学校名称": "荃灣聖芳濟中學", "学校代码": "sfxs", "种类": "資助", "所属地区": "荃灣區", "组别": "2B", "授课语言": "中中", "学生性别": "男校", "宗教": "天主教", "学校网址": "https://www.sfxs.edu.hk", "联系电话": "24920226"}, {"学校名称": "胡漢輝中學", "学校代码": "tiaccwhf", "种类": "資助", "所属地区": "荃灣區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.tiaccwhf.edu.hk", "联系电话": "24908773"}, {"学校名称": "何傳耀紀念中學", "学校代码": "twphcymc", "种类": "資助", "所属地区": "荃灣區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.twphcymc.edu.hk", "联系电话": "24966000"}, {"学校名称": "仁濟醫院林百欣中學", "学校代码": "ychlpyss", "种类": "資助", "所属地区": "荃灣區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.ychlpyss.edu.hk", "联系电话": "24937258"}, {"学校名称": "沙田蘇浙公學", "学校代码": "kcc-st", "种类": "資助", "所属地区": "沙田區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.kccshatin.edu.hk", "联系电话": "26972179"}, {"学校名称": "浸信會永隆中學", "学校代码": "bwlss", "种类": "資助", "所属地区": "屯門區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.bwlss.edu.hk", "联系电话": "24643638"}, {"学校名称": "佛教沈香林紀念中學", "学校代码": "bshlmc", "种类": "資助", "所属地区": "屯門區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "佛教", "学校网址": "https://www.bsc.edu.hk/", "联系电话": "24377000"}, {"学校名称": "明愛屯門馬登基金中學", "学校代码": "tmmarden", "种类": "資助", "所属地区": "屯門區", "组别": "3C", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "https://www.tmmarden.edu.hk", "联系电话": "24610304"}, {"学校名称": "迦密唐賓南紀念中學", "学校代码": "cbt", "种类": "資助", "所属地区": "屯門區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.cbtmss.edu.hk/", "联系电话": "24651585"}, {"学校名称": "中華基督教會何福堂書院", "学校代码": "hftc", "种类": "資助", "所属地区": "屯門區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.hftc.edu.hk", "联系电话": "24596354"}, {"学校名称": "譚李麗芬紀念中學", "学校代码": "tllf", "种类": "資助", "所属地区": "屯門區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.tllf.edu.hk", "联系电话": "24522422"}, {"学校名称": "青松侯寶垣中學", "学校代码": "cchpwss", "种类": "資助", "所属地区": "屯門區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "道教", "学校网址": "https://www.cchpwss.edu.hk", "联系电话": "24577154"}, {"学校名称": "宣道中學", "学校代码": "cactm", "种类": "資助", "所属地区": "屯門區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.cactm.edu.hk/", "联系电话": "24692080"}, {"学校名称": "宣道會陳瑞芝紀念中學", "学校代码": "scc", "种类": "資助", "所属地区": "屯門區", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.scc.edu.hk", "联系电话": "24591166"}, {"学校名称": "鐘聲慈善社胡陳金枝中學", "学校代码": "csbs", "种类": "資助", "所属地区": "屯門區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.csbs.edu.hk", "联系电话": "24524688"}, {"学校名称": "廠商會蔡章閣中學", "学校代码": "cmacck", "种类": "資助", "所属地区": "屯門區", "组别": "3C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.cmacck.edu.hk", "联系电话": "24520681"}, {"学校名称": "香海正覺蓮社佛教梁植偉中學", "学校代码": "blcwc", "种类": "資助", "所属地区": "屯門區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "佛教", "学校网址": "https://www.blcwc.edu.hk", "联系电话": "24676672"}, {"学校名称": "可藝中學", "学校代码": "hongai", "种类": "資助", "所属地区": "屯門區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "儒釋道", "学校网址": "https://www.hongai.edu.hk", "联系电话": "24417100"}, {"学校名称": "屯門裘錦秋中學", "学校代码": "jcctm", "种类": "資助", "所属地区": "屯門區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.jcctm.edu.hk", "联系电话": "24611555"}, {"学校名称": "路德會呂祥光中學", "学校代码": "lck", "种类": "資助", "所属地区": "屯門區", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.lck.edu.hk", "联系电话": "24503618"}, {"学校名称": "妙法寺劉金龍中學", "学校代码": "lkl", "种类": "資助", "所属地区": "屯門區", "组别": "2A", "授课语言": "英中", "学生性别": "女校", "宗教": "佛教", "学校网址": "http://www.lkl.edu.hk", "联系电话": "24619566"}, {"学校名称": "新生命教育協會平安福音中學", "学校代码": "nlsipess", "种类": "資助", "所属地区": "屯門區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.nlsipess.edu.hk/", "联系电话": "24401828"}, {"学校名称": "加拿大神召會嘉智中學", "学校代码": "kachi", "种类": "資助", "所属地区": "屯門區", "组别": "3C", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.kachi.edu.hk", "联系电话": "24413818"}, {"学校名称": "保良局百周年李兆忠紀念中學", "学校代码": "plkclscmc", "种类": "資助", "所属地区": "屯門區", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.plkc.edu.hk/", "联系电话": "24623945"}, {"学校名称": "保良局董玉娣中學", "学校代码": "plktytc", "种类": "資助", "所属地区": "屯門區", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.plktytc.edu.hk", "联系电话": "24631766"}, {"学校名称": "新會商會中學", "学校代码": "swcs", "种类": "資助", "所属地区": "屯門區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.swcs.edu.hk", "联系电话": "24632660"}, {"学校名称": "深培中學", "学校代码": "semple", "种类": "資助", "所属地区": "屯門區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.semple.edu.hk", "联系电话": "24524702"}, {"学校名称": "釋慧文中學", "学校代码": "shwss", "种类": "資助", "所属地区": "屯門區", "组别": "3C", "授课语言": "中中", "学生性别": "男女", "宗教": "佛教", "学校网址": "http://www.shwss.edu.hk", "联系电话": "24615067"}, {"学校名称": "順德聯誼總會梁銶琚中學", "学校代码": "lkkc", "种类": "資助", "所属地区": "屯門區", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.lkkc.edu.hk", "联系电话": "24580766"}, {"学校名称": "順德聯誼總會譚伯羽中學", "学校代码": "tpyc", "种类": "資助", "所属地区": "屯門區", "组别": "1B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.tpyc.edu.hk", "联系电话": "24501402"}, {"学校名称": "聖公會聖西門呂明才中學", "学校代码": "skhsslmc", "种类": "資助", "所属地区": "屯門區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.skhsslmc.edu.hk", "联系电话": "24598236"}, {"学校名称": "南屯門官立中學", "学校代码": "stmgss", "种类": "官立", "所属地区": "屯門區", "组别": "2A", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.stmgss.edu.hk", "联系电话": "24045506"}, {"学校名称": "馬可賓紀念中學", "学校代码": "makopan", "种类": "資助", "所属地区": "屯門區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.makopan.edu.hk", "联系电话": "24077440"}, {"学校名称": "崇真書院", "学校代码": "ttc", "种类": "資助", "所属地区": "屯門區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.ttc.edu.hk", "联系电话": "35076400"}, {"学校名称": "屯門天主教中學", "学校代码": "tmcss", "种类": "資助", "所属地区": "屯門區", "组别": "2A", "授课语言": "英中", "学生性别": "男女", "宗教": "天主教", "学校网址": "https://www.tmcss.edu.hk", "联系电话": "24632082"}, {"学校名称": "屯門官立中學", "学校代码": "tmgss", "种类": "官立", "所属地区": "屯門區", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.tmgss.edu.hk", "联系电话": "24580459"}, {"学校名称": "東華三院辛亥年總理中學", "学校代码": "shd", "种类": "資助", "所属地区": "屯門區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.shd.edu.hk", "联系电话": "24645220"}, {"学校名称": "東華三院邱子田紀念中學", "学校代码": "ytt", "种类": "資助", "所属地区": "屯門區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.ytt.edu.hk", "联系电话": "24652205"}, {"学校名称": "仁濟醫院第二中學", "学校代码": "ych2ss", "种类": "資助", "所属地区": "屯門區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.ych2ss.edu.hk", "联系电话": "24673736"}, {"学校名称": "仁愛堂陳黃淑芳紀念中學", "学校代码": "yotcwsf", "种类": "資助", "所属地区": "屯門區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://yotcwsf.edu.hk", "联系电话": "24666802"}, {"学校名称": "仁愛堂田家炳中學", "学校代码": "yottkp", "种类": "資助", "所属地区": "屯門區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.yottkp.edu.hk", "联系电话": "24665270"}, {"学校名称": "恩平工商會李琳明中學", "学校代码": "ypicallmc", "种类": "資助", "所属地区": "屯門區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.ypicallmc.edu.hk", "联系电话": "24670652"}, {"学校名称": "天水圍香島中學", "学校代码": "tsw-heungto", "种类": "直資", "所属地区": "元朗區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.heungto.net", "联系电话": "26500016"}, {"学校名称": "新界鄉議局元朗區中學", "学校代码": "nthykyldss", "种类": "官立", "所属地区": "元朗區", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.nthykyldss.edu.hk", "联系电话": "24766226"}, {"学校名称": "萬鈞伯裘書院", "学校代码": "pakkau", "种类": "直資", "所属地区": "元朗區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.mkpc.edu.hk/", "联系电话": "24482960"}, {"学校名称": "伯特利中學", "学校代码": "bethel", "种类": "資助", "所属地区": "元朗區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.bethel.edu.hk", "联系电话": "24712622"}, {"学校名称": "佛教茂峰法師紀念中學", "学校代码": "bmf", "种类": "資助", "所属地区": "元朗區", "组别": "3C", "授课语言": "中中", "学生性别": "男女", "宗教": "佛教", "学校网址": "https://www.bmf.edu.hk", "联系电话": "24457171"}, {"学校名称": "明愛元朗陳震夏中學", "学校代码": "cys", "种类": "資助", "所属地区": "元朗區", "组别": "3C", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "https://www.cys.edu.hk", "联系电话": "24755432"}, {"学校名称": "中華基督教會方潤華中學", "学校代码": "fywss", "种类": "資助", "所属地区": "元朗區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.fywss.edu.hk", "联系电话": "24455833"}, {"学校名称": "中華基督教會基朗中學", "学校代码": "keilong", "种类": "資助", "所属地区": "元朗區", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.keilong.edu.hk", "联系电话": "24754781"}, {"学校名称": "中華基督教會基元中學", "学校代码": "ccckyc", "种类": "資助", "所属地区": "元朗區", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://ccckyc.edu.hk", "联系电话": "24750331"}, {"学校名称": "中華基督教青年會中學", "学校代码": "cymcass", "种类": "直資", "所属地区": "元朗區", "组别": "2B", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.cymcass.edu.hk", "联系电话": "25408650"}, {"学校名称": "趙聿修紀念中學", "学校代码": "clsmss", "种类": "官立", "所属地区": "元朗區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.clsmss.edu.hk", "联系电话": "24778237"}, {"学校名称": "張煊昌中學", "学校代码": "tcss", "种类": "資助", "所属地区": "元朗區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.tcss.edu.hk", "联系电话": "24483111"}, {"学校名称": "金巴崙長老會耀道中學", "学校代码": "cpcydss", "种类": "資助", "所属地区": "元朗區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.cpcydss.edu.hk", "联系电话": "24730777"}, {"学校名称": "宏信書院", "学校代码": "luac", "种类": "直資", "所属地区": "元朗區", "组别": "2C", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.luac.edu.hk", "联系电话": "82082092"}, {"学校名称": "路德會西門英才中學", "学校代码": "home-gslc", "种类": "資助", "所属地区": "元朗區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.gslc.edu.hk/", "联系电话": "24782424"}, {"学校名称": "香港青年協會李兆基書院", "学校代码": "hlc", "种类": "直資", "所属地区": "元朗區", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.hlc.edu.hk", "联系电话": "21461128"}, {"学校名称": "可道中學", "学校代码": "hodao", "种类": "資助", "所属地区": "元朗區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "儒釋道", "学校网址": "https://www.hodao.edu.hk", "联系电话": "24799885"}, {"学校名称": "元朗裘錦秋中學", "学校代码": "jccssyl", "种类": "資助", "所属地区": "元朗區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.jccssyl.edu.hk", "联系电话": "24450228"}, {"学校名称": "陳呂重德紀念中學", "学校代码": "mfbmclct", "种类": "資助", "所属地区": "元朗區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "佛教", "学校网址": "http://www.clctmc.edu.hk", "联系电话": "24458899"}, {"学校名称": "博愛醫院鄧佩瓊紀念中學", "学校代码": "tpk", "种类": "資助", "所属地区": "元朗區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.tpk.edu.hk", "联系电话": "24741576"}, {"学校名称": "天主教培聖中學", "学校代码": "puishing", "种类": "資助", "所属地区": "元朗區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "http://www.puishing.edu.hk", "联系电话": "24450800"}, {"学校名称": "伊利沙伯中學舊生會中學", "学校代码": "ss-qesosa", "种类": "資助", "所属地区": "元朗區", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.qos.edu.hk/", "联系电话": "23386122"}, {"学校名称": "伊利沙伯中學舊生會湯國華中學", "学校代码": "tkwss-qesosa", "种类": "資助", "所属地区": "元朗區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.qts.edu.hk/", "联系电话": "26175000"}, {"学校名称": "順德聯誼總會翁祐中學", "学校代码": "stfa-yyc", "种类": "資助", "所属地区": "元朗區", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.stfa-yyc.edu.hk", "联系电话": "31570632"}, {"学校名称": "天主教崇德英文書院", "学校代码": "stc", "种类": "資助", "所属地区": "元朗區", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "天主教", "学校网址": "https://www.stc.edu.hk", "联系电话": "24764263"}, {"学校名称": "聖公會白約翰會督中學", "学校代码": "skhbbss", "种类": "資助", "所属地区": "元朗區", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.skhbbss.edu.hk", "联系电话": "24754778"}, {"学校名称": "十八鄉鄉事委員會公益社中學", "学校代码": "sphrc", "种类": "資助", "所属地区": "元朗區", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.sphrc.edu.hk", "联系电话": "24478123"}, {"学校名称": "元朗信義中學", "学校代码": "yll", "种类": "資助", "所属地区": "元朗區", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.yll.edu.hk", "联系电话": "24480622"}, {"学校名称": "香港管理專業協會羅桂祥中學", "学校代码": "hkmakslo", "种类": "資助", "所属地区": "元朗區", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.hkmakslo.edu.hk", "联系电话": "24703363"}, {"学校名称": "賽馬會萬鈞毅智書院", "学校代码": "tjcec", "种类": "資助", "所属地区": "元朗區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.jcmkec.edu.hk/", "联系电话": "24472322"}, {"学校名称": "天水圍官立中學", "学校代码": "tswgss", "种类": "官立", "所属地区": "元朗區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.tswgss.edu.hk", "联系电话": "24450967"}, {"学校名称": "天水圍循道衞理中學", "学校代码": "tswmc", "种类": "資助", "所属地区": "元朗區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.tswmc.edu.hk", "联系电话": "31562500"}, {"学校名称": "東華三院盧幹庭紀念中學", "学校代码": "lktmc", "种类": "資助", "所属地区": "元朗區", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://web.lktmc.edu.hk/", "联系电话": "24742678"}, {"学校名称": "東華三院郭一葦中學", "学校代码": "twghkywc", "种类": "資助", "所属地区": "元朗區", "组别": "3C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.twghkywc.edu.hk", "联系电话": "24471258"}, {"学校名称": "鄧兆棠中學", "学校代码": "tstss", "种类": "資助", "所属地区": "元朗區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.tstss.edu.hk", "联系电话": "24461661"}, {"学校名称": "元朗天主教中學", "学校代码": "ylcss", "种类": "資助", "所属地区": "元朗區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "https://www.ylcss.edu.hk", "联系电话": "24431363"}, {"学校名称": "元朗商會中學", "学校代码": "ylmass", "种类": "資助", "所属地区": "元朗區", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.ylmass.edu.hk", "联系电话": "24787348"}, {"学校名称": "元朗公立中學", "学校代码": "ylpss", "种类": "官立", "所属地区": "元朗區", "组别": "2C", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.ylpss.edu.hk/", "联系电话": "24762357"}, {"学校名称": "大埔三育中學", "学校代码": "tpsy", "种类": "直資", "所属地区": "大埔區", "组别": "2C", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.tpsy.edu.hk", "联系电话": "26653459"}, {"学校名称": "明愛粉嶺陳震夏中學", "学校代码": "cfs", "种类": "資助", "所属地区": "北區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "https://www.cfs.edu.hk", "联系电话": "26699966"}, {"学校名称": "中華基督教會基新中學", "学校代码": "keisan", "种类": "資助", "所属地区": "北區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.ks.edu.hk", "联系电话": "26693906"}, {"学校名称": "宣道會陳朱素華紀念中學", "学校代码": "caswcmc", "种类": "資助", "所属地区": "北區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.caswcmc.edu.hk", "联系电话": "26709229"}, {"学校名称": "新界喇沙中學", "学校代码": "delasalle", "种类": "資助", "所属地区": "北區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "http://www.delasalle.edu.hk", "联系电话": "26700443"}, {"学校名称": "風采中學", "学校代码": "elegantia", "种类": "資助", "所属地区": "北區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.elegantia.edu.hk", "联系电话": "24683680"}, {"学校名称": "粉嶺官立中學", "学校代码": "fgss", "种类": "官立", "所属地区": "北區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.fgss.edu.hk", "联系电话": "26776778"}, {"学校名称": "粉嶺救恩書院", "学校代码": "fkyc", "种类": "資助", "所属地区": "北區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.fkyc.edu.hk", "联系电话": "26608405"}, {"学校名称": "基督教香港信義會心誠中學", "学校代码": "flss", "种类": "直資", "所属地区": "北區", "组别": "2B", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.flss.edu.hk", "联系电话": "26700541"}, {"学校名称": "粉嶺禮賢會中學", "学校代码": "frcss", "种类": "資助", "所属地区": "北區", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.frcss.edu.hk", "联系电话": "29473698"}, {"学校名称": "鳳溪廖萬石堂中學", "学校代码": "fklmstss", "种类": "資助", "所属地区": "北區", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.fklmstss.edu.hk", "联系电话": "26736106"}, {"学校名称": "鳳溪第一中學", "学校代码": "fk1ss-fungkai", "种类": "資助", "所属地区": "北區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.fk1ss.edu.hk", "联系电话": "26700366"}, {"学校名称": "馬錦燦紀念英文中學", "学校代码": "bmkc", "种类": "資助", "所属地区": "北區", "组别": "2B", "授课语言": "英中", "学生性别": "男女", "宗教": "佛教", "学校网址": "https://www.bmkc.edu.hk", "联系电话": "26699208"}, {"学校名称": "鄧顯紀念中學", "学校代码": "tanghin", "种类": "資助", "所属地区": "北區", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "道教", "学校网址": "https://www.tanghin.edu.hk", "联系电话": "26726820"}, {"学校名称": "保良局馬錦明中學", "学校代码": "plkmkmc", "种类": "資助", "所属地区": "北區", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.plkmkmc.edu.hk", "联系电话": "26794545"}, {"学校名称": "上水官立中學", "学校代码": "ssgss", "种类": "官立", "所属地区": "北區", "组别": "3C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.ssgss.edu.hk", "联系电话": "26680628"}, {"学校名称": "聖公會陳融中學", "学校代码": "skhcyss", "种类": "資助", "所属地区": "北區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.skhcyss.edu.hk", "联系电话": "26718989"}, {"学校名称": "聖芳濟各書院", "学校代码": "sfac", "种类": "資助", "所属地区": "北區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "https://www.sfac.edu.hk", "联系电话": "26779702"}, {"学校名称": "田家炳中學", "学校代码": "tkpss", "种类": "資助", "所属地区": "北區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://web.tkpss.edu.hk", "联系电话": "26731778"}, {"学校名称": "東華三院甲寅年總理中學", "学校代码": "twghkyds", "种类": "資助", "所属地区": "北區", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.twghkyds.edu.hk", "联系电话": "26727395"}, {"学校名称": "東華三院李嘉誠中學", "学校代码": "twghlkss", "种类": "資助", "所属地区": "北區", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.twghlkss.edu.hk", "联系电话": "26697455"}, {"学校名称": "神召會康樂中學", "学校代码": "hebron", "种类": "資助", "所属地区": "大埔區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.hebron.edu.hk", "联系电话": "26520698"}, {"学校名称": "佛教大光慈航中學", "学校代码": "btkchc", "种类": "資助", "所属地区": "大埔區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "佛教", "学校网址": "http://www.btkchc.edu.hk", "联系电话": "26640833"}, {"学校名称": "迦密聖道中學", "学校代码": "chw", "种类": "資助", "所属地区": "大埔區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.chw.edu.hk", "联系电话": "26539786"}, {"学校名称": "馮梁結紀念中學", "学校代码": "flk", "种类": "資助", "所属地区": "大埔區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.flk.edu.hk", "联系电话": "26516033"}, {"学校名称": "香港紅卍字會大埔卍慈中學", "学校代码": "hkrsstpss", "种类": "資助", "所属地区": "大埔區", "组别": "3C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.hkrsstpss.edu.hk", "联系电话": "26666821"}, {"学校名称": "香港教師會李興貴中學", "学校代码": "hktalhk", "种类": "資助", "所属地区": "大埔區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.hktalhk.edu.hk", "联系电话": "26317556"}, {"学校名称": "恩主教書院", "学校代码": "valtorta", "种类": "資助", "所属地区": "大埔區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "天主教", "学校网址": "http://www.valtorta.edu.hk", "联系电话": "26560017"}, {"学校名称": "王肇枝中學", "学校代码": "wscss", "种类": "資助", "所属地区": "大埔區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.wscss.edu.hk", "联系电话": "26561270"}, {"学校名称": "浸信會呂明才中學", "学校代码": "blmcss", "种类": "資助", "所属地区": "沙田區", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.blmcss.edu.hk", "联系电话": "26922161"}, {"学校名称": "基督書院", "学校代码": "christcollege", "种类": "資助", "所属地区": "沙田區", "组别": "2A", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.christcollege.edu.hk", "联系电话": "26353330"}, {"学校名称": "梁文燕紀念中學(沙田)", "学校代码": "hlmssst", "种类": "官立", "所属地区": "沙田區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.hlmssst.edu.hk", "联系电话": "26941414"}, {"学校名称": "王錦輝中小學", "学校代码": "hkbuas", "种类": "直資", "所属地区": "沙田區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.hkbuas.edu.hk", "联系电话": "26372270"}, {"学校名称": "賽馬會體藝中學", "学校代码": "tic", "种类": "資助", "所属地区": "沙田區", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.tic.edu.hk", "联系电话": "26917150"}, {"学校名称": "林大輝中學", "学校代码": "ltfc", "种类": "直資", "所属地区": "沙田區", "组别": "2C", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.ltfc.edu.hk", "联系电话": "27861990"}, {"学校名称": "培僑書院", "学校代码": "puikiucollege", "种类": "直資", "所属地区": "沙田區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.puikiucollege.edu.hk", "联系电话": "26023166"}, {"学校名称": "沙田循道衞理中學", "学校代码": "stmc", "种类": "資助", "所属地区": "沙田區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.stmc.edu.hk", "联系电话": "26021300"}, {"学校名称": "沙田培英中學", "学校代码": "pyc", "种类": "資助", "所属地区": "沙田區", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.pyc.edu.hk", "联系电话": "26917217"}, {"学校名称": "聖公會林裘謀中學", "学校代码": "skhlkmss", "种类": "資助", "所属地区": "沙田區", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.skhlkmss.edu.hk", "联系电话": "26488222"}, {"学校名称": "聖公會曾肇添中學", "学校代码": "skhtst", "种类": "資助", "所属地区": "沙田區", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.skhtst.edu.hk", "联系电话": "26975566"}, {"学校名称": "聖羅撒書院", "学校代码": "hksrl", "种类": "資助", "所属地区": "沙田區", "组别": "1B", "授课语言": "英中", "学生性别": "女校", "宗教": "天主教", "学校网址": "https://www.hksrl.edu.hk", "联系电话": "23371867"}, {"学校名称": "香港神託會培基書院", "学校代码": "spkc", "种类": "直資", "所属地区": "沙田區", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.spkc.edu.hk", "联系电话": "23454567"}, {"学校名称": "德信中學", "学校代码": "tsss", "种类": "直資", "所属地区": "沙田區", "组别": "2C", "授课语言": "英中", "学生性别": "男校", "宗教": "天主教", "学校网址": "https://www.tsss.edu.hk", "联系电话": "23174339"}, {"学校名称": "東華三院馮黃鳳亭中學", "学校代码": "twghfwfts", "种类": "資助", "所属地区": "沙田區", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.twghfwfts.edu.hk", "联系电话": "26913738"}, {"学校名称": "迦密柏雨中學", "学校代码": "cpu", "种类": "資助", "所属地区": "大埔區", "组别": "1A", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.cpu.edu.hk", "联系电话": "26650078"}, {"学校名称": "中華聖潔會靈風中學", "学校代码": "lsc", "种类": "資助", "所属地区": "大埔區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.lsc.edu.hk", "联系电话": "29589694"}, {"学校名称": "孔教學院大成何郭佩珍中學", "学校代码": "chkpcc", "种类": "資助", "所属地区": "大埔區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "孔教", "学校网址": "http://www.ctshkpcc.edu.hk", "联系电话": "26665926"}, {"学校名称": "港九街坊婦女會孫方中書院", "学校代码": "sunfc", "种类": "資助", "所属地区": "大埔區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://sunfc.school.hk", "联系电话": "26567123"}, {"学校名称": "圓玄學院第二中學", "学校代码": "yy2", "种类": "資助", "所属地区": "大埔區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "道教", "学校网址": "http://www.yy2.edu.hk", "联系电话": "26616038"}, {"学校名称": "救恩書院", "学校代码": "kyc", "种类": "資助", "所属地区": "大埔區", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.kyc.edu.hk", "联系电话": "26608308"}, {"学校名称": "羅定邦中學", "学校代码": "ltpss", "种类": "直資", "所属地区": "大埔區", "组别": "2A", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.ltpss.edu.hk", "联系电话": "26851210"}, {"学校名称": "靈糧堂劉梅軒中學", "学校代码": "llcmhlau", "种类": "資助", "所属地区": "大埔區", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.llcmhlau.edu.hk", "联系电话": "26531234"}, {"学校名称": "新界鄉議局大埔區中學", "学校代码": "nthyktpdss", "种类": "官立", "所属地区": "大埔區", "组别": "3B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.nthyktpdss.edu.hk", "联系电话": "26643032"}, {"学校名称": "南亞路德會沐恩中學", "学校代码": "ilc", "种类": "資助", "所属地区": "大埔區", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.ilc.edu.hk", "联系电话": "26673129"}, {"学校名称": "聖公會莫壽增會督中學", "学校代码": "mst", "种类": "資助", "所属地区": "大埔區", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.mst.edu.hk", "联系电话": "26567804"}, {"学校名称": "大埔官立中學", "学校代码": "tpgss", "种类": "官立", "所属地区": "大埔區", "组别": "3C", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.tpgss.edu.hk", "联系电话": "26653025"}, {"学校名称": "拔萃男書院", "学校代码": "dbs", "种类": "直資", "所属地区": "九龍城", "组别": "1A", "授课语言": "英中", "学生性别": "男校", "宗教": "基督教", "学校网址": "https://www.dbs.edu.hk", "联系电话": "27115191"}, {"学校名称": "香港兆基創意書院", "学校代码": "creativehk", "种类": "直資", "所属地区": "九龍城", "组别": "无组别", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.creativehk.edu.hk", "联系电话": "21809595"}, {"学校名称": "嘉諾撒聖家書院", "学校代码": "hfcc", "种类": "資助", "所属地区": "九龍城", "组别": "1B", "授课语言": "英中", "学生性别": "女校", "宗教": "天主教", "学校网址": "http://www.hfcc.edu.hk", "联系电话": "23379123"}, {"学校名称": "獻主會聖母院書院", "学校代码": "notre-dame-college", "种类": "資助", "所属地区": "九龍城", "组别": "3A", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "http://www.ndc.edu.hk", "联系电话": "27115291"}, {"学校名称": "五旬節中學", "学校代码": "pentecostal", "种类": "資助", "所属地区": "九龍城", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.pentecostalschool.edu.hk", "联系电话": "27132772"}, {"学校名称": "保良局顏寶鈴書院", "学校代码": "npl", "种类": "直資", "所属地区": "九龍城", "组别": "1B", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.npl.edu.hk", "联系电话": "24623932"}, {"学校名称": "香港培正中學", "学校代码": "puiching", "种类": "資助", "所属地区": "九龍城", "组别": "1A", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.puiching.edu.hk", "联系电话": "27119222"}, {"学校名称": "德蘭中學", "学校代码": "stteresa", "种类": "資助", "所属地区": "九龍城", "组别": "2C", "授课语言": "中中", "学生性别": "女校", "宗教": "天主教", "学校网址": "https://www.stteresa.edu.hk", "联系电话": "27115202"}, {"学校名称": "順德聯誼總會胡兆熾中學", "学校代码": "stfaswc", "种类": "資助", "所属地区": "九龍城", "组别": "2B", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.stfaswc.edu.hk", "联系电话": "27621183"}, {"学校名称": "余振強紀念中學", "学校代码": "yckmc", "种类": "資助", "所属地区": "九龍城", "组别": "2C", "授课语言": "中中", "学生性别": "男女", "宗教": "天主教", "学校网址": "http://www.yckmc.edu.hk", "联系电话": "27144161"}, {"学校名称": "基督教女青年會丘佐榮中學", "学校代码": "htyc", "种类": "資助", "所属地区": "九龍城", "组别": "1C", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.htyc.edu.hk", "联系电话": "27117159"}, {"学校名称": "弘立書院", "学校代码": "isf", "种类": "私立", "所属地区": "南區", "组别": "无组别", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://academy.isf.edu.hk/", "联系电话": "22022031"}, {"学校名称": "國際基督教優質音樂中學暨小學", "学校代码": "icqm", "种类": "私立", "所属地区": "黃大仙", "组别": "无组别", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.icqm.edu.hk", "联系电话": "27773828"}, {"学校名称": "滬江維多利亞學校", "学校代码": "vsa", "种类": "私立", "所属地区": "南區", "组别": "无组别", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.vsa.edu.hk", "联系电话": "34021100"}, {"学校名称": "智新書院", "学校代码": "discovery", "种类": "私立", "所属地区": "離島區", "组别": "无组别", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.discovery.edu.hk", "联系电话": "39691000"}, {"学校名称": "啓新書院", "学校代码": "renaissance", "种类": "私立", "所属地区": "沙田區", "组别": "无组别", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.rchk.edu.hk", "联系电话": "35563556"}, {"学校名称": "保良局莊啟程預科書院", "学校代码": "ktchong", "种类": "資助", "所属地区": "油尖旺", "组别": "无组别", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.sfc-plk.edu.hk", "联系电话": "23905010"}, {"学校名称": "崇正中學", "学校代码": "ttms", "种类": "私立", "所属地区": "深水埗", "组别": "无组别", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.ttms.edu.hk", "联系电话": "23878228"}, {"学校名称": "路德會官塘書院", "学校代码": "ktlc", "种类": "私立", "所属地区": "觀塘區", "组别": "无组别", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://www.lutheran.edu.hk", "联系电话": "23671111"}, {"学校名称": "神召會德萃書院", "学校代码": "aogmms", "种类": "私立", "所属地区": "黃大仙", "组别": "无组别", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.pchk.org.hk/", "联系电话": "23380701"}, {"学校名称": "香港復臨學校", "学校代码": "hkaa", "种类": "私立", "所属地区": "西貢區", "组别": "无组别", "授课语言": "英中", "学生性别": "男女", "宗教": "基督教", "学校网址": "https://www.hkaa.edu.hk", "联系电话": "26230034"}, {"学校名称": "漢鼎書院", "学校代码": "han", "种类": "私立", "所属地区": "南區", "组别": "无组别", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.hanacademy.edu.hk", "联系电话": "39986300"}, {"学校名称": "香港墨爾文國際學校", "学校代码": "malvern", "种类": "私立", "所属地区": "大埔區", "组别": "无组别", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "http://www.malverncollege.org.hk", "联系电话": "38984699"}, {"学校名称": "香港華德福教育基金會瑪利亞書院", "学校代码": "rsefhkmaria", "种类": "私立", "所属地区": "油尖旺", "组别": "无组别", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://rsefhkmaria.edu.hk/", "联系电话": "23615147"}, {"学校名称": "大光德萃書院", "学校代码": "tkhc", "种类": "私立", "所属地区": "大埔區", "组别": "无组别", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.tkhc.edu.hk/", "联系电话": "23389186"}, {"学校名称": "茵維特中學", "学校代码": "invictus", "种类": "私立", "所属地区": "東區", "组别": "无组别", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.invictus.edu.hk/", "联系电话": "64833506"}, {"学校名称": "示昕學校", "学校代码": "shema", "种类": "私立", "所属地区": "觀塘區", "组别": "无组别", "授课语言": "中中", "学生性别": "男女", "宗教": "基督教", "学校网址": "http://shema.edu.hk/", "联系电话": "35860107"}, {"学校名称": "一諾中學(九龍塘)", "学校代码": "inno", "种类": "私立", "所属地区": "觀塘區", "组别": "无组别", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.iss.edu.hk/", "联系电话": "26956988"}, {"学校名称": "香島華德福學校", "学校代码": "iwshk", "种类": "私立", "所属地区": "中西區", "组别": "无组别", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://iws.edu.hk/", "联系电话": "51141451"}, {"学校名称": "香港力邁學校", "学校代码": "austin", "种类": "私立", "所属地区": "油尖旺", "组别": "无组别", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.austinschool.edu.hk/", "联系电话": "27111168"}, {"学校名称": "香港紫荊書院", "学校代码": "hkbc", "种类": "私立", "所属地区": "觀塘區", "组别": "无组别", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.hkbc.edu.hk/", "联系电话": "37531610"}, {"学校名称": "香港道爾頓學校", "学校代码": "dshk", "种类": "私立", "所属地区": "灣仔區", "组别": "无组别", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://dshk.edu.hk/", "联系电话": "36124660"}, {"学校名称": "聖道百卉書院", "学校代码": "bloom", "种类": "私立", "所属地区": "深水埗", "组别": "无组别", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://secondary.bloom.edu.hk/", "联系电话": "2216 5200"}, {"学校名称": "泰來書院", "学校代码": "anantara", "种类": "私立", "所属地区": "九龍城", "组别": "无组别", "授课语言": "中中", "学生性别": "男女", "宗教": "無", "学校网址": "https://anantara.edublogs.org/", "联系电话": "38994698"}, {"学校名称": "香港威雅學校", "学校代码": "wycombeabbey", "种类": "私立", "所属地区": "南區", "组别": "无组别", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.was.edu.hk/", "联系电话": "21297100"}, {"学校名称": "香港威雅學校(九龍)", "学校代码": "wycombeabbey-kl", "种类": "私立", "所属地区": "黃大仙", "组别": "无组别", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.was.edu.hk/", "联系电话": "21297100"}, {"学校名称": "香港李寶椿聯合世界書院", "学校代码": "lpcuwc", "种类": "直資", "所属地区": "沙田區", "组别": "无组别", "授课语言": "英中", "学生性别": "男女", "宗教": "無", "学校网址": "https://www.lpcuwc.edu.hk/", "联系电话": "26400441"}];
+            
+            filteredData = [...schoolsData];
+            
+            // 初始化筛选选项
+            initFilters();
+            
+            // 更新统计信息
+            updateStats();
+            
+            // 显示学校列表
+            displaySchools();
+        }
+
+        // 初始化筛选选项
+        function initFilters() {
+            const types = [...new Set(schoolsData.map(s => s['种类']).filter(v => v))];
+            const districts = [...new Set(schoolsData.map(s => s['所属地区']).filter(v => v))];
+            const bands = [...new Set(schoolsData.map(s => s['组别']).filter(v => v))];
+            const languages = [...new Set(schoolsData.map(s => s['授课语言']).filter(v => v))];
+            const genders = [...new Set(schoolsData.map(s => s['学生性别']).filter(v => v))];
+            const religions = [...new Set(schoolsData.map(s => s['宗教']).filter(v => v))];
+
+            populateSelect('filterType', types.sort());
+            populateSelect('filterDistrict', districts.sort());
+            populateSelect('filterBand', bands.sort());
+            populateSelect('filterLanguage', languages.sort());
+            populateSelect('filterGender', genders.sort());
+            populateSelect('filterReligion', religions.sort());
+        }
+
+        // 填充下拉选项
+        function populateSelect(id, options) {
+            const select = document.getElementById(id);
+            options.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option;
+                optionElement.textContent = option;
+                select.appendChild(optionElement);
+            });
+        }
+
+        // 实时搜索（用户输入时触发）
+        function realtimeSearch() {
+            applyFilters();
+        }
+        
+        // 应用筛选
+        function applyFilters() {
+            const searchName = document.getElementById('searchName').value;
+            const filterType = document.getElementById('filterType').value;
+            const filterDistrict = document.getElementById('filterDistrict').value;
+            const filterBand = document.getElementById('filterBand').value;
+            const filterLanguage = document.getElementById('filterLanguage').value;
+            const filterGender = document.getElementById('filterGender').value;
+            const filterReligion = document.getElementById('filterReligion').value;
+
+            filteredData = schoolsData.filter(school => {
+                return smartMatch(school, searchName) &&
+                       (!filterType || school['种类'] === filterType) &&
+                       (!filterDistrict || school['所属地区'] === filterDistrict) &&
+                       (!filterBand || school['组别'] === filterBand) &&
+                       (!filterLanguage || school['授课语言'] === filterLanguage) &&
+                       (!filterGender || school['学生性别'] === filterGender) &&
+                       (!filterReligion || school['宗教'] === filterReligion);
+            });
+
+            updateStats();
+            displaySchools();
+        }
+
+        // 重置筛选
+        function resetFilters() {
+            document.getElementById('searchName').value = '';
+            document.getElementById('filterType').value = '';
+            document.getElementById('filterDistrict').value = '';
+            document.getElementById('filterBand').value = '';
+            document.getElementById('filterLanguage').value = '';
+            document.getElementById('filterGender').value = '';
+            document.getElementById('filterReligion').value = '';
+            
+            filteredData = [...schoolsData];
+            updateStats();
+            displaySchools();
+        }
+
+        // 更新统计信息
+        function updateStats() {
+            document.getElementById('totalSchools').textContent = schoolsData.length;
+            document.getElementById('filteredSchools').textContent = filteredData.length;
+            document.getElementById('totalDistricts').textContent = new Set(schoolsData.map(s => s['所属地区']).filter(v => v)).size;
+            document.getElementById('totalTypes').textContent = new Set(schoolsData.map(s => s['种类']).filter(v => v)).size;
+            document.getElementById('resultCount').textContent = filteredData.length;
+            document.getElementById('footerTotal').textContent = schoolsData.length;
+        }
+
+        // 显示学校列表
+        function displaySchools() {
+            if (filteredData.length === 0) {
+                showNoResults();
+                return;
+            }
+
+            if (currentView === 'card') {
+                displayCardView();
+            } else if (currentView === 'list') {
+                displayListView();
+            } else if (currentView === 'table') {
+                displayTableView();
+            }
+        }
+
+        // 卡片视图
+        function displayCardView() {
+            const grid = document.getElementById('schoolsGrid');
+            grid.innerHTML = filteredData.map(school => {
+                const bandClass = school['组别'] === '无组别' ? 'tag-no-band' : '';
+                return `
+                <div class="school-card">
+                    <div class="school-name">
+                        ${school['学校名称']}
+                        <span class="school-code">${school['学校代码'] || 'N/A'}</span>
+                    </div>
+                    <div class="school-info">
+                        <div class="info-row">
+                            <span class="info-label">种类:</span>
+                            <span class="tag ${typeClasses[school['种类']] || 'tag-type1'}">${school['种类'] || 'N/A'}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">地区:</span>
+                            <span class="info-value">📍 ${school['所属地区'] || 'N/A'}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">组别:</span>
+                            <span class="info-value ${bandClass}">🏆 ${school['组别'] || 'N/A'}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">授课语言:</span>
+                            <span class="info-value">🌐 ${school['授课语言'] || 'N/A'}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">学生性别:</span>
+                            <span class="info-value">👥 ${school['学生性别'] || 'N/A'}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">宗教:</span>
+                            <span class="info-value">🙏 ${school['宗教'] || 'N/A'}</span>
+                        </div>
+                    </div>
+                    <div class="school-contact">
+                        ${school['联系电话'] ? `<button class="contact-btn contact-phone" onclick="callSchool('${school['联系电话']}')">📞 ${school['联系电话']}</button>` : ''}
+                        ${school['学校网址'] ? `<button class="contact-btn contact-web" onclick="visitWebsite('${school['学校网址']}')">🌐 网站</button>` : ''}
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        // 列表视图
+        function displayListView() {
+            const listView = document.getElementById('listView');
+            listView.innerHTML = filteredData.map(school => `
+                <div class="school-list-item">
+                    <div>
+                        <strong style="font-size: 16px;">${school['学校名称']}</strong>
+                        <div style="color: #999; font-size: 12px; margin-top: 5px;">${school['学校代码'] || 'N/A'}</div>
+                    </div>
+                    <div>
+                        <span class="tag ${typeClasses[school['种类']] || 'tag-type1'}">${school['种类'] || 'N/A'}</span>
+                        <div style="color: #666; font-size: 12px; margin-top: 5px;">📍 ${school['所属地区'] || 'N/A'}</div>
+                    </div>
+                    <div style="color: #666; font-size: 14px;">
+                        <div>🏆 ${school['组别'] || 'N/A'} | 🌐 ${school['授课语言'] || 'N/A'}</div>
+                        <div style="margin-top: 5px;">👥 ${school['学生性别'] || 'N/A'}</div>
+                    </div>
+                    <div style="color: #666; font-size: 14px;">
+                        🙏 ${school['宗教'] || 'N/A'}
+                    </div>
+                    <div style="display: flex; gap: 5px;">
+                        ${school['联系电话'] ? `<button class="contact-btn contact-phone" onclick="callSchool('${school['联系电话']}')" style="padding: 8px 16px;">📞</button>` : ''}
+                        ${school['学校网址'] ? `<button class="contact-btn contact-web" onclick="visitWebsite('${school['学校网址']}')" style="padding: 8px 16px;">🌐</button>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 表格视图
+        function displayTableView() {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = filteredData.map(school => `
+                <tr>
+                    <td><strong>${school['学校名称']}</strong></td>
+                    <td>${school['学校代码'] || 'N/A'}</td>
+                    <td><span class="tag ${typeClasses[school['种类']] || 'tag-type1'}">${school['种类'] || 'N/A'}</span></td>
+                    <td>${school['所属地区'] || 'N/A'}</td>
+                    <td>${school['组别'] || 'N/A'}</td>
+                    <td>${school['授课语言'] || 'N/A'}</td>
+                    <td>${school['学生性别'] || 'N/A'}</td>
+                    <td>${school['宗教'] || 'N/A'}</td>
+                    <td>
+                        ${school['联系电话'] ? `<div>📞 ${school['联系电话']}</div>` : ''}
+                        ${school['学校网址'] ? `<div><a href="${school['学校网址']}" target="_blank" style="color: #667eea;">🌐 网站</a></div>` : ''}
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // 显示无结果
+        function showNoResults() {
+            const grid = document.getElementById('schoolsGrid');
+            const listView = document.getElementById('listView');
+            const tableView = document.getElementById('tableView');
+            
+            const noResultsHtml = `
+                <div class="no-results">
+                    <div class="no-results-icon">😔</div>
+                    <div class="no-results-text">未找到符合条件的学校</div>
+                    <div class="no-results-hint">请尝试调整筛选条件</div>
+                </div>
+            `;
+            
+            grid.innerHTML = noResultsHtml;
+            listView.innerHTML = noResultsHtml;
+            document.getElementById('tableBody').innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 40px;">未找到符合条件的学校</td></tr>';
+        }
+
+        // 切换视图
+        function switchView(view) {
+            currentView = view;
+            
+            // 更新按钮状态
+            document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // 显示对应视图
+            document.getElementById('schoolsGrid').style.display = view === 'card' ? 'grid' : 'none';
+            document.getElementById('listView').classList.toggle('active', view === 'list');
+            document.getElementById('tableView').classList.toggle('active', view === 'table');
+            
+            displaySchools();
+        }
+
+        // 拨打电话
+        function callSchool(phone) {
+            window.location.href = `tel:${phone}`;
+        }
+
+        // 访问网站
+        function visitWebsite(url) {
+            if (!url.startsWith('http')) {
+                url = 'https://' + url;
+            }
+            window.open(url, '_blank');
+        }
+
+        // 页面加载时初始化
+        window.onload = init;
+    </script>
+</body>
+</html>
