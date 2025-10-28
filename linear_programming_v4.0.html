@@ -1,14 +1,15 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Linear Programming Calculator (2 Variables)</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjs@11.8.0/lib/browser/math.min.js"></script>
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="互动式线性规划教学工具，帮助学生理解和掌握线性规划概念，适用于DSE数学延伸部分。" name="description"/><meta content="线性规划,Linear Programming,数学工具,DSE数学,万鹤书院,教学工具" name="keywords"/><meta content="万鹤书院 Vanhok Academy" name="author"/><meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots"/><link href="https://page.vanhok.com/linear_programming_v4.0.html" rel="canonical"/><meta content="website" property="og:type"/><meta content="https://page.vanhok.com/linear_programming_v4.0.html" property="og:url"/><meta content="线性规划教学工具 v4.0 | Linear Programming | 万鹤书院" property="og:title"/><meta content="互动式线性规划教学工具，帮助学生理解和掌握线性规划概念，适用于DSE数学延伸部分。" property="og:description"/><meta content="万鹤书院 Vanhok Academy" property="og:site_name"/><meta content="zh_HK" property="og:locale"/><meta content="summary_large_image" name="twitter:card"/><meta content="https://page.vanhok.com/linear_programming_v4.0.html" name="twitter:url"/><meta content="线性规划教学工具 v4.0 | Linear Programming | 万鹤书院" name="twitter:title"/><meta content="互动式线性规划教学工具，帮助学生理解和掌握线性规划概念，适用于DSE数学延伸部分。" name="twitter:description"/><meta content="zh-CN" name="language"/><meta content="7 days" name="revisit-after"/><meta content="global" name="distribution"/><meta content="general" name="rating"/>
+<title>线性规划教学工具 v4.0 | Linear Programming | 万鹤书院</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjs@11.8.0/lib/browser/math.min.js"></script>
+<style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
@@ -160,258 +161,243 @@
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="container mx-auto text-center">
-            <h1 class="text-4xl font-bold">Online Linear Programming Calculator</h1>
-            <p class="text-xl mt-2">Two Variables with Graphical Visualization & Sensitivity Analysis</p>
-            <p class="mt-3">by Anker Wong</p>
-        </div>
-    </header>
-
-    <div class="container mx-auto p-4">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div class="lg:col-span-1">
-                <div class="card">
-                    <h2 class="text-2xl font-semibold mb-4 heading-gradient">
-                        <i class="fas fa-bullseye mr-2"></i>Objective Function
+<header class="header">
+<div class="container mx-auto text-center">
+<h1 class="text-4xl font-bold">Online Linear Programming Calculator</h1>
+<p class="text-xl mt-2">Two Variables with Graphical Visualization &amp; Sensitivity Analysis</p>
+<p class="mt-3">by Anker Wong</p>
+</div>
+</header>
+<div class="container mx-auto p-4">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="lg:col-span-1">
+<div class="card">
+<h2 class="text-2xl font-semibold mb-4 heading-gradient">
+<i class="fas fa-bullseye mr-2"></i>Objective Function
                     </h2>
-                    <div class="input-group">
-                        <label class="block mb-2">Type:</label>
-                        <select id="objectiveType" class="block w-full">
-                            <option value="max">Maximize</option>
-                            <option value="min">Minimize</option>
-                        </select>
-                    </div>
-                    <div class="flex space-x-2">
-                        <div class="input-group w-1/2">
-                            <label class="block mb-2">X Coefficient:</label>
-                            <input type="number" id="objectiveX" class="block w-full" value="3" step="0.1">
-                        </div>
-                        <div class="input-group w-1/2">
-                            <label class="block mb-2">Y Coefficient:</label>
-                            <input type="number" id="objectiveY" class="block w-full" value="2" step="0.1">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h2 class="text-2xl font-semibold mb-4 heading-gradient">
-                        <i class="fas fa-not-equal mr-2"></i>Constraints
+<div class="input-group">
+<label class="block mb-2">Type:</label>
+<select class="block w-full" id="objectiveType">
+<option value="max">Maximize</option>
+<option value="min">Minimize</option>
+</select>
+</div>
+<div class="flex space-x-2">
+<div class="input-group w-1/2">
+<label class="block mb-2">X Coefficient:</label>
+<input class="block w-full" id="objectiveX" step="0.1" type="number" value="3"/>
+</div>
+<div class="input-group w-1/2">
+<label class="block mb-2">Y Coefficient:</label>
+<input class="block w-full" id="objectiveY" step="0.1" type="number" value="2"/>
+</div>
+</div>
+</div>
+<div class="card">
+<h2 class="text-2xl font-semibold mb-4 heading-gradient">
+<i class="fas fa-not-equal mr-2"></i>Constraints
                     </h2>
-                    <div id="constraints-container">
-                        <div class="constraint-container" data-constraint-id="1">
-                            <div class="flex justify-between mb-2">
-                                <span class="font-bold">Constraint #1</span>
-                                <button class="text-red-500 delete-constraint" data-constraint-id="1">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </div>
-                            <div class="flex space-x-2">
-                                <div class="w-1/3">
-                                    <label class="block mb-2">X Coeff:</label>
-                                    <input type="number" class="constraint-x block w-full" value="1" step="0.1">
-                                </div>
-                                <div class="w-1/3">
-                                    <label class="block mb-2">Y Coeff:</label>
-                                    <input type="number" class="constraint-y block w-full" value="1" step="0.1">
-                                </div>
-                                <div class="w-1/3">
-                                    <label class="block mb-2">Type:</label>
-                                    <select class="constraint-type block w-full">
-                                        <option value="<=">≤</option>
-                                        <option value="=">= (equal)</option>
-                                        <option value=">=">≥</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="mt-2">
-                                <label class="block mb-2">RHS Value:</label>
-                                <input type="number" class="constraint-rhs block w-full" value="6" step="0.1">
-                            </div>
-                        </div>
-                        <div class="constraint-container" data-constraint-id="2">
-                            <div class="flex justify-between mb-2">
-                                <span class="font-bold">Constraint #2</span>
-                                <button class="text-red-500 delete-constraint" data-constraint-id="2">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </div>
-                            <div class="flex space-x-2">
-                                <div class="w-1/3">
-                                    <label class="block mb-2">X Coeff:</label>
-                                    <input type="number" class="constraint-x block w-full" value="2" step="0.1">
-                                </div>
-                                <div class="w-1/3">
-                                    <label class="block mb-2">Y Coeff:</label>
-                                    <input type="number" class="constraint-y block w-full" value="1" step="0.1">
-                                </div>
-                                <div class="w-1/3">
-                                    <label class="block mb-2">Type:</label>
-                                    <select class="constraint-type block w-full">
-                                        <option value="<=">≤</option>
-                                        <option value="=">= (equal)</option>
-                                        <option value=">=">≥</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="mt-2">
-                                <label class="block mb-2">RHS Value:</label>
-                                <input type="number" class="constraint-rhs block w-full" value="8" step="0.1">
-                            </div>
-                        </div>
-                    </div>
-
-                    <button id="add-constraint" class="btn-primary mt-4 w-full">
-                        <i class="fas fa-plus mr-2"></i>Add Constraint
+<div id="constraints-container">
+<div class="constraint-container" data-constraint-id="1">
+<div class="flex justify-between mb-2">
+<span class="font-bold">Constraint #1</span>
+<button class="text-red-500 delete-constraint" data-constraint-id="1">
+<i class="fas fa-trash-alt"></i>
+</button>
+</div>
+<div class="flex space-x-2">
+<div class="w-1/3">
+<label class="block mb-2">X Coeff:</label>
+<input class="constraint-x block w-full" step="0.1" type="number" value="1"/>
+</div>
+<div class="w-1/3">
+<label class="block mb-2">Y Coeff:</label>
+<input class="constraint-y block w-full" step="0.1" type="number" value="1"/>
+</div>
+<div class="w-1/3">
+<label class="block mb-2">Type:</label>
+<select class="constraint-type block w-full">
+<option value="&lt;=">≤</option>
+<option value="=">= (equal)</option>
+<option value="&gt;=">≥</option>
+</select>
+</div>
+</div>
+<div class="mt-2">
+<label class="block mb-2">RHS Value:</label>
+<input class="constraint-rhs block w-full" step="0.1" type="number" value="6"/>
+</div>
+</div>
+<div class="constraint-container" data-constraint-id="2">
+<div class="flex justify-between mb-2">
+<span class="font-bold">Constraint #2</span>
+<button class="text-red-500 delete-constraint" data-constraint-id="2">
+<i class="fas fa-trash-alt"></i>
+</button>
+</div>
+<div class="flex space-x-2">
+<div class="w-1/3">
+<label class="block mb-2">X Coeff:</label>
+<input class="constraint-x block w-full" step="0.1" type="number" value="2"/>
+</div>
+<div class="w-1/3">
+<label class="block mb-2">Y Coeff:</label>
+<input class="constraint-y block w-full" step="0.1" type="number" value="1"/>
+</div>
+<div class="w-1/3">
+<label class="block mb-2">Type:</label>
+<select class="constraint-type block w-full">
+<option value="&lt;=">≤</option>
+<option value="=">= (equal)</option>
+<option value="&gt;=">≥</option>
+</select>
+</div>
+</div>
+<div class="mt-2">
+<label class="block mb-2">RHS Value:</label>
+<input class="constraint-rhs block w-full" step="0.1" type="number" value="8"/>
+</div>
+</div>
+</div>
+<button class="btn-primary mt-4 w-full" id="add-constraint">
+<i class="fas fa-plus mr-2"></i>Add Constraint
                     </button>
-                </div>
-
-                <div class="card">
-                    <h2 class="text-2xl font-semibold mb-4 heading-gradient">
-                        <i class="fas fa-chart-line mr-2"></i>Graph Settings
+</div>
+<div class="card">
+<h2 class="text-2xl font-semibold mb-4 heading-gradient">
+<i class="fas fa-chart-line mr-2"></i>Graph Settings
                     </h2>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="input-group">
-                            <label class="block mb-2">X-Axis Max:</label>
-                            <input type="number" id="xAxisMax" class="block w-full" value="10" min="1">
-                        </div>
-                        <div class="input-group">
-                            <label class="block mb-2">Y-Axis Max:</label>
-                            <input type="number" id="yAxisMax" class="block w-full" value="10" min="1">
-                        </div>
-                        <div class="input-group">
-                            <label class="block mb-2">X-Axis Step:</label>
-                            <input type="number" id="xAxisStep" class="block w-full" value="1" min="0.1" step="0.1">
-                        </div>
-                        <div class="input-group">
-                            <label class="block mb-2">Y-Axis Step:</label>
-                            <input type="number" id="yAxisStep" class="block w-full" value="1" min="0.1" step="0.1">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-4">
-                    <button id="solve-button" class="btn-primary w-full text-lg py-3">
-                        <i class="fas fa-calculator mr-2"></i>Solve
+<div class="grid grid-cols-2 gap-4">
+<div class="input-group">
+<label class="block mb-2">X-Axis Max:</label>
+<input class="block w-full" id="xAxisMax" min="1" type="number" value="10"/>
+</div>
+<div class="input-group">
+<label class="block mb-2">Y-Axis Max:</label>
+<input class="block w-full" id="yAxisMax" min="1" type="number" value="10"/>
+</div>
+<div class="input-group">
+<label class="block mb-2">X-Axis Step:</label>
+<input class="block w-full" id="xAxisStep" min="0.1" step="0.1" type="number" value="1"/>
+</div>
+<div class="input-group">
+<label class="block mb-2">Y-Axis Step:</label>
+<input class="block w-full" id="yAxisStep" min="0.1" step="0.1" type="number" value="1"/>
+</div>
+</div>
+</div>
+<div class="mt-4">
+<button class="btn-primary w-full text-lg py-3" id="solve-button">
+<i class="fas fa-calculator mr-2"></i>Solve
                     </button>
-                </div>
-
-                <div class="card mt-4">
-                    <h2 class="text-2xl font-semibold mb-4 heading-gradient">
-                        <i class="fas fa-info-circle mr-2"></i>Instructions
+</div>
+<div class="card mt-4">
+<h2 class="text-2xl font-semibold mb-4 heading-gradient">
+<i class="fas fa-info-circle mr-2"></i>Instructions
                     </h2>
-                    <ol class="list-decimal pl-5 space-y-2">
-                        <li>Input your objective function coefficients and choose max or min</li>
-                        <li>Add constraints with their coefficients and right-hand side values</li>
-                        <li>Adjust graph settings if needed</li>
-                        <li>Click "Solve" to calculate the optimal solution</li>
-                        <li>View the results and sensitivity analysis</li>
-                    </ol>
-                </div>
-            </div>
-
-            <div class="lg:col-span-2">
-                <div class="card">
-                    <h2 class="text-2xl font-semibold mb-4 heading-gradient">
-                        <i class="fas fa-chart-area mr-2"></i>Graphical Representation
+<ol class="list-decimal pl-5 space-y-2">
+<li>Input your objective function coefficients and choose max or min</li>
+<li>Add constraints with their coefficients and right-hand side values</li>
+<li>Adjust graph settings if needed</li>
+<li>Click "Solve" to calculate the optimal solution</li>
+<li>View the results and sensitivity analysis</li>
+</ol>
+</div>
+</div>
+<div class="lg:col-span-2">
+<div class="card">
+<h2 class="text-2xl font-semibold mb-4 heading-gradient">
+<i class="fas fa-chart-area mr-2"></i>Graphical Representation
                     </h2>
-                    <div class="chart-container">
-                        <canvas id="lpChart"></canvas>
-                    </div>
-                </div>
-
-                <div id="results-section" class="card hidden">
-                    <h2 class="text-2xl font-semibold mb-4 heading-gradient">
-                        <i class="fas fa-star mr-2"></i>Results
+<div class="chart-container">
+<canvas id="lpChart"></canvas>
+</div>
+</div>
+<div class="card hidden" id="results-section">
+<h2 class="text-2xl font-semibold mb-4 heading-gradient">
+<i class="fas fa-star mr-2"></i>Results
                     </h2>
-                    <div id="optimal-solution" class="result-box">
-                        <h3 class="text-xl font-semibold mb-2">Optimal Solution</h3>
-                        <div id="optimal-solution-content" class="text-lg"></div>
-                    </div>
-                    
-                    <h3 class="text-xl font-semibold mt-6 mb-3">Constraints at Optimal Solution</h3>
-                    <div id="constraints-table-container">
-                        <table id="constraints-table" class="w-full">
-                            <thead>
-                                <tr>
-                                    <th>Constraint</th>
-                                    <th>LHS Value</th>
-                                    <th>Type</th>
-                                    <th>RHS Value</th>
-                                    <th>Slack/Surplus</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="constraints-table-body"></tbody>
-                        </table>
-                    </div>
-                </div>
-                
-                <div id="sensitivity-section" class="card hidden">
-                    <h2 class="text-2xl font-semibold mb-4 heading-gradient">
-                        <i class="fas fa-microscope mr-2"></i>Sensitivity Analysis
+<div class="result-box" id="optimal-solution">
+<h3 class="text-xl font-semibold mb-2">Optimal Solution</h3>
+<div class="text-lg" id="optimal-solution-content"></div>
+</div>
+<h3 class="text-xl font-semibold mt-6 mb-3">Constraints at Optimal Solution</h3>
+<div id="constraints-table-container">
+<table class="w-full" id="constraints-table">
+<thead>
+<tr>
+<th>Constraint</th>
+<th>LHS Value</th>
+<th>Type</th>
+<th>RHS Value</th>
+<th>Slack/Surplus</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody id="constraints-table-body"></tbody>
+</table>
+</div>
+</div>
+<div class="card hidden" id="sensitivity-section">
+<h2 class="text-2xl font-semibold mb-4 heading-gradient">
+<i class="fas fa-microscope mr-2"></i>Sensitivity Analysis
                     </h2>
-                    
-                    <div class="sensitivity-box">
-                        <h3 class="text-xl font-semibold mb-2">What is Sensitivity Analysis?</h3>
-                        <p class="mb-3">Sensitivity analysis determines how changes in the coefficients and constraints affect the optimal solution. It helps understand which parameters are most critical to the solution.</p>
-                    </div>
-                    
-                    <h3 class="text-xl font-semibold mt-6 mb-3">Objective Function Coefficients</h3>
-                    <div id="obj-sensitivity-container">
-                        <table id="obj-sensitivity-table" class="w-full">
-                            <thead>
-                                <tr>
-                                    <th>Variable</th>
-                                    <th>Current Value</th>
-                                    <th>Allowable Decrease</th>
-                                    <th>Allowable Increase</th>
-                                </tr>
-                            </thead>
-                            <tbody id="obj-sensitivity-body"></tbody>
-                        </table>
-                        <div class="mt-4 text-gray-700">
-                            <p><strong>Interpretation:</strong> The allowable increase/decrease shows how much each objective coefficient can change without changing the optimal corner point. Beyond these ranges, a different corner point would become optimal.</p>
-                        </div>
-                    </div>
-                    
-                    <h3 class="text-xl font-semibold mt-6 mb-3">Right Hand Side (RHS) Sensitivity</h3>
-                    <div id="rhs-sensitivity-container">
-                        <table id="rhs-sensitivity-table" class="w-full">
-                            <thead>
-                                <tr>
-                                    <th>Constraint</th>
-                                    <th>Current RHS</th>
-                                    <th>Shadow Price</th>
-                                    <th>Allowable Decrease</th>
-                                    <th>Allowable Increase</th>
-                                </tr>
-                            </thead>
-                            <tbody id="rhs-sensitivity-body"></tbody>
-                        </table>
-                        <div class="mt-4 text-gray-700">
-                            <p><strong>Interpretation:</strong></p>
-                            <ul class="list-disc pl-5 space-y-2 mt-2">
-                                <li><strong>Shadow Price:</strong> The change in the objective value per unit increase in the RHS of the constraint.</li>
-                                <li><strong>Binding Constraints:</strong> Constraints that are fully utilized at the optimal solution (equality or zero slack). These constraints have non-zero shadow prices.</li>
-                                <li><strong>Non-binding Constraints:</strong> Constraints with slack (not fully utilized) at the optimal solution. These have zero shadow prices.</li>
-                                <li><strong>Allowable Range:</strong> The range within which the shadow price remains valid. Beyond this range, the set of binding constraints changes.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <footer class="footer text-center">
-        <div class="container mx-auto">
-            <p class="text-lg">Online Linear Programming Calculator</p>
-            <p class="mt-2">Created by Anker Wong</p>
-        </div>
-    </footer>
-
-    <script>
+<div class="sensitivity-box">
+<h3 class="text-xl font-semibold mb-2">What is Sensitivity Analysis?</h3>
+<p class="mb-3">Sensitivity analysis determines how changes in the coefficients and constraints affect the optimal solution. It helps understand which parameters are most critical to the solution.</p>
+</div>
+<h3 class="text-xl font-semibold mt-6 mb-3">Objective Function Coefficients</h3>
+<div id="obj-sensitivity-container">
+<table class="w-full" id="obj-sensitivity-table">
+<thead>
+<tr>
+<th>Variable</th>
+<th>Current Value</th>
+<th>Allowable Decrease</th>
+<th>Allowable Increase</th>
+</tr>
+</thead>
+<tbody id="obj-sensitivity-body"></tbody>
+</table>
+<div class="mt-4 text-gray-700">
+<p><strong>Interpretation:</strong> The allowable increase/decrease shows how much each objective coefficient can change without changing the optimal corner point. Beyond these ranges, a different corner point would become optimal.</p>
+</div>
+</div>
+<h3 class="text-xl font-semibold mt-6 mb-3">Right Hand Side (RHS) Sensitivity</h3>
+<div id="rhs-sensitivity-container">
+<table class="w-full" id="rhs-sensitivity-table">
+<thead>
+<tr>
+<th>Constraint</th>
+<th>Current RHS</th>
+<th>Shadow Price</th>
+<th>Allowable Decrease</th>
+<th>Allowable Increase</th>
+</tr>
+</thead>
+<tbody id="rhs-sensitivity-body"></tbody>
+</table>
+<div class="mt-4 text-gray-700">
+<p><strong>Interpretation:</strong></p>
+<ul class="list-disc pl-5 space-y-2 mt-2">
+<li><strong>Shadow Price:</strong> The change in the objective value per unit increase in the RHS of the constraint.</li>
+<li><strong>Binding Constraints:</strong> Constraints that are fully utilized at the optimal solution (equality or zero slack). These constraints have non-zero shadow prices.</li>
+<li><strong>Non-binding Constraints:</strong> Constraints with slack (not fully utilized) at the optimal solution. These have zero shadow prices.</li>
+<li><strong>Allowable Range:</strong> The range within which the shadow price remains valid. Beyond this range, the set of binding constraints changes.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<footer class="footer text-center">
+<div class="container mx-auto">
+<p class="text-lg">Online Linear Programming Calculator</p>
+<p class="mt-2">Created by Anker Wong</p>
+</div>
+</footer>
+<script>
         // Global variables
         let lpChart = null;
         let nextConstraintId = 3;
