@@ -1,0 +1,46 @@
+<!-- 万鹤书院 V2.0 文章模板 -->
+<!-- 通用页脚代码 -->
+<footer class="article-footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>萬鶴書院</h4>
+            <p>專注 HKDSE 中文科課程</p>
+        </div>
+        <div class="footer-section">
+            <h5>校區地址</h5>
+            <p>📍 福田：福田中深花園大廈A座4樓403</p>
+            <p>📍 南山：粵海街道天利中央商務廣場A座</p>
+        </div>
+        <div class="footer-section">
+            <h5>聯絡方式</h5>
+            <p>☎️ 400-633-8747</p>
+            <p>📱 +852 55155942</p>
+            <p>💬 微信：MSS-Cinly</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2024 萬鶴書院 版權所有 | 微信公眾號：萬鶴DSE</p>
+    </div>
+</footer>
+
+<!-- 通用JavaScript代码 -->
+<script>
+    const backToTopButton = document.getElementById('backToTop');
+    window.addEventListener('scroll', function() {
+        backToTopButton.classList.toggle('show', window.pageYOffset > 300);
+    });
+    backToTopButton.addEventListener('click', function() {
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+    
+    document.querySelectorAll('.annotated').forEach(span => {
+        const tooltip = document.createElement('div');
+        tooltip.className = 'tooltip';
+        let tooltipContent = span.dataset.meaning;
+        if (span.dataset.pronunciation) {
+            tooltipContent += `<br><small>${span.dataset.pronunciation}</small>`;
+        }
+        tooltip.innerHTML = tooltipContent;
+        span.appendChild(tooltip);
+    });
+</script>
