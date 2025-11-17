@@ -1,371 +1,363 @@
 <!DOCTYPE html>
+
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vanhok IELTS - 专业雅思模拟考试平台</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="万鹤书院IELTS雅思在线模考系统，提供全真模拟测试、即时评分、详细解析，助力雅思考试高分通过。" name="description"/><meta content="IELTS,雅思,模考,Mock Test,英语考试,万鹤书院,雅思培训" name="keywords"/><meta content="万鹤书院 Vanhok Academy" name="author"/><meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots"/><link href="https://page.vanhok.com/ielts/index.html" rel="canonical"/><meta content="website" property="og:type"/><meta content="https://page.vanhok.com/ielts/index.html" property="og:url"/><meta content="IELTS雅思模考平台 | Mock Test System | 万鹤书院" property="og:title"/><meta content="万鹤书院IELTS雅思在线模考系统，提供全真模拟测试、即时评分、详细解析，助力雅思考试高分通过。" property="og:description"/><meta content="万鹤书院 Vanhok Academy" property="og:site_name"/><meta content="zh_HK" property="og:locale"/><meta content="summary_large_image" name="twitter:card"/><meta content="https://page.vanhok.com/ielts/index.html" name="twitter:url"/><meta content="IELTS雅思模考平台 | Mock Test System | 万鹤书院" name="twitter:title"/><meta content="万鹤书院IELTS雅思在线模考系统，提供全真模拟测试、即时评分、详细解析，助力雅思考试高分通过。" name="twitter:description"/><meta content="zh-CN" name="language"/><meta content="7 days" name="revisit-after"/><meta content="global" name="distribution"/><meta content="general" name="rating"/>
+<title>IELTS雅思模考平台 | Mock Test System | 万鹤书院</title>
+<link href="styles.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div id="loading-screen" class="loading-screen">
-        <div class="loading-content">
-            <div class="logo">🎯 Vanhok IELTS</div>
-            <div class="loading-spinner"></div>
-            <div class="loading-text">正在初始化雅思考试系统...</div>
-        </div>
-    </div>
-
-    <!-- Navigation Header -->
-    <nav class="navbar" id="navbar" style="display: none;">
-        <div class="nav-container">
-            <div class="nav-brand">
-                <h1>🎯 Vanhok IELTS</h1>
-                <span class="nav-subtitle">专业雅思模拟考试平台</span>
-            </div>
-            <div class="nav-menu">
-                <button class="nav-button" onclick="showSection('home')">首页</button>
-                <button class="nav-button" onclick="showSection('practice')">模拟考试</button>
-                <button class="nav-button" onclick="showSection('progress')">成绩查看</button>
-                <div class="user-menu">
-                    <button id="auth-button" class="auth-button">登录</button>
-                    <div id="user-profile" class="user-profile" style="display: none;">
-                        <span id="user-email"></span>
-                        <button onclick="logout()">退出</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Container -->
-    <main id="main-container" style="display: none;">
-        <!-- Home Section -->
-        <section id="home-section" class="section active">
-            <div class="hero">
-                <div class="hero-content">
-                    <h2 class="hero-title">专业雅思模拟考试平台</h2>
-                    <p class="hero-subtitle">
-                        基于最新Cambridge IELTS真题，提供完整的听力、阅读、写作、口语四项测试<br>
+<!-- Loading Screen -->
+<div class="loading-screen" id="loading-screen">
+<div class="loading-content">
+<div class="logo">🎯 Vanhok IELTS</div>
+<div class="loading-spinner"></div>
+<div class="loading-text">正在初始化雅思考试系统...</div>
+</div>
+</div>
+<!-- Navigation Header -->
+<nav class="navbar" id="navbar" style="display: none;">
+<div class="nav-container">
+<div class="nav-brand">
+<h1>🎯 Vanhok IELTS</h1>
+<span class="nav-subtitle">专业雅思模拟考试平台</span>
+</div>
+<div class="nav-menu">
+<button class="nav-button" onclick="showSection('home')">首页</button>
+<button class="nav-button" onclick="showSection('practice')">模拟考试</button>
+<button class="nav-button" onclick="showSection('progress')">成绩查看</button>
+<div class="user-menu">
+<button class="auth-button" id="auth-button">登录</button>
+<div class="user-profile" id="user-profile" style="display: none;">
+<span id="user-email"></span>
+<button onclick="logout()">退出</button>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Container -->
+<main id="main-container" style="display: none;">
+<!-- Home Section -->
+<section class="section active" id="home-section">
+<div class="hero">
+<div class="hero-content">
+<h2 class="hero-title">专业雅思模拟考试平台</h2>
+<p class="hero-subtitle">
+                        基于最新Cambridge IELTS真题，提供完整的听力、阅读、写作、口语四项测试<br/>
                         采用Supabase云数据库，确保考试数据安全可靠
                     </p>
-                    <div class="hero-stats">
-                        <div class="stat-item">
-                            <div class="stat-number">40+</div>
-                            <div class="stat-label">完整模拟试卷</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">1600+</div>
-                            <div class="stat-label">练习题目</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">160+</div>
-                            <div class="stat-label">听力录音</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">AI</div>
-                            <div class="stat-label">智能评分</div>
-                        </div>
-                    </div>
-                    <div class="hero-actions">
-                        <button class="cta-primary" onclick="startTest()">开始模拟考试</button>
-                        <button class="cta-secondary" onclick="showSection('practice')">浏览题库</button>
-                    </div>
-                </div>
-                <div class="hero-visual">
-                    <div class="feature-cards">
-                        <div class="feature-card">
-                            <div class="feature-icon">🎧</div>
-                            <h3>听力测试</h3>
-                            <p>4个部分，30分钟<br>音频仅播放一次</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">📖</div>
-                            <h3>阅读理解</h3>
-                            <p>3篇文章，60分钟<br>40道题目</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">✍️</div>
-                            <h3>写作任务</h3>
-                            <p>2个任务，60分钟<br>AI智能评分</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">🗣️</div>
-                            <h3>口语考试</h3>
-                            <p>3个部分，15分钟<br>录音评估</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Practice Section -->
-        <section id="practice-section" class="section">
-            <div class="section-header">
-                <h2>选择考试模式</h2>
-                <p>选择完整模拟考试或单项练习</p>
-            </div>
-            <div class="test-modes">
-                <div class="test-mode-card" onclick="startFullTest()">
-                    <div class="mode-icon">🎯</div>
-                    <h3>完整模拟考试</h3>
-                    <p>完整的2.5小时IELTS考试体验</p>
-                    <div class="mode-details">
-                        <span>听力 30分钟</span>
-                        <span>阅读 60分钟</span>
-                        <span>写作 60分钟</span>
-                        <span>口语 15分钟</span>
-                    </div>
-                    <button class="start-button">开始考试</button>
-                </div>
-                <div class="test-mode-card" onclick="showSection('listening')">
-                    <div class="mode-icon">🎧</div>
-                    <h3>听力练习</h3>
-                    <p>专项听力技能训练</p>
-                    <div class="mode-details">
-                        <span>4个部分</span>
-                        <span>40道题目</span>
-                        <span>30分钟</span>
-                    </div>
-                    <button class="start-button">开始练习</button>
-                </div>
-                <div class="test-mode-card" onclick="showSection('reading')">
-                    <div class="mode-icon">📖</div>
-                    <h3>阅读练习</h3>
-                    <p>学术类阅读理解训练</p>
-                    <div class="mode-details">
-                        <span>3篇文章</span>
-                        <span>40道题目</span>
-                        <span>60分钟</span>
-                    </div>
-                    <button class="start-button">开始练习</button>
-                </div>
-                <div class="test-mode-card" onclick="showSection('writing')">
-                    <div class="mode-icon">✍️</div>
-                    <h3>写作练习</h3>
-                    <p>Task 1 & Task 2 写作训练</p>
-                    <div class="mode-details">
-                        <span>图表描述</span>
-                        <span>议论文写作</span>
-                        <span>60分钟</span>
-                    </div>
-                    <button class="start-button">开始练习</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Listening Section -->
-        <section id="listening-section" class="section">
-            <div class="test-header">
-                <h2>IELTS 听力测试</h2>
-                <div class="test-timer">
-                    <span>剩余时间: </span>
-                    <span id="listening-timer">30:00</span>
-                </div>
-            </div>
-            <div class="test-content">
-                <div class="audio-player">
-                    <div id="audio-status">准备播放音频...</div>
-                    <audio id="listening-audio" preload="metadata"></audio>
-                    <div class="audio-controls">
-                        <button id="play-audio" onclick="playListeningAudio()">▶️ 播放音频</button>
-                        <div class="audio-warning">⚠️ 注意：音频只能播放一次</div>
-                    </div>
-                    <div class="audio-progress">
-                        <div id="audio-progress-bar"></div>
-                    </div>
-                </div>
-                <div class="questions-container">
-                    <div id="listening-questions">
-                        <!-- Questions will be loaded dynamically -->
-                    </div>
-                </div>
-                <div class="test-controls">
-                    <button onclick="submitListening()" class="submit-button">提交答案</button>
-                    <button onclick="showSection('practice')" class="back-button">返回</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Reading Section -->
-        <section id="reading-section" class="section">
-            <div class="test-header">
-                <h2>IELTS 阅读测试</h2>
-                <div class="test-timer">
-                    <span>剩余时间: </span>
-                    <span id="reading-timer">60:00</span>
-                </div>
-            </div>
-            <div class="reading-content">
-                <div class="reading-passage">
-                    <div id="reading-text">
-                        <!-- Reading passage will be loaded here -->
-                    </div>
-                </div>
-                <div class="reading-questions">
-                    <div id="reading-questions-container">
-                        <!-- Questions will be loaded here -->
-                    </div>
-                </div>
-            </div>
-            <div class="test-controls">
-                <button onclick="submitReading()" class="submit-button">提交答案</button>
-                <button onclick="showSection('practice')" class="back-button">返回</button>
-            </div>
-        </section>
-
-        <!-- Writing Section -->
-        <section id="writing-section" class="section">
-            <div class="test-header">
-                <h2>IELTS 写作测试</h2>
-                <div class="test-timer">
-                    <span>剩余时间: </span>
-                    <span id="writing-timer">60:00</span>
-                </div>
-            </div>
-            <div class="writing-content">
-                <div class="writing-tasks">
-                    <div class="writing-task active" id="task1">
-                        <h3>Task 1 - 图表描述 (20分钟，至少150词)</h3>
-                        <div class="task-prompt">
-                            <p>下面的图表显示了某国家2020-2023年四个季度的GDP增长率。请描述图表中的主要特征，并在必要时进行比较。</p>
-                            <div class="chart-container">
-                                <!-- Chart image will be loaded here -->
-                            </div>
-                        </div>
-                        <div class="writing-area">
-                            <textarea id="task1-text" placeholder="在此输入你的答案..." maxlength="3000"></textarea>
-                            <div class="word-count">字数: <span id="task1-count">0</span>/150 (最少)</div>
-                        </div>
-                    </div>
-                    <div class="writing-task" id="task2">
-                        <h3>Task 2 - 议论文 (40分钟，至少250词)</h3>
-                        <div class="task-prompt">
-                            <p>Some people believe that technology has made our lives easier, while others think it has made our lives more complicated. Discuss both views and give your own opinion.</p>
-                        </div>
-                        <div class="writing-area">
-                            <textarea id="task2-text" placeholder="在此输入你的答案..." maxlength="5000"></textarea>
-                            <div class="word-count">字数: <span id="task2-count">0</span>/250 (最少)</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="task-navigation">
-                    <button onclick="switchTask(1)" class="task-nav-button active" id="nav-task1">Task 1</button>
-                    <button onclick="switchTask(2)" class="task-nav-button" id="nav-task2">Task 2</button>
-                </div>
-            </div>
-            <div class="test-controls">
-                <button onclick="submitWriting()" class="submit-button">提交答案</button>
-                <button onclick="showSection('practice')" class="back-button">返回</button>
-            </div>
-        </section>
-
-        <!-- Progress Section -->
-        <section id="progress-section" class="section">
-            <div class="section-header">
-                <h2>考试成绩与进度</h2>
-                <p>查看你的历史成绩和学习进度</p>
-            </div>
-            <div class="progress-content">
-                <div class="progress-overview">
-                    <div class="score-card">
-                        <h3>最近成绩</h3>
-                        <div class="overall-score">7.5</div>
-                        <div class="score-breakdown">
-                            <div class="score-item">
-                                <span>听力</span>
-                                <span class="score">7.0</span>
-                            </div>
-                            <div class="score-item">
-                                <span>阅读</span>
-                                <span class="score">8.0</span>
-                            </div>
-                            <div class="score-item">
-                                <span>写作</span>
-                                <span class="score">7.0</span>
-                            </div>
-                            <div class="score-item">
-                                <span>口语</span>
-                                <span class="score">8.0</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="progress-stats">
-                        <h3>学习统计</h3>
-                        <div class="stat-row">
-                            <span>完成测试</span>
-                            <span>12 次</span>
-                        </div>
-                        <div class="stat-row">
-                            <span>学习天数</span>
-                            <span>28 天</span>
-                        </div>
-                        <div class="stat-row">
-                            <span>练习题目</span>
-                            <span>480 道</span>
-                        </div>
-                        <div class="stat-row">
-                            <span>正确率</span>
-                            <span>78%</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="test-history">
-                    <h3>历史成绩</h3>
-                    <div id="test-history-list">
-                        <!-- Test history will be loaded here -->
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Auth Modal -->
-    <div id="auth-modal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="auth-title">登录账户</h3>
-                <button onclick="closeAuthModal()" class="close-button">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form id="auth-form">
-                    <div class="form-group">
-                        <label for="email">邮箱地址</label>
-                        <input type="email" id="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">密码</label>
-                        <input type="password" id="password" required>
-                    </div>
-                    <div id="register-fields" style="display: none;">
-                        <div class="form-group">
-                            <label for="confirm-password">确认密码</label>
-                            <input type="password" id="confirm-password">
-                        </div>
-                        <div class="form-group">
-                            <label for="full-name">姓名</label>
-                            <input type="text" id="full-name">
-                        </div>
-                    </div>
-                    <button type="submit" class="auth-submit" id="auth-submit">登录</button>
-                </form>
-                <div class="auth-switch">
-                    <span id="switch-text">还没有账户？</span>
-                    <button onclick="toggleAuthMode()" id="switch-button">注册</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="config.js"></script>
-    <script src="auth.js"></script>
-    <script src="app.js"></script>
-    <script src="listening.js"></script>
-    <script src="reading.js"></script>
-    <script src="writing.js"></script>
+<div class="hero-stats">
+<div class="stat-item">
+<div class="stat-number">40+</div>
+<div class="stat-label">完整模拟试卷</div>
+</div>
+<div class="stat-item">
+<div class="stat-number">1600+</div>
+<div class="stat-label">练习题目</div>
+</div>
+<div class="stat-item">
+<div class="stat-number">160+</div>
+<div class="stat-label">听力录音</div>
+</div>
+<div class="stat-item">
+<div class="stat-number">AI</div>
+<div class="stat-label">智能评分</div>
+</div>
+</div>
+<div class="hero-actions">
+<button class="cta-primary" onclick="startTest()">开始模拟考试</button>
+<button class="cta-secondary" onclick="showSection('practice')">浏览题库</button>
+</div>
+</div>
+<div class="hero-visual">
+<div class="feature-cards">
+<div class="feature-card">
+<div class="feature-icon">🎧</div>
+<h3>听力测试</h3>
+<p>4个部分，30分钟<br/>音频仅播放一次</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">📖</div>
+<h3>阅读理解</h3>
+<p>3篇文章，60分钟<br/>40道题目</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">✍️</div>
+<h3>写作任务</h3>
+<p>2个任务，60分钟<br/>AI智能评分</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">🗣️</div>
+<h3>口语考试</h3>
+<p>3个部分，15分钟<br/>录音评估</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Practice Section -->
+<section class="section" id="practice-section">
+<div class="section-header">
+<h2>选择考试模式</h2>
+<p>选择完整模拟考试或单项练习</p>
+</div>
+<div class="test-modes">
+<div class="test-mode-card" onclick="startFullTest()">
+<div class="mode-icon">🎯</div>
+<h3>完整模拟考试</h3>
+<p>完整的2.5小时IELTS考试体验</p>
+<div class="mode-details">
+<span>听力 30分钟</span>
+<span>阅读 60分钟</span>
+<span>写作 60分钟</span>
+<span>口语 15分钟</span>
+</div>
+<button class="start-button">开始考试</button>
+</div>
+<div class="test-mode-card" onclick="showSection('listening')">
+<div class="mode-icon">🎧</div>
+<h3>听力练习</h3>
+<p>专项听力技能训练</p>
+<div class="mode-details">
+<span>4个部分</span>
+<span>40道题目</span>
+<span>30分钟</span>
+</div>
+<button class="start-button">开始练习</button>
+</div>
+<div class="test-mode-card" onclick="showSection('reading')">
+<div class="mode-icon">📖</div>
+<h3>阅读练习</h3>
+<p>学术类阅读理解训练</p>
+<div class="mode-details">
+<span>3篇文章</span>
+<span>40道题目</span>
+<span>60分钟</span>
+</div>
+<button class="start-button">开始练习</button>
+</div>
+<div class="test-mode-card" onclick="showSection('writing')">
+<div class="mode-icon">✍️</div>
+<h3>写作练习</h3>
+<p>Task 1 &amp; Task 2 写作训练</p>
+<div class="mode-details">
+<span>图表描述</span>
+<span>议论文写作</span>
+<span>60分钟</span>
+</div>
+<button class="start-button">开始练习</button>
+</div>
+</div>
+</section>
+<!-- Listening Section -->
+<section class="section" id="listening-section">
+<div class="test-header">
+<h2>IELTS 听力测试</h2>
+<div class="test-timer">
+<span>剩余时间: </span>
+<span id="listening-timer">30:00</span>
+</div>
+</div>
+<div class="test-content">
+<div class="audio-player">
+<div id="audio-status">准备播放音频...</div>
+<audio id="listening-audio" preload="metadata"></audio>
+<div class="audio-controls">
+<button id="play-audio" onclick="playListeningAudio()">▶️ 播放音频</button>
+<div class="audio-warning">⚠️ 注意：音频只能播放一次</div>
+</div>
+<div class="audio-progress">
+<div id="audio-progress-bar"></div>
+</div>
+</div>
+<div class="questions-container">
+<div id="listening-questions">
+<!-- Questions will be loaded dynamically -->
+</div>
+</div>
+<div class="test-controls">
+<button class="submit-button" onclick="submitListening()">提交答案</button>
+<button class="back-button" onclick="showSection('practice')">返回</button>
+</div>
+</div>
+</section>
+<!-- Reading Section -->
+<section class="section" id="reading-section">
+<div class="test-header">
+<h2>IELTS 阅读测试</h2>
+<div class="test-timer">
+<span>剩余时间: </span>
+<span id="reading-timer">60:00</span>
+</div>
+</div>
+<div class="reading-content">
+<div class="reading-passage">
+<div id="reading-text">
+<!-- Reading passage will be loaded here -->
+</div>
+</div>
+<div class="reading-questions">
+<div id="reading-questions-container">
+<!-- Questions will be loaded here -->
+</div>
+</div>
+</div>
+<div class="test-controls">
+<button class="submit-button" onclick="submitReading()">提交答案</button>
+<button class="back-button" onclick="showSection('practice')">返回</button>
+</div>
+</section>
+<!-- Writing Section -->
+<section class="section" id="writing-section">
+<div class="test-header">
+<h2>IELTS 写作测试</h2>
+<div class="test-timer">
+<span>剩余时间: </span>
+<span id="writing-timer">60:00</span>
+</div>
+</div>
+<div class="writing-content">
+<div class="writing-tasks">
+<div class="writing-task active" id="task1">
+<h3>Task 1 - 图表描述 (20分钟，至少150词)</h3>
+<div class="task-prompt">
+<p>下面的图表显示了某国家2020-2023年四个季度的GDP增长率。请描述图表中的主要特征，并在必要时进行比较。</p>
+<div class="chart-container">
+<!-- Chart image will be loaded here -->
+</div>
+</div>
+<div class="writing-area">
+<textarea id="task1-text" maxlength="3000" placeholder="在此输入你的答案..."></textarea>
+<div class="word-count">字数: <span id="task1-count">0</span>/150 (最少)</div>
+</div>
+</div>
+<div class="writing-task" id="task2">
+<h3>Task 2 - 议论文 (40分钟，至少250词)</h3>
+<div class="task-prompt">
+<p>Some people believe that technology has made our lives easier, while others think it has made our lives more complicated. Discuss both views and give your own opinion.</p>
+</div>
+<div class="writing-area">
+<textarea id="task2-text" maxlength="5000" placeholder="在此输入你的答案..."></textarea>
+<div class="word-count">字数: <span id="task2-count">0</span>/250 (最少)</div>
+</div>
+</div>
+</div>
+<div class="task-navigation">
+<button class="task-nav-button active" id="nav-task1" onclick="switchTask(1)">Task 1</button>
+<button class="task-nav-button" id="nav-task2" onclick="switchTask(2)">Task 2</button>
+</div>
+</div>
+<div class="test-controls">
+<button class="submit-button" onclick="submitWriting()">提交答案</button>
+<button class="back-button" onclick="showSection('practice')">返回</button>
+</div>
+</section>
+<!-- Progress Section -->
+<section class="section" id="progress-section">
+<div class="section-header">
+<h2>考试成绩与进度</h2>
+<p>查看你的历史成绩和学习进度</p>
+</div>
+<div class="progress-content">
+<div class="progress-overview">
+<div class="score-card">
+<h3>最近成绩</h3>
+<div class="overall-score">7.5</div>
+<div class="score-breakdown">
+<div class="score-item">
+<span>听力</span>
+<span class="score">7.0</span>
+</div>
+<div class="score-item">
+<span>阅读</span>
+<span class="score">8.0</span>
+</div>
+<div class="score-item">
+<span>写作</span>
+<span class="score">7.0</span>
+</div>
+<div class="score-item">
+<span>口语</span>
+<span class="score">8.0</span>
+</div>
+</div>
+</div>
+<div class="progress-stats">
+<h3>学习统计</h3>
+<div class="stat-row">
+<span>完成测试</span>
+<span>12 次</span>
+</div>
+<div class="stat-row">
+<span>学习天数</span>
+<span>28 天</span>
+</div>
+<div class="stat-row">
+<span>练习题目</span>
+<span>480 道</span>
+</div>
+<div class="stat-row">
+<span>正确率</span>
+<span>78%</span>
+</div>
+</div>
+</div>
+<div class="test-history">
+<h3>历史成绩</h3>
+<div id="test-history-list">
+<!-- Test history will be loaded here -->
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Auth Modal -->
+<div class="modal" id="auth-modal" style="display: none;">
+<div class="modal-content">
+<div class="modal-header">
+<h3 id="auth-title">登录账户</h3>
+<button class="close-button" onclick="closeAuthModal()">×</button>
+</div>
+<div class="modal-body">
+<form id="auth-form">
+<div class="form-group">
+<label for="email">邮箱地址</label>
+<input id="email" required="" type="email"/>
+</div>
+<div class="form-group">
+<label for="password">密码</label>
+<input id="password" required="" type="password"/>
+</div>
+<div id="register-fields" style="display: none;">
+<div class="form-group">
+<label for="confirm-password">确认密码</label>
+<input id="confirm-password" type="password"/>
+</div>
+<div class="form-group">
+<label for="full-name">姓名</label>
+<input id="full-name" type="text"/>
+</div>
+</div>
+<button class="auth-submit" id="auth-submit" type="submit">登录</button>
+</form>
+<div class="auth-switch">
+<span id="switch-text">还没有账户？</span>
+<button id="switch-button" onclick="toggleAuthMode()">注册</button>
+</div>
+</div>
+</div>
+</div>
+<script src="config.js"></script>
+<script src="auth.js"></script>
+<script src="app.js"></script>
+<script src="listening.js"></script>
+<script src="reading.js"></script>
+<script src="writing.js"></script>
 </body>
 </html>
