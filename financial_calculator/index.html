@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>金融课程计算器 - Finance Calculator</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-calculator"></i> 金融课程计算器</h1>
+            <p>专业的金融计算工具集 - Professional Finance Calculator Suite</p>
+        </header>
+
+        <nav class="calculator-nav">
+            <button class="nav-btn active" data-section="time-value">
+                <i class="fas fa-clock"></i> 时间价值
+            </button>
+            <button class="nav-btn" data-section="bond">
+                <i class="fas fa-file-invoice-dollar"></i> 债券定价
+            </button>
+            <button class="nav-btn" data-section="investment">
+                <i class="fas fa-chart-line"></i> 投资评估
+            </button>
+            <button class="nav-btn" data-section="capital-cost">
+                <i class="fas fa-percentage"></i> 资本成本
+            </button>
+        </nav>
+
+        <main>
+            <!-- 时间价值计算 -->
+            <section id="time-value" class="calculator-section active">
+                <div class="section-header">
+                    <h2>时间价值计算</h2>
+                    <p>计算货币的现值、终值和年金价值</p>
+                </div>
+
+                <div class="calculator-grid">
+                    <!-- PV Calculator -->
+                    <div class="calculator-card">
+                        <h3><i class="fas fa-arrow-left"></i> 现值 (PV)</h3>
+                        <p class="formula">PV = FV / (1 + r)^n</p>
+                        <div class="input-group">
+                            <label>未来价值 (FV):</label>
+                            <input type="number" id="pv-fv" placeholder="例如: 10000">
+                        </div>
+                        <div class="input-group">
+                            <label>利率 (r) %:</label>
+                            <input type="number" id="pv-r" placeholder="例如: 5" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label>期数 (n):</label>
+                            <input type="number" id="pv-n" placeholder="例如: 10">
+                        </div>
+                        <button class="calc-btn" onclick="calculatePV()">计算</button>
+                        <div class="result" id="pv-result"></div>
+                    </div>
+
+                    <!-- FV Calculator -->
+                    <div class="calculator-card">
+                        <h3><i class="fas fa-arrow-right"></i> 终值 (FV)</h3>
+                        <p class="formula">FV = PV × (1 + r)^n</p>
+                        <div class="input-group">
+                            <label>现值 (PV):</label>
+                            <input type="number" id="fv-pv" placeholder="例如: 10000">
+                        </div>
+                        <div class="input-group">
+                            <label>利率 (r) %:</label>
+                            <input type="number" id="fv-r" placeholder="例如: 5" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label>期数 (n):</label>
+                            <input type="number" id="fv-n" placeholder="例如: 10">
+                        </div>
+                        <button class="calc-btn" onclick="calculateFV()">计算</button>
+                        <div class="result" id="fv-result"></div>
+                    </div>
+
+                    <!-- Perpetuity Calculator -->
+                    <div class="calculator-card">
+                        <h3><i class="fas fa-infinity"></i> 永续年金 (Perpetuity)</h3>
+                        <p class="formula">PV = C / r</p>
+                        <div class="input-group">
+                            <label>每期现金流 (C):</label>
+                            <input type="number" id="perp-c" placeholder="例如: 1000">
+                        </div>
+                        <div class="input-group">
+                            <label>折现率 (r) %:</label>
+                            <input type="number" id="perp-r" placeholder="例如: 5" step="0.01">
+                        </div>
+                        <button class="calc-btn" onclick="calculatePerpetuity()">计算</button>
+                        <div class="result" id="perp-result"></div>
+                    </div>
+
+                    <!-- Annuity Calculator -->
+                    <div class="calculator-card">
+                        <h3><i class="fas fa-coins"></i> 普通年金 (Annuity)</h3>
+                        <p class="formula">PV = C × [1 - (1 + r)^(-n)] / r</p>
+                        <div class="input-group">
+                            <label>每期现金流 (C):</label>
+                            <input type="number" id="ann-c" placeholder="例如: 1000">
+                        </div>
+                        <div class="input-group">
+                            <label>利率 (r) %:</label>
+                            <input type="number" id="ann-r" placeholder="例如: 5" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label>期数 (n):</label>
+                            <input type="number" id="ann-n" placeholder="例如: 10">
+                        </div>
+                        <button class="calc-btn" onclick="calculateAnnuity()">计算</button>
+                        <div class="result" id="ann-result"></div>
+                    </div>
+
+                    <!-- Annuity Due Calculator -->
+                    <div class="calculator-card">
+                        <h3><i class="fas fa-money-bill-wave"></i> 预付年金 (Annuity Due)</h3>
+                        <p class="formula">PV = C × [1 - (1 + r)^(-n)] / r × (1 + r)</p>
+                        <div class="input-group">
+                            <label>每期现金流 (C):</label>
+                            <input type="number" id="anndue-c" placeholder="例如: 1000">
+                        </div>
+                        <div class="input-group">
+                            <label>利率 (r) %:</label>
+                            <input type="number" id="anndue-r" placeholder="例如: 5" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label>期数 (n):</label>
+                            <input type="number" id="anndue-n" placeholder="例如: 10">
+                        </div>
+                        <button class="calc-btn" onclick="calculateAnnuityDue()">计算</button>
+                        <div class="result" id="anndue-result"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 债券定价 -->
+            <section id="bond" class="calculator-section">
+                <div class="section-header">
+                    <h2>债券定价</h2>
+                    <p>计算债券的理论价格</p>
+                </div>
+
+                <div class="calculator-grid">
+                    <div class="calculator-card wide">
+                        <h3><i class="fas fa-file-invoice-dollar"></i> 债券价格 (Bond Price)</h3>
+                        <p class="formula">Bond Price = Σ [C / (1+r)^t] + [FV / (1+r)^n]</p>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label>面值 (Face Value):</label>
+                                <input type="number" id="bond-fv" placeholder="例如: 1000">
+                            </div>
+                            <div class="input-group">
+                                <label>票面利率 (Coupon Rate) %:</label>
+                                <input type="number" id="bond-coupon" placeholder="例如: 6" step="0.01">
+                            </div>
+                        </div>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label>到期收益率 (YTM) %:</label>
+                                <input type="number" id="bond-ytm" placeholder="例如: 5" step="0.01">
+                            </div>
+                            <div class="input-group">
+                                <label>到期年限 (Years):</label>
+                                <input type="number" id="bond-years" placeholder="例如: 10">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>付息频率 (每年):</label>
+                            <select id="bond-freq">
+                                <option value="1">年付 (Annual)</option>
+                                <option value="2" selected>半年付 (Semi-annual)</option>
+                                <option value="4">季付 (Quarterly)</option>
+                                <option value="12">月付 (Monthly)</option>
+                            </select>
+                        </div>
+                        <button class="calc-btn" onclick="calculateBondPrice()">计算债券价格</button>
+                        <div class="result" id="bond-result"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 投资项目评估 -->
+            <section id="investment" class="calculator-section">
+                <div class="section-header">
+                    <h2>投资项目评估</h2>
+                    <p>评估投资项目的财务可行性</p>
+                </div>
+
+                <div class="calculator-grid">
+                    <!-- NPV Calculator -->
+                    <div class="calculator-card wide">
+                        <h3><i class="fas fa-chart-bar"></i> 净现值 (NPV)</h3>
+                        <p class="formula">NPV = Σ [CFt / (1+r)^t] - 初始投资</p>
+                        <div class="input-group">
+                            <label>初始投资 (Initial Investment):</label>
+                            <input type="number" id="npv-initial" placeholder="例如: 100000">
+                        </div>
+                        <div class="input-group">
+                            <label>折现率 (Discount Rate) %:</label>
+                            <input type="number" id="npv-rate" placeholder="例如: 10" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label>现金流 (用逗号分隔):</label>
+                            <input type="text" id="npv-cashflows" placeholder="例如: 30000,35000,40000,45000,50000">
+                            <small>输入每期的现金流，用逗号分隔</small>
+                        </div>
+                        <button class="calc-btn" onclick="calculateNPV()">计算 NPV</button>
+                        <div class="result" id="npv-result"></div>
+                    </div>
+
+                    <!-- IRR Calculator -->
+                    <div class="calculator-card wide">
+                        <h3><i class="fas fa-percentage"></i> 内部收益率 (IRR)</h3>
+                        <p class="formula">IRR: NPV = 0 时的折现率</p>
+                        <div class="input-group">
+                            <label>初始投资 (负数):</label>
+                            <input type="number" id="irr-initial" placeholder="例如: -100000">
+                        </div>
+                        <div class="input-group">
+                            <label>现金流 (用逗号分隔):</label>
+                            <input type="text" id="irr-cashflows" placeholder="例如: 30000,35000,40000,45000,50000">
+                            <small>输入每期的现金流，用逗号分隔</small>
+                        </div>
+                        <button class="calc-btn" onclick="calculateIRR()">计算 IRR</button>
+                        <div class="result" id="irr-result"></div>
+                    </div>
+
+                    <!-- Profitability Index Calculator -->
+                    <div class="calculator-card wide">
+                        <h3><i class="fas fa-balance-scale"></i> 盈利指数 (Profitability Index)</h3>
+                        <p class="formula">PI = PV(未来现金流) / 初始投资</p>
+                        <div class="input-group">
+                            <label>初始投资 (Initial Investment):</label>
+                            <input type="number" id="pi-initial" placeholder="例如: 100000">
+                        </div>
+                        <div class="input-group">
+                            <label>折现率 (Discount Rate) %:</label>
+                            <input type="number" id="pi-rate" placeholder="例如: 10" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label>现金流 (用逗号分隔):</label>
+                            <input type="text" id="pi-cashflows" placeholder="例如: 30000,35000,40000,45000,50000">
+                            <small>输入每期的现金流，用逗号分隔</small>
+                        </div>
+                        <button class="calc-btn" onclick="calculatePI()">计算盈利指数</button>
+                        <div class="result" id="pi-result"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 资本成本计算 -->
+            <section id="capital-cost" class="calculator-section">
+                <div class="section-header">
+                    <h2>资本成本计算</h2>
+                    <p>计算企业的资本成本和预期回报率</p>
+                </div>
+
+                <div class="calculator-grid">
+                    <!-- WACC Calculator -->
+                    <div class="calculator-card wide">
+                        <h3><i class="fas fa-building"></i> 加权平均资本成本 (WACC)</h3>
+                        <p class="formula">WACC = (E/V × Re) + (D/V × Rd × (1-Tc))</p>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label>股权市值 (E):</label>
+                                <input type="number" id="wacc-equity" placeholder="例如: 600000">
+                            </div>
+                            <div class="input-group">
+                                <label>债务市值 (D):</label>
+                                <input type="number" id="wacc-debt" placeholder="例如: 400000">
+                            </div>
+                        </div>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label>股权成本 (Re) %:</label>
+                                <input type="number" id="wacc-re" placeholder="例如: 12" step="0.01">
+                            </div>
+                            <div class="input-group">
+                                <label>债务成本 (Rd) %:</label>
+                                <input type="number" id="wacc-rd" placeholder="例如: 6" step="0.01">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>企业税率 (Tc) %:</label>
+                            <input type="number" id="wacc-tax" placeholder="例如: 25" step="0.01">
+                        </div>
+                        <button class="calc-btn" onclick="calculateWACC()">计算 WACC</button>
+                        <div class="result" id="wacc-result"></div>
+                    </div>
+
+                    <!-- CAPM Calculator -->
+                    <div class="calculator-card wide">
+                        <h3><i class="fas fa-chart-line"></i> 资本资产定价模型 (CAPM)</h3>
+                        <p class="formula">Re = Rf + β × (Rm - Rf)</p>
+                        <div class="input-group">
+                            <label>无风险利率 (Rf) %:</label>
+                            <input type="number" id="capm-rf" placeholder="例如: 3" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label>市场回报率 (Rm) %:</label>
+                            <input type="number" id="capm-rm" placeholder="例如: 10" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label>Beta系数 (β):</label>
+                            <input type="number" id="capm-beta" placeholder="例如: 1.2" step="0.01">
+                        </div>
+                        <button class="calc-btn" onclick="calculateCAPM()">计算预期回报率</button>
+                        <div class="result" id="capm-result"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>© 2024 金融课程计算器 | 仅供学习参考使用</p>
+        </footer>
+    </div>
+
+    <script src="js/calculator.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
