@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKDSE Essay Memorizer - Vanhok Academy</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1 class="main-title">HKDSE Essay Memorizer</h1>
+                    <h2 class="sub-title">Vanhok Academy Writing System v1.0</h2>
+                </div>
+                <div class="header-right">
+                    <p class="designer-info">Designed by Anker Wong</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="stage-nav">
+            <a href="index.html" class="home-btn">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <button class="stage-btn active" data-stage="1">
+                <span class="stage-number">1</span>
+                <span class="stage-name">Framework</span>
+            </button>
+            <button class="stage-btn" data-stage="2">
+                <span class="stage-number">2</span>
+                <span class="stage-name">Analysis</span>
+            </button>
+            <button class="stage-btn" data-stage="3">
+                <span class="stage-number">3</span>
+                <span class="stage-name">Recitation</span>
+            </button>
+        </nav>
+
+        <!-- Stage 1: 逻辑框架 -->
+        <section id="stage1" class="stage-section active">
+            <div class="stage-header">
+                <h3><i class="fas fa-sitemap"></i> Stage 1: Essay Framework</h3>
+                <button id="toggleTopicSentences" class="primary-btn">
+                    <i class="fas fa-eye"></i> Show Topic Sentences
+                </button>
+            </div>
+            
+            <div class="essay-content" id="essayContent"></div>
+        </section>
+
+        <!-- Stage 2: 句式拆解 -->
+        <section id="stage2" class="stage-section">
+            <div class="stage-header">
+                <h3><i class="fas fa-puzzle-piece"></i> Stage 2: Sentence Analysis & Vocabulary</h3>
+                <div class="view-controls">
+                    <button class="view-btn active" data-view="original">
+                        <i class="fas fa-file-alt"></i> Original
+                    </button>
+                    <button class="view-btn" data-view="grammar">
+                        <i class="fas fa-highlighter"></i> Grammar
+                    </button>
+                    <button class="view-btn" data-view="vocabulary">
+                        <i class="fas fa-book"></i> Vocabulary
+                    </button>
+                </div>
+            </div>
+
+            <div class="legend" id="grammarLegend" style="display: none;">
+                <span class="legend-item"><span class="color-box subject"></span> Subject</span>
+                <span class="legend-item"><span class="color-box verb"></span> Verb</span>
+                <span class="legend-item"><span class="color-box object"></span> Object</span>
+            </div>
+
+            <div class="sentence-view" id="sentenceView"></div>
+        </section>
+
+        <!-- Stage 3: 背诵练习 -->
+        <section id="stage3" class="stage-section">
+            <div class="stage-header">
+                <h3><i class="fas fa-brain"></i> Stage 3: Recitation Practice</h3>
+                <div class="recitation-controls">
+                    <button id="startRecitation" class="primary-btn">
+                        <i class="fas fa-play"></i> Start Recitation
+                    </button>
+                    <button id="resetRecitation" class="secondary-btn" style="display: none;">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                </div>
+            </div>
+
+            <div class="progress-container" id="recitationProgress" style="display: none;">
+                <div class="progress-info">
+                    <span id="progressText">Progress: 0/33</span>
+                    <span id="progressPercent">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <div class="recitation-area" id="recitationArea">
+                <div class="welcome-message">
+                    <i class="fas fa-book-reader"></i>
+                    <h4>Welcome to Recitation Practice</h4>
+                    <p>Click "Start Recitation" to begin memorizing the essay sentence by sentence</p>
+                    <ul class="instructions">
+                        <li>First click: Shows the sentence structure (Subject-Verb-Object)</li>
+                        <li>Second click: Reveals the complete sentence</li>
+                        <li>Repeat until you've memorized the entire essay</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="next-sentence-btn-container" id="nextBtnContainer" style="display: none;">
+                <button id="nextSentenceBtn" class="large-action-btn">
+                    <i class="fas fa-arrow-down"></i>
+                    <span id="nextBtnText">Click to Show Hint</span>
+                </button>
+            </div>
+
+            <div class="completion-message" id="completionMessage" style="display: none;">
+                <div class="confetti">🎉</div>
+                <h4>Congratulations!</h4>
+                <p>You have completed all 33 sentences</p>
+                <button id="restartRecitation" class="primary-btn">
+                    <i class="fas fa-redo"></i> Practice Again
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 Vanhok Academy | All Rights Reserved</p>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
