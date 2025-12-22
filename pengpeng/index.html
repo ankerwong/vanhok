@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CityU Marketing 面试提词器</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 控制栏 -->
+    <header class="control-bar">
+        <div class="control-left">
+            <h1><i class="fas fa-graduation-cap"></i> CityU Marketing 面试提词器</h1>
+        </div>
+        <div class="control-center">
+            <button id="playPauseBtn" class="control-btn" title="空格键">
+                <i class="fas fa-play"></i>
+            </button>
+            <div class="speed-control">
+                <button id="speedSlowBtn" class="speed-btn" title="慢速">慢</button>
+                <button id="speedMediumBtn" class="speed-btn active" title="中速">中</button>
+                <button id="speedFastBtn" class="speed-btn" title="快速">快</button>
+            </div>
+        </div>
+        <div class="control-right">
+            <button id="langToggleBtn" class="control-btn" title="左右箭头切换">
+                <i class="fas fa-language"></i>
+                <span id="currentLang">中文</span>
+            </button>
+            <button id="themeToggleBtn" class="control-btn" title="主题切换">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button id="fontSizeToggleBtn" class="control-btn" title="字体大小">
+                <i class="fas fa-text-height"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <div class="main-container">
+        <!-- 左侧问题导航 -->
+        <aside class="question-nav">
+            <h2>问题列表</h2>
+            <nav id="questionList">
+                <!-- 问题列表将通过JavaScript动态生成 -->
+            </nav>
+        </aside>
+
+        <!-- 中间内容显示区 -->
+        <main class="content-area">
+            <div id="contentDisplay" class="content-scroll">
+                <!-- 内容将通过JavaScript动态生成 -->
+            </div>
+        </main>
+    </div>
+
+    <!-- 底部进度条 -->
+    <footer class="progress-footer">
+        <div class="progress-info">
+            <span id="currentQuestionTitle">准备开始...</span>
+            <span id="progressPercent">0%</span>
+        </div>
+        <div class="progress-bar-container">
+            <div id="progressBar" class="progress-bar"></div>
+        </div>
+    </footer>
+
+    <!-- 快捷键提示 -->
+    <div id="shortcutHint" class="shortcut-hint">
+        <h3>快捷键</h3>
+        <ul>
+            <li><kbd>空格</kbd> 暂停/播放</li>
+            <li><kbd>↑</kbd> 加速</li>
+            <li><kbd>↓</kbd> 减速</li>
+            <li><kbd>←</kbd> 切换到中文</li>
+            <li><kbd>→</kbd> 切换到英文</li>
+            <li><kbd>R</kbd> 重置到顶部</li>
+            <li><kbd>F</kbd> 全屏模式</li>
+        </ul>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
