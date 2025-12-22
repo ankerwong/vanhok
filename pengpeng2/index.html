@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>面试提词器 2.0 - Interview Prompter</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 输入页面 -->
+    <div id="inputPage" class="page">
+        <div class="input-container">
+            <div class="input-header">
+                <i class="fas fa-microphone-alt"></i>
+                <h1>面试提词器 2.0</h1>
+                <p class="subtitle">Interview Prompter - 让你的面试更专业</p>
+            </div>
+
+            <div class="input-content">
+                <div class="instructions">
+                    <h3><i class="fas fa-info-circle"></i> 使用说明</h3>
+                    <div class="instruction-grid">
+                        <div class="instruction-item">
+                            <span class="step-number">1</span>
+                            <div>
+                                <strong>粘贴内容</strong>
+                                <p>将你的面试问题和答案粘贴到下方文本框</p>
+                            </div>
+                        </div>
+                        <div class="instruction-item">
+                            <span class="step-number">2</span>
+                            <div>
+                                <strong>格式要求</strong>
+                                <p>使用序号标记问题（1、2、3... 或 1. 2. 3...）</p>
+                            </div>
+                        </div>
+                        <div class="instruction-item">
+                            <span class="step-number">3</span>
+                            <div>
+                                <strong>点击开始</strong>
+                                <p>系统自动解析，进入提词器界面</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="format-example">
+                    <h4><i class="fas fa-code"></i> 格式示例</h4>
+                    <pre><code>1、自我介绍
+您好，我叫张三，毕业于...
+
+Hello, my name is Zhang San...
+
+2、为什么选择这个专业？
+我选择这个专业是因为...
+
+I chose this major because...</code></pre>
+                </div>
+
+                <div class="textarea-wrapper">
+                    <textarea 
+                        id="contentInput" 
+                        placeholder="在此粘贴你的面试内容...&#10;&#10;支持格式：&#10;1、问题标题&#10;回答内容...&#10;&#10;2、下一个问题&#10;回答内容..."
+                    ></textarea>
+                    <div class="textarea-stats">
+                        <span id="charCount">0 字符</span>
+                        <span id="questionCount">0 个问题</span>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="loadExampleBtn" class="btn btn-secondary">
+                        <i class="fas fa-file-import"></i> 加载示例
+                    </button>
+                    <button id="clearBtn" class="btn btn-secondary">
+                        <i class="fas fa-trash-alt"></i> 清空
+                    </button>
+                    <button id="startBtn" class="btn btn-primary" disabled>
+                        <i class="fas fa-play-circle"></i> 开始使用
+                    </button>
+                </div>
+
+                <div id="savedContentNotice" class="saved-notice" style="display: none;">
+                    <i class="fas fa-check-circle"></i>
+                    <span>已恢复上次保存的内容</span>
+                    <button id="clearSavedBtn" class="btn-link">清除并重新输入</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 提词器页面 -->
+    <div id="prompterPage" class="page" style="display: none;">
+        <!-- 顶部控制栏 -->
+        <header class="control-bar">
+            <div class="control-logo">
+                <i class="fas fa-microphone-alt"></i>
+                <span>提词器 2.0</span>
+            </div>
+
+            <div class="control-group">
+                <button id="playPauseBtn" class="ctrl-btn" title="播放/暂停 (空格)">
+                    <i class="fas fa-play"></i>
+                </button>
+
+                <div class="speed-group">
+                    <button class="ctrl-btn speed-btn" data-speed="slow" title="慢速">
+                        <i class="fas fa-angle-double-left"></i> 慢
+                    </button>
+                    <button class="ctrl-btn speed-btn active" data-speed="medium" title="中速">
+                        <i class="fas fa-minus"></i> 中
+                    </button>
+                    <button class="ctrl-btn speed-btn" data-speed="fast" title="快速">
+                        快 <i class="fas fa-angle-double-right"></i>
+                    </button>
+                </div>
+
+                <div class="divider"></div>
+
+                <button id="fontSizeBtn" class="ctrl-btn" title="字号 (+/-)">
+                    <i class="fas fa-text-height"></i>
+                    <span class="btn-label">正常</span>
+                </button>
+
+                <button id="langToggleBtn" class="ctrl-btn" title="语言切换 (←/→)">
+                    <i class="fas fa-language"></i>
+                    <span class="btn-label">中英</span>
+                </button>
+
+                <button id="themeToggleBtn" class="ctrl-btn" title="主题切换">
+                    <i class="fas fa-moon"></i>
+                </button>
+
+                <div class="divider"></div>
+
+                <button id="resetBtn" class="ctrl-btn" title="重置 (R)">
+                    <i class="fas fa-redo-alt"></i>
+                </button>
+
+                <button id="editBtn" class="ctrl-btn" title="编辑内容 (E)">
+                    <i class="fas fa-edit"></i>
+                </button>
+
+                <button id="fullscreenBtn" class="ctrl-btn" title="全屏 (F)">
+                    <i class="fas fa-expand"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- 主内容区域 -->
+        <main class="main-content">
+            <!-- 左侧问题列表 -->
+            <aside class="question-list">
+                <div class="list-header">
+                    <i class="fas fa-list-ol"></i>
+                    <span>问题列表</span>
+                </div>
+                <div id="questionListContent" class="list-content">
+                    <!-- 动态生成 -->
+                </div>
+            </aside>
+
+            <!-- 中间内容显示区 -->
+            <section class="content-display">
+                <div id="sentenceContainer" class="sentence-container">
+                    <!-- 动态生成句子 -->
+                </div>
+            </section>
+        </main>
+
+        <!-- 底部进度条 -->
+        <footer class="progress-bar">
+            <div class="progress-info">
+                <span id="currentQuestionTitle">准备开始...</span>
+                <span id="progressPercentage">0%</span>
+            </div>
+            <div class="progress-track">
+                <div id="progressFill" class="progress-fill"></div>
+            </div>
+            <div class="progress-time">
+                <span id="currentTime">00:00</span>
+                <span class="separator">/</span>
+                <span id="totalTime">00:00</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
