@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>万鹤书院 - 南山海岸城校区打印机驱动安装指引</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .printer-info {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        .printer-info h2 {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .printer-info p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .download-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .driver-card {
+            background: #ffffff;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .driver-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .driver-card h3 {
+            color: #667eea;
+            font-size: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .driver-card h3::before {
+            content: "💻";
+            margin-right: 10px;
+            font-size: 24px;
+        }
+
+        .driver-card p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-box h3 {
+            color: #856404;
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .warning-box h3::before {
+            content: "⚠️";
+            margin-right: 10px;
+            font-size: 22px;
+        }
+
+        .warning-box p {
+            color: #856404;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .official-link {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .official-link h3 {
+            color: #1976d2;
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .official-link h3::before {
+            content: "🔗";
+            margin-right: 10px;
+            font-size: 22px;
+        }
+
+        .official-btn {
+            display: inline-block;
+            background: #2196f3;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .official-btn:hover {
+            background: #1976d2;
+            transform: translateY(-2px);
+        }
+
+        .steps {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .steps h4 {
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .steps ol {
+            margin-left: 20px;
+            color: #666;
+            line-height: 2;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .driver-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🖨️ 万鹤书院打印机驱动安装指引</h1>
+            <p>南山海岸城校区 · 奔图 D1 Max 打印机</p>
+        </div>
+
+        <div class="content">
+            <div class="printer-info">
+                <h2>打印机型号信息</h2>
+                <p><strong>型号：</strong>奔图（Pantum）D1 Max<br>
+                <strong>位置：</strong>南山海岸城校区<br>
+                <strong>适用人员：</strong>万鹤书院教师及工作人员</p>
+            </div>
+
+            <div class="download-section">
+                <h2 class="section-title">📥 驱动程序下载</h2>
+
+                <div class="driver-card">
+                    <h3>Windows 11 驱动程序</h3>
+                    <p><strong>适用系统：</strong>Windows 11（64位）</p>
+                    <p><strong>文件名：</strong>D1MaxWindows11</p>
+                    <a href="./D1MaxWindows11" class="download-btn" download>下载 Windows 11 驱动</a>
+                    
+                    <div class="steps">
+                        <h4>安装步骤：</h4>
+                        <ol>
+                            <li>下载驱动文件到本地</li>
+                            <li>双击运行安装程序</li>
+                            <li>按照安装向导提示完成安装</li>
+                            <li>连接打印机并测试打印</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="driver-card">
+                    <h3>MacOS 26 驱动程序</h3>
+                    <p><strong>适用系统：</strong>MacOS 26</p>
+                    <p><strong>文件名：</strong>D1MaxMacOS26</p>
+                    <a href="./D1MaxMacOS26" class="download-btn" download>下载 MacOS 26 驱动</a>
+                    
+                    <div class="steps">
+                        <h4>安装步骤：</h4>
+                        <ol>
+                            <li>下载驱动文件到本地</li>
+                            <li>打开下载的安装包</li>
+                            <li>按照安装向导完成安装</li>
+                            <li>在"系统偏好设置"中添加打印机</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h3>MacOS 用户重要提示</h3>
+                    <p>由于 MacOS 版本众多且驱动程序可能存在兼容性问题，如果您的系统版本不是 MacOS 26，或安装后遇到问题，请访问奔图打印机官网下载适合您系统版本的驱动程序。</p>
+                    <p><strong>不同的 MacOS 版本可能需要不同的驱动程序，请确保下载与您系统版本匹配的驱动。</strong></p>
+                </div>
+
+                <div class="official-link">
+                    <h3>奔图官方驱动下载</h3>
+                    <p>访问奔图官网，搜索"D1 Max"型号，下载适合您系统的驱动程序</p>
+                    <a href="https://www.pantum.cn/support/download/driver/" class="official-btn" target="_blank">访问奔图官网驱动下载页面 →</a>
+                    
+                    <div class="steps" style="margin-top: 15px;">
+                        <h4>官网下载步骤：</h4>
+                        <ol>
+                            <li>点击上方按钮访问奔图官网</li>
+                            <li>在搜索框中输入"D1 Max"</li>
+                            <li>选择您的操作系统类型和版本</li>
+                            <li>下载对应的驱动程序</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>如有技术问题，请联系学院IT支持团队</p>
+            <p style="margin-top: 10px;">万鹤书院 · 南山海岸城校区</p>
+        </div>
+    </div>
+</body>
+</html>
