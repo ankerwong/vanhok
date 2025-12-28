@@ -10,7 +10,7 @@ const articlesData = {
         pdfUrl: 'Should parents monitor their kids social account.pdf',
         
         podcast: {
-            audioUrl: 'https://www.genspark.ai/api/files/s/IVzCmaFb',
+            audioUrl: './audio1.mp3',
             duration: 144
         },
         
@@ -313,7 +313,7 @@ const articlesData = {
         pdfUrl: 'Are Japan\'s proposed language tests for.pdf',
         
         podcast: {
-            audioUrl: 'https://www.genspark.ai/api/files/s/2WBdnnQJ',
+            audioUrl: './audio2.mp3',
             duration: 146
         },
         
