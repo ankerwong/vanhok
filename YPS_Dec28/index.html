@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Young Post Spark 报刊精读助手</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-newspaper"></i>
+                    <span>Young Post Spark 报刊精读助手</span>
+                </div>
+                <div class="header-subtitle">
+                    专为香港初中学生设计的互动学习平台
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Article Selector -->
+    <section class="article-selector">
+        <div class="container">
+            <h2 class="section-title">选择文章</h2>
+            <div class="article-cards">
+                <div class="article-card active" data-article="article1">
+                    <div class="article-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Article 1</h3>
+                    <h4>Social Media Monitoring</h4>
+                    <p>Should parents monitor their kids' social media accounts?</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-book"></i> 779 words</span>
+                        <span><i class="fas fa-clock"></i> CEFR B1-B2</span>
+                    </div>
+                </div>
+                
+                <div class="article-card" data-article="article2">
+                    <div class="article-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <h3>Article 2</h3>
+                    <h4>Japan Language Tests</h4>
+                    <p>Are Japan's proposed language tests for residency unfair barriers?</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-book"></i> 848 words</span>
+                        <span><i class="fas fa-clock"></i> CEFR B1-B2</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Module Navigation -->
+    <nav class="module-nav">
+        <div class="container">
+            <div class="nav-tabs">
+                <button class="nav-tab active" data-module="worksheet">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Content Worksheet</span>
+                </button>
+                <button class="nav-tab" data-module="flashcards">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Flashcards</span>
+                </button>
+                <button class="nav-tab" data-module="podcast">
+                    <i class="fas fa-podcast"></i>
+                    <span>Audio Podcast</span>
+                </button>
+                <button class="nav-tab" data-module="background">
+                    <i class="fas fa-book-open"></i>
+                    <span>Background Knowledge</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Worksheet Module -->
+            <div id="worksheet-module" class="module active">
+                <div class="module-header">
+                    <h2><i class="fas fa-clipboard-list"></i> Content Worksheet</h2>
+                    <p class="module-description">完成以下题目，帮助你定位文章中的关键信息</p>
+                </div>
+                <div id="worksheet-content"></div>
+            </div>
+
+            <!-- Flashcards Module -->
+            <div id="flashcards-module" class="module">
+                <div class="module-header">
+                    <h2><i class="fas fa-layer-group"></i> Interactive Flashcards</h2>
+                    <p class="module-description">点击卡片翻转查看单词释义，使用箭头切换</p>
+                </div>
+                <div id="flashcards-content"></div>
+            </div>
+
+            <!-- Podcast Module -->
+            <div id="podcast-module" class="module">
+                <div class="module-header">
+                    <h2><i class="fas fa-podcast"></i> Audio Podcast</h2>
+                    <p class="module-description">播放音频帮助你理解文章内容</p>
+                </div>
+                <div id="podcast-content"></div>
+            </div>
+
+            <!-- Background Knowledge Module -->
+            <div id="background-module" class="module">
+                <div class="module-header">
+                    <h2><i class="fas fa-book-open"></i> Background Knowledge</h2>
+                    <p class="module-description">了解与文章相关的背景知识和统计数据</p>
+                </div>
+                <div id="background-content"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Young Post Spark 报刊精读助手 | 专为教学设计</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
