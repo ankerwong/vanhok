@@ -1,12 +1,13 @@
 <!DOCTYPE html>
+
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>万鹤书院HKDSE智能排课系统</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="万鹤书院在线课程安排系统，方便学生查询课程时间表、预约课程、管理学习进度。" name="description"/><meta content="课程安排,排课系统,时间表,万鹤书院,在线工具" name="keywords"/><meta content="万鹤书院 Vanhok Academy" name="author"/><meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots"/><link href="https://page.vanhok.com/scheduler.html" rel="canonical"/><meta content="website" property="og:type"/><meta content="https://page.vanhok.com/scheduler.html" property="og:url"/><meta content="课程安排系统 | 排课工具 | 万鹤书院" property="og:title"/><meta content="万鹤书院在线课程安排系统，方便学生查询课程时间表、预约课程、管理学习进度。" property="og:description"/><meta content="万鹤书院 Vanhok Academy" property="og:site_name"/><meta content="zh_HK" property="og:locale"/><meta content="summary_large_image" name="twitter:card"/><meta content="https://page.vanhok.com/scheduler.html" name="twitter:url"/><meta content="课程安排系统 | 排课工具 | 万鹤书院" name="twitter:title"/><meta content="万鹤书院在线课程安排系统，方便学生查询课程时间表、预约课程、管理学习进度。" name="twitter:description"/><meta content="zh-CN" name="language"/><meta content="7 days" name="revisit-after"/><meta content="global" name="distribution"/><meta content="general" name="rating"/>
+<title>课程安排系统 | 排课工具 | 万鹤书院</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
         .tab-content { display: none; }
         .tab-content.active { display: block; }
         .time-slot { min-height: 40px; }
@@ -39,547 +40,513 @@
     </style>
 </head>
 <body class="bg-gray-50">
-    <div class="container mx-auto px-4 py-6">
-        <!-- Header -->
-        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-            <div class="text-center">
-                <h1 class="text-3xl font-bold text-blue-800 mb-2">万鹤书院HKDSE智能排课系统</h1>
-                <p class="text-gray-600">专业的HKDSE课程智能排课解决方案</p>
-            </div>
-        </div>
-
-        <!-- Navigation Tabs -->
-        <div class="bg-white rounded-lg shadow-md mb-6">
-            <div class="border-b border-gray-200">
-                <nav class="flex space-x-8" aria-label="Tabs">
-                    <button onclick="showTab('courses')" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-blue-500 text-blue-600" id="courses-tab">
-                        <i class="fas fa-book mr-2"></i>课程设置
+<div class="container mx-auto px-4 py-6">
+<!-- Header -->
+<div class="bg-white rounded-lg shadow-md p-6 mb-6">
+<div class="text-center">
+<h1 class="text-3xl font-bold text-blue-800 mb-2">万鹤书院HKDSE智能排课系统</h1>
+<p class="text-gray-600">专业的HKDSE课程智能排课解决方案</p>
+</div>
+</div>
+<!-- Navigation Tabs -->
+<div class="bg-white rounded-lg shadow-md mb-6">
+<div class="border-b border-gray-200">
+<nav aria-label="Tabs" class="flex space-x-8">
+<button class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-blue-500 text-blue-600" id="courses-tab" onclick="showTab('courses')">
+<i class="fas fa-book mr-2"></i>课程设置
                     </button>
-                    <button onclick="showTab('teachers')" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" id="teachers-tab">
-                        <i class="fas fa-chalkboard-teacher mr-2"></i>教师管理
+<button class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" id="teachers-tab" onclick="showTab('teachers')">
+<i class="fas fa-chalkboard-teacher mr-2"></i>教师管理
                     </button>
-                    <button onclick="showTab('constraints')" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" id="constraints-tab">
-                        <i class="fas fa-cogs mr-2"></i>约束条件
+<button class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" id="constraints-tab" onclick="showTab('constraints')">
+<i class="fas fa-cogs mr-2"></i>约束条件
                     </button>
-                    <button onclick="showTab('schedule')" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" id="schedule-tab">
-                        <i class="fas fa-calendar-alt mr-2"></i>智能排课
+<button class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" id="schedule-tab" onclick="showTab('schedule')">
+<i class="fas fa-calendar-alt mr-2"></i>智能排课
                     </button>
-                    <button onclick="showTab('results')" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" id="results-tab">
-                        <i class="fas fa-table mr-2"></i>课表展示
+<button class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" id="results-tab" onclick="showTab('results')">
+<i class="fas fa-table mr-2"></i>课表展示
                     </button>
-                </nav>
-            </div>
-        </div>
-
-        <!-- Course Settings Tab -->
-        <div id="courses" class="tab-content active">
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <h2 class="text-2xl font-bold mb-6 text-gray-800">
-                    <i class="fas fa-book text-blue-600 mr-2"></i>HKDSE课程设置
+</nav>
+</div>
+</div>
+<!-- Course Settings Tab -->
+<div class="tab-content active" id="courses">
+<div class="bg-white rounded-lg shadow-md p-6">
+<h2 class="text-2xl font-bold mb-6 text-gray-800">
+<i class="fas fa-book text-blue-600 mr-2"></i>HKDSE课程设置
                 </h2>
-                
-                <!-- Required Subjects -->
-                <div class="mb-8">
-                    <h3 class="text-xl font-semibold mb-4 text-gray-700">必修科目</h3>
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <!-- Chinese -->
-                        <div class="border border-gray-200 rounded-lg p-4">
-                            <div class="flex items-center justify-between mb-3">
-                                <h4 class="text-lg font-medium text-gray-800">中文</h4>
-                                <label class="flex items-center">
-                                    <input type="checkbox" id="chinese-evening" class="mr-2">
-                                    <span class="text-sm text-gray-600">允许晚自习排课</span>
-                                </label>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-gray-600">每周总课时：</span>
-                                    <input type="number" id="chinese-hours" value="6" min="1" max="20" class="w-20 px-2 py-1 border border-gray-300 rounded text-center">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Mathematics -->
-                        <div class="border border-gray-200 rounded-lg p-4">
-                            <div class="flex items-center justify-between mb-3">
-                                <h4 class="text-lg font-medium text-gray-800">数学</h4>
-                                <label class="flex items-center">
-                                    <input type="checkbox" id="math-evening" class="mr-2">
-                                    <span class="text-sm text-gray-600">允许晚自习排课</span>
-                                </label>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-gray-600">每周总课时：</span>
-                                    <input type="number" id="math-hours" value="6" min="1" max="20" class="w-20 px-2 py-1 border border-gray-300 rounded text-center">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- English (Detailed) -->
-                        <div class="border border-gray-200 rounded-lg p-4 lg:col-span-2">
-                            <div class="flex items-center justify-between mb-3">
-                                <h4 class="text-lg font-medium text-gray-800">英文（细分板块）</h4>
-                                <label class="flex items-center">
-                                    <input type="checkbox" id="english-evening" class="mr-2">
-                                    <span class="text-sm text-gray-600">允许晚自习排课</span>
-                                </label>
-                            </div>
-                            <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
-                                <div class="space-y-2">
-                                    <label class="block text-sm font-medium text-gray-700">英文听力A</label>
-                                    <input type="number" id="english-listening-a" value="2" min="0" max="10" class="w-full px-2 py-1 border border-gray-300 rounded text-center">
-                                </div>
-                                <div class="space-y-2">
-                                    <label class="block text-sm font-medium text-gray-700">英文听力B</label>
-                                    <input type="number" id="english-listening-b" value="2" min="0" max="10" class="w-full px-2 py-1 border border-gray-300 rounded text-center">
-                                </div>
-                                <div class="space-y-2">
-                                    <label class="block text-sm font-medium text-gray-700">英文阅读</label>
-                                    <input type="number" id="english-reading" value="2" min="0" max="10" class="w-full px-2 py-1 border border-gray-300 rounded text-center">
-                                </div>
-                                <div class="space-y-2">
-                                    <label class="block text-sm font-medium text-gray-700">英文写作</label>
-                                    <input type="number" id="english-writing" value="2" min="0" max="10" class="w-full px-2 py-1 border border-gray-300 rounded text-center">
-                                </div>
-                                <div class="space-y-2">
-                                    <label class="block text-sm font-medium text-gray-700">英文口语</label>
-                                    <input type="number" id="english-speaking" value="2" min="0" max="10" class="w-full px-2 py-1 border border-gray-300 rounded text-center">
-                                </div>
-                            </div>
-                            <div class="mt-3 p-2 bg-blue-50 rounded">
-                                <span class="text-sm text-blue-800">英文总课时：<span id="english-total">10</span> 课时/周</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Elective Subjects -->
-                <div class="mb-8">
-                    <h3 class="text-xl font-semibold mb-4 text-gray-700">选修科目</h3>
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <!-- Physics -->
-                        <div class="border border-gray-200 rounded-lg p-4">
-                            <div class="flex items-center justify-between mb-3">
-                                <h4 class="text-lg font-medium text-gray-800">物理</h4>
-                                <label class="flex items-center">
-                                    <input type="checkbox" id="physics-evening" class="mr-2">
-                                    <span class="text-sm text-gray-600">允许晚自习排课</span>
-                                </label>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-gray-600">每周课时：</span>
-                                    <input type="number" id="physics-hours" value="5" min="1" max="10" class="w-20 px-2 py-1 border border-gray-300 rounded text-center">
-                                </div>
-                                <div class="text-xs text-blue-600">选修组合1：物理 & 历史</div>
-                            </div>
-                        </div>
-
-                        <!-- Chemistry -->
-                        <div class="border border-gray-200 rounded-lg p-4">
-                            <div class="flex items-center justify-between mb-3">
-                                <h4 class="text-lg font-medium text-gray-800">化学</h4>
-                                <label class="flex items-center">
-                                    <input type="checkbox" id="chemistry-evening" class="mr-2">
-                                    <span class="text-sm text-gray-600">允许晚自习排课</span>
-                                </label>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-gray-600">每周课时：</span>
-                                    <input type="number" id="chemistry-hours" value="5" min="1" max="10" class="w-20 px-2 py-1 border border-gray-300 rounded text-center">
-                                </div>
-                                <div class="text-xs text-blue-600">选修组合2：化学 & 经济</div>
-                            </div>
-                        </div>
-
-                        <!-- Biology -->
-                        <div class="border border-gray-200 rounded-lg p-4">
-                            <div class="flex items-center justify-between mb-3">
-                                <h4 class="text-lg font-medium text-gray-800">生物</h4>
-                                <label class="flex items-center">
-                                    <input type="checkbox" id="biology-evening" class="mr-2">
-                                    <span class="text-sm text-gray-600">允许晚自习排课</span>
-                                </label>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-gray-600">每周课时：</span>
-                                    <input type="number" id="biology-hours" value="5" min="1" max="10" class="w-20 px-2 py-1 border border-gray-300 rounded text-center">
-                                </div>
-                                <div class="text-xs text-blue-600">选修组合3：生物 & M2</div>
-                            </div>
-                        </div>
-
-                        <!-- Economics -->
-                        <div class="border border-gray-200 rounded-lg p-4">
-                            <div class="flex items-center justify-between mb-3">
-                                <h4 class="text-lg font-medium text-gray-800">经济</h4>
-                                <label class="flex items-center">
-                                    <input type="checkbox" id="economics-evening" class="mr-2">
-                                    <span class="text-sm text-gray-600">允许晚自习排课</span>
-                                </label>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-gray-600">每周课时：</span>
-                                    <input type="number" id="economics-hours" value="5" min="1" max="10" class="w-20 px-2 py-1 border border-gray-300 rounded text-center">
-                                </div>
-                                <div class="text-xs text-blue-600">选修组合2：化学 & 经济</div>
-                            </div>
-                        </div>
-
-                        <!-- History -->
-                        <div class="border border-gray-200 rounded-lg p-4">
-                            <div class="flex items-center justify-between mb-3">
-                                <h4 class="text-lg font-medium text-gray-800">历史</h4>
-                                <label class="flex items-center">
-                                    <input type="checkbox" id="history-evening" class="mr-2">
-                                    <span class="text-sm text-gray-600">允许晚自习排课</span>
-                                </label>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-gray-600">每周课时：</span>
-                                    <input type="number" id="history-hours" value="5" min="1" max="10" class="w-20 px-2 py-1 border border-gray-300 rounded text-center">
-                                </div>
-                                <div class="text-xs text-blue-600">选修组合1：物理 & 历史</div>
-                            </div>
-                        </div>
-
-                        <!-- M2 -->
-                        <div class="border border-gray-200 rounded-lg p-4">
-                            <div class="flex items-center justify-between mb-3">
-                                <h4 class="text-lg font-medium text-gray-800">M2</h4>
-                                <label class="flex items-center">
-                                    <input type="checkbox" id="m2-evening" class="mr-2">
-                                    <span class="text-sm text-gray-600">允许晚自习排课</span>
-                                </label>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-gray-600">每周课时：</span>
-                                    <input type="number" id="m2-hours" value="5" min="1" max="10" class="w-20 px-2 py-1 border border-gray-300 rounded text-center">
-                                </div>
-                                <div class="text-xs text-blue-600">选修组合3：生物 & M2</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Class Structure -->
-                <div class="mb-6">
-                    <h3 class="text-xl font-semibold mb-4 text-gray-700">分班结构设置</h3>
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div class="border border-gray-200 rounded-lg p-4">
-                            <h4 class="text-lg font-medium text-gray-800 mb-3">全年班（4月开学）</h4>
-                            <div class="space-y-2 text-sm">
-                                <div>• 英语：按成绩分A、B班（同时上课）</div>
-                                <div>• 中文、数学：按能力分1、2班（同时上课）</div>
-                                <div>• 选修课：走班制，按组合上课</div>
-                            </div>
-                        </div>
-                        <div class="border border-gray-200 rounded-lg p-4">
-                            <h4 class="text-lg font-medium text-gray-800 mb-3">冲刺班（8月开学）</h4>
-                            <div class="space-y-2 text-sm">
-                                <div>• 所有科目统一授课</div>
-                                <div>• 不分班，集中教学</div>
-                                <div>• 选修课同样按组合安排</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="text-center">
-                    <button onclick="saveCourseSettings()" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-200">
-                        <i class="fas fa-save mr-2"></i>保存课程设置
+<!-- Required Subjects -->
+<div class="mb-8">
+<h3 class="text-xl font-semibold mb-4 text-gray-700">必修科目</h3>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Chinese -->
+<div class="border border-gray-200 rounded-lg p-4">
+<div class="flex items-center justify-between mb-3">
+<h4 class="text-lg font-medium text-gray-800">中文</h4>
+<label class="flex items-center">
+<input class="mr-2" id="chinese-evening" type="checkbox"/>
+<span class="text-sm text-gray-600">允许晚自习排课</span>
+</label>
+</div>
+<div class="space-y-2">
+<div class="flex items-center justify-between">
+<span class="text-gray-600">每周总课时：</span>
+<input class="w-20 px-2 py-1 border border-gray-300 rounded text-center" id="chinese-hours" max="20" min="1" type="number" value="6"/>
+</div>
+</div>
+</div>
+<!-- Mathematics -->
+<div class="border border-gray-200 rounded-lg p-4">
+<div class="flex items-center justify-between mb-3">
+<h4 class="text-lg font-medium text-gray-800">数学</h4>
+<label class="flex items-center">
+<input class="mr-2" id="math-evening" type="checkbox"/>
+<span class="text-sm text-gray-600">允许晚自习排课</span>
+</label>
+</div>
+<div class="space-y-2">
+<div class="flex items-center justify-between">
+<span class="text-gray-600">每周总课时：</span>
+<input class="w-20 px-2 py-1 border border-gray-300 rounded text-center" id="math-hours" max="20" min="1" type="number" value="6"/>
+</div>
+</div>
+</div>
+<!-- English (Detailed) -->
+<div class="border border-gray-200 rounded-lg p-4 lg:col-span-2">
+<div class="flex items-center justify-between mb-3">
+<h4 class="text-lg font-medium text-gray-800">英文（细分板块）</h4>
+<label class="flex items-center">
+<input class="mr-2" id="english-evening" type="checkbox"/>
+<span class="text-sm text-gray-600">允许晚自习排课</span>
+</label>
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
+<div class="space-y-2">
+<label class="block text-sm font-medium text-gray-700">英文听力A</label>
+<input class="w-full px-2 py-1 border border-gray-300 rounded text-center" id="english-listening-a" max="10" min="0" type="number" value="2"/>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-medium text-gray-700">英文听力B</label>
+<input class="w-full px-2 py-1 border border-gray-300 rounded text-center" id="english-listening-b" max="10" min="0" type="number" value="2"/>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-medium text-gray-700">英文阅读</label>
+<input class="w-full px-2 py-1 border border-gray-300 rounded text-center" id="english-reading" max="10" min="0" type="number" value="2"/>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-medium text-gray-700">英文写作</label>
+<input class="w-full px-2 py-1 border border-gray-300 rounded text-center" id="english-writing" max="10" min="0" type="number" value="2"/>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-medium text-gray-700">英文口语</label>
+<input class="w-full px-2 py-1 border border-gray-300 rounded text-center" id="english-speaking" max="10" min="0" type="number" value="2"/>
+</div>
+</div>
+<div class="mt-3 p-2 bg-blue-50 rounded">
+<span class="text-sm text-blue-800">英文总课时：<span id="english-total">10</span> 课时/周</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Elective Subjects -->
+<div class="mb-8">
+<h3 class="text-xl font-semibold mb-4 text-gray-700">选修科目</h3>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Physics -->
+<div class="border border-gray-200 rounded-lg p-4">
+<div class="flex items-center justify-between mb-3">
+<h4 class="text-lg font-medium text-gray-800">物理</h4>
+<label class="flex items-center">
+<input class="mr-2" id="physics-evening" type="checkbox"/>
+<span class="text-sm text-gray-600">允许晚自习排课</span>
+</label>
+</div>
+<div class="space-y-2">
+<div class="flex items-center justify-between">
+<span class="text-gray-600">每周课时：</span>
+<input class="w-20 px-2 py-1 border border-gray-300 rounded text-center" id="physics-hours" max="10" min="1" type="number" value="5"/>
+</div>
+<div class="text-xs text-blue-600">选修组合1：物理 &amp; 历史</div>
+</div>
+</div>
+<!-- Chemistry -->
+<div class="border border-gray-200 rounded-lg p-4">
+<div class="flex items-center justify-between mb-3">
+<h4 class="text-lg font-medium text-gray-800">化学</h4>
+<label class="flex items-center">
+<input class="mr-2" id="chemistry-evening" type="checkbox"/>
+<span class="text-sm text-gray-600">允许晚自习排课</span>
+</label>
+</div>
+<div class="space-y-2">
+<div class="flex items-center justify-between">
+<span class="text-gray-600">每周课时：</span>
+<input class="w-20 px-2 py-1 border border-gray-300 rounded text-center" id="chemistry-hours" max="10" min="1" type="number" value="5"/>
+</div>
+<div class="text-xs text-blue-600">选修组合2：化学 &amp; 经济</div>
+</div>
+</div>
+<!-- Biology -->
+<div class="border border-gray-200 rounded-lg p-4">
+<div class="flex items-center justify-between mb-3">
+<h4 class="text-lg font-medium text-gray-800">生物</h4>
+<label class="flex items-center">
+<input class="mr-2" id="biology-evening" type="checkbox"/>
+<span class="text-sm text-gray-600">允许晚自习排课</span>
+</label>
+</div>
+<div class="space-y-2">
+<div class="flex items-center justify-between">
+<span class="text-gray-600">每周课时：</span>
+<input class="w-20 px-2 py-1 border border-gray-300 rounded text-center" id="biology-hours" max="10" min="1" type="number" value="5"/>
+</div>
+<div class="text-xs text-blue-600">选修组合3：生物 &amp; M2</div>
+</div>
+</div>
+<!-- Economics -->
+<div class="border border-gray-200 rounded-lg p-4">
+<div class="flex items-center justify-between mb-3">
+<h4 class="text-lg font-medium text-gray-800">经济</h4>
+<label class="flex items-center">
+<input class="mr-2" id="economics-evening" type="checkbox"/>
+<span class="text-sm text-gray-600">允许晚自习排课</span>
+</label>
+</div>
+<div class="space-y-2">
+<div class="flex items-center justify-between">
+<span class="text-gray-600">每周课时：</span>
+<input class="w-20 px-2 py-1 border border-gray-300 rounded text-center" id="economics-hours" max="10" min="1" type="number" value="5"/>
+</div>
+<div class="text-xs text-blue-600">选修组合2：化学 &amp; 经济</div>
+</div>
+</div>
+<!-- History -->
+<div class="border border-gray-200 rounded-lg p-4">
+<div class="flex items-center justify-between mb-3">
+<h4 class="text-lg font-medium text-gray-800">历史</h4>
+<label class="flex items-center">
+<input class="mr-2" id="history-evening" type="checkbox"/>
+<span class="text-sm text-gray-600">允许晚自习排课</span>
+</label>
+</div>
+<div class="space-y-2">
+<div class="flex items-center justify-between">
+<span class="text-gray-600">每周课时：</span>
+<input class="w-20 px-2 py-1 border border-gray-300 rounded text-center" id="history-hours" max="10" min="1" type="number" value="5"/>
+</div>
+<div class="text-xs text-blue-600">选修组合1：物理 &amp; 历史</div>
+</div>
+</div>
+<!-- M2 -->
+<div class="border border-gray-200 rounded-lg p-4">
+<div class="flex items-center justify-between mb-3">
+<h4 class="text-lg font-medium text-gray-800">M2</h4>
+<label class="flex items-center">
+<input class="mr-2" id="m2-evening" type="checkbox"/>
+<span class="text-sm text-gray-600">允许晚自习排课</span>
+</label>
+</div>
+<div class="space-y-2">
+<div class="flex items-center justify-between">
+<span class="text-gray-600">每周课时：</span>
+<input class="w-20 px-2 py-1 border border-gray-300 rounded text-center" id="m2-hours" max="10" min="1" type="number" value="5"/>
+</div>
+<div class="text-xs text-blue-600">选修组合3：生物 &amp; M2</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Class Structure -->
+<div class="mb-6">
+<h3 class="text-xl font-semibold mb-4 text-gray-700">分班结构设置</h3>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<div class="border border-gray-200 rounded-lg p-4">
+<h4 class="text-lg font-medium text-gray-800 mb-3">全年班（4月开学）</h4>
+<div class="space-y-2 text-sm">
+<div>• 英语：按成绩分A、B班（同时上课）</div>
+<div>• 中文、数学：按能力分1、2班（同时上课）</div>
+<div>• 选修课：走班制，按组合上课</div>
+</div>
+</div>
+<div class="border border-gray-200 rounded-lg p-4">
+<h4 class="text-lg font-medium text-gray-800 mb-3">冲刺班（8月开学）</h4>
+<div class="space-y-2 text-sm">
+<div>• 所有科目统一授课</div>
+<div>• 不分班，集中教学</div>
+<div>• 选修课同样按组合安排</div>
+</div>
+</div>
+</div>
+</div>
+<div class="text-center">
+<button class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-200" onclick="saveCourseSettings()">
+<i class="fas fa-save mr-2"></i>保存课程设置
                     </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Teachers Tab -->
-        <div id="teachers" class="tab-content">
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <h2 class="text-2xl font-bold mb-6 text-gray-800">
-                    <i class="fas fa-chalkboard-teacher text-blue-600 mr-2"></i>教师管理
+</div>
+</div>
+</div>
+<!-- Teachers Tab -->
+<div class="tab-content" id="teachers">
+<div class="bg-white rounded-lg shadow-md p-6">
+<h2 class="text-2xl font-bold mb-6 text-gray-800">
+<i class="fas fa-chalkboard-teacher text-blue-600 mr-2"></i>教师管理
                 </h2>
-                
-                <!-- Add Teacher Form -->
-                <div class="mb-6 p-4 border border-gray-200 rounded-lg">
-                    <h3 class="text-lg font-semibold mb-4">添加教师</h3>
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">教师姓名</label>
-                            <input type="text" id="teacher-name" placeholder="请输入教师姓名" class="w-full px-3 py-2 border border-gray-300 rounded-md">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">可授课科目</label>
-                            <select id="teacher-subjects" multiple class="w-full px-3 py-2 border border-gray-300 rounded-md">
-                                <option value="chinese">中文</option>
-                                <option value="english-listening-a">英文听力A</option>
-                                <option value="english-listening-b">英文听力B</option>
-                                <option value="english-reading">英文阅读</option>
-                                <option value="english-writing">英文写作</option>
-                                <option value="english-speaking">英文口语</option>
-                                <option value="math">数学</option>
-                                <option value="physics">物理</option>
-                                <option value="chemistry">化学</option>
-                                <option value="biology">生物</option>
-                                <option value="economics">经济</option>
-                                <option value="history">历史</option>
-                                <option value="m2">M2</option>
-                            </select>
-                        </div>
-                        <div class="flex items-end">
-                            <button onclick="addTeacher()" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 w-full">
-                                <i class="fas fa-plus mr-2"></i>添加教师
+<!-- Add Teacher Form -->
+<div class="mb-6 p-4 border border-gray-200 rounded-lg">
+<h3 class="text-lg font-semibold mb-4">添加教师</h3>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">教师姓名</label>
+<input class="w-full px-3 py-2 border border-gray-300 rounded-md" id="teacher-name" placeholder="请输入教师姓名" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">可授课科目</label>
+<select class="w-full px-3 py-2 border border-gray-300 rounded-md" id="teacher-subjects" multiple="">
+<option value="chinese">中文</option>
+<option value="english-listening-a">英文听力A</option>
+<option value="english-listening-b">英文听力B</option>
+<option value="english-reading">英文阅读</option>
+<option value="english-writing">英文写作</option>
+<option value="english-speaking">英文口语</option>
+<option value="math">数学</option>
+<option value="physics">物理</option>
+<option value="chemistry">化学</option>
+<option value="biology">生物</option>
+<option value="economics">经济</option>
+<option value="history">历史</option>
+<option value="m2">M2</option>
+</select>
+</div>
+<div class="flex items-end">
+<button class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 w-full" onclick="addTeacher()">
+<i class="fas fa-plus mr-2"></i>添加教师
                             </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Teachers List -->
-                <div class="mb-6">
-                    <h3 class="text-lg font-semibold mb-4">教师列表</h3>
-                    <div id="teachers-list" class="space-y-3">
-                        <!-- Teachers will be populated here -->
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Constraints Tab -->
-        <div id="constraints" class="tab-content">
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <h2 class="text-2xl font-bold mb-6 text-gray-800">
-                    <i class="fas fa-cogs text-blue-600 mr-2"></i>约束条件设置
+</div>
+</div>
+</div>
+<!-- Teachers List -->
+<div class="mb-6">
+<h3 class="text-lg font-semibold mb-4">教师列表</h3>
+<div class="space-y-3" id="teachers-list">
+<!-- Teachers will be populated here -->
+</div>
+</div>
+</div>
+</div>
+<!-- Constraints Tab -->
+<div class="tab-content" id="constraints">
+<div class="bg-white rounded-lg shadow-md p-6">
+<h2 class="text-2xl font-bold mb-6 text-gray-800">
+<i class="fas fa-cogs text-blue-600 mr-2"></i>约束条件设置
                 </h2>
-
-                <!-- Teacher Selection -->
-                <div class="mb-6">
-                    <label class="block text-lg font-medium text-gray-700 mb-2">选择教师设置约束条件</label>
-                    <select id="constraint-teacher-select" onchange="loadTeacherConstraints()" class="w-full px-3 py-2 border border-gray-300 rounded-md">
-                        <option value="">请选择教师</option>
-                    </select>
-                </div>
-
-                <!-- Constraints Settings -->
-                <div id="teacher-constraints-panel" class="hidden">
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <!-- Available Times -->
-                        <div class="border border-gray-200 rounded-lg p-4">
-                            <h3 class="text-lg font-semibold mb-3 text-green-700">
-                                <i class="fas fa-check-circle mr-2"></i>可用时间
+<!-- Teacher Selection -->
+<div class="mb-6">
+<label class="block text-lg font-medium text-gray-700 mb-2">选择教师设置约束条件</label>
+<select class="w-full px-3 py-2 border border-gray-300 rounded-md" id="constraint-teacher-select" onchange="loadTeacherConstraints()">
+<option value="">请选择教师</option>
+</select>
+</div>
+<!-- Constraints Settings -->
+<div class="hidden" id="teacher-constraints-panel">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Available Times -->
+<div class="border border-gray-200 rounded-lg p-4">
+<h3 class="text-lg font-semibold mb-3 text-green-700">
+<i class="fas fa-check-circle mr-2"></i>可用时间
                             </h3>
-                            <p class="text-sm text-gray-600 mb-3">点击下方时间段设置教师可上课时间</p>
-                            <div id="available-times" class="constraint-time-grid">
-                                <!-- Time slots will be generated here -->
-                            </div>
-                        </div>
-
-                        <!-- Unavailable Times -->
-                        <div class="border border-gray-200 rounded-lg p-4">
-                            <h3 class="text-lg font-semibold mb-3 text-red-700">
-                                <i class="fas fa-times-circle mr-2"></i>不可用时间
+<p class="text-sm text-gray-600 mb-3">点击下方时间段设置教师可上课时间</p>
+<div class="constraint-time-grid" id="available-times">
+<!-- Time slots will be generated here -->
+</div>
+</div>
+<!-- Unavailable Times -->
+<div class="border border-gray-200 rounded-lg p-4">
+<h3 class="text-lg font-semibold mb-3 text-red-700">
+<i class="fas fa-times-circle mr-2"></i>不可用时间
                             </h3>
-                            <p class="text-sm text-gray-600 mb-3">点击下方时间段设置教师不能上课时间</p>
-                            <div id="unavailable-times" class="constraint-time-grid">
-                                <!-- Time slots will be generated here -->
-                            </div>
-                        </div>
-
-                        <!-- Preferred Times -->
-                        <div class="border border-gray-200 rounded-lg p-4">
-                            <h3 class="text-lg font-semibold mb-3 text-blue-700">
-                                <i class="fas fa-star mr-2"></i>优先时间
+<p class="text-sm text-gray-600 mb-3">点击下方时间段设置教师不能上课时间</p>
+<div class="constraint-time-grid" id="unavailable-times">
+<!-- Time slots will be generated here -->
+</div>
+</div>
+<!-- Preferred Times -->
+<div class="border border-gray-200 rounded-lg p-4">
+<h3 class="text-lg font-semibold mb-3 text-blue-700">
+<i class="fas fa-star mr-2"></i>优先时间
                             </h3>
-                            <p class="text-sm text-gray-600 mb-3">点击下方时间段设置教师偏好时间</p>
-                            <div id="preferred-times" class="constraint-time-grid">
-                                <!-- Time slots will be generated here -->
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Multi-course Teaching -->
-                    <div class="mt-6 border border-gray-200 rounded-lg p-4">
-                        <h3 class="text-lg font-semibold mb-3 text-purple-700">
-                            <i class="fas fa-layer-group mr-2"></i>多课程授课设置
+<p class="text-sm text-gray-600 mb-3">点击下方时间段设置教师偏好时间</p>
+<div class="constraint-time-grid" id="preferred-times">
+<!-- Time slots will be generated here -->
+</div>
+</div>
+</div>
+<!-- Multi-course Teaching -->
+<div class="mt-6 border border-gray-200 rounded-lg p-4">
+<h3 class="text-lg font-semibold mb-3 text-purple-700">
+<i class="fas fa-layer-group mr-2"></i>多课程授课设置
                         </h3>
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">全年班授课科目</label>
-                                <select id="full-year-subjects" multiple class="w-full px-3 py-2 border border-gray-300 rounded-md h-24">
-                                    <!-- Options will be populated based on teacher's subjects -->
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">冲刺班授课科目</label>
-                                <select id="sprint-subjects" multiple class="w-full px-3 py-2 border border-gray-300 rounded-md h-24">
-                                    <!-- Options will be populated based on teacher's subjects -->
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="text-center mt-6">
-                        <button onclick="saveTeacherConstraints()" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-200">
-                            <i class="fas fa-save mr-2"></i>保存约束条件
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">全年班授课科目</label>
+<select class="w-full px-3 py-2 border border-gray-300 rounded-md h-24" id="full-year-subjects" multiple="">
+<!-- Options will be populated based on teacher's subjects -->
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">冲刺班授课科目</label>
+<select class="w-full px-3 py-2 border border-gray-300 rounded-md h-24" id="sprint-subjects" multiple="">
+<!-- Options will be populated based on teacher's subjects -->
+</select>
+</div>
+</div>
+</div>
+<div class="text-center mt-6">
+<button class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-200" onclick="saveTeacherConstraints()">
+<i class="fas fa-save mr-2"></i>保存约束条件
                         </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Schedule Tab -->
-        <div id="schedule" class="tab-content">
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <h2 class="text-2xl font-bold mb-6 text-gray-800">
-                    <i class="fas fa-calendar-alt text-blue-600 mr-2"></i>智能排课
+</div>
+</div>
+</div>
+</div>
+<!-- Schedule Tab -->
+<div class="tab-content" id="schedule">
+<div class="bg-white rounded-lg shadow-md p-6">
+<h2 class="text-2xl font-bold mb-6 text-gray-800">
+<i class="fas fa-calendar-alt text-blue-600 mr-2"></i>智能排课
                 </h2>
-
-                <!-- Schedule Settings -->
-                <div class="mb-6">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div class="border border-gray-200 rounded-lg p-4">
-                            <h3 class="text-lg font-semibold mb-3">排课参数设置</h3>
-                            <div class="space-y-3">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">生成方案数量</label>
-                                    <select id="solution-count" class="w-full px-3 py-2 border border-gray-300 rounded-md">
-                                        <option value="3">3个方案</option>
-                                        <option value="5" selected>5个方案</option>
-                                        <option value="10">10个方案</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">优化目标</label>
-                                    <select id="optimization-target" class="w-full px-3 py-2 border border-gray-300 rounded-md">
-                                        <option value="teacher-preference">教师偏好时间最大化</option>
-                                        <option value="course-distribution" selected>课程分布均匀化</option>
-                                        <option value="balanced">综合平衡</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="border border-gray-200 rounded-lg p-4">
-                            <h3 class="text-lg font-semibold mb-3">晚自习设置</h3>
-                            <div class="space-y-3">
-                                <div class="p-3 bg-yellow-50 rounded">
-                                    <div class="text-sm text-yellow-800">
-                                        <i class="fas fa-info-circle mr-2"></i>
+<!-- Schedule Settings -->
+<div class="mb-6">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<div class="border border-gray-200 rounded-lg p-4">
+<h3 class="text-lg font-semibold mb-3">排课参数设置</h3>
+<div class="space-y-3">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">生成方案数量</label>
+<select class="w-full px-3 py-2 border border-gray-300 rounded-md" id="solution-count">
+<option value="3">3个方案</option>
+<option selected="" value="5">5个方案</option>
+<option value="10">10个方案</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">优化目标</label>
+<select class="w-full px-3 py-2 border border-gray-300 rounded-md" id="optimization-target">
+<option value="teacher-preference">教师偏好时间最大化</option>
+<option selected="" value="course-distribution">课程分布均匀化</option>
+<option value="balanced">综合平衡</option>
+</select>
+</div>
+</div>
+</div>
+<div class="border border-gray-200 rounded-lg p-4">
+<h3 class="text-lg font-semibold mb-3">晚自习设置</h3>
+<div class="space-y-3">
+<div class="p-3 bg-yellow-50 rounded">
+<div class="text-sm text-yellow-800">
+<i class="fas fa-info-circle mr-2"></i>
                                         晚自习排课规则：
                                     </div>
-                                    <ul class="text-sm text-yellow-700 mt-2 ml-4">
-                                        <li>• 第三节晚自习(20:30-21:30)固定不排课</li>
-                                        <li>• 只有标记"允许晚自习排课"的科目可排入</li>
-                                        <li>• 前两节晚自习优先自习，必要时安排课程</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Generate Schedule Button -->
-                <div class="text-center mb-6">
-                    <button onclick="generateSchedule()" class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition duration-200 text-lg font-semibold">
-                        <i class="fas fa-magic mr-2"></i>开始智能排课
+<ul class="text-sm text-yellow-700 mt-2 ml-4">
+<li>• 第三节晚自习(20:30-21:30)固定不排课</li>
+<li>• 只有标记"允许晚自习排课"的科目可排入</li>
+<li>• 前两节晚自习优先自习，必要时安排课程</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Generate Schedule Button -->
+<div class="text-center mb-6">
+<button class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition duration-200 text-lg font-semibold" onclick="generateSchedule()">
+<i class="fas fa-magic mr-2"></i>开始智能排课
                     </button>
-                </div>
-
-                <!-- Progress -->
-                <div id="schedule-progress" class="hidden mb-6">
-                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                        <div class="flex items-center">
-                            <i class="fas fa-spinner fa-spin text-blue-600 mr-3"></i>
-                            <div>
-                                <div class="text-blue-800 font-medium">正在生成排课方案...</div>
-                                <div class="text-blue-600 text-sm mt-1" id="progress-text">初始化排课引擎</div>
-                            </div>
-                        </div>
-                        <div class="mt-3">
-                            <div class="bg-blue-200 rounded-full h-2">
-                                <div class="bg-blue-600 h-2 rounded-full transition-all duration-300" id="progress-bar" style="width: 0%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Schedule Results -->
-                <div id="schedule-results" class="hidden">
-                    <div class="border border-gray-200 rounded-lg p-4">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-lg font-semibold">生成结果</h3>
-                            <div class="text-sm text-gray-600" id="results-summary"></div>
-                        </div>
-                        <div id="solution-list" class="space-y-2">
-                            <!-- Solutions will be populated here -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Results Tab -->
-        <div id="results" class="tab-content">
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <h2 class="text-2xl font-bold mb-6 text-gray-800">
-                    <i class="fas fa-table text-blue-600 mr-2"></i>课表展示
+</div>
+<!-- Progress -->
+<div class="hidden mb-6" id="schedule-progress">
+<div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+<div class="flex items-center">
+<i class="fas fa-spinner fa-spin text-blue-600 mr-3"></i>
+<div>
+<div class="text-blue-800 font-medium">正在生成排课方案...</div>
+<div class="text-blue-600 text-sm mt-1" id="progress-text">初始化排课引擎</div>
+</div>
+</div>
+<div class="mt-3">
+<div class="bg-blue-200 rounded-full h-2">
+<div class="bg-blue-600 h-2 rounded-full transition-all duration-300" id="progress-bar" style="width: 0%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Schedule Results -->
+<div class="hidden" id="schedule-results">
+<div class="border border-gray-200 rounded-lg p-4">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-semibold">生成结果</h3>
+<div class="text-sm text-gray-600" id="results-summary"></div>
+</div>
+<div class="space-y-2" id="solution-list">
+<!-- Solutions will be populated here -->
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Results Tab -->
+<div class="tab-content" id="results">
+<div class="bg-white rounded-lg shadow-md p-6">
+<h2 class="text-2xl font-bold mb-6 text-gray-800">
+<i class="fas fa-table text-blue-600 mr-2"></i>课表展示
                 </h2>
-
-                <!-- Solution Navigation -->
-                <div id="solution-navigation" class="flex items-center justify-between mb-6 p-4 bg-gray-50 rounded-lg">
-                    <button onclick="previousSolution()" class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition duration-200">
-                        <i class="fas fa-chevron-left mr-2"></i>上一个方案
+<!-- Solution Navigation -->
+<div class="flex items-center justify-between mb-6 p-4 bg-gray-50 rounded-lg" id="solution-navigation">
+<button class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition duration-200" onclick="previousSolution()">
+<i class="fas fa-chevron-left mr-2"></i>上一个方案
                     </button>
-                    <div class="text-center">
-                        <div class="text-lg font-semibold" id="current-solution-title">方案 1</div>
-                        <div class="text-sm text-gray-600" id="current-solution-info">点击生成排课方案后查看</div>
-                    </div>
-                    <button onclick="nextSolution()" class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition duration-200">
+<div class="text-center">
+<div class="text-lg font-semibold" id="current-solution-title">方案 1</div>
+<div class="text-sm text-gray-600" id="current-solution-info">点击生成排课方案后查看</div>
+</div>
+<button class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition duration-200" onclick="nextSolution()">
                         下一个方案<i class="fas fa-chevron-right ml-2"></i>
-                    </button>
-                </div>
-
-                <!-- Timetable Display -->
-                <div id="timetable-container">
-                    <!-- Full Year Classes -->
-                    <div class="mb-8">
-                        <h3 class="text-xl font-semibold mb-4 text-gray-700">全年班课表</h3>
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            <div>
-                                <h4 class="text-lg font-medium mb-2 text-center bg-blue-100 p-2 rounded">英语A班 & 中数1班</h4>
-                                <div id="full-year-a1-timetable" class="timetable-grid"></div>
-                            </div>
-                            <div>
-                                <h4 class="text-lg font-medium mb-2 text-center bg-green-100 p-2 rounded">英语B班 & 中数2班</h4>
-                                <div id="full-year-b2-timetable" class="timetable-grid"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sprint Class -->
-                    <div class="mb-8">
-                        <h3 class="text-xl font-semibold mb-4 text-gray-700">冲刺班课表</h3>
-                        <div>
-                            <h4 class="text-lg font-medium mb-2 text-center bg-yellow-100 p-2 rounded">冲刺班</h4>
-                            <div id="sprint-timetable" class="timetable-grid"></div>
-                        </div>
-                    </div>
-
-                    <!-- Overall Schedule -->
-                    <div class="mb-6">
-                        <h3 class="text-xl font-semibold mb-4 text-gray-700">总课表概览</h3>
-                        <div id="overall-timetable" class="timetable-grid"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
+</button>
+</div>
+<!-- Timetable Display -->
+<div id="timetable-container">
+<!-- Full Year Classes -->
+<div class="mb-8">
+<h3 class="text-xl font-semibold mb-4 text-gray-700">全年班课表</h3>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<div>
+<h4 class="text-lg font-medium mb-2 text-center bg-blue-100 p-2 rounded">英语A班 &amp; 中数1班</h4>
+<div class="timetable-grid" id="full-year-a1-timetable"></div>
+</div>
+<div>
+<h4 class="text-lg font-medium mb-2 text-center bg-green-100 p-2 rounded">英语B班 &amp; 中数2班</h4>
+<div class="timetable-grid" id="full-year-b2-timetable"></div>
+</div>
+</div>
+</div>
+<!-- Sprint Class -->
+<div class="mb-8">
+<h3 class="text-xl font-semibold mb-4 text-gray-700">冲刺班课表</h3>
+<div>
+<h4 class="text-lg font-medium mb-2 text-center bg-yellow-100 p-2 rounded">冲刺班</h4>
+<div class="timetable-grid" id="sprint-timetable"></div>
+</div>
+</div>
+<!-- Overall Schedule -->
+<div class="mb-6">
+<h3 class="text-xl font-semibold mb-4 text-gray-700">总课表概览</h3>
+<div class="timetable-grid" id="overall-timetable"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
         // Global variables
         let teachers = [];
         let courseSettings = {};
