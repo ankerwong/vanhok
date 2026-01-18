@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>万鹤书院｜门牌生成器</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <div class="brand">
+        <div class="brand-mark">V</div>
+        <div>
+          <div class="brand-title">万鹤书院 门牌生成器</div>
+          <div class="brand-sub">A4 输出，上下两张 A5 门牌；三种设计风格可选</div>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <a class="btn btn-ghost" href="#" id="btnReset">重置</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container grid">
+    <section class="panel">
+      <h2 class="h2">1) 选择设计方案</h2>
+      <div class="style-picker" role="radiogroup" aria-label="选择门牌风格">
+        <label class="style-card">
+          <input type="radio" name="style" value="modern" checked>
+          <div class="style-thumb thumb-modern"></div>
+          <div class="style-meta">
+            <div class="style-name">方案 1｜Modern Geometric</div>
+            <div class="style-desc">几何纹理 + 玻璃拟态 + 金色高对比</div>
+          </div>
+        </label>
+        <label class="style-card">
+          <input type="radio" name="style" value="minimal">
+          <div class="style-thumb thumb-minimal"></div>
+          <div class="style-meta">
+            <div class="style-name">方案 2｜Elegant Minimal</div>
+            <div class="style-desc">极简留白 + 光束纹理 + 清晰分隔线</div>
+          </div>
+        </label>
+        <label class="style-card">
+          <input type="radio" name="style" value="tech">
+          <div class="style-thumb thumb-tech"></div>
+          <div class="style-meta">
+            <div class="style-name">方案 3｜Dynamic Tech</div>
+            <div class="style-desc">赛博科技 + 霓虹辉光 + 点阵/电路感</div>
+          </div>
+        </label>
+      </div>
+
+      <h2 class="h2">2) 填写两张门牌信息</h2>
+      <form id="form" class="form" novalidate>
+        <div class="form-grid">
+          <fieldset class="card">
+            <legend>上半张（A5 #1）</legend>
+            <div class="fields">
+              <div class="field">
+                <label>Room Number（房号）</label>
+                <input name="room1" placeholder="例如：402A" required maxlength="16" />
+              </div>
+              <div class="field">
+                <label>Priority User（英文）</label>
+                <input name="user1" placeholder="例如：Hercules To" required maxlength="64" />
+              </div>
+              <div class="field">
+                <label>Role（英文）</label>
+                <input name="role1" placeholder="例如：Student" required maxlength="32" />
+              </div>
+              <div class="field two">
+                <div>
+                  <label>Start Date</label>
+                  <input type="date" name="start1" required />
+                </div>
+                <div>
+                  <label>End Date</label>
+                  <input type="date" name="end1" required />
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="card">
+            <legend>下半张（A5 #2）</legend>
+            <div class="fields">
+              <div class="field">
+                <label>Room Number（房号）</label>
+                <input name="room2" placeholder="例如：305B" required maxlength="16" />
+              </div>
+              <div class="field">
+                <label>Priority User（英文）</label>
+                <input name="user2" placeholder="例如：Jane Doe" required maxlength="64" />
+              </div>
+              <div class="field">
+                <label>Role（英文）</label>
+                <input name="role2" placeholder="例如：Teacher" required maxlength="32" />
+              </div>
+              <div class="field two">
+                <div>
+                  <label>Start Date</label>
+                  <input type="date" name="start2" required />
+                </div>
+                <div>
+                  <label>End Date</label>
+                  <input type="date" name="end2" required />
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn btn-primary" id="btnGenerate">生成 A4 图片</button>
+          <button type="button" class="btn" id="btnPng" disabled>下载 PNG（推荐打印）</button>
+          <button type="button" class="btn" id="btnJpg" disabled>下载 JPG</button>
+          <div class="hint">输出尺寸：768×1024px（A4 比例），上下两张 768×512px（A5）</div>
+        </div>
+        <div id="errorBox" class="error" aria-live="polite" hidden></div>
+      </form>
+    </section>
+
+    <aside class="panel preview">
+      <div class="preview-head">
+        <h2 class="h2">预览</h2>
+        <div class="badge" id="badgeStyle">方案 1</div>
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="canvas" width="768" height="1024" aria-label="A4 门牌预览"></canvas>
+      </div>
+      <div class="preview-foot">
+        <div class="mini">提示：打印建议关闭“缩放到页面”，或选择“实际大小/100%”。</div>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="footer container">
+    <div>© <span id="year"></span> Vanhok Academy · Door Sign Generator (Static)</div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
