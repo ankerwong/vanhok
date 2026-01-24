@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>万鹤书院 HKDSE 资讯中心 - 香港DSE考试最新资讯</title>
+    <meta name="description" content="万鹤书院HKDSE资讯中心，提供香港DSE考试最新资讯、考试时间表、升学指南、选科建议、备考攻略等专业内容。">
+    <meta name="keywords" content="HKDSE, DSE考试, 香港中学文凭, 考试资讯, 升学指南, 万鹤书院">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="https://www.genspark.ai/api/files/s/OoOh1qCh" alt="万鹤书院" class="logo">
+                <span class="brand-name">万鹤书院 HKDSE 资讯中心</span>
+            </div>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="菜单">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="active">资讯首页</a></li>
+                <li><a href="timetable.html">考试时间表</a></li>
+                <li><a href="statistics.html">统计数据</a></li>
+                <li><a href="admission.html">升学录取</a></li>
+                <li><a href="subjects.html">选科指南</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main class="news-main">
+        <!-- 顶部轮播图区域 -->
+        <section class="hero-slider">
+            <div class="container">
+                <div class="slider-wrapper">
+                    <div class="slider-container" id="heroSlider">
+                        <!-- 轮播项由 JS 动态生成 -->
+                    </div>
+                    <button class="slider-btn prev" id="sliderPrev" aria-label="上一张">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="slider-btn next" id="sliderNext" aria-label="下一张">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <div class="slider-dots" id="sliderDots"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 资讯内容区 -->
+        <div class="container news-container">
+            <!-- 搜索和分类栏 -->
+            <section class="news-controls">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="搜索资讯标题、关键词...">
+                </div>
+                
+                <div class="category-filter" id="categoryFilter">
+                    <!-- 分类标签由 JS 动态生成 -->
+                </div>
+            </section>
+
+            <!-- 内容区域 -->
+            <div class="news-layout">
+                <!-- 主内容区 -->
+                <div class="news-content">
+                    <!-- 置顶精选资讯 -->
+                    <section class="featured-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-star"></i>
+                            精选推荐
+                        </h2>
+                        <div class="featured-grid" id="featuredGrid">
+                            <!-- 精选卡片由 JS 动态生成 -->
+                        </div>
+                    </section>
+
+                    <!-- 最新资讯列表 -->
+                    <section class="latest-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-clock"></i>
+                            最新资讯
+                        </h2>
+                        <div class="articles-list" id="articlesList">
+                            <!-- 资讯列表由 JS 动态生成 -->
+                        </div>
+                        
+                        <!-- 加载更多 -->
+                        <div class="load-more-wrapper">
+                            <button class="btn-load-more" id="loadMoreBtn">
+                                <i class="fas fa-sync-alt"></i>
+                                加载更多
+                            </button>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- 侧边栏 -->
+                <aside class="news-sidebar">
+                    <!-- 搜索框（桌面版） -->
+                    <div class="sidebar-widget search-widget">
+                        <h3 class="widget-title">
+                            <i class="fas fa-search"></i>
+                            搜索资讯
+                        </h3>
+                        <div class="search-box">
+                            <input type="text" id="sidebarSearch" placeholder="搜索关键词...">
+                            <button id="sidebarSearchBtn">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 热门资讯 -->
+                    <div class="sidebar-widget">
+                        <h3 class="widget-title">
+                            <i class="fas fa-fire"></i>
+                            热门资讯
+                        </h3>
+                        <div class="popular-list" id="popularList">
+                            <!-- 热门列表由 JS 动态生成 -->
+                        </div>
+                    </div>
+
+                    <!-- 资讯分类 -->
+                    <div class="sidebar-widget">
+                        <h3 class="widget-title">
+                            <i class="fas fa-folder"></i>
+                            资讯分类
+                        </h3>
+                        <div class="category-list" id="categoryList">
+                            <!-- 分类列表由 JS 动态生成 -->
+                        </div>
+                    </div>
+
+                    <!-- 快速链接 -->
+                    <div class="sidebar-widget">
+                        <h3 class="widget-title">
+                            <i class="fas fa-link"></i>
+                            快速链接
+                        </h3>
+                        <div class="quick-links">
+                            <a href="timetable.html" class="quick-link">
+                                <i class="fas fa-calendar-alt"></i>
+                                2026考试时间表
+                            </a>
+                            <a href="admission.html" class="quick-link">
+                                <i class="fas fa-university"></i>
+                                八大录取分数
+                            </a>
+                            <a href="admission.html#calculator" class="quick-link">
+                                <i class="fas fa-calculator"></i>
+                                JUPAS分数计算器
+                            </a>
+                            <a href="subjects.html" class="quick-link">
+                                <i class="fas fa-book"></i>
+                                选科指南
+                            </a>
+                            <a href="statistics.html" class="quick-link">
+                                <i class="fas fa-chart-bar"></i>
+                                统计数据
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 热门标签 -->
+                    <div class="sidebar-widget">
+                        <h3 class="widget-title">
+                            <i class="fas fa-tags"></i>
+                            热门标签
+                        </h3>
+                        <div class="tags-cloud" id="tagsCloud">
+                            <!-- 标签云由 JS 动态生成 -->
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于万鹤书院</h3>
+                    <p>万鹤书院专注香港HKDSE课程教学，提供专业的DSE备考指导、升学规划服务。</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="timetable.html">考试时间表</a></li>
+                        <li><a href="statistics.html">统计数据</a></li>
+                        <li><a href="admission.html">升学录取</a></li>
+                        <li><a href="subjects.html">选科指南</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>联系我们</h3>
+                    <p><i class="fas fa-phone"></i> +852 1234 5678</p>
+                    <p><i class="fas fa-envelope"></i> info@wanhe-academy.hk</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 香港九龙旺角XX大厦</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 万鹤书院. 保留所有权利.</p>
+                <p class="footer-note">本站数据来源：香港考试及评核局 (HKEAA)</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" id="backToTop" aria-label="返回顶部">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script src="js/articles.js"></script>
+    <script src="js/news.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[文章标题] - 万鹤书院 HKDSE 资讯中心</title>
+    <meta name="description" content="[文章摘要]">
+    <meta name="keywords" content="[标签1, 标签2, 标签3]">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 文章详情页专用样式 */
+        .article-detail {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 900px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .article-header {
+            margin-bottom: 30px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid var(--gray-200);
+        }
+        
+        .article-detail-category {
+            display: inline-block;
+            padding: 6px 16px;
+            background: var(--primary-purple);
+            color: var(--white);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .article-detail-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.3;
+            color: var(--primary-purple);
+            margin-bottom: 20px;
+        }
+        
+        .article-detail-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            color: var(--gray-600);
+            font-size: 0.95rem;
+        }
+        
+        .article-detail-meta span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .article-body {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: var(--black);
+        }
+        
+        .article-body h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-purple);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-gold);
+        }
+        
+        .article-body h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--black);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        .article-body p {
+            margin-bottom: 20px;
+        }
+        
+        .article-body ul, .article-body ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .article-body li {
+            margin-bottom: 10px;
+        }
+        
+        .article-body img {
+            width: 100%;
+            border-radius: var(--border-radius);
+            margin: 25px 0;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .article-body blockquote {
+            border-left: 4px solid var(--primary-gold);
+            padding-left: 20px;
+            margin: 25px 0;
+            font-style: italic;
+            color: var(--gray-600);
+            background: var(--gray-100);
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .article-footer {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid var(--gray-200);
+        }
+        
+        .article-tags-section {
+            margin-bottom: 30px;
+        }
+        
+        .article-tags-section h4 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--gray-700);
+        }
+        
+        .article-share {
+            margin-top: 30px;
+        }
+        
+        .article-share h4 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--gray-700);
+        }
+        
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .share-btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            color: var(--white);
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .share-btn.facebook { background: #1877F2; }
+        .share-btn.whatsapp { background: #25D366; }
+        .share-btn.twitter { background: #1DA1F2; }
+        .share-btn.copy { background: var(--gray-600); }
+        
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .related-articles {
+            margin: 60px auto;
+            max-width: 900px;
+        }
+        
+        .related-articles h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-purple);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary-gold);
+        }
+        
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .article-detail {
+                padding: 25px 20px;
+            }
+            
+            .article-detail-title {
+                font-size: 1.8rem;
+            }
+            
+            .article-body {
+                font-size: 1rem;
+            }
+            
+            .article-body h2 {
+                font-size: 1.5rem;
+            }
+            
+            .article-body h3 {
+                font-size: 1.3rem;
+            }
+            
+            .share-buttons {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="https://www.genspark.ai/api/files/s/OoOh1qCh" alt="万鹤书院" class="logo">
+                <span class="brand-name">万鹤书院 HKDSE 资讯中心</span>
+            </div>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="菜单">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="../index.html">资讯首页</a></li>
+                <li><a href="../timetable.html">考试时间表</a></li>
+                <li><a href="../statistics.html">统计数据</a></li>
+                <li><a href="../admission.html">升学录取</a></li>
+                <li><a href="../subjects.html">选科指南</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 文章详情 -->
+    <main class="container">
+        <article class="article-detail">
+            <!-- 文章头部 -->
+            <header class="article-header">
+                <div class="article-detail-category">
+                    <i class="fas fa-folder"></i> 备考攻略
+                </div>
+                <h1 class="article-detail-title">
+                    [示例] 中文科备考策略：阅读卷与写作卷全攻略
+                </h1>
+                <div class="article-detail-meta">
+                    <span><i class="fas fa-calendar"></i> 2026-02-01</span>
+                    <span><i class="fas fa-user"></i> 中文科主任</span>
+                    <span><i class="fas fa-eye"></i> 0 次阅读</span>
+                    <span><i class="fas fa-clock"></i> 阅读时长约 10 分钟</span>
+                </div>
+            </header>
+
+            <!-- 文章正文 -->
+            <div class="article-body">
+                <p><strong>【编者按】</strong>本文为资讯详情页模板，用于展示如何添加新的资讯内容。您可以复制此模板，修改相应内容后发布新资讯。</p>
+
+                <h2>一、文章概述</h2>
+                <p>
+                    这里是文章的开篇段落，简要介绍文章的主题和内容框架。例如：中文科是HKDSE的核心科目之一，
+                    对于大部分同学来说既重要又具有挑战性。本文将从阅读理解、写作技巧、文言文应对等多个角度，
+                    为同学们提供全面的备考指导。
+                </p>
+
+                <h2>二、阅读理解攻略</h2>
+                
+                <h3>2.1 白话文阅读技巧</h3>
+                <p>
+                    白话文阅读是卷一的重要组成部分。考生需要掌握以下技巧：
+                </p>
+                <ul>
+                    <li><strong>快速浏览全文</strong>：先通读全文，了解文章主旨和结构</li>
+                    <li><strong>精读关键段落</strong>：重点阅读首尾段、转折句、议论句</li>
+                    <li><strong>标注重点信息</strong>：用不同符号标记人物、事件、观点等</li>
+                    <li><strong>理解隐含意义</strong>：注意作者的言外之意和写作手法</li>
+                </ul>
+
+                <h3>2.2 文言文阅读策略</h3>
+                <p>
+                    文言文阅读是许多同学的难点。建议采取以下策略：
+                </p>
+                <ol>
+                    <li>熟记常见文言实词、虚词的意义和用法</li>
+                    <li>掌握文言句式特点（如倒装句、省略句等）</li>
+                    <li>积累常见典故、成语的出处和含义</li>
+                    <li>多做历年真题，培养语感</li>
+                </ol>
+
+                <blockquote>
+                    <strong>💡 备考贴士：</strong>建议每天阅读一篇文言文短文，配合注释理解，
+                    并尝试用现代汉语复述内容，这样可以有效提升文言文理解能力。
+                </blockquote>
+
+                <h2>三、写作技巧提升</h2>
+                
+                <h3>3.1 审题立意</h3>
+                <p>
+                    写作的第一步是准确审题。考生需要：
+                </p>
+                <ul>
+                    <li>仔细分析题目要求（记叙、议论、描写等文体）</li>
+                    <li>确定写作重点和主题思想</li>
+                    <li>构思文章结构和论证逻辑</li>
+                </ul>
+
+                <h3>3.2 结构布局</h3>
+                <p>
+                    一篇优秀的作文需要清晰的结构：
+                </p>
+                <ul>
+                    <li><strong>开头</strong>：引人入胜，点明主旨</li>
+                    <li><strong>主体</strong>：层次分明，论证充分</li>
+                    <li><strong>结尾</strong>：总结升华，呼应开头</li>
+                </ul>
+
+                <!-- 可以插入图片 -->
+                <!-- <img src="../images/writing-structure.jpg" alt="作文结构示意图"> -->
+
+                <h3>3.3 语言表达</h3>
+                <p>
+                    语言是作文的外衣，需要注意：
+                </p>
+                <ul>
+                    <li>用词准确、生动、多样化</li>
+                    <li>句式灵活，长短句结合</li>
+                    <li>适当运用修辞手法（比喻、排比、引用等）</li>
+                    <li>避免错别字和语法错误</li>
+                </ul>
+
+                <h2>四、实战练习建议</h2>
+                <p>
+                    理论知识掌握后，还需要大量练习来巩固：
+                </p>
+                <ol>
+                    <li><strong>定期模拟考试</strong>：按考试时间完成整套试卷</li>
+                    <li><strong>批改与反思</strong>：请老师批改，找出问题所在</li>
+                    <li><strong>背诵优秀范文</strong>：学习他人的写作技巧和表达方式</li>
+                    <li><strong>积累素材</strong>：建立素材库，包括名人事例、经典语句等</li>
+                </ol>
+
+                <blockquote>
+                    <strong>📚 推荐资源：</strong>万鹤书院提供中文科专项训练课程，包括阅读理解精讲、
+                    写作批改服务、文言文专题辅导等。欢迎咨询了解详情。
+                </blockquote>
+
+                <h2>五、常见误区提醒</h2>
+                <p>
+                    同学们在备考过程中要避免以下误区：
+                </p>
+                <ul>
+                    <li>❌ 只顾刷题，不注重总结反思</li>
+                    <li>❌ 忽视基础知识，过分追求技巧</li>
+                    <li>❌ 写作时堆砌辞藻，忽略内容质量</li>
+                    <li>❌ 考前突击，平时不积累</li>
+                </ul>
+
+                <h2>六、总结</h2>
+                <p>
+                    中文科的学习没有捷径，需要长期积累和反复练习。只要掌握正确的方法，
+                    持之以恒地努力，相信同学们一定能在DSE中取得理想成绩。万鹤书院祝各位考生备考顺利，
+                    金榜题名！
+                </p>
+            </div>
+
+            <!-- 文章页脚 -->
+            <footer class="article-footer">
+                <!-- 标签 -->
+                <div class="article-tags-section">
+                    <h4><i class="fas fa-tags"></i> 相关标签</h4>
+                    <div class="featured-tags">
+                        <span class="tag">#中文科</span>
+                        <span class="tag">#备考攻略</span>
+                        <span class="tag">#阅读理解</span>
+                        <span class="tag">#写作技巧</span>
+                    </div>
+                </div>
+
+                <!-- 分享 -->
+                <div class="article-share">
+                    <h4><i class="fas fa-share-alt"></i> 分享文章</h4>
+                    <div class="share-buttons">
+                        <button class="share-btn facebook" onclick="shareToFacebook()">
+                            <i class="fab fa-facebook"></i> Facebook
+                        </button>
+                        <button class="share-btn whatsapp" onclick="shareToWhatsApp()">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </button>
+                        <button class="share-btn twitter" onclick="shareToTwitter()">
+                            <i class="fab fa-twitter"></i> Twitter
+                        </button>
+                        <button class="share-btn copy" onclick="copyLink()">
+                            <i class="fas fa-link"></i> 复制链接
+                        </button>
+                    </div>
+                </div>
+            </footer>
+        </article>
+
+        <!-- 相关文章推荐 -->
+        <section class="related-articles">
+            <h3><i class="fas fa-newspaper"></i> 相关推荐</h3>
+            <div class="related-grid">
+                <!-- 这里可以手动添加3-4篇相关文章，或者通过JS自动生成 -->
+                <div class="featured-card">
+                    <div class="featured-image" style="background-image: url('https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=800&h=450&fit=crop')">
+                        <div class="featured-category" style="background-color: #27AE60;">
+                            <i class="fas fa-lightbulb"></i> 备考攻略
+                        </div>
+                    </div>
+                    <div class="featured-body">
+                        <h3 class="featured-title">
+                            <a href="#">英文科提分秘籍：从Level 3到Level 5**</a>
+                        </h3>
+                        <p class="featured-summary">英文科提升策略：Paper 1阅读技巧、Paper 2写作框架...</p>
+                        <div class="featured-meta">
+                            <span><i class="fas fa-calendar"></i> 2026-02-05</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="featured-card">
+                    <div class="featured-image" style="background-image: url('https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&h=450&fit=crop')">
+                        <div class="featured-category" style="background-color: #27AE60;">
+                            <i class="fas fa-lightbulb"></i> 备考攻略
+                        </div>
+                    </div>
+                    <div class="featured-body">
+                        <h3 class="featured-title">
+                            <a href="#">数学必修部分高分攻略</a>
+                        </h3>
+                        <p class="featured-summary">数学科备考全攻略：多项选择题快速解题、长题目完整步骤...</p>
+                        <div class="featured-meta">
+                            <span><i class="fas fa-calendar"></i> 2026-02-10</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="featured-card">
+                    <div class="featured-image" style="background-image: url('https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800&h=450&fit=crop')">
+                        <div class="featured-category" style="background-color: #F39C12;">
+                            <i class="fas fa-book"></i> 选科建议
+                        </div>
+                    </div>
+                    <div class="featured-body">
+                        <h3 class="featured-title">
+                            <a href="../subjects.html">HKDSE选科完全指南</a>
+                        </h3>
+                        <p class="featured-summary">中三选科最全攻略！核心科目详解、16大选修科目介绍...</p>
+                        <div class="featured-meta">
+                            <span><i class="fas fa-calendar"></i> 2026-01-15</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于万鹤书院</h3>
+                    <p>万鹤书院专注香港HKDSE课程教学，提供专业的DSE备考指导、升学规划服务。</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">资讯首页</a></li>
+                        <li><a href="../timetable.html">考试时间表</a></li>
+                        <li><a href="../statistics.html">统计数据</a></li>
+                        <li><a href="../admission.html">升学录取</a></li>
+                        <li><a href="../subjects.html">选科指南</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>联系我们</h3>
+                    <p><i class="fas fa-phone"></i> +852 1234 5678</p>
+                    <p><i class="fas fa-envelope"></i> info@wanhe-academy.hk</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 香港九龙旺角XX大厦</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 万鹤书院. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" id="backToTop" aria-label="返回顶部">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script src="../js/main.js"></script>
+    <script>
+        // 分享功能
+        function shareToFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        }
+
+        function shareToWhatsApp() {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent(document.title);
+            window.open(`https://wa.me/?text=${text}%20${url}`, '_blank');
+        }
+
+        function shareToTwitter() {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent(document.title);
+            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('链接已复制到剪贴板！');
+            });
+        }
+    </script>
+</body>
+</html>
