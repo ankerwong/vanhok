@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v2.0升級說明 - 萬鶴書院HKDSE英語口語考試分組系統</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang TC', sans-serif;
+            background: linear-gradient(135deg, #3d2a7e 0%, #5a3f9e 100%);
+            padding: 40px 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .header img {
+            max-width: 400px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #3d2a7e;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .version-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f5b841, #f5a521);
+            color: #3d2a7e;
+            padding: 10px 30px;
+            border-radius: 25px;
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .comparison-section {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .comparison-section h2 {
+            color: #3d2a7e;
+            font-size: 32px;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 4px solid #f5b841;
+            padding-bottom: 15px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border: 3px solid #f5b841;
+            border-radius: 15px;
+            padding: 30px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(245, 184, 65, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 60px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            color: #3d2a7e;
+            font-size: 24px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #555;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #f5b841;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .new-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #f5b841;
+            color: #3d2a7e;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 3px 10px rgba(245, 184, 65, 0.5);
+        }
+
+        .workflow-section {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .workflow-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .step {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #f5b841;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #3d2a7e, #5a3f9e);
+            color: white;
+            min-width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            color: #3d2a7e;
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .step-content p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .comparison-table {
+            width: 100%;
+            margin-top: 30px;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #3d2a7e, #5a3f9e);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        .comparison-table td {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .comparison-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .yes-mark {
+            color: #4CAF50;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .no-mark {
+            color: #f44336;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .download-section {
+            background: linear-gradient(135deg, #3d2a7e, #5a3f9e);
+            color: white;
+            padding: 50px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .download-section h2 {
+            color: white;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .download-section p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .btn-download {
+            display: inline-block;
+            padding: 20px 60px;
+            background: #f5b841;
+            color: #3d2a7e;
+            text-decoration: none;
+            border-radius: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(245, 184, 65, 0.5);
+        }
+
+        .btn-download:hover {
+            background: #f5a521;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(245, 184, 65, 0.7);
+        }
+
+        .file-info {
+            margin-top: 20px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .screenshot-section {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .screenshot-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #f5b841;
+        }
+
+        .screenshot-item h4 {
+            color: #3d2a7e;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .screenshot-placeholder {
+            background: linear-gradient(135deg, #e0e0e0, #f5f5f5);
+            height: 200px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://www.genspark.ai/api/files/s/J6JylInK" alt="萬鶴書院">
+            <h1>系統升級說明</h1>
+            <div class="version-badge">v2.0 重大更新</div>
+        </div>
+
+        <div class="comparison-section">
+            <h2>🆕 三大核心功能升級</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="new-badge">NEW</span>
+                    <div class="feature-icon">📊</div>
+                    <h3>批次顯示控制</h3>
+                    <p>解決學生提前知道分組的問題，按批次逐一公佈考試分組</p>
+                    <ul class="feature-list">
+                        <li>初始只顯示第1批學生</li>
+                        <li>通過按鈕控制顯示下一批</li>
+                        <li>保護考試公平性</li>
+                        <li>可自由前後翻看</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <span class="new-badge">NEW</span>
+                    <div class="feature-icon">🎬</div>
+                    <h3>抽籤動畫效果</h3>
+                    <p>增加抽籤過程的視覺呈現，提升儀式感和隨機性表現</p>
+                    <ul class="feature-list">
+                        <li>Logo脈動動畫</li>
+                        <li>旋轉加載器</li>
+                        <li>學生姓名滾動效果</li>
+                        <li>約1.8秒動畫時長</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <span class="new-badge">NEW</span>
+                    <div class="feature-icon">💾</div>
+                    <h3>Cookie數據保存</h3>
+                    <p>自動保存所有輸入數據和分組結果，防止意外丟失</p>
+                    <ul class="feature-list">
+                        <li>實時自動保存</li>
+                        <li>刷新後自動恢復</li>
+                        <li>7天有效期</li>
+                        <li>可手動清空數據</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="comparison-section">
+            <h2>📋 版本功能對比</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>功能</th>
+                        <th>v1.0</th>
+                        <th>v2.0</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>批量輸入學生名單</strong></td>
+                        <td><span class="yes-mark">✓</span></td>
+                        <td><span class="yes-mark">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>智能分組算法</strong></td>
+                        <td><span class="yes-mark">✓</span></td>
+                        <td><span class="yes-mark">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>多考場支持</strong></td>
+                        <td><span class="yes-mark">✓</span></td>
+                        <td><span class="yes-mark">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>大屏顯示</strong></td>
+                        <td><span class="yes-mark">✓</span></td>
+                        <td><span class="yes-mark">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>批次控制顯示</strong></td>
+                        <td><span class="no-mark">✗</span></td>
+                        <td><span class="yes-mark">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>抽籤動畫</strong></td>
+                        <td><span class="no-mark">✗</span></td>
+                        <td><span class="yes-mark">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>數據自動保存</strong></td>
+                        <td><span class="no-mark">✗</span></td>
+                        <td><span class="yes-mark">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>防止提前知道分組</strong></td>
+                        <td><span class="no-mark">✗</span></td>
+                        <td><span class="yes-mark">✓</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="workflow-section">
+            <h2 style="color: #3d2a7e; font-size: 32px; margin-bottom: 30px; text-align: center; border-bottom: 4px solid #f5b841; padding-bottom: 15px;">🔄 升級後的完整流程</h2>
+            <div class="workflow-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>輸入信息 + 自動保存</h3>
+                        <p>輸入學生名單、考場數量、教師姓名。系統實時自動保存到Cookie，即使刷新頁面也不會丟失數據。新增「清空數據」按鈕，可一鍵清除所有保存的數據。</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>抽籤動畫 ✨</h3>
+                        <p>點擊「開始抽籤分組」後，進入精美的抽籤動畫頁面。顯示Logo脈動、旋轉加載器、滾動姓名等視覺效果，約1.8秒後自動跳轉到結果頁面。</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>批次顯示控制 🔐</h3>
+                        <p>結果頁面默認只顯示第1批學生。每個考場的第1組考生可以看到自己的分組，其他批次完全隱藏。考試進行時，負責人員通過「下一批」按鈕逐步公佈後續批次。</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>靈活查看與管理</h3>
+                        <p>可使用「上一批」/「下一批」按鈕自由查看已公佈的批次。中間顯示當前批次進度（如：2/4）。如需重新分組，點擊「返回重新分組」，數據會保留以便修改。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="screenshot-section">
+            <h2 style="color: #3d2a7e; font-size: 32px; margin-bottom: 20px; text-align: center; border-bottom: 4px solid #f5b841; padding-bottom: 15px;">📸 界面預覽</h2>
+            <div class="screenshot-grid">
+                <div class="screenshot-item">
+                    <h4>設置頁面</h4>
+                    <div class="screenshot-placeholder">
+                        新增「清空數據」按鈕<br>
+                        實時數據保存提示
+                    </div>
+                </div>
+                <div class="screenshot-item">
+                    <h4>抽籤動畫頁面 🆕</h4>
+                    <div class="screenshot-placeholder">
+                        Logo脈動效果<br>
+                        旋轉加載器<br>
+                        學生姓名滾動
+                    </div>
+                </div>
+                <div class="screenshot-item">
+                    <h4>結果頁面（批次控制）🆕</h4>
+                    <div class="screenshot-placeholder">
+                        批次控制按鈕<br>
+                        當前批次：1/4<br>
+                        隱藏未公佈批次
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="download-section">
+            <h2>⬇️ 立即下載升級版</h2>
+            <p>包含所有新功能的完整版本，下載解壓後即可使用</p>
+            <a href="#" class="btn-download" onclick="alert('請從文件系統下載 vanhok-exam-grouping-v2.0.zip'); return false;">下載 v2.0</a>
+            <div class="file-info">
+                📦 文件包含：index.html、styles.css、script.js、demo.html、README.md、UPGRADE_LOG.md<br>
+                💾 文件大小：約16KB | 版本：v2.0 | 更新日期：2026年2月6日
+            </div>
+        </div>
+
+        <div style="text-align: center; padding: 40px; color: white;">
+            <p style="font-size: 18px;">© 2026 萬鶴書院 Vanhok Academy</p>
+            <p style="margin-top: 10px; opacity: 0.8;">專業教育系統開發 | 技術支持</p>
+        </div>
+    </div>
+</body>
+</html>
