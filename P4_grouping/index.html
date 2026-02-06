@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>萬鶴書院 - HKDSE英語口語考試分組系統</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 設置頁面 -->
+        <div id="setupPage" class="page active">
+            <div class="header">
+                <img src="./logo.png" alt="萬鶴書院" class="logo">
+                <h1>HKDSE英語口語考試分組系統</h1>
+            </div>
+
+            <div class="form-section">
+                <div class="form-group">
+                    <label for="studentList">學生名單（每行一個學生姓名）：</label>
+                    <textarea id="studentList" rows="12" placeholder="請複製粘貼學生名單，每行一個姓名&#10;例如：&#10;張三&#10;李四&#10;王五&#10;..."></textarea>
+                    <div class="student-count">已輸入學生數：<span id="studentCount">0</span></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="examRoomCount">考場數量：</label>
+                    <select id="examRoomCount">
+                        <option value="2">2個考場</option>
+                        <option value="3" selected>3個考場</option>
+                        <option value="4">4個考場</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>考場負責老師：</label>
+                    <div id="teacherInputs">
+                        <!-- 動態生成 -->
+                    </div>
+                </div>
+
+                <button id="startGrouping" class="btn-primary">開始抽籤分組</button>
+            </div>
+        </div>
+
+        <!-- 結果顯示頁面 -->
+        <div id="resultPage" class="page">
+            <div class="result-header">
+                <img src="https://www.genspark.ai/api/files/s/J6JylInK" alt="萬鶴書院" class="logo-small">
+                <h1>HKDSE英語口語考試分組結果</h1>
+                <button id="backBtn" class="btn-secondary">返回重新分組</button>
+            </div>
+
+            <div id="resultContent" class="result-content">
+                <!-- 動態生成結果 -->
+            </div>
+
+            <div class="result-footer">
+                <p>總學生數：<span id="totalStudents">0</span> | 總組數：<span id="totalGroups">0</span></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
