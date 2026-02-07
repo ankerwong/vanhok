@@ -434,7 +434,7 @@ function generateCardHTML(candidate) {
             <div class="card-header">
                 <!-- Logo區域 -->
                 <div class="header-left">
-                    <img src="https://www.genspark.ai/api/files/s/J6JylInK" alt="Vanhok Academy Logo" class="card-logo">
+                    <img src="./logo.png" alt="Vanhok Academy Logo" class="card-logo">
                 </div>
                 
                 <!-- 中間標題區域 -->
