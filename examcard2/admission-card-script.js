@@ -535,7 +535,7 @@ function generateCardHTML(candidate, cardIndex) {
                 
                 <!-- 中間標題區域 -->
                 <div class="header-center">
-                    <div class="year">2025</div>
+                    <div class="year">2026</div>
                     <div class="title-ch">萬鶴書院</div>
                     <div class="title-en">VANHOK ACADEMY</div>
                     <div style="height: 8px;"></div>
