@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>萬鶴書院 - HKDSE準考證生成系統</title>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="admission-card-style.css">
+    <link rel="stylesheet" href="card-style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 設置頁面 -->
+        <div id="setupPage" class="page active">
+            <div class="header">
+                <img src="https://www.genspark.ai/api/files/s/J6JylInK" alt="萬鶴書院" class="logo">
+                <h1>HKDSE準考證生成系統</h1>
+                <p class="subtitle">Admission Card Generation System</p>
+            </div>
+
+            <div class="form-section">
+                <h2>📋 考生資料輸入</h2>
+                
+                <div class="input-method">
+                    <div class="method-card active" id="excelMethod">
+                        <div class="method-icon">📊</div>
+                        <h3>Excel批量導入</h3>
+                        <p>上傳Excel檔案批量生成</p>
+                    </div>
+                    <div class="method-card" id="manualMethod">
+                        <div class="method-icon">✍️</div>
+                        <h3>手動輸入</h3>
+                        <p>逐一填寫考生資料</p>
+                    </div>
+                </div>
+
+                <!-- Excel上傳區域 -->
+                <div id="excelUploadArea" class="upload-area">
+                    <div class="upload-box">
+                        <div class="upload-icon">📤</div>
+                        <p>拖放Excel檔案到這裡，或點擊選擇檔案</p>
+                        <input type="file" id="excelFile" accept=".xlsx,.xls" style="display: none;">
+                        <button class="btn-upload" onclick="document.getElementById('excelFile').click()">
+                            選擇Excel檔案
+                        </button>
+                    </div>
+                    <div class="template-download">
+                        <button class="btn-template" id="downloadTemplate">
+                            <span>📥</span> 下載Excel模板
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 手動輸入區域 -->
+                <div id="manualInputArea" class="manual-input" style="display: none;">
+                    <div class="form-group">
+                        <label>考生姓名 Candidate Name *</label>
+                        <input type="text" id="candidateName" placeholder="例：張偉明 ZHANG Weiming">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>考生編號 Candidate Number *</label>
+                            <input type="text" id="candidateNumber" placeholder="例：A123456">
+                        </div>
+                        <div class="form-group">
+                            <label>性別 Gender *</label>
+                            <select id="gender">
+                                <option value="">請選擇</option>
+                                <option value="M">男 Male</option>
+                                <option value="F">女 Female</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>考試科目 Subject *</label>
+                        <input type="text" id="subject" placeholder="例：English Language 英國語文">
+                    </div>
+                    <div class="form-group">
+                        <label>應考語言 Medium of Exam *</label>
+                        <select id="examLanguage">
+                            <option value="">請選擇</option>
+                            <option value="中文 Chinese">中文 Chinese</option>
+                            <option value="英文 English">英文 English</option>
+                            <option value="中英文 Chinese & English">中英文 Chinese & English</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>考場資訊 Exam Venue</label>
+                        <textarea id="venue" rows="2" placeholder="例：Room 101, Vanhok Academy"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>考試日期 Exam Date</label>
+                        <input type="date" id="examDate">
+                    </div>
+                    <div class="form-group">
+                        <label>考試時間 Exam Time</label>
+                        <input type="text" id="examTime" placeholder="例：09:00 - 11:30">
+                    </div>
+                    <button class="btn-add" id="addCandidate">➕ 新增考生</button>
+                </div>
+
+                <!-- 考生列表 - v3.0: 添加選擇控制 -->
+                <div id="candidateList" class="candidate-list" style="display: none;">
+                    <h3>已添加考生列表 (<span id="candidateCount">0</span>人)</h3>
+                    <div class="selection-controls">
+                        <button class="btn-select" id="selectAll">✓ 全選</button>
+                        <button class="btn-select" id="deselectAll">✗ 取消全選</button>
+                        <span style="color: #666; margin-left: auto; align-self: center; font-size: 14px;">
+                            💡 提示：勾選考生可以選擇性下載，減少文件大小
+                        </span>
+                    </div>
+                    <div class="list-container" id="listContainer"></div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn-secondary" id="clearAll">清空列表</button>
+                    <button class="btn-primary" id="generateCards" disabled>生成準考證</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 預覽頁面 -->
+        <div id="previewPage" class="page">
+            <div class="preview-header">
+                <h1>準考證預覽</h1>
+                <div class="preview-actions">
+                    <button class="btn-secondary" id="backToEdit">← 返回編輯</button>
+                    <button class="btn-primary btn-download-selected" id="downloadSelected" disabled>📥 下載選中 (0)</button>
+                    <button class="btn-primary" id="downloadAll">📥 下載全部</button>
+                </div>
+                <p style="text-align: center; color: #666; margin-top: 15px; font-size: 14px;">
+                    💡 建議：考生數量超過10人時，使用「下載選中」分批下載，避免內存問題
+                </p>
+            </div>
+            <div class="preview-container" id="previewContainer">
+                <!-- 動態生成預覽卡片 -->
+            </div>
+        </div>
+    </div>
+
+    <script src="admission-card-script.js"></script>
+</body>
+</html>

@@ -1,0 +1,317 @@
+/* 準考證卡片樣式 - 基於HKDSE官方格式 - v3.0更新 */
+
+.admission-card {
+    background: white;
+    width: 210mm;
+    min-height: 297mm;
+    padding: 12mm;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    position: relative;
+    page-break-after: always;
+    font-family: Arial, 'Microsoft YaHei', sans-serif;
+}
+
+.card-content {
+    width: 100%;
+    height: 100%;
+}
+
+/* 頂部區域 */
+.card-header {
+    display: grid;
+    grid-template-columns: 100px 1fr 100px; /* v3.0: 縮小右側條形碼區域從120px到100px */
+    gap: 15px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #000;
+}
+
+.card-logo {
+    width: 100%;
+    max-width: 90px;
+    height: auto;
+}
+
+.header-center {
+    text-align: center;
+}
+
+.year {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+.title-ch {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.title-en {
+    font-size: 11px;
+    margin-bottom: 8px;
+}
+
+.form-title-ch {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.form-title-en {
+    font-size: 12px;
+}
+
+.header-right {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* v3.0: 調整條形碼樣式 */
+.barcode-svg {
+    width: 100%;
+    max-width: 95px; /* 限制最大寬度 */
+    height: auto;
+    max-height: 50px; /* 限制最大高度 */
+    margin: 0 auto;
+}
+
+.barcode {
+    width: 100%;
+    height: auto;
+    max-height: 50px; /* v3.0: 從60px減小到50px */
+}
+
+.candidate-number-display {
+    font-size: 9px; /* v3.0: 從10px減小到9px */
+    margin-top: 2px;
+    font-weight: bold;
+    word-break: break-all;
+}
+
+/* 基本信息區域 */
+.basic-info {
+    margin-bottom: 15px;
+}
+
+.info-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 8px;
+    border: 1px solid #000;
+}
+
+.info-field {
+    display: flex;
+    flex: 1;
+    border-right: 1px solid #000;
+}
+
+.info-field:last-child {
+    border-right: none;
+}
+
+.info-field.full-width {
+    flex: 1 0 100%;
+}
+
+.field-label {
+    background: #f0f0f0;
+    padding: 6px 8px;
+    font-size: 9px;
+    line-height: 1.3;
+    min-width: 85px;
+    border-right: 1px solid #000;
+}
+
+.label-ch {
+    font-weight: bold;
+}
+
+.label-en {
+    font-size: 8px;
+}
+
+.field-value {
+    padding: 6px 10px;
+    font-size: 11px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.candidate-number {
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+/* 考試科目表格 - v3.0: 刪除試場編號列 */
+.exam-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+    font-size: 9px;
+}
+
+.exam-table th,
+.exam-table td {
+    border: 1px solid #000;
+    padding: 6px 8px;
+    text-align: left;
+}
+
+.exam-table thead {
+    background: #f0f0f0;
+}
+
+.exam-table th {
+    font-weight: bold;
+}
+
+.th-ch {
+    font-size: 10px;
+    margin-bottom: 2px;
+}
+
+.th-en {
+    font-size: 8px;
+    font-weight: normal;
+}
+
+/* v3.0: 更新列寬（刪除試場編號列後重新分配） */
+.col-subject {
+    width: 28%; /* 從25%增加 */
+}
+
+.col-version {
+    width: 12%; /* 從10%增加 */
+}
+
+.col-exam-center {
+    width: 38%; /* 從30%增加 */
+}
+
+/* .col-center-no 已刪除 */
+
+.col-date {
+    width: 10%; /* 從12%減少 */
+}
+
+.col-time {
+    width: 12%; /* 從13%減少 */
+}
+
+.col-time-header {
+    text-align: center;
+}
+
+.subject-cell {
+    font-weight: bold;
+    font-size: 10px;
+    line-height: 1.4;
+}
+
+.venue-cell {
+    font-size: 9px;
+    line-height: 1.4;
+}
+
+.center-align {
+    text-align: center;
+    font-size: 9px;
+}
+
+/* 備註區域 - v3.0: 增加第6條 */
+.remarks-section {
+    margin-top: 15px;
+    font-size: 8px;
+    line-height: 1.5;
+}
+
+.remarks-title {
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 10px;
+}
+
+.title-ch {
+    margin-right: 5px;
+}
+
+.remarks-content {
+    text-align: justify;
+}
+
+.remark-item {
+    margin-bottom: 8px;
+    text-indent: -15px;
+    padding-left: 15px;
+}
+
+.remark-item strong {
+    font-size: 9px;
+}
+
+.remark-item:last-child {
+    margin-bottom: 0; /* v3.0: 移除最後一項的底部間距 */
+}
+
+/* 打印樣式 */
+@media print {
+    body {
+        background: white;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .admission-card {
+        box-shadow: none;
+        margin: 0;
+        page-break-after: always;
+    }
+    
+    .preview-header,
+    .btn-primary,
+    .btn-secondary {
+        display: none !important;
+    }
+}
+
+/* 響應式調整 */
+@media screen and (max-width: 768px) {
+    .admission-card {
+        width: 100%;
+        min-height: auto;
+        padding: 5mm;
+    }
+    
+    .card-header {
+        grid-template-columns: 70px 1fr 80px; /* v3.0: 調整移動端布局 */
+    }
+    
+    .card-logo {
+        max-width: 65px;
+    }
+    
+    .year {
+        font-size: 14px;
+    }
+    
+    .title-ch {
+        font-size: 11px;
+    }
+    
+    .title-en {
+        font-size: 9px;
+    }
+    
+    .barcode-svg {
+        max-width: 75px;
+        max-height: 40px;
+    }
+}
