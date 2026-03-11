@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A1 第二章：數據控制及數據組織 | 萬鶴書院 VANHOK ACADEMY</title>
+<style>
+  :root {
+    --purple:#3D1785; --purple-light:#5c2db8; --purple-dark:#2a0f5e;
+    --gold:#F5A623; --gold-light:#ffc85a;
+    --white:#ffffff; --bg:#f7f5ff; --text:#1a1a2e; --text-light:#555577;
+    --border:#d8d0f0;
+    --success:#1a7a4a; --success-bg:#e8f5ee;
+    --danger:#b91c1c;  --danger-bg:#fef2f2;
+    --info:#1d4ed8;    --info-bg:#eff6ff;
+    --warn-bg:#fffbeb; --warn:#92400e;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Noto Sans TC','Microsoft JhengHei','微軟正黑體',Arial,sans-serif;
+       background:var(--bg);color:var(--text);font-size:15px;line-height:1.85;}
+
+  /* ── WATERMARK ── */
+  body::before{
+    content:'萬鶴書院  VANHOK ACADEMY  ©Anker Wong  萬鶴書院  VANHOK ACADEMY  ©Anker Wong  萬鶴書院  VANHOK ACADEMY  ©Anker Wong';
+    position:fixed;top:0;left:0;width:100%;height:100%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px;font-weight:700;color:rgba(61,23,133,0.055);
+    transform:rotate(-35deg);white-space:nowrap;pointer-events:none;
+    z-index:9999;word-spacing:30px;letter-spacing:4px;line-height:3;
+    padding:0 40px;text-align:center;overflow:hidden;}
+
+  /* ── HEADER ── */
+  .site-header{background:linear-gradient(135deg,var(--purple-dark) 0%,var(--purple) 60%,var(--purple-light) 100%);
+               color:white;position:sticky;top:0;z-index:1000;
+               box-shadow:0 4px 20px rgba(61,23,133,.35);}
+  .header-inner{max-width:1200px;margin:0 auto;padding:12px 30px;
+                display:flex;align-items:center;justify-content:space-between;}
+  .header-brand{display:flex;align-items:center;gap:14px;}
+  .logo-circle{width:52px;height:52px;background:var(--gold);border-radius:12px;
+               display:flex;align-items:center;justify-content:center;
+               font-size:26px;font-weight:900;color:var(--purple-dark);flex-shrink:0;
+               box-shadow:0 2px 10px rgba(245,166,35,.4);}
+  .brand-text .school-zh{font-size:20px;font-weight:800;letter-spacing:2px;}
+  .brand-text .school-en{font-size:11px;letter-spacing:3px;opacity:.85;}
+  .header-right{text-align:right;font-size:12px;opacity:.8;line-height:1.5;}
+  .header-right .subject{font-size:14px;font-weight:600;opacity:1;color:var(--gold);}
+
+  /* ── HERO ── */
+  .chapter-hero{background:linear-gradient(160deg,var(--purple) 0%,#6b35d4 100%);
+                color:white;padding:50px 30px 40px;text-align:center;
+                position:relative;overflow:hidden;}
+  .chapter-hero::after{content:'A1';position:absolute;right:-10px;bottom:-30px;
+                        font-size:180px;font-weight:900;opacity:.06;color:white;pointer-events:none;}
+  .chapter-badge{display:inline-block;background:rgba(245,166,35,.25);
+                 border:1px solid var(--gold);color:var(--gold-light);
+                 padding:4px 18px;border-radius:20px;font-size:12px;
+                 letter-spacing:2px;margin-bottom:16px;}
+  .chapter-hero h1{font-size:2.4em;font-weight:900;margin-bottom:10px;
+                   text-shadow:0 2px 8px rgba(0,0,0,.2);}
+  .chapter-hero .subtitle{font-size:1.1em;opacity:.8;margin-bottom:20px;}
+  .chapter-meta{display:flex;justify-content:center;gap:30px;flex-wrap:wrap;margin-top:20px;}
+  .meta-item{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+             padding:8px 20px;border-radius:8px;font-size:13px;}
+  .meta-item span{color:var(--gold);font-weight:700;}
+
+  /* ── LAYOUT ── */
+  .content-wrapper{max-width:1000px;margin:0 auto;padding:40px 30px 60px;}
+
+  /* ── TOC ── */
+  .toc-box{background:white;border:2px solid var(--purple);border-radius:16px;
+           padding:28px 32px;margin-bottom:40px;
+           box-shadow:0 4px 20px rgba(61,23,133,.08);}
+  .toc-box h3{color:var(--purple);font-size:1.1em;font-weight:800;margin-bottom:16px;
+              padding-bottom:10px;border-bottom:2px solid var(--border);
+              display:flex;align-items:center;gap:8px;}
+  .toc-list{list-style:none;}
+  .toc-list li{padding:5px 0;border-bottom:1px dotted var(--border);
+               display:flex;align-items:center;gap:10px;}
+  .toc-list li:last-child{border-bottom:none;}
+  .toc-num{background:var(--purple);color:white;width:24px;height:24px;
+           border-radius:50%;display:flex;align-items:center;justify-content:center;
+           font-size:11px;font-weight:700;flex-shrink:0;}
+  .toc-list a{color:var(--purple);text-decoration:none;font-weight:600;flex:1;}
+  .toc-list a:hover{color:var(--gold);}
+  .toc-dse{background:var(--gold);color:var(--purple-dark);padding:1px 8px;
+           border-radius:4px;font-size:10px;font-weight:700;}
+
+  /* ── SECTION ── */
+  .section{background:white;border-radius:16px;margin-bottom:36px;
+           box-shadow:0 4px 16px rgba(61,23,133,.07);overflow:hidden;
+           border:1px solid var(--border);}
+  .section-header{background:linear-gradient(90deg,var(--purple) 0%,var(--purple-light) 100%);
+                  color:white;padding:18px 28px;display:flex;align-items:center;gap:14px;}
+  .section-num{background:var(--gold);color:var(--purple-dark);
+               width:36px;height:36px;border-radius:50%;
+               display:flex;align-items:center;justify-content:center;
+               font-size:16px;font-weight:900;flex-shrink:0;}
+  .section-header h2{font-size:1.25em;font-weight:800;line-height:1.3;}
+  .section-header .en-title{font-size:.75em;opacity:.75;font-weight:400;display:block;margin-top:2px;}
+  .section-body{padding:28px 32px;}
+
+  h3.sub-title{color:var(--purple);font-size:1.05em;font-weight:800;
+               margin:20px 0 12px;padding-left:12px;border-left:4px solid var(--gold);line-height:1.4;}
+  h4.mini-title{color:var(--purple-dark);font-size:.95em;font-weight:700;
+                margin:14px 0 8px;display:flex;align-items:center;gap:8px;}
+  h4.mini-title::before{content:'';width:8px;height:8px;background:var(--gold);
+                         border-radius:50%;flex-shrink:0;}
+  p{margin-bottom:10px;}
+  ul,ol{padding-left:22px;margin-bottom:10px;}
+  li{margin-bottom:5px;}
+
+  /* ── BOXES ── */
+  .box{border-radius:10px;padding:16px 20px;margin:16px 0;border-left:5px solid;}
+  .box-dse{background:linear-gradient(135deg,#fdf4e7,#fff9f0);border-color:var(--gold);}
+  .box-dse .box-title{color:#b45309;font-weight:800;font-size:.9em;margin-bottom:6px;}
+  .box-info{background:var(--info-bg);border-color:var(--info);}
+  .box-info .box-title{color:var(--info);font-weight:800;font-size:.9em;margin-bottom:6px;}
+  .box-danger{background:var(--danger-bg);border-color:var(--danger);}
+  .box-danger .box-title{color:var(--danger);font-weight:800;font-size:.9em;margin-bottom:6px;}
+  .box-success{background:var(--success-bg);border-color:var(--success);}
+  .box-success .box-title{color:var(--success);font-weight:800;font-size:.9em;margin-bottom:6px;}
+  .box-purple{background:#f5f0ff;border-color:var(--purple);}
+  .box-purple .box-title{color:var(--purple);font-weight:800;font-size:.9em;margin-bottom:6px;}
+
+  /* ── TABLE ── */
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px;
+        border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(61,23,133,.08);}
+  thead tr{background:var(--purple);color:white;}
+  thead th{padding:12px 16px;text-align:left;font-weight:700;}
+  tbody tr:nth-child(even){background:#f7f5ff;}
+  tbody tr:hover{background:#ede9ff;}
+  tbody td{padding:10px 16px;border-bottom:1px solid var(--border);}
+  .td-label{font-weight:700;color:var(--purple);}
+
+  /* ── HIERARCHY ── */
+  .hierarchy{display:flex;flex-direction:column;gap:0;margin:16px 0;}
+  .hier-row{display:flex;align-items:stretch;}
+  .hier-indent{width:28px;border-left:2px dashed var(--border);border-bottom:2px dashed var(--border);
+               margin-left:14px;min-height:40px;flex-shrink:0;}
+  .hier-box{flex:1;border:1.5px solid var(--border);border-radius:8px;
+            padding:10px 16px;margin:3px 0;display:flex;align-items:center;gap:10px;}
+  .hier-box.lvl1{border-color:var(--purple);background:#f0ebff;}
+  .hier-box.lvl2{border-color:#7c3aed;background:#f5f0ff;}
+  .hier-box.lvl3{border-color:#a78bfa;background:white;}
+  .hier-box.lvl4{border-color:#c4b5fd;background:#fafafa;}
+  .hier-label{font-weight:800;color:var(--purple);min-width:70px;}
+  .hier-en{font-size:12px;color:var(--text-light);}
+  .hier-eg{font-size:12px;color:var(--text-light);margin-left:auto;}
+
+  /* ── VALIDATION GRID ── */
+  .val-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+            gap:12px;margin:14px 0;}
+  .val-card{border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;
+            transition:border-color .2s;}
+  .val-card:hover{border-color:var(--purple);}
+  .val-card-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+  .val-icon{width:32px;height:32px;border-radius:8px;background:var(--purple);
+            color:white;display:flex;align-items:center;justify-content:center;
+            font-size:14px;font-weight:800;flex-shrink:0;}
+  .val-name{font-weight:800;color:var(--purple);font-size:13px;}
+  .val-en{font-size:11px;color:var(--text-light);}
+  .val-def{font-size:13px;color:var(--text);margin-bottom:5px;}
+  .val-eg{font-size:12px;color:var(--text-light);font-style:italic;
+          background:#f7f5ff;border-radius:5px;padding:5px 8px;}
+
+  /* ── ACCESS COMPARISON ── */
+  .access-compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;}
+  .access-card{border-radius:12px;padding:20px;border:2px solid;}
+  .access-card.seq{border-color:#7c3aed;background:#f5f0ff;}
+  .access-card.dir{border-color:var(--gold);background:#fffbeb;}
+  .access-card h4{font-size:1em;font-weight:800;margin-bottom:12px;
+                  display:flex;align-items:center;gap:8px;}
+  .access-card h4 .badge{padding:2px 10px;border-radius:10px;font-size:11px;}
+  .access-card.seq h4{color:#5b21b6;}
+  .access-card.dir h4{color:#92400e;}
+
+  /* ── CHECK DIGIT STEPS ── */
+  .steps-list{counter-reset:step-counter;list-style:none;padding:0;}
+  .steps-list li{counter-increment:step-counter;display:flex;gap:14px;
+                 margin-bottom:14px;align-items:flex-start;}
+  .steps-list li::before{content:counter(step-counter);
+                          background:var(--purple);color:white;
+                          width:28px;height:28px;border-radius:50%;
+                          display:flex;align-items:center;justify-content:center;
+                          font-size:13px;font-weight:800;flex-shrink:0;margin-top:1px;}
+
+  /* ── CODE BLOCK ── */
+  .code-block{background:#1e1e2e;color:#cdd6f4;border-radius:10px;
+              padding:16px 20px;font-family:'Courier New',monospace;
+              font-size:13px;margin:12px 0;overflow-x:auto;border-left:4px solid var(--gold);}
+  .code-block .kw{color:#89b4fa;}
+  .code-block .str{color:#a6e3a1;}
+  .code-block .cm{color:#6c7086;font-style:italic;}
+
+  /* ── MCQ ── */
+  .mcq-section{background:white;border-radius:16px;margin-bottom:36px;
+               box-shadow:0 4px 16px rgba(61,23,133,.07);overflow:hidden;
+               border:1px solid var(--border);}
+  .mcq-header{background:linear-gradient(90deg,#b45309,#d97706);color:white;
+              padding:18px 28px;display:flex;align-items:center;gap:14px;}
+  .mcq-header h2{font-size:1.1em;font-weight:800;}
+  .mcq-body{padding:28px 32px;}
+  .mcq-item{border:1px solid var(--border);border-radius:12px;padding:20px 24px;
+            margin-bottom:20px;position:relative;}
+  .mcq-item:last-child{margin-bottom:0;}
+  .mcq-year{position:absolute;top:-10px;right:16px;background:var(--gold);
+            color:var(--purple-dark);padding:2px 12px;border-radius:10px;
+            font-size:11px;font-weight:800;}
+  .mcq-q{font-weight:700;margin-bottom:12px;font-size:14.5px;}
+  .mcq-options{list-style:none;padding:0;margin:0 0 14px;}
+  .mcq-options li{padding:7px 12px;border-radius:6px;margin-bottom:5px;
+                  font-size:14px;border:1px solid transparent;}
+  .mcq-options li.correct{background:var(--success-bg);border-color:var(--success);
+                           font-weight:700;color:var(--success);}
+  .mcq-answer{background:#f7f5ff;border-radius:8px;padding:12px 16px;font-size:13px;}
+  .mcq-answer strong{color:var(--purple);}
+  .accuracy-bar{display:flex;align-items:center;gap:10px;margin-top:8px;}
+  .bar-label{font-size:12px;color:var(--text-light);min-width:80px;}
+  .bar-track{flex:1;height:8px;background:#e0d8f8;border-radius:4px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:4px;}
+  .bar-pct{font-size:12px;font-weight:700;color:var(--purple);min-width:40px;text-align:right;}
+
+  /* ── HIGHLIGHTS ── */
+  .hl-purple{background:#ede9ff;color:var(--purple);padding:1px 5px;border-radius:3px;font-weight:700;}
+  .hl-gold{background:#fef3c7;color:#92400e;padding:1px 5px;border-radius:3px;font-weight:700;}
+  .hl-red{background:#fee2e2;color:#991b1b;padding:1px 5px;border-radius:3px;font-weight:700;}
+
+  /* ── GLOSSARY ── */
+  .glossary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+                 gap:10px;margin:14px 0;}
+  .gloss-item{background:#f7f5ff;border:1px solid var(--border);border-radius:8px;
+              padding:10px 14px;display:flex;align-items:flex-start;gap:10px;}
+  .gloss-zh{font-weight:800;color:var(--purple);min-width:110px;font-size:13px;flex-shrink:0;}
+  .gloss-en{font-size:12px;color:var(--text-light);}
+
+  /* ── FOOTER ── */
+  .site-footer{background:var(--purple-dark);color:rgba(255,255,255,.7);
+               padding:28px 30px;text-align:center;font-size:13px;margin-top:20px;}
+  .footer-brand{font-size:16px;font-weight:800;color:white;margin-bottom:6px;}
+  .footer-brand span{color:var(--gold);}
+  .footer-copy{font-size:12px;opacity:.6;margin-top:8px;}
+
+  @media(max-width:640px){
+    .header-inner,.content-wrapper,.section-body{padding-left:16px;padding-right:16px;}
+    .access-compare{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ───── HEADER ───── -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="logo-circle">V</div>
+      <div class="brand-text">
+        <div class="school-zh">萬鶴書院</div>
+        <div class="school-en">VANHOK ACADEMY</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="subject">HKDSE ICT 教學筆記</div>
+      <div>Created by Anker Wong</div>
+      <div>A1 資訊處理 · 第二章</div>
+    </div>
+  </div>
+</header>
+
+<!-- ───── HERO ───── -->
+<div class="chapter-hero">
+  <div class="chapter-badge">HKDSE ICT · A1 資訊處理</div>
+  <h1>第二章：數據控制及數據組織</h1>
+  <div class="subtitle">Data Control and Data Organisation</div>
+  <div class="chapter-meta">
+    <div class="meta-item">科目：<span>ICT 資訊及通訊科技</span></div>
+    <div class="meta-item">冊別：<span>A1 資訊處理</span></div>
+    <div class="meta-item">教師：<span>Anker Wong</span></div>
+    <div class="meta-item">學校：<span>萬鶴書院</span></div>
+  </div>
+</div>
+
+<!-- ───── CONTENT ───── -->
+<div class="content-wrapper">
+
+<!-- ══ DSE EXAM OVERVIEW ══ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">🎯</div>
+    <div>
+      <h2>2025 DSE 真實考題分析</h2>
+      <span class="en-title">2025 HKDSE Exam Question Analysis — Chapter 2 Related</span>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="box box-dse">
+      <div class="box-title">⭐ 本章在 2025 DSE 的重要性</div>
+      <p>本章考點在 2025 DSE 卷一甲（MCQ）及卷一乙（結構題）均有出現，其中<strong>數據有效性檢驗</strong>與<strong>數據庫功能（SQL、索引）</strong>是必考高頻題型，合共佔分相當可觀。</p>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>題號</th><th>題型</th><th>考核內容</th><th>正確率</th><th>難度</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-label">卷一甲 Q9</td>
+          <td>MCQ</td>
+          <td>數據庫 SQL 查詢 — SELECT COUNT(*) 語法</td>
+          <td><span style="color:#1a7a4a;font-weight:700;">52%</span></td>
+          <td>⭐⭐⭐</td>
+        </tr>
+        <tr>
+          <td class="td-label">卷一乙 Q1(b)</td>
+          <td>結構題</td>
+          <td>COUNTIF 函數用法、數據有效性（OTP 特徵）</td>
+          <td><span style="color:#b45309;font-weight:700;">中等</span></td>
+          <td>⭐⭐⭐</td>
+        </tr>
+        <tr>
+          <td class="td-label">卷一乙 Q2</td>
+          <td>結構題</td>
+          <td>SQL SELECT COUNT(*) — 返回列數分析</td>
+          <td><span style="color:#b45309;font-weight:700;">中等</span></td>
+          <td>⭐⭐⭐</td>
+        </tr>
+        <tr>
+          <td class="td-label">卷一乙 Q5(a)(b)</td>
+          <td>結構題</td>
+          <td>數據庫欄位的數據類型選擇、升級 RAM 的理由</td>
+          <td><span style="color:#b91c1c;font-weight:700;">較低</span></td>
+          <td>⭐⭐⭐⭐</td>
+        </tr>
+        <tr>
+          <td class="td-label">歷屆 MCQ</td>
+          <td>MCQ</td>
+          <td>數據有效性檢驗類型（完整性/固定值/範圍/格式等）</td>
+          <td><span style="color:#1a7a4a;font-weight:700;">50–65%</span></td>
+          <td>⭐⭐⭐</td>
+        </tr>
+        <tr>
+          <td class="td-label">歷屆 MCQ</td>
+          <td>MCQ</td>
+          <td>奇偶檢測（偶數/奇數）、檢查數位（HKID 算法）</td>
+          <td><span style="color:#b91c1c;font-weight:700;">40–55%</span></td>
+          <td>⭐⭐⭐⭐</td>
+        </tr>
+        <tr>
+          <td class="td-label">歷屆 MCQ</td>
+          <td>MCQ</td>
+          <td>順序存取 vs 直接存取 特徵比較</td>
+          <td><span style="color:#1a7a4a;font-weight:700;">60–75%</span></td>
+          <td>⭐⭐</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="box box-danger">
+      <div class="box-title">⚠️ 高頻失分陷阱（教師重點強調）</div>
+      <ul>
+        <li><strong>數據有效性檢驗 vs 數據驗證</strong>：兩者概念不同，前者由電腦自動執行規則，後者驗證輸入是否與原始數據一致（如雙重輸入、核對）</li>
+        <li><strong>奇偶檢測</strong>：題目不指明是奇數還是偶數檢測時，需根據「只有一組通過」的條件推斷類型</li>
+        <li><strong>檢查數位（HKID）</strong>：加權和 ÷ 11，餘數為 0 才有效；只含一個英文字母時須在開頭補空格（轉換為 36）</li>
+        <li><strong>索引的代價</strong>：索引可加快搜尋，但<span class="hl-red">需要額外儲存空間</span>，且<span class="hl-red">更新記錄時須同步更新索引表</span></li>
+        <li><strong>SQL COUNT(*)</strong>：返回的是<span class="hl-red">行數（記錄數）</span>，不是欄位數</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TOC ══ -->
+<div class="toc-box">
+  <h3>📋 本章目錄</h3>
+  <ul class="toc-list">
+    <li><div class="toc-num">1</div><a href="#s1">數據分級</a></li>
+    <li><div class="toc-num">2</div><a href="#s2">數據控制 — 數據有效性檢驗</a><span class="toc-dse">DSE高頻</span></li>
+    <li><div class="toc-num">3</div><a href="#s3">檢查數位（HKID 算法詳解）</a><span class="toc-dse">DSE必考</span></li>
+    <li><div class="toc-num">4</div><a href="#s4">奇偶檢測</a><span class="toc-dse">DSE必考</span></li>
+    <li><div class="toc-num">5</div><a href="#s5">數據驗證</a><span class="toc-dse">DSE常考</span></li>
+    <li><div class="toc-num">6</div><a href="#s6">數據庫的功能（組織、儲存、提取、索引）</a><span class="toc-dse">DSE高頻</span></li>
+    <li><div class="toc-num">7</div><a href="#s7">檔案存取方式（順序 vs 直接）</a><span class="toc-dse">DSE常考</span></li>
+    <li><div class="toc-num">📝</div><a href="#mcq">DSE 歷屆試題練習</a></li>
+    <li><div class="toc-num">📚</div><a href="#gloss">本章詞彙表</a></li>
+  </ul>
+</div>
+
+<!-- ══ SECTION 1: 數據分級 ══ -->
+<div class="section" id="s1">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <div>
+      <h2>數據分級</h2>
+      <span class="en-title">Data Hierarchy</span>
+    </div>
+  </div>
+  <div class="section-body">
+    <p>數據通常以<strong>分級形式</strong>儲存。在數據分級中，每個較高層的數據都是較低層項目的集合。</p>
+
+    <!-- 分級圖 -->
+    <div class="hierarchy">
+      <div class="hier-row">
+        <div class="hier-box lvl1">
+          <span class="hier-label">📦 數據庫</span>
+          <span class="hier-en">Database</span>
+          <span class="hier-eg">例：學校整個數據庫系統</span>
+        </div>
+      </div>
+      <div class="hier-row" style="padding-left:20px">
+        <div class="hier-box lvl2">
+          <span class="hier-label">📁 檔案／表</span>
+          <span class="hier-en">File / Table</span>
+          <span class="hier-eg">例：學生資料表、課程表</span>
+        </div>
+      </div>
+      <div class="hier-row" style="padding-left:40px">
+        <div class="hier-box lvl3">
+          <span class="hier-label">📄 記錄／列</span>
+          <span class="hier-en">Record / Row</span>
+          <span class="hier-eg">例：某一學生的所有資料</span>
+        </div>
+      </div>
+      <div class="hier-row" style="padding-left:60px">
+        <div class="hier-box lvl4">
+          <span class="hier-label">🔤 欄位</span>
+          <span class="hier-en">Field</span>
+          <span class="hier-eg">例：學生姓名、性別、班別</span>
+        </div>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>層級（低→高）</th><th>名稱</th><th>說明</th><th>例子</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-label">最低層</td>
+          <td>欄位 (Field)</td>
+          <td>儲存單一屬性的數據單位</td>
+          <td>學生姓名、性別</td>
+        </tr>
+        <tr>
+          <td class="td-label">↑</td>
+          <td>記錄 (Record / Row)</td>
+          <td>集合某實體的所有欄位</td>
+          <td>學生 ID、姓名、性別、班別、學號</td>
+        </tr>
+        <tr>
+          <td class="td-label">↑</td>
+          <td>檔案 / 資料表 (File / Table)</td>
+          <td>集合結構相同的記錄</td>
+          <td>儲存了 100 名學生資料的數據表</td>
+        </tr>
+        <tr>
+          <td class="td-label">最高層</td>
+          <td>數據庫 (Database)</td>
+          <td>集合多個相關數據表</td>
+          <td>學校整個數據庫（含學生表、課程表等）</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="box box-danger">
+      <div class="box-title">⚠️ DSE 常見錯誤：排序題</div>
+      <p>DSE 曾考「由最低層至最高層排列」：正確順序為<br>
+      <strong>欄位 → 記錄 → 檔案（表）→ 數據庫</strong><br>
+      注意：「檔案」與「記錄」的順序最易混淆！</p>
+    </div>
+
+    <h3 class="sub-title">數據庫管理系統（DBMS）</h3>
+    <p>在管理大量數據時，<strong>數據庫</strong>通常比試算表更好。<strong>數據庫管理系統 (Database Management System, DBMS)</strong> 透過<strong>圖形用戶界面 (GUI)</strong> 讓我們有效地組織、儲存和提取數據。</p>
+    <div class="box box-info">
+      <div class="box-title">💡 試算表 vs 數據庫</div>
+      <table>
+        <thead><tr><th>比較</th><th>試算表 (Spreadsheet)</th><th>數據庫 (Database)</th></tr></thead>
+        <tbody>
+          <tr><td class="td-label">適合規模</td><td>小量數據</td><td>大量數據</td></tr>
+          <tr><td class="td-label">數據關聯</td><td>難以建立多表關聯</td><td>可建立表間關聯（如外鍵）</td></tr>
+          <tr><td class="td-label">查詢能力</td><td>函數（VLOOKUP 等）</td><td>SQL 語言</td></tr>
+          <tr><td class="td-label">多用戶</td><td>有限</td><td>支援多用戶同時存取</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SECTION 2: 數據有效性檢驗 ══ -->
+<div class="section" id="s2">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <div>
+      <h2>數據控制 — 數據有效性檢驗</h2>
+      <span class="en-title">Data Control — Data Validation</span>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="box box-dse">
+      <div class="box-title">⭐ DSE 高頻考點</div>
+      <p>數據有效性檢驗的<strong>各種類型</strong>是 DSE 必考題材，每年至少 2–3 道題涉及此內容。必須能夠：(1) 識別各種類型，(2) 根據場景判斷應使用哪種類型，(3) 區分「有效性檢驗」與「數據驗證」的分別。</p>
+    </div>
+
+    <h3 class="sub-title">無用輸入，無用輸出（GIGO）</h3>
+    <p>當不可靠或不協調的數據輸入到數據分析中時，便不能得出有用的結果，這稱為 <span class="hl-gold">Garbage In, Garbage Out (GIGO)</span>。因此，我們必須對數據加以控制。</p>
+
+    <h4 class="mini-title">常見輸入錯誤類型</h4>
+    <table>
+      <thead>
+        <tr><th>錯誤類型</th><th>說明</th><th>例子</th><th>控制方法</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-label">轉錄錯誤</td>
+          <td>從一個媒體抄到另一個媒體時出錯</td>
+          <td>OCR 將大楷「I」識別為「l」或「1」</td>
+          <td>拼寫檢查</td>
+        </tr>
+        <tr>
+          <td class="td-label">打字錯誤</td>
+          <td>鍵盤輸入時按錯鍵</td>
+          <td>將「治」打成「冶」</td>
+          <td>拼寫檢查</td>
+        </tr>
+        <tr>
+          <td class="td-label">換位錯誤</td>
+          <td>數據位置不正確（順序顛倒）</td>
+          <td>將「$15」打成「$51」</td>
+          <td>核對數據</td>
+        </tr>
+        <tr>
+          <td class="td-label">不存在的數據</td>
+          <td>提供了不存在的值</td>
+          <td>輸入不存在的電郵地址</td>
+          <td>格式檢查、驗證回覆</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub-title">數據有效性檢驗的八種類型</h3>
+    <p><strong>數據有效性檢驗 (Data Validation)</strong> 是數據控制的一部分，由<strong>電腦系統自動執行</strong>。它<span class="hl-red">不能保證數據絕對正確</span>，但確保數據合理並符合某些規則。</p>
+
+    <div class="val-grid">
+      <div class="val-card">
+        <div class="val-card-head">
+          <div class="val-icon">①</div>
+          <div><div class="val-name">完整性檢查</div><div class="val-en">Presence Check</div></div>
+        </div>
+        <div class="val-def">確保<strong>必填欄位</strong>中有數據，不可留空。</div>
+        <div class="val-eg">申請人必須提供姓名。</div>
+      </div>
+
+      <div class="val-card">
+        <div class="val-card-head">
+          <div class="val-icon">②</div>
+          <div><div class="val-name">固定值檢查</div><div class="val-en">Restricted Value Check</div></div>
+        </div>
+        <div class="val-def">確保數據只能來自<strong>一系列特定的值</strong>。</div>
+        <div class="val-eg">申請人的性別必須是「M」或「F」。</div>
+      </div>
+
+      <div class="val-card">
+        <div class="val-card-head">
+          <div class="val-icon">③</div>
+          <div><div class="val-name">類型檢查</div><div class="val-en">Type Check</div></div>
+        </div>
+        <div class="val-def">確保數據必須為<strong>特定數據類型</strong>。</div>
+        <div class="val-eg">申請人的年齡必須是數字（不能是文字）。</div>
+      </div>
+
+      <div class="val-card">
+        <div class="val-card-head">
+          <div class="val-icon">④</div>
+          <div><div class="val-name">範圍檢查</div><div class="val-en">Range Check</div></div>
+        </div>
+        <div class="val-def">確保數據必須<strong>位於指定範圍內</strong>。</div>
+        <div class="val-eg">申請人的年齡必須大於 12 歲。</div>
+      </div>
+
+      <div class="val-card">
+        <div class="val-card-head">
+          <div class="val-icon">⑤</div>
+          <div><div class="val-name">長度檢查</div><div class="val-en">Length Check</div></div>
+        </div>
+        <div class="val-def">確保數據的<strong>字符數必須在指定範圍內</strong>。</div>
+        <div class="val-eg">申請人必須提供 8 個位數的電話號碼。</div>
+      </div>
+
+      <div class="val-card">
+        <div class="val-card-head">
+          <div class="val-icon">⑥</div>
+          <div><div class="val-name">格式檢查</div><div class="val-en">Format Check</div></div>
+        </div>
+        <div class="val-def">確保數據必須<strong>採用特定格式</strong>。</div>
+        <div class="val-eg">電郵地址必須包含「@」符號。</div>
+      </div>
+
+      <div class="val-card">
+        <div class="val-card-head">
+          <div class="val-icon">⑦</div>
+          <div><div class="val-name">一致性檢查</div><div class="val-en">Consistency Check</div></div>
+        </div>
+        <div class="val-def">確保<strong>多個欄位之間的數據具有合理關係</strong>。</div>
+        <div class="val-eg">結束日期必須在開始日期之後。</div>
+      </div>
+
+      <div class="val-card">
+        <div class="val-card-head">
+          <div class="val-icon">⑧</div>
+          <div><div class="val-name">唯一性檢查</div><div class="val-en">Uniqueness Check</div></div>
+        </div>
+        <div class="val-def">確保欄位的數據<strong>必須是獨一無二</strong>的。</div>
+        <div class="val-eg">每位學生只能申請一次，學生 ID 不應重複。</div>
+      </div>
+    </div>
+
+    <h3 class="sub-title">用戶界面工具輔助有效性檢驗</h3>
+    <table>
+      <thead>
+        <tr><th>UI 工具</th><th>輔助的檢驗類型</th><th>說明</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="td-label">下拉式選單</td><td>固定值檢查</td><td>只可選取預設選項之一</td></tr>
+        <tr><td class="td-label">單選按鈕</td><td>固定值檢查</td><td>只可選取一個特定值</td></tr>
+        <tr><td class="td-label">複選框</td><td>固定值檢查</td><td>可選取多個預設值</td></tr>
+        <tr><td class="td-label">日期選擇器</td><td>格式檢查</td><td>防止輸入「32/08/2025」等無效日期</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub-title">數據類型（Data Types）</h3>
+    <p>為方便組織和分析數據，同一欄位的數據應屬<strong>同一數據類型</strong>。</p>
+    <table>
+      <thead>
+        <tr><th>數據類型</th><th>說明</th><th>數值例子</th><th>用途例子</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="td-label">整數 (Integer)</td><td>可以是正數、負數或零，無小數位</td><td>-29, 0, 100</td><td>學生分數、年齡</td></tr>
+        <tr><td class="td-label">實數 (Real)</td><td>可以有小數點和小數位</td><td>3.14, -2.5</td><td>身高、體重</td></tr>
+        <tr><td class="td-label">字串/文字 (String)</td><td>由字符組成（英文、數字、中文、符號）</td><td>"陳大文", "1A"</td><td>姓名、班別</td></tr>
+        <tr><td class="td-label">布爾 (Boolean)</td><td>只能是 TRUE（真）或 FALSE（假）</td><td>TRUE, FALSE</td><td>是否合格、是否在世</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══ SECTION 3: 檢查數位 ══ -->
+<div class="section" id="s3">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <div>
+      <h2>檢查數位</h2>
+      <span class="en-title">Check Digit</span>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="box box-dse">
+      <div class="box-title">⭐ DSE 必考計算題</div>
+      <p>檢查數位（尤其香港身份證 HKID 算法）是 DSE 每隔幾年必考的計算型題目，正確率偏低。必須掌握完整計算步驟。</p>
+    </div>
+
+    <p><strong>檢查數位 (Check Digit)</strong> 是一種數據有效性檢驗方式，常用於數字數據，如：身份證號碼、書號（ISBN）、信用卡號碼。它由<strong>特定算法生成</strong>，並附加在數據末尾。若輸入數據的檢查數位與算法計算結果不匹配，則該數據無效。</p>
+
+    <h3 class="sub-title">🆔 香港身份證號碼（HKID）檢查數位 — 逐步詳解</h3>
+
+    <ol class="steps-list">
+      <li>
+        <div>
+          <strong>格式化</strong>：忽略括號。若身份證只有一個英文字母，在最前面補一個空格，使總長度統一為 9 個字符。
+          <div style="margin-top:8px;font-size:13px;background:#f7f5ff;padding:8px 12px;border-radius:6px;">
+            一個字母：<code> P246246(A)</code> → 補空格後：<code>[空格]P246246A</code><br>
+            兩個字母：<code>WX135135(2)</code> → <code>WX135135 2</code>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>字母轉數字</strong>：A=10, B=11, C=12, … Z=35，空格=36。
+          <div style="margin-top:8px;font-size:13px;background:#f7f5ff;padding:8px 12px;border-radius:6px;">
+            空格→36, P→25, W→32, X→33
+          </div>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>乘以比重</strong>：從左到右，9 個數字（含轉換後的字母）分別乘以比重：
+          <div style="margin:10px 0;overflow-x:auto;">
+            <table style="margin:0;font-size:13px;">
+              <thead>
+                <tr>
+                  <th>位置</th><th>第1位</th><th>第2位</th><th>第3位</th><th>第4位</th><th>第5位</th><th>第6位</th><th>第7位</th><th>第8位</th><th>第9位（檢查數位）</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="td-label">比重</td><td>9</td><td>8</td><td>7</td><td>6</td><td>5</td><td>4</td><td>3</td><td>2</td><td>1</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          將各乘積加總，得到<strong>加權和 (Weighted Sum)</strong>。
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>整除檢驗</strong>：加權和 ÷ 11，若<strong>餘數為 0</strong>，則號碼有效。
+          <div style="margin-top:8px;font-size:13px;background:#f7f5ff;padding:8px 12px;border-radius:6px;">
+            若要求計算檢查數位：加權和（不含檢查數位）÷ 11 = 餘數 r<br>
+            → 檢查數位 = 11 − r（若結果為 10，則檢查數位為 A；若為 11，則為 0）
+          </div>
+        </div>
+      </li>
+    </ol>
+
+    <div class="box box-success">
+      <div class="box-title">✅ 計算例子：驗證 P246246(A)</div>
+      <p>空格→36，P→25；數字：2, 4, 6, 2, 4, 6；檢查數位：A=10</p>
+      <p>加權和 = 36×9 + 25×8 + 2×7 + 4×6 + 6×5 + 2×4 + 4×3 + 6×2 + 10×1<br>
+      = 324 + 200 + 14 + 24 + 30 + 8 + 12 + 12 + 10 = <strong>634</strong></p>
+      <p>… 實際課堂計算以教材原始數字為準（OCR 可能存在輕微偏差）</p>
+      <p>餘數為 0 → <strong>號碼有效 ✓</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SECTION 4: 奇偶檢測 ══ -->
+<div class="section" id="s4">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <div>
+      <h2>奇偶檢測</h2>
+      <span class="en-title">Parity Check</span>
+    </div>
+  </div>
+  <div class="section-body">
+    <p>數據以<strong>二進制代碼</strong>儲存在電腦中。為檢測數據傳輸過程中的錯誤，在二進制代碼末尾附加一個<strong>奇偶檢驗位 (Parity Bit)</strong>，以確保代碼中 1 的總數是偶數或奇數。</p>
+
+    <div class="access-compare">
+      <div class="access-card seq">
+        <h4 style="color:#5b21b6;">偶數奇偶檢測 (Even Parity)</h4>
+        <p>確保二進制代碼中 <strong>1 的總數為偶數</strong>。</p>
+        <ul>
+          <li>原始：<code>0000 001</code>（一個 1）→ 奇偶位 = <strong>1</strong> → 0000 0011（兩個 1，偶數）</li>
+          <li>原始：<code>1010 101</code>（四個 1）→ 奇偶位 = <strong>0</strong> → 1010 1010（四個 1，偶數）</li>
+        </ul>
+      </div>
+      <div class="access-card dir">
+        <h4 style="color:#92400e;">奇數奇偶檢測 (Odd Parity)</h4>
+        <p>確保二進制代碼中 <strong>1 的總數為奇數</strong>。</p>
+        <ul>
+          <li>原始：<code>0000 001</code>（一個 1）→ 奇偶位 = <strong>0</strong> → 0000 0010（仍一個 1，奇數）</li>
+          <li>原始：<code>1010 101</code>（四個 1）→ 奇偶位 = <strong>1</strong> → 1010 1011（五個 1，奇數）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="box box-danger">
+      <div class="box-title">⚠️ 奇偶檢測的限制</div>
+      <ul>
+        <li>只能檢測<strong>奇數個位元出錯</strong>的情況（如 1 個位元翻轉）</li>
+        <li>若<strong>偶數個位元同時翻轉</strong>（如 2 個），1 的總數不變，錯誤<span class="hl-red">無法被檢測</span></li>
+        <li>通過奇偶檢測<span class="hl-red">不代表</span>數據傳輸一定沒有錯誤</li>
+      </ul>
+    </div>
+
+    <div class="box box-info">
+      <div class="box-title">💡 DSE 解題技巧：當題目不說明使用哪種奇偶檢測</div>
+      <p>題目給出多組代碼，說明「只有一組通過」→ 分別數各組中 1 的數目：</p>
+      <ul>
+        <li>若只有一組 1 的數目為奇數 → 應用的是<strong>奇數奇偶檢測</strong></li>
+        <li>若只有一組 1 的數目為偶數 → 應用的是<strong>偶數奇偶檢測</strong></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SECTION 5: 數據驗證 ══ -->
+<div class="section" id="s5">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <div>
+      <h2>數據驗證</h2>
+      <span class="en-title">Data Verification</span>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="box box-danger">
+      <div class="box-title">⚠️ 必須區分！有效性檢驗 vs 數據驗證</div>
+      <table>
+        <thead><tr><th>比較</th><th>數據有效性檢驗 (Validation)</th><th>數據驗證 (Verification)</th></tr></thead>
+        <tbody>
+          <tr><td class="td-label">執行方式</td><td>由電腦/系統自動執行規則</td><td>由人手或電腦比對原始數據</td></tr>
+          <tr><td class="td-label">目的</td><td>確保數據合理、符合規則</td><td>確保輸入數據與原始數據一致</td></tr>
+          <tr><td class="td-label">能否保證正確</td><td>❌ 不能保證絕對正確</td><td>✅ 可驗證一致性</td></tr>
+          <tr><td class="td-label">例子</td><td>年齡必須 &gt; 12</td><td>雙重輸入電郵地址並比對</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-title">數據驗證的三種方法</h3>
+    <table>
+      <thead>
+        <tr><th>方法</th><th>說明</th><th>例子</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-label">輸入數據兩次<br>(Double Data Entry)</td>
+          <td>由<strong>兩位操作員分別輸入</strong>相同的數據，比較兩份複本是否相同。</td>
+          <td>更改電郵地址時，要求用戶輸入新電郵地址兩次，系統比對是否一致。</td>
+        </tr>
+        <tr>
+          <td class="td-label">視覺核查<br>(Visual Check)</td>
+          <td>由<strong>同一操作員</strong>將輸入的數據與原始資料比較，確認一致。</td>
+          <td>在電子表單填好後，用戶自行再次對照原始文件確認。</td>
+        </tr>
+        <tr>
+          <td class="td-label">核對數據<br>(Proofreading)</td>
+          <td>由<strong>另一位操作員</strong>將輸入之數據與原始檔案比對。</td>
+          <td>將學生成績輸入電子成績單後，打印出來與試卷互相核對。</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══ SECTION 6: 數據庫功能 ══ -->
+<div class="section" id="s6">
+  <div class="section-header">
+    <div class="section-num">6</div>
+    <div>
+      <h2>數據庫的功能</h2>
+      <span class="en-title">Functions of a Database (DBMS)</span>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="box box-dse">
+      <div class="box-title">⭐ 2025 DSE 考試重點（卷一乙 Q2、Q5）</div>
+      <p>SQL 語句（INSERT、SELECT、WHERE、ORDER BY）及索引的<strong>原理與代價</strong>是高頻考點。必須能分辨各 SQL 語句的作用，以及理解索引的利弊。</p>
+    </div>
+
+    <h3 class="sub-title">① 組織（數據庫結構）</h3>
+    <p>良好的數據庫結構可以使不同數據表之間的傳遞更流暢，並<strong>減少數據重複</strong>。選擇適合的數據類型，使數據更一致，分析更輕鬆。</p>
+
+    <h3 class="sub-title">② 儲存（INSERT / GUI）</h3>
+    <p>可以使用 <strong>SQL</strong> 語句或 <strong>GUI</strong> 在數據表中插入新記錄、更改或刪除現有記錄。</p>
+    <div class="code-block">
+<span class="kw">INSERT INTO</span> STUDENT (SID, ENAME, SEX, CLASS, CNO)
+<span class="kw">VALUES</span> (<span class="str">"015044"</span>, <span class="str">"Peter Chan"</span>, <span class="str">"M"</span>, <span class="str">"1A"</span>, <span class="str">"11"</span>);
+    </div>
+    <p>亦可將 <strong>.csv（逗號分隔值）</strong>檔案匯入數據庫，在短時間內創建大量記錄，節省手動輸入時間。</p>
+
+    <h3 class="sub-title">③ 提取（SELECT / WHERE / ORDER BY）</h3>
+    <p>使用 SQL 或 GUI 從數據庫中提取特定數據，並可按標準排序。</p>
+    <div class="code-block">
+<span class="cm">-- 提取所有男生</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> STUDENT <span class="kw">WHERE</span> SEX = <span class="str">"M"</span>;
+
+<span class="cm">-- 按姓名排序</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> STUDENT <span class="kw">WHERE</span> SEX = <span class="str">"M"</span> <span class="kw">ORDER BY</span> ENAME;
+
+<span class="cm">-- 計算記錄數（2025 DSE 考點）</span>
+<span class="kw">SELECT COUNT</span>(*) <span class="kw">FROM</span> STUDENT <span class="kw">WHERE</span> SEX = <span class="str">"F"</span>;
+<span class="cm">-- 返回：1 行，顯示符合條件的記錄數目</span>
+    </div>
+
+    <div class="box box-danger">
+      <div class="box-title">⚠️ 2025 DSE 常考陷阱：COUNT(*) 返回幾行？</div>
+      <p><code>SELECT COUNT(*) FROM STUDENT WHERE SEX = "F"</code> 的結果只有<strong>1 行</strong>，內容是符合條件的記錄數目（例如：4）。很多考生誤以為返回所有女生記錄，需特別留意。</p>
+    </div>
+
+    <h3 class="sub-title">④ 索引（Index）</h3>
+    <p>建立索引後，DBMS 會建立一個<strong>索引表（Index Table）</strong>，僅包含索引欄位和指向相關記錄的指針。搜尋時，DBMS 可對索引表使用<strong>二分搜尋法 (Binary Search)</strong>，大幅減少比較次數。</p>
+
+    <div class="box box-info">
+      <div class="box-title">💡 索引搜尋過程（Binary Search 示例）</div>
+      <p>搜尋「Peter Chan」（11 條記錄的索引表）：</p>
+      <ol>
+        <li>檢查第 6 項（Liliana Sykes，以「L」開頭）→「L」在「P」前 → 排除前 6 項</li>
+        <li>檢查第 9 項（Roberta Barrera，以「R」開頭）→「R」在「P」後 → 排除後 3 項</li>
+        <li>檢查第 7 項（Nolan Humphrey）→ 不符合 → 只剩 1 項</li>
+        <li>最後一項即「Peter Chan」</li>
+      </ol>
+      <p>只需 <strong>4 次</strong>比較，而非逐行讀取 11 條記錄。</p>
+    </div>
+
+    <h4 class="mini-title">索引的利與弊</h4>
+    <table>
+      <thead><tr><th></th><th>說明</th></tr></thead>
+      <tbody>
+        <tr><td class="td-label" style="color:#1a7a4a;">✅ 優點</td><td>大幅加快數據<strong>提取/搜尋</strong>速度</td></tr>
+        <tr><td class="td-label" style="color:#b91c1c;">❌ 代價 1</td><td>需要額外的<strong>儲存空間</strong>儲存索引表</td></tr>
+        <tr><td class="td-label" style="color:#b91c1c;">❌ 代價 2</td><td>加入新記錄或修改欄位後，須<strong>更新索引表</strong>（需時間）</td></tr>
+        <tr><td class="td-label" style="color:#b45309;">⚠️ 建議</td><td>只在<strong>必要時</strong>才建立索引，為太多欄位建立索引並不可取</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══ SECTION 7: 檔案存取方式 ══ -->
+<div class="section" id="s7">
+  <div class="section-header">
+    <div class="section-num">7</div>
+    <div>
+      <h2>檔案存取方式</h2>
+      <span class="en-title">File Access Methods</span>
+    </div>
+  </div>
+  <div class="section-body">
+    <p>數據可以儲存在不同的儲存設備中，它們決定了<strong>存取數據的方式</strong>。常見的兩種存取方式：</p>
+
+    <div class="access-compare">
+      <div class="access-card seq">
+        <h4>📼 順序存取<br><span class="badge" style="background:#ede9ff;color:#5b21b6;">Sequential Access</span></h4>
+        <ul>
+          <li>從<strong>頭開始</strong>依次讀寫數據</li>
+          <li>存取特定數據須依次搜索，速度<strong>較慢</strong>且<strong>難以預測</strong></li>
+          <li>存取速度視乎目標數據所在位置而定</li>
+          <li>成本<strong>較低</strong></li>
+          <li>適合：儲存<strong>備份數據</strong>（按順序寫入）</li>
+        </ul>
+        <p style="margin-top:10px;font-size:13px;"><strong>設備例子：</strong>磁帶 (Magnetic Tape) 🎞️</p>
+      </div>
+      <div class="access-card dir">
+        <h4>💿 直接存取<br><span class="badge" style="background:#fef9c3;color:#92400e;">Direct Access</span></h4>
+        <ul>
+          <li>每個儲存位置有<strong>獨一無二的位址</strong></li>
+          <li>可直接存取任何位置，<strong>無須搜索</strong>其他位置</li>
+          <li>速度<strong>更穩定</strong>，一般比順序存取<strong>快</strong></li>
+          <li>成本<strong>較高</strong></li>
+          <li>適合：儲存<strong>常用數據</strong>（需頻繁隨機存取）</li>
+        </ul>
+        <p style="margin-top:10px;font-size:13px;"><strong>設備例子：</strong>硬碟 💽、USB 隨身碟 🔌、光碟 💿、SSD</p>
+      </div>
+    </div>
+
+    <h3 class="sub-title">順序存取 vs 直接存取 比較表</h3>
+    <table>
+      <thead>
+        <tr><th>比較項目</th><th>順序存取</th><th>直接存取</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="td-label">存取速度</td><td>難以預測，通常<span class="hl-red">較慢</span></td><td>穩定，通常<span class="hl-purple">較快</span></td></tr>
+        <tr><td class="td-label">成本</td><td>較低</td><td>較高</td></tr>
+        <tr><td class="td-label">儲存密度</td><td>較高</td><td>較低</td></tr>
+        <tr><td class="td-label">適用場景</td><td>儲存備份（按序寫入）</td><td>儲存常用數據（頻繁讀取）</td></tr>
+        <tr><td class="td-label">設備例子</td><td>磁帶</td><td>硬碟、SSD、USB、光碟</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══ GLOSSARY ══ -->
+<div class="section" id="gloss">
+  <div class="section-header">
+    <div class="section-num">📚</div>
+    <div>
+      <h2>本章詞彙表</h2>
+      <span class="en-title">Chapter Glossary</span>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="glossary-grid">
+      <div class="gloss-item"><div class="gloss-zh">數據分級</div><div class="gloss-en">Data Hierarchy</div></div>
+      <div class="gloss-item"><div class="gloss-zh">欄位</div><div class="gloss-en">Field</div></div>
+      <div class="gloss-item"><div class="gloss-zh">記錄 / 列</div><div class="gloss-en">Record / Row</div></div>
+      <div class="gloss-item"><div class="gloss-zh">檔案 / 表</div><div class="gloss-en">File / Table</div></div>
+      <div class="gloss-item"><div class="gloss-zh">數據庫</div><div class="gloss-en">Database</div></div>
+      <div class="gloss-item"><div class="gloss-zh">數據庫管理系統</div><div class="gloss-en">DBMS</div></div>
+      <div class="gloss-item"><div class="gloss-zh">圖形用戶界面</div><div class="gloss-en">GUI</div></div>
+      <div class="gloss-item"><div class="gloss-zh">數據控制</div><div class="gloss-en">Data Control</div></div>
+      <div class="gloss-item"><div class="gloss-zh">無用輸入無用輸出</div><div class="gloss-en">GIGO</div></div>
+      <div class="gloss-item"><div class="gloss-zh">數據有效性檢驗</div><div class="gloss-en">Data Validation</div></div>
+      <div class="gloss-item"><div class="gloss-zh">完整性檢查</div><div class="gloss-en">Presence Check</div></div>
+      <div class="gloss-item"><div class="gloss-zh">固定值檢查</div><div class="gloss-en">Restricted Value Check</div></div>
+      <div class="gloss-item"><div class="gloss-zh">類型檢查</div><div class="gloss-en">Type Check</div></div>
+      <div class="gloss-item"><div class="gloss-zh">範圍檢查</div><div class="gloss-en">Range Check</div></div>
+      <div class="gloss-item"><div class="gloss-zh">長度檢查</div><div class="gloss-en">Length Check</div></div>
+      <div class="gloss-item"><div class="gloss-zh">格式檢查</div><div class="gloss-en">Format Check</div></div>
+      <div class="gloss-item"><div class="gloss-zh">一致性檢查</div><div class="gloss-en">Consistency Check</div></div>
+      <div class="gloss-item"><div class="gloss-zh">唯一性檢查</div><div class="gloss-en">Uniqueness Check</div></div>
+      <div class="gloss-item"><div class="gloss-zh">檢查數位</div><div class="gloss-en">Check Digit</div></div>
+      <div class="gloss-item"><div class="gloss-zh">奇偶檢驗位</div><div class="gloss-en">Parity Bit</div></div>
+      <div class="gloss-item"><div class="gloss-zh">奇偶檢測</div><div class="gloss-en">Parity Check</div></div>
+      <div class="gloss-item"><div class="gloss-zh">數據驗證</div><div class="gloss-en">Data Verification</div></div>
+      <div class="gloss-item"><div class="gloss-zh">雙重數據輸入</div><div class="gloss-en">Double Data Entry</div></div>
+      <div class="gloss-item"><div class="gloss-zh">索引</div><div class="gloss-en">Index</div></div>
+      <div class="gloss-item"><div class="gloss-zh">二分搜尋法</div><div class="gloss-en">Binary Search</div></div>
+      <div class="gloss-item"><div class="gloss-zh">順序存取</div><div class="gloss-en">Sequential Access</div></div>
+      <div class="gloss-item"><div class="gloss-zh">直接存取</div><div class="gloss-en">Direct Access</div></div>
+      <div class="gloss-item"><div class="gloss-zh">逗號分隔值</div><div class="gloss-en">CSV (Comma-Separated Values)</div></div>
+      <div class="gloss-item"><div class="gloss-zh">布爾</div><div class="gloss-en">Boolean</div></div>
+      <div class="gloss-item"><div class="gloss-zh">加權和</div><div class="gloss-en">Weighted Sum</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MCQ PRACTICE ══ -->
+<div class="mcq-section" id="mcq">
+  <div class="mcq-header">
+    <div class="section-num" style="background:white;color:#b45309;">📝</div>
+    <h2>DSE 歷屆試題練習（第二章相關）</h2>
+  </div>
+  <div class="mcq-body">
+
+    <div class="mcq-item">
+      <div class="mcq-year">DSE 2012 1A Q01</div>
+      <div class="mcq-q">Q1. 要以檢查數位來驗證一組香港身份證號碼的有效性，我們應：<br>
+      (1) 確保號碼開首的字符為一或兩個英文字母。<br>
+      (2) 確保號碼的加權和可被 11 整除。<br>
+      (3) 確保號碼不可包含多於 9 個字符（括號除外）。</div>
+      <ul class="mcq-options">
+        <li>A. 只有 (1)</li>
+        <li>B. 只有 (2)</li>
+        <li>C. 只有 (1) 和 (3)</li>
+        <li class="correct">D. 只有 (2) 和 (3) — 答案：B（只有 (2)）</li>
+      </ul>
+      <div class="mcq-answer">
+        <strong>答案：B（只有 (2)）</strong><br>
+        分析：(1) 是格式檢查（字母開頭）；(3) 是長度檢查（9 個字符）；只有 (2) 是真正利用<strong>檢查數位</strong>（加權和可被 11 整除）的有效性檢驗方式。
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-year">DSE 2013 1A Q09</div>
+      <div class="mcq-q">Q2. 某數據傳輸系統接收了四組二進制代碼，如只有一組代碼通過了奇偶檢測，它是以下哪一項？<br>
+      A. 1101 1000 &nbsp; B. 1110 1011 &nbsp; C. 0010 0101 &nbsp; D. 0100 1000</div>
+      <ul class="mcq-options">
+        <li>A. 1101 1000（四個 1）</li>
+        <li>B. 1110 1011（六個 1）</li>
+        <li class="correct">C. 0010 0101（三個 1）✓</li>
+        <li>D. 0100 1000（兩個 1）</li>
+      </ul>
+      <div class="mcq-answer">
+        <strong>答案：C</strong><br>
+        各選項 1 的數目：A=4，B=6，C=3，D=2。A、B、D 均為偶數個 1，C 為奇數個 1。若應用<strong>偶數奇偶檢測</strong>，則 A、B、D 皆通過（三組），不符。若應用<strong>奇數奇偶檢測</strong>，只有 C（三個 1）通過，符合題目「只有一組通過」的條件。
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-year">DSE 2015 1A Q22</div>
+      <div class="mcq-q">Q3. 一個外賣速遞網站的客戶意見表中，客戶拉動滑塊（1–5）評分。若改為文字方塊，應運用哪些有效性檢驗？<br>
+      (1) 唯一性檢查 &nbsp; (2) 類型檢查（必須輸入 0–5 的數字）&nbsp; (3) 範圍檢查（值在 0–5 之間）</div>
+      <ul class="mcq-options">
+        <li>A. 只有 (1) 和 (2)</li>
+        <li class="correct">B. 只有 (2) 和 (3) ✓</li>
+        <li>C. 只有 (3) 和 (1)</li>
+        <li>D. (1)、(2) 和 (3)</li>
+      </ul>
+      <div class="mcq-answer">
+        <strong>答案：B</strong><br>
+        評分值必須是數字（<strong>類型檢查</strong>），且必須在 1–5 之間（<strong>範圍檢查</strong>）。唯一性檢查不適用，因為多位客戶可給相同評分。
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-year">DSE 2017 Q05</div>
+      <div class="mcq-q">Q4. 老師想將 1A 班學生資料儲存在數據表中，欄位 CNO（班號）的數據類型為數字。以下哪些有效性檢驗適合應用於 CNO 欄位？<br>
+      (1) 唯一性檢查 &nbsp; (2) 類型檢查 &nbsp; (3) 完整性檢查</div>
+      <ul class="mcq-options">
+        <li>A. 只有 (2)</li>
+        <li>B. 只有 (1) 和 (2)</li>
+        <li>C. 只有 (2) 和 (3)</li>
+        <li class="correct">D. (1)、(2) 和 (3) ✓</li>
+      </ul>
+      <div class="mcq-answer">
+        <strong>答案：D</strong><br>
+        (1) 同一班所有學生的班號相同，不同班的班號不應重複 → <strong>唯一性</strong>；(2) CNO 是數字類型 → <strong>類型檢查</strong>；(3) 每個學生必須有班號，不可留空 → <strong>完整性檢查</strong>。三者皆適用。
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-year">DSE 2009 1A Q11</div>
+      <div class="mcq-q">Q5. 阿發更改帳戶電郵地址時，網上表單出現「無效的電郵地址」和「請輸入相同的電郵地址」的錯誤訊息。此表單應用了哪些數據控制方式？<br>
+      (1) 完整性檢查 &nbsp; (2) 格式檢查 &nbsp; (3) 輸入數據兩次作驗證</div>
+      <ul class="mcq-options">
+        <li>A. 只有 (1) 和 (2)</li>
+        <li>B. 只有 (1) 和 (3)</li>
+        <li class="correct">C. 只有 (2) 和 (3) ✓</li>
+        <li>D. (1)、(2) 和 (3)</li>
+      </ul>
+      <div class="mcq-answer">
+        <strong>答案：C</strong><br>
+        「無效的電郵地址」→ <strong>格式檢查</strong>（必須包含 @）；「請輸入相同的電郵地址」→ <strong>雙重數據輸入</strong>（輸入兩次作比對驗證）。「舊電郵地址」欄不可留空 → 完整性，但題目沒有錯誤訊息指向此，故只有 (2) 和 (3)。
+      </div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-year">2025 DSE 卷一乙 Q2</div>
+      <div class="mcq-q">Q6. 執行以下 SQL 語句後，返回結果有多少行？<br>
+      <code>SELECT COUNT(*) FROM STUDENT WHERE SEX = "F"</code><br>
+      （假設 STUDENT 表中共有 5 名女生）</div>
+      <ul class="mcq-options">
+        <li>A. 0 行</li>
+        <li class="correct">B. 1 行（內容為數字 5）✓</li>
+        <li>C. 5 行（顯示每位女生的記錄）</li>
+        <li>D. 顯示所有欄位標題</li>
+      </ul>
+      <div class="mcq-answer">
+        <strong>答案：B</strong><br>
+        <code>SELECT COUNT(*)</code> 是<strong>聚合函數</strong>，返回的結果只有 <strong>1 行</strong>，內容是符合 WHERE 條件的記錄總數（如 5）。這是 2025 DSE 卷一乙 Q2 的核心考點，正確率不高。
+        <div class="accuracy-bar">
+          <span class="bar-label">2025 正確率（估）</span>
+          <div class="bar-track"><div class="bar-fill" style="width:52%;background:var(--purple)"></div></div>
+          <span class="bar-pct">52%</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ SUMMARY ══ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">✨</div>
+    <div>
+      <h2>本章重點摘要</h2>
+      <span class="en-title">Chapter Summary</span>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="box box-purple">
+      <div class="box-title">📌 DSE 必記要點</div>
+      <ul>
+        <li>數據分級由低至高：<strong>欄位 → 記錄 → 檔案（表）→ 數據庫</strong></li>
+        <li>GIGO 原則：<span class="hl-gold">Garbage In, Garbage Out</span>——輸入垃圾，輸出垃圾</li>
+        <li>8 種有效性檢驗：完整性、固定值、<span class="hl-purple">類型</span>、<span class="hl-purple">範圍</span>、長度、格式、一致性、唯一性</li>
+        <li>有效性檢驗 ≠ 數據驗證：前者電腦自動執行，後者比對原始數據</li>
+        <li>HKID 檢查數位：加權和 ÷ 11，<span class="hl-red">餘數為 0 才有效</span></li>
+        <li>奇偶檢測：只能檢測<span class="hl-red">奇數個</span>位元出錯；「只有一組通過」→ 判斷奇/偶數檢測類型</li>
+        <li><code>SELECT COUNT(*)</code> 只返回 <span class="hl-red">1 行</span>（記錄數）</li>
+        <li>索引：加快搜尋，但<span class="hl-red">需要儲存空間</span>，更新記錄時<span class="hl-red">需更新索引表</span></li>
+        <li>直接存取：速度快且穩定，適合頻繁隨機存取（如硬碟）</li>
+        <li>順序存取：速度慢但成本低，適合備份（如磁帶）</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center;color:var(--text-light);font-size:12px;padding:20px 0 0;border-top:1px solid var(--border)">
+  📚 本教學筆記由 <strong>萬鶴書院 VANHOK ACADEMY</strong> 製作 ·
+  Created by <strong>Anker Wong</strong> ·
+  HKDSE ICT A1 資訊處理 © 2025 ·
+  <em>未經授權，嚴禁複製或轉發</em>
+</div>
+
+</div><!-- /content-wrapper -->
+
+<footer class="site-footer">
+  <div class="footer-brand">萬鶴書院 <span>VANHOK ACADEMY</span></div>
+  <div>HKDSE ICT 教學筆記系列 · A1 資訊處理 · 第二章：數據控制及數據組織</div>
+  <div>授課教師：Anker Wong | ICT </div>
+  <div class="footer-copy">© 2026 萬鶴書院版權所有 · Created by Anker Wong · 本教材受版權法保護，未經授權不得轉載</div>
+</footer>
+
+</body>
+</html>
