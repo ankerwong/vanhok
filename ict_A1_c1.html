@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A1 第一章：資訊管理簡介 | 萬鶴書院 VANHOK ACADEMY</title>
+<style>
+  /* ===== BASE ===== */
+  :root {
+    --purple: #3D1785;
+    --purple-light: #5c2db8;
+    --purple-dark: #2a0f5e;
+    --gold: #F5A623;
+    --gold-light: #ffc85a;
+    --white: #ffffff;
+    --bg: #f7f5ff;
+    --text: #1a1a2e;
+    --text-light: #555577;
+    --border: #d8d0f0;
+    --success: #1a7a4a;
+    --success-bg: #e8f5ee;
+    --danger: #b91c1c;
+    --danger-bg: #fef2f2;
+    --info: #1d4ed8;
+    --info-bg: #eff6ff;
+    --warning-bg: #fffbeb;
+    --warning: #92400e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans TC', 'Microsoft JhengHei', '微軟正黑體', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  /* ===== WATERMARK ===== */
+  body::before {
+    content: '萬鶴書院  VANHOK ACADEMY  ©Anker Wong  萬鶴書院  VANHOK ACADEMY  ©Anker Wong  萬鶴書院  VANHOK ACADEMY  ©Anker Wong';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: rgba(61, 23, 133, 0.06);
+    transform: rotate(-35deg);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 9999;
+    word-spacing: 30px;
+    letter-spacing: 4px;
+    line-height: 3;
+    padding: 0 40px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  /* ===== HEADER ===== */
+  .site-header {
+    background: linear-gradient(135deg, var(--purple-dark) 0%, var(--purple) 60%, var(--purple-light) 100%);
+    color: white;
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(61,23,133,0.35);
+  }
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 12px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .logo-circle {
+    width: 52px; height: 52px;
+    background: var(--gold);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; font-weight: 900; color: var(--purple-dark);
+    flex-shrink: 0;
+    box-shadow: 0 2px 10px rgba(245,166,35,0.4);
+  }
+  .brand-text .school-zh { font-size: 20px; font-weight: 800; letter-spacing: 2px; }
+  .brand-text .school-en { font-size: 11px; letter-spacing: 3px; opacity: 0.85; }
+  .header-right {
+    text-align: right;
+    font-size: 12px;
+    opacity: 0.8;
+    line-height: 1.5;
+  }
+  .header-right .subject { font-size: 14px; font-weight: 600; opacity: 1; color: var(--gold); }
+
+  /* ===== CHAPTER HERO ===== */
+  .chapter-hero {
+    background: linear-gradient(160deg, var(--purple) 0%, #6b35d4 100%);
+    color: white;
+    padding: 50px 30px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .chapter-hero::after {
+    content: 'A1';
+    position: absolute;
+    right: -10px; bottom: -30px;
+    font-size: 180px;
+    font-weight: 900;
+    opacity: 0.06;
+    color: white;
+    pointer-events: none;
+  }
+  .chapter-badge {
+    display: inline-block;
+    background: rgba(245,166,35,0.25);
+    border: 1px solid var(--gold);
+    color: var(--gold-light);
+    padding: 4px 18px;
+    border-radius: 20px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+  .chapter-hero h1 {
+    font-size: 2.4em;
+    font-weight: 900;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .chapter-hero .subtitle {
+    font-size: 1.1em;
+    opacity: 0.8;
+    margin-bottom: 20px;
+  }
+  .chapter-meta {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+  .meta-item {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+  }
+  .meta-item span { color: var(--gold); font-weight: 700; }
+
+  /* ===== CONTENT LAYOUT ===== */
+  .content-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 30px 60px;
+  }
+
+  /* ===== TOC ===== */
+  .toc-box {
+    background: white;
+    border: 2px solid var(--purple);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 20px rgba(61,23,133,0.08);
+  }
+  .toc-box h3 {
+    color: var(--purple);
+    font-size: 1.1em;
+    font-weight: 800;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .toc-list { list-style: none; }
+  .toc-list li {
+    padding: 5px 0;
+    border-bottom: 1px dotted var(--border);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .toc-list li:last-child { border-bottom: none; }
+  .toc-num {
+    background: var(--purple);
+    color: white;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .toc-list a {
+    color: var(--purple);
+    text-decoration: none;
+    font-weight: 600;
+    flex: 1;
+  }
+  .toc-list a:hover { color: var(--gold); }
+  .toc-dse { background: var(--gold); color: var(--purple-dark); padding: 1px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; }
+
+  /* ===== SECTION ===== */
+  .section {
+    background: white;
+    border-radius: 16px;
+    margin-bottom: 36px;
+    box-shadow: 0 4px 16px rgba(61,23,133,0.07);
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .section-header {
+    background: linear-gradient(90deg, var(--purple) 0%, var(--purple-light) 100%);
+    color: white;
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .section-num {
+    background: var(--gold);
+    color: var(--purple-dark);
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 900;
+    flex-shrink: 0;
+  }
+  .section-header h2 {
+    font-size: 1.25em;
+    font-weight: 800;
+    line-height: 1.3;
+  }
+  .section-header .en-title {
+    font-size: 0.75em;
+    opacity: 0.75;
+    font-weight: 400;
+    display: block;
+    margin-top: 2px;
+  }
+  .section-body { padding: 28px 32px; }
+
+  /* ===== SUBSECTION ===== */
+  .subsection { margin-bottom: 28px; }
+  .subsection:last-child { margin-bottom: 0; }
+  h3.sub-title {
+    color: var(--purple);
+    font-size: 1.05em;
+    font-weight: 800;
+    margin-bottom: 12px;
+    padding-left: 12px;
+    border-left: 4px solid var(--gold);
+    line-height: 1.4;
+  }
+  h4.mini-title {
+    color: var(--purple-dark);
+    font-size: 0.95em;
+    font-weight: 700;
+    margin: 14px 0 8px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  h4.mini-title::before {
+    content: '';
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ===== CONTENT ELEMENTS ===== */
+  p { margin-bottom: 10px; color: var(--text); }
+
+  ul, ol { padding-left: 22px; margin-bottom: 10px; }
+  li { margin-bottom: 5px; }
+  li ul, li ol { margin-top: 5px; }
+
+  /* ===== HIGHLIGHT BOXES ===== */
+  .box {
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    border-left: 5px solid;
+  }
+  .box-dse {
+    background: linear-gradient(135deg, #fdf4e7, #fff9f0);
+    border-color: var(--gold);
+    border-left-width: 5px;
+  }
+  .box-dse .box-title { color: #b45309; font-weight: 800; font-size: 0.9em; margin-bottom: 6px; }
+  .box-info {
+    background: var(--info-bg);
+    border-color: var(--info);
+  }
+  .box-info .box-title { color: var(--info); font-weight: 800; font-size: 0.9em; margin-bottom: 6px; }
+  .box-danger {
+    background: var(--danger-bg);
+    border-color: var(--danger);
+  }
+  .box-danger .box-title { color: var(--danger); font-weight: 800; font-size: 0.9em; margin-bottom: 6px; }
+  .box-success {
+    background: var(--success-bg);
+    border-color: var(--success);
+  }
+  .box-success .box-title { color: var(--success); font-weight: 800; font-size: 0.9em; margin-bottom: 6px; }
+  .box-purple {
+    background: #f5f0ff;
+    border-color: var(--purple);
+  }
+  .box-purple .box-title { color: var(--purple); font-weight: 800; font-size: 0.9em; margin-bottom: 6px; }
+
+  /* ===== COMPARISON TABLE ===== */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 14px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(61,23,133,0.08);
+  }
+  thead tr { background: var(--purple); color: white; }
+  thead th { padding: 12px 16px; text-align: left; font-weight: 700; }
+  tbody tr:nth-child(even) { background: #f7f5ff; }
+  tbody tr:hover { background: #ede9ff; }
+  tbody td { padding: 10px 16px; border-bottom: 1px solid var(--border); }
+  .td-label { font-weight: 700; color: var(--purple); }
+
+  /* ===== COMPONENT GRID ===== */
+  .component-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+    margin: 16px 0;
+  }
+  .component-card {
+    background: linear-gradient(135deg, #f5f0ff, #ede9ff);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .component-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(61,23,133,0.12); }
+  .component-icon { font-size: 28px; margin-bottom: 8px; }
+  .component-zh { font-size: 14px; font-weight: 800; color: var(--purple); margin-bottom: 3px; }
+  .component-en { font-size: 11px; color: var(--text-light); letter-spacing: 1px; }
+  .component-desc { font-size: 12px; color: var(--text-light); margin-top: 6px; line-height: 1.4; }
+
+  /* ===== IPO DIAGRAM ===== */
+  .ipo-flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 20px 0;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .ipo-box {
+    background: var(--purple);
+    color: white;
+    padding: 18px 28px;
+    border-radius: 10px;
+    text-align: center;
+    min-width: 130px;
+    box-shadow: 0 4px 12px rgba(61,23,133,0.25);
+  }
+  .ipo-box.gold { background: var(--gold); color: var(--purple-dark); }
+  .ipo-box .ipo-en { font-size: 11px; opacity: 0.8; letter-spacing: 1px; }
+  .ipo-box .ipo-zh { font-size: 18px; font-weight: 800; }
+  .ipo-box .ipo-eg { font-size: 11px; margin-top: 6px; opacity: 0.75; }
+  .ipo-arrow {
+    font-size: 28px;
+    color: var(--purple);
+    padding: 0 8px;
+    font-weight: 900;
+  }
+
+  /* ===== STAGES FLOW ===== */
+  .stages-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 16px 0;
+  }
+  .stage-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .stage-row:hover { border-color: var(--purple); box-shadow: 0 3px 10px rgba(61,23,133,0.08); }
+  .stage-num {
+    background: var(--purple);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 800;
+    flex-shrink: 0;
+  }
+  .stage-content { flex: 1; }
+  .stage-name { font-weight: 800; color: var(--purple); font-size: 15px; }
+  .stage-en { font-size: 12px; color: var(--text-light); margin-bottom: 3px; }
+  .stage-desc { font-size: 13px; color: var(--text); line-height: 1.5; }
+  .stage-eg { font-size: 12px; color: var(--text-light); font-style: italic; margin-top: 2px; }
+
+  /* ===== MEDIA TYPE CARDS ===== */
+  .media-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+    margin: 16px 0;
+  }
+  .media-card {
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    transition: border-color 0.2s;
+  }
+  .media-card:hover { border-color: var(--purple); }
+  .media-card-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 12px;
+  }
+  .media-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .media-icon.text-icon { background: #e0f0ff; }
+  .media-icon.img-icon { background: #ffe8d6; }
+  .media-icon.audio-icon { background: #e8ffe8; }
+  .media-icon.video-icon { background: #f5e8ff; }
+  .media-card-header .media-name { font-weight: 800; color: var(--purple); font-size: 15px; }
+  .media-card-header .media-en { font-size: 11px; color: var(--text-light); }
+  .media-subtypes { display: flex; flex-direction: column; gap: 6px; }
+  .subtype { background: #f7f5ff; border-radius: 6px; padding: 6px 10px; font-size: 12px; }
+  .subtype strong { color: var(--purple-dark); }
+
+  /* ===== GLOSSARY ===== */
+  .glossary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 10px;
+    margin: 14px 0;
+  }
+  .gloss-item {
+    background: #f7f5ff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .gloss-zh { font-weight: 800; color: var(--purple); min-width: 90px; font-size: 13px; flex-shrink: 0; }
+  .gloss-en { font-size: 12px; color: var(--text-light); }
+
+  /* ===== MCQ SECTION ===== */
+  .mcq-section {
+    background: white;
+    border-radius: 16px;
+    margin-bottom: 36px;
+    box-shadow: 0 4px 16px rgba(61,23,133,0.07);
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .mcq-header {
+    background: linear-gradient(90deg, #b45309, #d97706);
+    color: white;
+    padding: 18px 28px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .mcq-header h2 { font-size: 1.1em; font-weight: 800; }
+  .mcq-body { padding: 28px 32px; }
+  .mcq-item {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .mcq-item:last-child { margin-bottom: 0; }
+  .mcq-year {
+    position: absolute;
+    top: -10px; right: 16px;
+    background: var(--gold);
+    color: var(--purple-dark);
+    padding: 2px 12px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 800;
+  }
+  .mcq-q { font-weight: 700; margin-bottom: 12px; font-size: 14.5px; }
+  .mcq-options { list-style: none; padding: 0; margin: 0 0 14px; }
+  .mcq-options li {
+    padding: 7px 12px;
+    border-radius: 6px;
+    margin-bottom: 5px;
+    font-size: 14px;
+    cursor: default;
+    border: 1px solid transparent;
+  }
+  .mcq-options li.correct {
+    background: var(--success-bg);
+    border-color: var(--success);
+    font-weight: 700;
+    color: var(--success);
+  }
+  .mcq-answer {
+    background: #f7f5ff;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+  .mcq-answer strong { color: var(--purple); }
+  .accuracy-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+  }
+  .bar-label { font-size: 12px; color: var(--text-light); min-width: 80px; }
+  .bar-track { flex: 1; height: 8px; background: #e0d8f8; border-radius: 4px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 4px; }
+  .bar-pct { font-size: 12px; font-weight: 700; color: var(--purple); min-width: 40px; text-align: right; }
+
+  /* ===== FOOTER ===== */
+  .site-footer {
+    background: var(--purple-dark);
+    color: rgba(255,255,255,0.7);
+    padding: 28px 30px;
+    text-align: center;
+    font-size: 13px;
+    margin-top: 20px;
+  }
+  .footer-brand {
+    font-size: 16px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 6px;
+  }
+  .footer-brand span { color: var(--gold); }
+  .footer-copy { font-size: 12px; opacity: 0.6; margin-top: 8px; }
+
+  /* ===== HIGHLIGHT ===== */
+  .hl-purple { background: #ede9ff; color: var(--purple); padding: 1px 5px; border-radius: 3px; font-weight: 700; }
+  .hl-gold { background: #fef3c7; color: #92400e; padding: 1px 5px; border-radius: 3px; font-weight: 700; }
+  .hl-red { background: #fee2e2; color: #991b1b; padding: 1px 5px; border-radius: 3px; font-weight: 700; }
+
+  /* ===== PRINT ===== */
+  @media print {
+    .site-header { position: static !important; }
+    body::before { display: none; }
+    .watermark-print { display: block !important; }
+  }
+  .watermark-print { display: none; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 640px) {
+    .header-inner { padding: 10px 16px; }
+    .content-wrapper { padding: 20px 16px 40px; }
+    .section-body { padding: 20px 18px; }
+    .ipo-flow { flex-direction: column; }
+    .ipo-arrow { transform: rotate(90deg); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="logo-circle">V</div>
+      <div class="brand-text">
+        <div class="school-zh">萬鶴書院</div>
+        <div class="school-en">VANHOK ACADEMY</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="subject">HKDSE ICT 教學筆記</div>
+      <div>Created by Anker Wong</div>
+      <div>A1 資訊處理 · 第一章</div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== CHAPTER HERO ===== -->
+<div class="chapter-hero">
+  <div class="chapter-badge">HKDSE ICT · A1 資訊處理</div>
+  <h1>第一章：資訊管理簡介</h1>
+  <div class="subtitle">Introduction to Information Management</div>
+  <div class="chapter-meta">
+    <div class="meta-item">科目：<span>ICT 資訊及通訊科技</span></div>
+    <div class="meta-item">冊別：<span>A1 資訊處理</span></div>
+    <div class="meta-item">教師：<span>Anker Wong</span></div>
+    <div class="meta-item">學校：<span>萬鶴書院</span></div>
+  </div>
+</div>
+
+<!-- ===== CONTENT ===== -->
+<div class="content-wrapper">
+
+  <!-- TOC -->
+  <div class="toc-box">
+    <h3>📋 本章目錄</h3>
+    <ul class="toc-list">
+      <li><div class="toc-num">1</div><a href="#s1">資訊系統的組成</a><span class="toc-dse">DSE常考</span></li>
+      <li><div class="toc-num">2</div><a href="#s2">數據與資訊</a><span class="toc-dse">DSE常考</span></li>
+      <li><div class="toc-num">3</div><a href="#s3">輸入—處理—輸出 (IPO) 周期</a></li>
+      <li><div class="toc-num">4</div><a href="#s4">多媒體數據類型</a><span class="toc-dse">DSE常考</span></li>
+      <li><div class="toc-num">5</div><a href="#s5">資訊處理的七個階段</a><span class="toc-dse">DSE常考</span></li>
+      <li><div class="toc-num">6</div><a href="#s6">資訊時代的發展</a></li>
+      <li><div class="toc-num">7</div><a href="#s7">資訊素養</a></li>
+      <li><div class="toc-num">📝</div><a href="#mcq">DSE試題練習</a></li>
+    </ul>
+  </div>
+
+  <!-- ===== SECTION 1: 資訊系統 ===== -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div>
+        <h2>資訊系統的組成</h2>
+        <span class="en-title">Components of an Information System</span>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="box box-dse">
+        <div class="box-title">⭐ DSE 考試重點</div>
+        <p>資訊系統的五大組成部分是 DSE 必考選擇題範圍，必須熟記每個組成的定義及例子。</p>
+      </div>
+
+      <p>資訊系統是一個由<strong>人員、數據、硬件、軟件及過程</strong>組成的有機整體，用以<strong>收集、儲存、處理及傳遞資訊</strong>，支援決策與業務運作。</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <div class="component-icon">👥</div>
+          <div class="component-zh">人員</div>
+          <div class="component-en">People / Personnel</div>
+          <div class="component-desc">使用及管理系統的用戶（如操作員、管理人員、IT 支援人員）</div>
+        </div>
+        <div class="component-card">
+          <div class="component-icon">🗄️</div>
+          <div class="component-zh">數據</div>
+          <div class="component-en">Data</div>
+          <div class="component-desc">系統所處理的原始素材（如數字、文字、圖像）</div>
+        </div>
+        <div class="component-card">
+          <div class="component-icon">💻</div>
+          <div class="component-zh">硬件</div>
+          <div class="component-en">Hardware</div>
+          <div class="component-desc">系統所用的實體設備（如電腦、伺服器、路由器）</div>
+        </div>
+        <div class="component-card">
+          <div class="component-icon">📦</div>
+          <div class="component-zh">軟件</div>
+          <div class="component-en">Software</div>
+          <div class="component-desc">驅動硬件及處理數據的程式（如 OS、應用程式）</div>
+        </div>
+        <div class="component-card">
+          <div class="component-icon">⚙️</div>
+          <div class="component-zh">過程</div>
+          <div class="component-en">Process / Procedure</div>
+          <div class="component-desc">系統運作的步驟與規則（如工作流程、操作手冊）</div>
+        </div>
+      </div>
+
+      <div class="box box-danger">
+        <div class="box-title">⚠️ 常見錯誤</div>
+        <p>考生常忘記「<strong>過程 (Process)</strong>」，誤以為資訊系統只有四個組成部分。請牢記五個：<strong>人員、數據、硬件、軟件、過程</strong>（可記口訣：人數硬軟過）。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 2: 數據與資訊 ===== -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div>
+        <h2>數據與資訊</h2>
+        <span class="en-title">Data vs. Information</span>
+      </div>
+    </div>
+    <div class="section-body">
+      <table>
+        <thead>
+          <tr>
+            <th>比較</th>
+            <th>數據 (Data)</th>
+            <th>資訊 (Information)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-label">定義</td>
+            <td>未經處理的原始素材</td>
+            <td>經過處理後具意義的數據</td>
+          </tr>
+          <tr>
+            <td class="td-label">特徵</td>
+            <td>缺乏語境、孤立存在</td>
+            <td>有語境、可用於決策</td>
+          </tr>
+          <tr>
+            <td class="td-label">例子</td>
+            <td>學生成績：75, 82, 60</td>
+            <td>「甲班平均分為72.3，高於全校水平」</td>
+          </tr>
+          <tr>
+            <td class="td-label">關係</td>
+            <td colspan="2">數據 → 處理（分類、計算、分析）→ 資訊</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="box box-success">
+        <div class="box-title">✅ 記憶方法</div>
+        <p>數據 = 原材料（麵粉）；資訊 = 成品（麵包）。原材料需要「加工」才能變成有價值的成品。</p>
+      </div>
+
+      <h3 class="sub-title">優質資訊的特徵（ACCURATE 原則）</h3>
+      <table>
+        <thead>
+          <tr><th>特徵</th><th>英文</th><th>說明</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="td-label">準確性</td><td>Accuracy</td><td>資訊正確無誤，無錯誤數據</td></tr>
+          <tr><td class="td-label">完整性</td><td>Completeness</td><td>包含所有必要資訊，無遺漏</td></tr>
+          <tr><td class="td-label">時效性</td><td>Timeliness</td><td>資訊是最新的，符合當前需求</td></tr>
+          <tr><td class="td-label">相關性</td><td>Relevance</td><td>切合使用者的需要</td></tr>
+          <tr><td class="td-label">適用性</td><td>Appropriateness</td><td>以適合的格式呈現給正確的人</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 3: IPO ===== -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div>
+        <h2>輸入—處理—輸出 (IPO) 周期</h2>
+        <span class="en-title">Input–Process–Output Cycle</span>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>IPO 周期是資訊系統的核心運作模型，描述數據如何從輸入轉換為有用的輸出資訊。</p>
+
+      <div class="ipo-flow">
+        <div class="ipo-box">
+          <div class="ipo-en">INPUT</div>
+          <div class="ipo-zh">輸入</div>
+          <div class="ipo-eg">收集原始數據</div>
+        </div>
+        <div class="ipo-arrow">→</div>
+        <div class="ipo-box gold">
+          <div class="ipo-en">PROCESS</div>
+          <div class="ipo-zh">處理</div>
+          <div class="ipo-eg">計算、分析、整理</div>
+        </div>
+        <div class="ipo-arrow">→</div>
+        <div class="ipo-box">
+          <div class="ipo-en">OUTPUT</div>
+          <div class="ipo-zh">輸出</div>
+          <div class="ipo-eg">呈現有用資訊</div>
+        </div>
+      </div>
+
+      <div class="box box-dse">
+        <div class="box-title">⭐ 2025 DSE 考試應用（Q2）</div>
+        <p>試題問及「哪個因素影響資訊系統的輸出質素」，答案需從<strong>數據質素、處理方法、輸出格式</strong>三方面分析。記住：<span class="hl-gold">Garbage In, Garbage Out (GIGO)</span>——輸入的數據質素直接決定輸出的資訊質素。</p>
+      </div>
+
+      <h4 class="mini-title">實際例子</h4>
+      <table>
+        <thead>
+          <tr><th>場景</th><th>輸入</th><th>處理</th><th>輸出</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>學校成績系統</td>
+            <td>學生考試分數</td>
+            <td>計算平均分、排名</td>
+            <td>成績表、班級排名</td>
+          </tr>
+          <tr>
+            <td>銀行提款機</td>
+            <td>銀行卡 + PIN</td>
+            <td>驗證身份、扣除款項</td>
+            <td>現金、交易收據</td>
+          </tr>
+          <tr>
+            <td>網上搜尋引擎</td>
+            <td>關鍵字</td>
+            <td>索引比對、排序</td>
+            <td>搜尋結果清單</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 4: 多媒體數據類型 ===== -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div>
+        <h2>多媒體數據類型</h2>
+        <span class="en-title">Types of Multimedia Data</span>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="box box-dse">
+        <div class="box-title">⭐ DSE 考試重點</div>
+        <p>文字、圖像（點陣/向量）、音頻、視頻的特徵及應用是 DSE Paper 1 Section A1 核心考點，尤其留意<strong>點陣圖 vs 向量圖</strong>的比較。</p>
+      </div>
+
+      <div class="media-grid">
+        <div class="media-card">
+          <div class="media-card-header">
+            <div class="media-icon text-icon">📝</div>
+            <div>
+              <div class="media-name">文字</div>
+              <div class="media-en">Text</div>
+            </div>
+          </div>
+          <div class="media-subtypes">
+            <div class="subtype"><strong>純文字（Plain Text）</strong>：僅含字元，無格式（.txt）</div>
+            <div class="subtype"><strong>格式化文字（Formatted Text）</strong>：含字體、大小、顏色等格式（.docx, .rtf）</div>
+          </div>
+        </div>
+
+        <div class="media-card">
+          <div class="media-card-header">
+            <div class="media-icon img-icon">🖼️</div>
+            <div>
+              <div class="media-name">圖像</div>
+              <div class="media-en">Image</div>
+            </div>
+          </div>
+          <div class="media-subtypes">
+            <div class="subtype"><strong>點陣圖（Bitmap）</strong>：由像素組成，放大會失真，檔案較大，適合相片（JPEG, PNG, BMP, GIF）</div>
+            <div class="subtype"><strong>向量圖（Vector）</strong>：由數學方程式組成，放大不失真，適合標誌（SVG, AI, EPS）</div>
+          </div>
+        </div>
+
+        <div class="media-card">
+          <div class="media-card-header">
+            <div class="media-icon audio-icon">🎵</div>
+            <div>
+              <div class="media-name">音頻</div>
+              <div class="media-en">Audio</div>
+            </div>
+          </div>
+          <div class="media-subtypes">
+            <div class="subtype">將聲音的模擬信號轉為數位數據儲存</div>
+            <div class="subtype">格式：MP3（有損壓縮）、WAV（無損）、AAC、FLAC</div>
+            <div class="subtype">影響質素：取樣率（Sampling Rate）、位元深度（Bit Depth）</div>
+          </div>
+        </div>
+
+        <div class="media-card">
+          <div class="media-card-header">
+            <div class="media-icon video-icon">🎬</div>
+            <div>
+              <div class="media-name">視頻</div>
+              <div class="media-en">Video</div>
+            </div>
+          </div>
+          <div class="media-subtypes">
+            <div class="subtype">由連續圖像幀（Frame）組成</div>
+            <div class="subtype">影響質素：解析度、幀率（FPS）、位元率（Bit Rate）</div>
+            <div class="subtype">格式：MP4、AVI、MOV</div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="sub-title">⚡ 點陣圖 vs 向量圖比較（DSE 高頻考點）</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>比較項目</th>
+            <th>點陣圖 (Bitmap)</th>
+            <th>向量圖 (Vector)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-label">組成方式</td>
+            <td>由像素 (Pixel) 組成</td>
+            <td>由數學方程式/幾何形狀組成</td>
+          </tr>
+          <tr>
+            <td class="td-label">縮放效果</td>
+            <td><span class="hl-red">放大後失真（鋸齒感）</span></td>
+            <td><span class="hl-purple">放大後不失真</span></td>
+          </tr>
+          <tr>
+            <td class="td-label">檔案大小</td>
+            <td>通常較大</td>
+            <td>通常較小</td>
+          </tr>
+          <tr>
+            <td class="td-label">色彩豐富度</td>
+            <td>可表現豐富色彩漸層</td>
+            <td>色彩較單一</td>
+          </tr>
+          <tr>
+            <td class="td-label">適用場景</td>
+            <td>相片、複雜圖像</td>
+            <td>標誌 (Logo)、插圖、圖示</td>
+          </tr>
+          <tr>
+            <td class="td-label">常見格式</td>
+            <td>JPEG, PNG, BMP, GIF</td>
+            <td>SVG, AI, EPS</td>
+          </tr>
+          <tr>
+            <td class="td-label">色彩深度</td>
+            <td>以位元/像素 (bpp) 表示</td>
+            <td>不適用</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="box box-info">
+        <div class="box-title">💡 補充：色彩深度 (Colour Depth)</div>
+        <p>色彩深度決定圖像可表達的顏色數目。</p>
+        <ul>
+          <li>1 bpp (bit per pixel) → 2<sup>1</sup> = 2 種顏色（黑白）</li>
+          <li>8 bpp → 2<sup>8</sup> = 256 種顏色</li>
+          <li>24 bpp → 2<sup>24</sup> = 16,777,216 種顏色（全彩 True Colour）</li>
+        </ul>
+        <p style="margin-top:8px">圖像檔案大小 = 圖像解析度（像素數） × 色彩深度（bits）÷ 8（轉換為 bytes）</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 5: 七個階段 ===== -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div>
+        <h2>資訊處理的七個階段</h2>
+        <span class="en-title">Seven Stages of Information Processing</span>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="box box-dse">
+        <div class="box-title">⭐ 2025 DSE 考試重點（Q4 卷一乙）</div>
+        <p>2025 年 DSE 曾考「收集 (Collection) 與分析 (Analysis) 的區別」，必須能區分各階段的定義，不能混淆「收集」與「整理」、「分析」與「處理」。</p>
+      </div>
+
+      <div class="stages-flow">
+        <div class="stage-row">
+          <div class="stage-num">1</div>
+          <div class="stage-content">
+            <div class="stage-name">收集 <span style="font-weight:400;color:#888">(Collection)</span></div>
+            <div class="stage-desc">從各種來源（如問卷、感應器、表單）<strong>蒐集原始數據</strong>的過程。</div>
+            <div class="stage-eg">例：超市掃描顧客購物條碼記錄購買項目</div>
+          </div>
+        </div>
+        <div class="stage-row">
+          <div class="stage-num">2</div>
+          <div class="stage-content">
+            <div class="stage-name">整理 <span style="font-weight:400;color:#888">(Organisation)</span></div>
+            <div class="stage-desc">將收集到的數據<strong>分類、排序、歸納</strong>，使其更有條理。</div>
+            <div class="stage-eg">例：將學生成績按班別及科目分類排列</div>
+          </div>
+        </div>
+        <div class="stage-row">
+          <div class="stage-num">3</div>
+          <div class="stage-content">
+            <div class="stage-name">儲存 <span style="font-weight:400;color:#888">(Storage)</span></div>
+            <div class="stage-desc">將數據或資訊<strong>儲存到儲存媒體</strong>以備日後使用。</div>
+            <div class="stage-eg">例：把顧客訂單記錄存入數據庫</div>
+          </div>
+        </div>
+        <div class="stage-row">
+          <div class="stage-num">4</div>
+          <div class="stage-content">
+            <div class="stage-name">處理 <span style="font-weight:400;color:#888">(Processing)</span></div>
+            <div class="stage-desc">對數據進行<strong>計算或轉換</strong>，使其具備特定意義。</div>
+            <div class="stage-eg">例：計算各科總分及平均分</div>
+          </div>
+        </div>
+        <div class="stage-row">
+          <div class="stage-num">5</div>
+          <div class="stage-content">
+            <div class="stage-name">分析 <span style="font-weight:400;color:#888">(Analysis)</span></div>
+            <div class="stage-desc">檢視處理後的資訊，<strong>發現規律、趨勢或推論</strong>，支援決策。</div>
+            <div class="stage-eg">例：分析成績趨勢，找出成績下滑的科目</div>
+          </div>
+        </div>
+        <div class="stage-row">
+          <div class="stage-num">6</div>
+          <div class="stage-content">
+            <div class="stage-name">傳遞 <span style="font-weight:400;color:#888">(Transmission)</span></div>
+            <div class="stage-desc">通過網絡或通訊媒介<strong>將資訊傳送給其他人或系統</strong>。</div>
+            <div class="stage-eg">例：透過電子郵件將成績報告發送給家長</div>
+          </div>
+        </div>
+        <div class="stage-row">
+          <div class="stage-num">7</div>
+          <div class="stage-content">
+            <div class="stage-name">呈現 <span style="font-weight:400;color:#888">(Presentation)</span></div>
+            <div class="stage-desc">以<strong>適當的格式</strong>（圖表、報告、顯示屏）展示資訊，讓接收者理解。</div>
+            <div class="stage-eg">例：以柱狀圖呈現各班成績比較</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="box box-danger">
+        <div class="box-title">⚠️ 考試陷阱：收集 vs 分析</div>
+        <ul>
+          <li><strong>收集 (Collection)</strong>：強調「蒐集」原始數據的行為，此時數據尚未被解讀。</li>
+          <li><strong>分析 (Analysis)</strong>：強調「解讀」已處理數據，發現意義與趨勢。</li>
+          <li>2025 DSE 曾出現混淆此兩者的選項，考生需嚴格區分。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 6: 資訊時代 ===== -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div>
+        <h2>資訊時代的發展</h2>
+        <span class="en-title">The Information Age</span>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>資訊時代（Information Age）是指以資訊科技為核心生產力的社會形態。推動資訊時代發展的三大技術：</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <div class="component-icon">📡</div>
+          <div class="component-zh">物聯網</div>
+          <div class="component-en">Internet of Things (IoT)</div>
+          <div class="component-desc">將日常設備連接互聯網，自動收集與傳遞數據（如智能家居、可穿戴設備）</div>
+        </div>
+        <div class="component-card">
+          <div class="component-icon">📊</div>
+          <div class="component-zh">大數據</div>
+          <div class="component-en">Big Data</div>
+          <div class="component-desc">大量、多樣、高速產生的數據集合（5V 特徵：Volume, Velocity, Variety, Veracity, Value）</div>
+        </div>
+        <div class="component-card">
+          <div class="component-icon">🤖</div>
+          <div class="component-zh">人工智能</div>
+          <div class="component-en">Artificial Intelligence (AI)</div>
+          <div class="component-desc">模擬人類智能的電腦系統，包括機器學習、影像識別、自然語言處理</div>
+        </div>
+        <div class="component-card">
+          <div class="component-icon">☁️</div>
+          <div class="component-zh">雲端運算</div>
+          <div class="component-en">Cloud Computing</div>
+          <div class="component-desc">透過網絡提供隨選即用的運算資源（如 Google Drive, iCloud）</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 7: 資訊素養 ===== -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <div>
+        <h2>資訊素養</h2>
+        <span class="en-title">Information Literacy</span>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>資訊素養是指個人能夠<strong>有效地識別、定位、評估及使用資訊</strong>的能力，在數碼時代尤為重要。</p>
+
+      <div class="subsection">
+        <h3 class="sub-title">知識產權 (Intellectual Property, IP)</h3>
+        <p>知識產權保護創作者的智力成果，主要形式包括：</p>
+        <table>
+          <thead>
+            <tr><th>類型</th><th>保護對象</th><th>香港相關法例</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="td-label">版權 (Copyright)</td><td>文字、音樂、軟件、圖像等創作</td><td>《版權條例》(Cap. 528)</td></tr>
+            <tr><td class="td-label">專利 (Patent)</td><td>新發明、新技術</td><td>《專利條例》(Cap. 514)</td></tr>
+            <tr><td class="td-label">商標 (Trademark)</td><td>品牌標誌、名稱</td><td>《商標條例》(Cap. 559)</td></tr>
+          </tbody>
+        </table>
+        <div class="box box-danger">
+          <div class="box-title">⚠️ 版權須知</div>
+          <p>未經授權複製、分發或修改受版權保護的作品屬違法行為。即使在教育場合使用，也需符合「公平處理 (Fair Dealing)」的條件。</p>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="sub-title">數據私隱 (Data Privacy)</h3>
+        <ul>
+          <li>香港受《個人資料（私隱）條例》（PDPO, Cap. 486）保護</li>
+          <li>個人資料六大原則：收集目的、準確性、使用限制、保安、開放、查閱更正</li>
+          <li>收集個人資料需事先獲得當事人同意</li>
+          <li>不可將個人資料用於收集目的以外的用途</li>
+        </ul>
+      </div>
+
+      <div class="subsection">
+        <h3 class="sub-title">資訊可信性 (Credibility of Information)</h3>
+        <p>評估資訊可信性需考慮：</p>
+        <ul>
+          <li><strong>來源</strong>：是否來自可信機構或專家</li>
+          <li><strong>準確性</strong>：是否有事實依據或數據支持</li>
+          <li><strong>時效</strong>：資訊是否最新</li>
+          <li><strong>目的</strong>：發布者是否有偏頗立場</li>
+        </ul>
+        <div class="box box-info">
+          <div class="box-title">💡 SIFT 模型（評估網絡資訊）</div>
+          <ul>
+            <li><strong>S</strong>top — 先暫停，不要衝動分享</li>
+            <li><strong>I</strong>nvestigate the source — 查清楚資訊來源</li>
+            <li><strong>F</strong>ind better coverage — 找其他來源核實</li>
+            <li><strong>T</strong>race claims — 追溯原始聲明</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="sub-title">資訊的提取與整理</h3>
+        <table>
+          <thead>
+            <tr><th>技巧</th><th>說明</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="td-label">關鍵字搜尋</td><td>使用適當關鍵字在搜尋引擎定位相關資訊</td></tr>
+            <tr><td class="td-label">資訊篩選</td><td>根據相關性、可信性過濾結果</td></tr>
+            <tr><td class="td-label">筆記整理</td><td>用圖表、思維導圖組織資訊</td></tr>
+            <tr><td class="td-label">引用來源</td><td>標明資訊來源，避免剽竊</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== GLOSSARY ===== -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">📚</div>
+      <div>
+        <h2>本章詞彙表</h2>
+        <span class="en-title">Chapter Glossary</span>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="glossary-grid">
+        <div class="gloss-item"><div class="gloss-zh">資訊系統</div><div class="gloss-en">Information System</div></div>
+        <div class="gloss-item"><div class="gloss-zh">數據</div><div class="gloss-en">Data</div></div>
+        <div class="gloss-item"><div class="gloss-zh">資訊</div><div class="gloss-en">Information</div></div>
+        <div class="gloss-item"><div class="gloss-zh">輸入</div><div class="gloss-en">Input</div></div>
+        <div class="gloss-item"><div class="gloss-zh">處理</div><div class="gloss-en">Process</div></div>
+        <div class="gloss-item"><div class="gloss-zh">輸出</div><div class="gloss-en">Output</div></div>
+        <div class="gloss-item"><div class="gloss-zh">純文字</div><div class="gloss-en">Plain Text</div></div>
+        <div class="gloss-item"><div class="gloss-zh">格式化文字</div><div class="gloss-en">Formatted Text</div></div>
+        <div class="gloss-item"><div class="gloss-zh">點陣圖</div><div class="gloss-en">Bitmap / Raster Image</div></div>
+        <div class="gloss-item"><div class="gloss-zh">向量圖</div><div class="gloss-en">Vector Image</div></div>
+        <div class="gloss-item"><div class="gloss-zh">像素</div><div class="gloss-en">Pixel</div></div>
+        <div class="gloss-item"><div class="gloss-zh">色彩深度</div><div class="gloss-en">Colour Depth</div></div>
+        <div class="gloss-item"><div class="gloss-zh">解析度</div><div class="gloss-en">Resolution</div></div>
+        <div class="gloss-item"><div class="gloss-zh">取樣率</div><div class="gloss-en">Sampling Rate</div></div>
+        <div class="gloss-item"><div class="gloss-zh">收集</div><div class="gloss-en">Collection</div></div>
+        <div class="gloss-item"><div class="gloss-zh">整理</div><div class="gloss-en">Organisation</div></div>
+        <div class="gloss-item"><div class="gloss-zh">儲存</div><div class="gloss-en">Storage</div></div>
+        <div class="gloss-item"><div class="gloss-zh">分析</div><div class="gloss-en">Analysis</div></div>
+        <div class="gloss-item"><div class="gloss-zh">傳遞</div><div class="gloss-en">Transmission</div></div>
+        <div class="gloss-item"><div class="gloss-zh">呈現</div><div class="gloss-en">Presentation</div></div>
+        <div class="gloss-item"><div class="gloss-zh">物聯網</div><div class="gloss-en">Internet of Things (IoT)</div></div>
+        <div class="gloss-item"><div class="gloss-zh">大數據</div><div class="gloss-en">Big Data</div></div>
+        <div class="gloss-item"><div class="gloss-zh">人工智能</div><div class="gloss-en">Artificial Intelligence (AI)</div></div>
+        <div class="gloss-item"><div class="gloss-zh">雲端運算</div><div class="gloss-en">Cloud Computing</div></div>
+        <div class="gloss-item"><div class="gloss-zh">知識產權</div><div class="gloss-en">Intellectual Property (IP)</div></div>
+        <div class="gloss-item"><div class="gloss-zh">版權</div><div class="gloss-en">Copyright</div></div>
+        <div class="gloss-item"><div class="gloss-zh">數據私隱</div><div class="gloss-en">Data Privacy</div></div>
+        <div class="gloss-item"><div class="gloss-zh">資訊素養</div><div class="gloss-en">Information Literacy</div></div>
+        <div class="gloss-item"><div class="gloss-zh">可信性</div><div class="gloss-en">Credibility</div></div>
+        <div class="gloss-item"><div class="gloss-zh">個人資料</div><div class="gloss-en">Personal Data</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MCQ PRACTICE ===== -->
+  <div class="mcq-section" id="mcq">
+    <div class="mcq-header">
+      <div class="section-num" style="background:white;color:#b45309;">📝</div>
+      <h2>DSE 歷屆試題練習（第一章相關）</h2>
+    </div>
+    <div class="mcq-body">
+
+      <div class="mcq-item">
+        <div class="mcq-year">2025 DSE Q2</div>
+        <div class="mcq-q">Q1. 以下哪個因素<strong>最直接</strong>影響資訊系統輸出的質素？</div>
+        <ul class="mcq-options">
+          <li>A. 輸出設備的解析度</li>
+          <li>B. 儲存媒體的容量</li>
+          <li class="correct">C. 輸入數據的準確性</li>
+          <li>D. 網絡連接速度</li>
+        </ul>
+        <div class="mcq-answer">
+          <strong>答案：C</strong> — 根據 GIGO 原則，輸出質素直接取決於輸入數據的質素。輸入數據不準確，無論處理方法多完善，輸出結果都不可靠。
+          <div class="accuracy-bar">
+            <span class="bar-label">2025 正確率</span>
+            <div class="bar-track"><div class="bar-fill" style="width:73%;background:var(--purple)"></div></div>
+            <span class="bar-pct">73%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mcq-item">
+        <div class="mcq-year">DSE 常考</div>
+        <div class="mcq-q">Q2. 向量圖與點陣圖相比，向量圖的優點是什麼？</div>
+        <ul class="mcq-options">
+          <li>A. 能顯示更豐富的色彩</li>
+          <li>B. 適合儲存相片</li>
+          <li class="correct">C. 放大後不會失真</li>
+          <li>D. 檔案格式更普及</li>
+        </ul>
+        <div class="mcq-answer">
+          <strong>答案：C</strong> — 向量圖使用數學方程式描述圖形，無論如何縮放都不會失真。點陣圖放大後因像素被拉伸而出現鋸齒邊緣。
+        </div>
+      </div>
+
+      <div class="mcq-item">
+        <div class="mcq-year">DSE 常考</div>
+        <div class="mcq-q">Q3. 資訊處理的七個階段中，「分析 (Analysis)」與「收集 (Collection)」的主要分別是？</div>
+        <ul class="mcq-options">
+          <li>A. 收集使用電腦，分析用人手進行</li>
+          <li>B. 收集在處理前進行，分析在儲存後進行</li>
+          <li class="correct">C. 收集是蒐集原始數據，分析是從數據中發現規律或趨勢</li>
+          <li>D. 收集比分析更耗時</li>
+        </ul>
+        <div class="mcq-answer">
+          <strong>答案：C</strong> — 收集強調「取得」原始數據的過程（如問卷、感應器），而分析強調從已處理的資訊中「解讀意義」（如找出趨勢、做出推論），二者功能截然不同。
+          <div class="accuracy-bar">
+            <span class="bar-label">2025 正確率（Q4）</span>
+            <div class="bar-track"><div class="bar-fill" style="width:65%;background:#d97706"></div></div>
+            <span class="bar-pct">65%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mcq-item">
+        <div class="mcq-year">DSE 常考</div>
+        <div class="mcq-q">Q4. 以下哪一項<strong>不屬於</strong>資訊系統的組成部分？</div>
+        <ul class="mcq-options">
+          <li>A. 數據</li>
+          <li>B. 硬件</li>
+          <li>C. 軟件</li>
+          <li class="correct">D. 資金</li>
+        </ul>
+        <div class="mcq-answer">
+          <strong>答案：D</strong> — 資訊系統的五大組成部分為：人員、數據、硬件、軟件、過程。「資金」不是資訊系統的組成部分（雖然是業務運作的要素）。
+        </div>
+      </div>
+
+      <div class="mcq-item">
+        <div class="mcq-year">DSE 常考</div>
+        <div class="mcq-q">Q5. 一幅解析度為 800 × 600 像素，色彩深度為 24 位元的點陣圖，其<strong>未壓縮</strong>檔案大小為多少？</div>
+        <ul class="mcq-options">
+          <li>A. 480,000 bytes</li>
+          <li>B. 960,000 bytes</li>
+          <li class="correct">C. 1,440,000 bytes（約 1.37 MB）</li>
+          <li>D. 2,880,000 bytes</li>
+        </ul>
+        <div class="mcq-answer">
+          <strong>答案：C</strong> — 計算方法：800 × 600 × 24 bits ÷ 8 = 800 × 600 × 3 bytes = 1,440,000 bytes ≈ 1.37 MB。
+          <br><small style="color:var(--text-light)">公式：像素數 × 色彩深度（bits）÷ 8 = 檔案大小（bytes）</small>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY BOX ===== -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">✨</div>
+      <div>
+        <h2>本章重點摘要</h2>
+        <span class="en-title">Chapter Summary</span>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="box box-purple">
+        <div class="box-title">📌 DSE 必記要點</div>
+        <ul>
+          <li>資訊系統的<strong>五大組成</strong>：人員、數據、硬件、軟件、<span class="hl-red">過程（最常忘記）</span></li>
+          <li>數據 vs 資訊：數據是原始素材，資訊是<strong>經處理後有意義</strong>的數據</li>
+          <li>IPO 周期：輸入 → 處理 → 輸出；<span class="hl-gold">GIGO 原則</span>（垃圾進，垃圾出）</li>
+          <li><strong>點陣圖</strong>：像素組成、放大失真；<strong>向量圖</strong>：數學方程式、放大不失真</li>
+          <li>色彩深度計算：像素數 × bpp ÷ 8 = 檔案大小（bytes）</li>
+          <li>七個資訊處理階段：收集→整理→儲存→處理→分析→傳遞→呈現</li>
+          <li><strong>收集</strong>（取數據）vs <strong>分析</strong>（解讀數據）：是高頻考試陷阱</li>
+          <li>知識產權三大類：版權、專利、商標</li>
+          <li>香港數據私隱受<strong>《個人資料（私隱）條例》(PDPO)</strong>保護</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- watermark attribution visible -->
+  <div style="text-align:center;color:var(--text-light);font-size:12px;padding:20px 0 0;border-top:1px solid var(--border)">
+    📚 本教學筆記由 <strong>萬鶴書院 VANHOK ACADEMY</strong> 製作 ·
+    Created by <strong>Anker Wong</strong> ·
+    HKDSE ICT A1 資訊處理 © 2025 ·
+    <em>未經授權，嚴禁複製或轉發</em>
+  </div>
+
+</div><!-- /content-wrapper -->
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="footer-brand">萬鶴書院 <span>VANHOK ACADEMY</span></div>
+  <div>HKDSE ICT 教學筆記系列 · A1 資訊處理 · 第一章：資訊管理簡介</div>
+  <div>授課教師：Anker Wong </div>
+  <div class="footer-copy">© 2026 萬鶴書院版權所有 · Created by Anker Wong · 本教材受版權法保護，未經授權不得轉載</div>
+</footer>
+
+</body>
+</html>
