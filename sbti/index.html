@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SBTI 人格测试 — MBTI已经过时，SBTI来了</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ===== HERO SECTION ===== -->
+<section id="hero" class="hero-section">
+  <div class="hero-bg-blobs">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+  </div>
+  <div class="hero-content">
+    <div class="badge-new">🔥 2026年最火恶搞测试</div>
+    <h1 class="hero-title">
+      <span class="strike-through">MBTI</span><br/>
+      已经过时，<br/>
+      <span class="highlight-sbti">SBTI</span> 来了！
+    </h1>
+    <p class="hero-subtitle">Silly Big Personality Test · 愚蠢且伟大的人格测试<br/>用荒诞幽默重新定义你的人生标签 💀</p>
+    <div class="hero-stats">
+      <div class="stat-item"><span class="stat-num">100万+</span><span class="stat-label">已测试</span></div>
+      <div class="stat-divider">|</div>
+      <div class="stat-item"><span class="stat-num">热搜#1</span><span class="stat-label">微博实时</span></div>
+      <div class="stat-divider">|</div>
+      <div class="stat-item"><span class="stat-num">16种</span><span class="stat-label">抽象人格</span></div>
+    </div>
+    <button class="btn-start" onclick="startTest()">
+      <i class="fas fa-bolt"></i> 立即测测我是什么人
+    </button>
+    <p class="hero-warning">⚠️ 本测试纯娱乐，测出啥别太认真，但也别不认真！</p>
+  </div>
+  <div class="scroll-hint" onclick="scrollToIntro()">
+    <i class="fas fa-chevron-down"></i>
+  </div>
+</section>
+
+<!-- ===== INTRO SECTION ===== -->
+<section id="intro" class="intro-section">
+  <div class="container">
+    <div class="section-tag">什么是 SBTI？</div>
+    <h2 class="section-title">MBTI 的混乱邪恶版本</h2>
+    <div class="intro-grid">
+      <div class="intro-card">
+        <div class="card-icon">💊</div>
+        <h3>起源</h3>
+        <p>由B站UP主<strong>@蛆肉儿串儿</strong>原创，最初是为了劝诫朋友戒酒写的测试，没想到2026年4月冲上微博热搜，网站直接被挤崩。</p>
+      </div>
+      <div class="intro-card">
+        <div class="card-icon">🎭</div>
+        <h3>核心玩法</h3>
+        <p>完全模仿MBTI形式，但测出来的结果全是<strong>"死者"、"草者"、"吗喽"</strong>等魔性标签，精准命中当代打工人内心深处的自嘲情绪。</p>
+      </div>
+      <div class="intro-card">
+        <div class="card-icon">🚀</div>
+        <h3>为什么爆了</h3>
+        <p>年轻人对严肃的"人格标签"早已审美疲劳，而SBTI用幽默解构压力、戏谑自嘲，在内卷时代给大家找到了新的<strong>情绪出口</strong>。</p>
+      </div>
+      <div class="intro-card">
+        <div class="card-icon">📱</div>
+        <h3>传播现象</h3>
+        <p>朋友圈全是晒结果的，微博热搜、抖音、小红书同步爆炸。测试网站因访问量太大多次<strong>瘫痪崩溃</strong>，只能靠截图云体验。</p>
+      </div>
+    </div>
+
+    <div class="mbti-vs-sbti">
+      <div class="vs-left">
+        <h3>MBTI 说你是：</h3>
+        <div class="vs-tags">
+          <span class="tag-serious">INFP · 调停者</span>
+          <span class="tag-serious">INTJ · 建筑师</span>
+          <span class="tag-serious">ENFP · 活动家</span>
+          <span class="tag-serious">ENTJ · 指挥官</span>
+        </div>
+      </div>
+      <div class="vs-arrow">VS<br/><i class="fas fa-arrow-right"></i></div>
+      <div class="vs-right">
+        <h3>SBTI 说你是：</h3>
+        <div class="vs-tags">
+          <span class="tag-funny">SHIT · 愤世者</span>
+          <span class="tag-funny">ATM · 送钱者</span>
+          <span class="tag-funny">DEAD · 死者</span>
+          <span class="tag-funny">CTRL · 拿捏者</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-start btn-center" onclick="startTest()">
+      <i class="fas fa-play-circle"></i> 开始测试，找到我的人格
+    </button>
+  </div>
+</section>
+
+<!-- ===== TEST SECTION ===== -->
+<section id="test" class="test-section" style="display:none;">
+  <div class="container">
+    <div class="test-header">
+      <div class="test-progress-wrap">
+        <div class="progress-info">
+          <span id="q-current">1</span> / <span id="q-total">20</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progress-fill" style="width:5%"></div>
+        </div>
+      </div>
+      <button class="btn-back" onclick="backToHome()"><i class="fas fa-arrow-left"></i> 返回</button>
+    </div>
+
+    <div class="question-card" id="question-card">
+      <div class="question-number" id="q-badge">Q1</div>
+      <div class="question-text" id="q-text">题目加载中...</div>
+      <div class="options-grid" id="options-container"></div>
+    </div>
+
+    <div class="test-tips">
+      <i class="fas fa-info-circle"></i>
+      <span id="tip-text">凭直觉选，别想太多</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== RESULT SECTION ===== -->
+<section id="result" class="result-section" style="display:none;">
+  <div class="result-bg-blobs">
+    <div class="blob blob1"></div>
+    <div class="blob blob4"></div>
+  </div>
+  <div class="container">
+    <div class="result-reveal-text">🔮 系统已洞察你的灵魂深处……</div>
+    <div class="result-card" id="result-card">
+      <div class="result-match">匹配度 <span id="result-match-num">--</span>%</div>
+      <div class="result-type-code" id="result-code">----</div>
+      <div class="result-type-name" id="result-name">加载中</div>
+      <div class="result-emoji" id="result-emoji">🤔</div>
+      <div class="result-desc" id="result-desc">正在生成你的专属鉴定报告...</div>
+      <div class="result-system-note" id="result-note"></div>
+
+      <div class="result-dimensions">
+        <h3><i class="fas fa-chart-bar"></i> 你的15维度人格雷达</h3>
+        <div class="dimensions-grid" id="dimensions-grid"></div>
+      </div>
+    </div>
+
+    <div class="result-actions">
+      <button class="btn-share" onclick="shareResult()">
+        <i class="fas fa-share-alt"></i> 分享给好友
+      </button>
+      <button class="btn-retry" onclick="restartTest()">
+        <i class="fas fa-redo"></i> 再测一次
+      </button>
+    </div>
+
+    <!-- FEEDBACK SECTION -->
+    <div class="feedback-card">
+      <h3><i class="fas fa-comment-dots"></i> 测准了吗？来说说你的感受</h3>
+      <div class="feedback-body">
+        <div class="rating-group">
+          <div class="rating-item">
+            <label>准确度</label>
+            <div class="stars" id="stars-accuracy" data-key="accuracy">
+              <i class="fas fa-star" data-val="1"></i>
+              <i class="fas fa-star" data-val="2"></i>
+              <i class="fas fa-star" data-val="3"></i>
+              <i class="fas fa-star" data-val="4"></i>
+              <i class="fas fa-star" data-val="5"></i>
+            </div>
+          </div>
+          <div class="rating-item">
+            <label>趣味性</label>
+            <div class="stars" id="stars-funny" data-key="funny">
+              <i class="fas fa-star" data-val="1"></i>
+              <i class="fas fa-star" data-val="2"></i>
+              <i class="fas fa-star" data-val="3"></i>
+              <i class="fas fa-star" data-val="4"></i>
+              <i class="fas fa-star" data-val="5"></i>
+            </div>
+          </div>
+        </div>
+        <input type="text" id="fb-username" class="fb-input" placeholder="你的昵称（可选）" maxlength="20" />
+        <textarea id="fb-comment" class="fb-textarea" placeholder="说说你的感受，或者吐槽一下结果 😄（可选）" rows="3" maxlength="200"></textarea>
+        <button class="btn-feedback" id="btn-submit-fb" onclick="submitFeedback()">
+          <i class="fas fa-paper-plane"></i> 提交反馈
+        </button>
+        <div class="feedback-success" id="feedback-success" style="display:none;">
+          <i class="fas fa-check-circle"></i> 反馈已提交，感谢你的评价！
+        </div>
+      </div>
+    </div>
+
+    <!-- COMMUNITY RESULTS -->
+    <div class="community-card">
+      <h3><i class="fas fa-users"></i> 大家都测出了什么？</h3>
+      <div class="community-list" id="community-list">
+        <div class="loading-text"><i class="fas fa-spinner fa-spin"></i> 加载社区数据...</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHARE TOAST -->
+<div class="share-toast" id="share-toast">
+  <i class="fas fa-copy"></i> 已复制分享链接！去发给好友吧~
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
