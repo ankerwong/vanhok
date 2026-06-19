@@ -1,13 +1,14 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>萬鶴書院 HKDSE 2025屆畢業生優異成績展示</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="2025年香港DSE考试成绩深度分析，提供成绩评估、升学路径规划、院校选择建议等专业升学指导服务。" name="description"/><meta content="DSE,DSE 2025,香港中学文凭考试,成绩分析,升学规划,万鹤书院,升学指导" name="keywords"/><meta content="万鹤书院 Vanhok Academy" name="author"/><meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots"/><link href="https://page.vanhok.com/Vanhok_DSEresult_2025.html" rel="canonical"/><meta content="article" property="og:type"/><meta content="https://page.vanhok.com/Vanhok_DSEresult_2025.html" property="og:url"/><meta content="2025年DSE成绩分析与升学规划 | 万鹤书院" property="og:title"/><meta content="2025年香港DSE考试成绩深度分析，提供成绩评估、升学路径规划、院校选择建议等专业升学指导服务。" property="og:description"/><meta content="万鹤书院 Vanhok Academy" property="og:site_name"/><meta content="zh_HK" property="og:locale"/><meta content="summary_large_image" name="twitter:card"/><meta content="https://page.vanhok.com/Vanhok_DSEresult_2025.html" name="twitter:url"/><meta content="2025年DSE成绩分析与升学规划 | 万鹤书院" name="twitter:title"/><meta content="2025年香港DSE考试成绩深度分析，提供成绩评估、升学路径规划、院校选择建议等专业升学指导服务。" name="twitter:description"/><meta content="zh-CN" name="language"/><meta content="7 days" name="revisit-after"/><meta content="global" name="distribution"/><meta content="general" name="rating"/>
+<title>2025年DSE成绩分析与升学规划 | 万鹤书院</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
         
         body {
@@ -142,443 +143,411 @@
     </style>
 </head>
 <body>
-    <!-- 密碼保護界面 -->
-    <div id="passwordScreen" class="password-container flex items-center justify-center">
-        <div class="bg-white rounded-2xl shadow-2xl p-8 w-96">
-            <div class="text-center mb-8">
-                <div class="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mx-auto mb-4 flex items-center justify-center">
-                    <i class="fas fa-graduation-cap text-white text-3xl"></i>
-                </div>
-                <h1 class="text-2xl font-bold text-gray-800 mb-2">萬鶴書院</h1>
-                <p class="text-gray-600">HKDSE 2025屆畢業生成績報告</p>
-            </div>
-            
-            <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-2">請輸入訪問密碼</label>
-                <input type="password" id="passwordInput" 
-                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                       placeholder="Enter Password" maxlength="20">
-            </div>
-            
-            <button onclick="checkPassword()" class="btn-primary w-full mb-4">
-                <i class="fas fa-unlock mr-2"></i>訊入報告
+<!-- 密碼保護界面 -->
+<div class="password-container flex items-center justify-center" id="passwordScreen">
+<div class="bg-white rounded-2xl shadow-2xl p-8 w-96">
+<div class="text-center mb-8">
+<div class="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mx-auto mb-4 flex items-center justify-center">
+<i class="fas fa-graduation-cap text-white text-3xl"></i>
+</div>
+<h1 class="text-2xl font-bold text-gray-800 mb-2">萬鶴書院</h1>
+<p class="text-gray-600">HKDSE 2025屆畢業生成績報告</p>
+</div>
+<div class="mb-6">
+<label class="block text-sm font-medium text-gray-700 mb-2">請輸入訪問密碼</label>
+<input class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="passwordInput" maxlength="20" placeholder="Enter Password" type="password"/>
+</div>
+<button class="btn-primary w-full mb-4" onclick="checkPassword()">
+<i class="fas fa-unlock mr-2"></i>訊入報告
             </button>
-            
-            <div id="errorMessage" class="text-red-500 text-sm text-center hidden">
+<div class="text-red-500 text-sm text-center hidden" id="errorMessage">
                 密碼錯誤，請重新輸入
             </div>
-        </div>
-    </div>
-
-    <!-- 主要內容 -->
-    <div id="mainContent" class="main-content">
-        <!-- 標題頁面 -->
-        <section class="section bg-gradient-to-br from-indigo-900 via-blue-800 to-purple-800 text-white">
-            <div class="container mx-auto text-center">
-                <div class="mb-8">
-                    <div class="w-32 h-32 bg-white bg-opacity-20 rounded-full mx-auto mb-8 flex items-center justify-center">
-                        <i class="fas fa-graduation-cap text-6xl"></i>
-                    </div>
-                    <h1 class="text-6xl font-bold mb-4">萬鶴書院</h1>
-                    <h2 class="text-4xl font-light mb-8">Wanhe Academy</h2>
-                    <h3 class="text-3xl font-semibold mb-12">HKDSE 2025屆畢業生優異成績展示</h3>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
-                    <div class="stat-card orange">
-                        <i class="fas fa-trophy text-4xl mb-4"></i>
-                        <div class="text-3xl font-bold mb-2">45.5%</div>
-                        <div class="text-lg">港前三大學預估率</div>
-                        <div class="text-sm opacity-80">Top 3 Universities</div>
-                    </div>
-                    
-                    <div class="stat-card blue">
-                        <i class="fas fa-language text-4xl mb-4"></i>
-                        <div class="text-3xl font-bold mb-2">77.3%</div>
-                        <div class="text-lg">英語及格率</div>
-                        <div class="text-sm opacity-80">English Pass Rate</div>
-                    </div>
-                    
-                    <div class="stat-card red">
-                        <i class="fas fa-star text-4xl mb-4"></i>
-                        <div class="text-3xl font-bold mb-2">20</div>
-                        <div class="text-lg">奪星總數</div>
-                        <div class="text-sm opacity-80">5** + 5* Grades</div>
-                    </div>
-                    
-                    <div class="stat-card green">
-                        <i class="fas fa-check-circle text-4xl mb-4"></i>
-                        <div class="text-3xl font-bold mb-2">100%</div>
-                        <div class="text-lg">公社科通過率</div>
-                        <div class="text-sm opacity-80">Liberal Studies</div>
-                    </div>
-                </div>
-                
-                <div class="mt-16">
-                    <p class="text-xl opacity-90">展現卓越教學成果 Demonstrating Excellence in Education</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 完整成績單 -->
-        <section class="section bg-gray-50">
-            <div class="container mx-auto">
-                <div class="card">
-                    <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-3xl font-bold text-gray-800">
-                            <i class="fas fa-table mr-3 text-blue-600"></i>
+</div>
+</div>
+<!-- 主要內容 -->
+<div class="main-content" id="mainContent">
+<!-- 標題頁面 -->
+<section class="section bg-gradient-to-br from-indigo-900 via-blue-800 to-purple-800 text-white">
+<div class="container mx-auto text-center">
+<div class="mb-8">
+<div class="w-32 h-32 bg-white bg-opacity-20 rounded-full mx-auto mb-8 flex items-center justify-center">
+<i class="fas fa-graduation-cap text-6xl"></i>
+</div>
+<h1 class="text-6xl font-bold mb-4">萬鶴書院</h1>
+<h2 class="text-4xl font-light mb-8">Wanhe Academy</h2>
+<h3 class="text-3xl font-semibold mb-12">HKDSE 2025屆畢業生優異成績展示</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
+<div class="stat-card orange">
+<i class="fas fa-trophy text-4xl mb-4"></i>
+<div class="text-3xl font-bold mb-2">45.5%</div>
+<div class="text-lg">港前三大學預估率</div>
+<div class="text-sm opacity-80">Top 3 Universities</div>
+</div>
+<div class="stat-card blue">
+<i class="fas fa-language text-4xl mb-4"></i>
+<div class="text-3xl font-bold mb-2">77.3%</div>
+<div class="text-lg">英語及格率</div>
+<div class="text-sm opacity-80">English Pass Rate</div>
+</div>
+<div class="stat-card red">
+<i class="fas fa-star text-4xl mb-4"></i>
+<div class="text-3xl font-bold mb-2">20</div>
+<div class="text-lg">奪星總數</div>
+<div class="text-sm opacity-80">5** + 5* Grades</div>
+</div>
+<div class="stat-card green">
+<i class="fas fa-check-circle text-4xl mb-4"></i>
+<div class="text-3xl font-bold mb-2">100%</div>
+<div class="text-lg">公社科通過率</div>
+<div class="text-sm opacity-80">Liberal Studies</div>
+</div>
+</div>
+<div class="mt-16">
+<p class="text-xl opacity-90">展現卓越教學成果 Demonstrating Excellence in Education</p>
+</div>
+</div>
+</section>
+<!-- 完整成績單 -->
+<section class="section bg-gray-50">
+<div class="container mx-auto">
+<div class="card">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-3xl font-bold text-gray-800">
+<i class="fas fa-table mr-3 text-blue-600"></i>
                             完整成績單 Complete Grade Report
                         </h2>
-                        <button id="toggleNames" onclick="toggleStudentNames()" class="btn-primary">
-                            <i class="fas fa-eye mr-2"></i>
-                            <span id="toggleText">隱藏姓名</span>
-                        </button>
-                    </div>
-                    
-                    <div class="overflow-x-auto">
-                        <table class="grade-table">
-                            <thead>
-                                <tr>
-                                    <th>序號</th>
-                                    <th>班級</th>
-                                    <th>姓名</th>
-                                    <th>中文</th>
-                                    <th>英文</th>
-                                    <th>數學</th>
-                                    <th>公社</th>
-                                    <th>物理</th>
-                                    <th>化學</th>
-                                    <th>生物</th>
-                                    <th>M2</th>
-                                    <th>經濟</th>
-                                    <th>歷史</th>
-                                    <th>BAFS</th>
-                                    <th>Best 5</th>
-                                    <th>Best 6</th>
-                                </tr>
-                            </thead>
-                            <tbody id="gradeTableBody">
-                                <tr><td>1</td><td>A</td><td class="student-name">李玄同</td><td>3</td><td>3</td><td>5*</td><td>A</td><td>5*</td><td>-</td><td>5*</td><td>4</td><td>-</td><td>-</td><td>-</td><td>28</td><td>31</td></tr>
-                                <tr><td>2</td><td>A</td><td class="student-name">蔡卓芮</td><td>5</td><td>3</td><td>5</td><td>A</td><td>5</td><td>5</td><td>-</td><td>4</td><td>-</td><td>-</td><td>-</td><td>26</td><td>29</td></tr>
-                                <tr><td>3</td><td>A</td><td class="student-name">朱開誠</td><td>3</td><td>3</td><td>5*</td><td>A</td><td>5*</td><td>4</td><td>-</td><td>4</td><td>-</td><td>-</td><td>-</td><td>25</td><td>29</td></tr>
-                                <tr><td>4</td><td>A</td><td class="student-name">林彥希</td><td>5</td><td>3</td><td>5</td><td>A</td><td>4</td><td>-</td><td>-</td><td>4</td><td>Abs</td><td>-</td><td>-</td><td>22</td><td>-</td></tr>
-                                <tr><td>5</td><td>A</td><td class="student-name">綦化誠</td><td>3</td><td>3</td><td>5**</td><td>A</td><td>-</td><td>-</td><td>-</td><td>4</td><td>-</td><td>-</td><td>3</td><td>21</td><td>-</td></tr>
-                                <tr><td>6</td><td>A</td><td class="student-name">俞雅雯</td><td>3</td><td>3</td><td>5</td><td>A</td><td>-</td><td>4</td><td>5</td><td>-</td><td>-</td><td>-</td><td>-</td><td>21</td><td>-</td></tr>
-                                <tr><td>7</td><td>A</td><td class="student-name">杜文鐸</td><td>4</td><td>4</td><td>5</td><td>A</td><td>3</td><td>3</td><td>-</td><td>4</td><td>-</td><td>-</td><td>-</td><td>20.5</td><td>23.5</td></tr>
-                                <tr><td>8</td><td>A</td><td class="student-name">郭君涵</td><td>4</td><td>3</td><td>4</td><td>A</td><td>4</td><td>Abs</td><td>-</td><td>-</td><td>5</td><td>-</td><td>-</td><td>20.5</td><td>-</td></tr>
-                                <tr><td>9</td><td>A</td><td class="student-name">洪貝詩</td><td>5</td><td>3</td><td>4</td><td>A</td><td>4</td><td>-</td><td>4</td><td>-</td><td>-</td><td>-</td><td>-</td><td>20.5</td><td>-</td></tr>
-                                <tr><td>10</td><td>A</td><td class="student-name">周王子廷</td><td>4</td><td>3</td><td>4</td><td>A</td><td>-</td><td>-</td><td>-</td><td>-</td><td>5</td><td>4</td><td>-</td><td>20.5</td><td>-</td></tr>
-                                <tr><td>11</td><td>A</td><td class="student-name">施洛嶺</td><td>5*</td><td>3</td><td>4</td><td>A</td><td>-</td><td>-</td><td>3</td><td>-</td><td>3</td><td>-</td><td>-</td><td>20</td><td>-</td></tr>
-                                <tr><td>12</td><td>A</td><td class="student-name">駱思穎</td><td>5</td><td>3</td><td>3</td><td>A</td><td>-</td><td>-</td><td>-</td><td>-</td><td>4</td><td>4</td><td>-</td><td>19.5</td><td>-</td></tr>
-                                <tr><td>13</td><td>B</td><td class="student-name">陳雯玉</td><td>3</td><td>3</td><td>5</td><td>A</td><td>4</td><td>-</td><td>-</td><td>3</td><td>-</td><td>-</td><td>-</td><td>18.5</td><td>-</td></tr>
-                                <tr><td>14</td><td>B</td><td class="student-name">平子銘</td><td>5*</td><td>2</td><td>4</td><td>A</td><td>-</td><td>-</td><td>-</td><td>-</td><td>2</td><td>4</td><td>-</td><td>18.5</td><td>-</td></tr>
-                                <tr><td>15</td><td>B</td><td class="student-name">譚星瑤</td><td>4</td><td>3</td><td>4</td><td>A</td><td>3</td><td>4</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>18</td><td>-</td></tr>
-                                <tr><td>16</td><td>B</td><td class="student-name">汪凱恩</td><td>4</td><td>3</td><td>5</td><td>A</td><td>3</td><td>3</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>18</td><td>-</td></tr>
-                                <tr><td>17</td><td>B</td><td class="student-name">戴嘉鍇</td><td>3</td><td>3</td><td>4</td><td>A</td><td>4</td><td>-</td><td>-</td><td>-</td><td>3</td><td>-</td><td>-</td><td>17</td><td>-</td></tr>
-                                <tr><td>18</td><td>B</td><td class="student-name">劉嘉慧</td><td>4</td><td>2</td><td>4</td><td>A</td><td>3</td><td>-</td><td>-</td><td>-</td><td>4</td><td>-</td><td>-</td><td>17</td><td>-</td></tr>
-                                <tr><td>19</td><td>B</td><td class="student-name">黃佳琪</td><td>4</td><td>3</td><td>4</td><td>A</td><td>-</td><td>-</td><td>3</td><td>-</td><td>3</td><td>-</td><td>-</td><td>16</td><td>-</td></tr>
-                                <tr><td>20</td><td>B</td><td class="student-name">顧嘉桐</td><td>3</td><td>2</td><td>4</td><td>A</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>3</td><td>3</td><td>15</td><td>-</td></tr>
-                                <tr><td>21</td><td>B</td><td class="student-name">劉博涵</td><td>3</td><td>2</td><td>4</td><td>A</td><td>3</td><td>2</td><td>-</td><td>Abs</td><td>-</td><td>-</td><td>-</td><td>14</td><td>-</td></tr>
-                                <tr><td>22</td><td>B</td><td class="student-name">陳思琦</td><td>3</td><td>2</td><td>3</td><td>A</td><td>-</td><td>-</td><td>-</td><td>-</td><td>3</td><td>3</td><td>-</td><td>14</td><td>-</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    <div class="mt-6 text-sm text-gray-600">
-                        <p><strong>說明：</strong>"-" 表示未選修該科目，"Abs" 表示缺考，"A" 表示公社科達標（A級）</p>
-                        <p><strong>Note:</strong> "-" indicates subject not taken, "Abs" indicates absent, "A" indicates Liberal Studies attained (Grade A)</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 與考評局數據對比 -->
-        <section class="section">
-            <div class="container mx-auto">
-                <div class="card">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
-                        <i class="fas fa-chart-bar mr-3 text-purple-600"></i>
+<button class="btn-primary" id="toggleNames" onclick="toggleStudentNames()">
+<i class="fas fa-eye mr-2"></i>
+<span id="toggleText">隱藏姓名</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="grade-table">
+<thead>
+<tr>
+<th>序號</th>
+<th>班級</th>
+<th>姓名</th>
+<th>中文</th>
+<th>英文</th>
+<th>數學</th>
+<th>公社</th>
+<th>物理</th>
+<th>化學</th>
+<th>生物</th>
+<th>M2</th>
+<th>經濟</th>
+<th>歷史</th>
+<th>BAFS</th>
+<th>Best 5</th>
+<th>Best 6</th>
+</tr>
+</thead>
+<tbody id="gradeTableBody">
+<tr><td>1</td><td>A</td><td class="student-name">李玄同</td><td>3</td><td>3</td><td>5*</td><td>A</td><td>5*</td><td>-</td><td>5*</td><td>4</td><td>-</td><td>-</td><td>-</td><td>28</td><td>31</td></tr>
+<tr><td>2</td><td>A</td><td class="student-name">蔡卓芮</td><td>5</td><td>3</td><td>5</td><td>A</td><td>5</td><td>5</td><td>-</td><td>4</td><td>-</td><td>-</td><td>-</td><td>26</td><td>29</td></tr>
+<tr><td>3</td><td>A</td><td class="student-name">朱開誠</td><td>3</td><td>3</td><td>5*</td><td>A</td><td>5*</td><td>4</td><td>-</td><td>4</td><td>-</td><td>-</td><td>-</td><td>25</td><td>29</td></tr>
+<tr><td>4</td><td>A</td><td class="student-name">林彥希</td><td>5</td><td>3</td><td>5</td><td>A</td><td>4</td><td>-</td><td>-</td><td>4</td><td>Abs</td><td>-</td><td>-</td><td>22</td><td>-</td></tr>
+<tr><td>5</td><td>A</td><td class="student-name">綦化誠</td><td>3</td><td>3</td><td>5**</td><td>A</td><td>-</td><td>-</td><td>-</td><td>4</td><td>-</td><td>-</td><td>3</td><td>21</td><td>-</td></tr>
+<tr><td>6</td><td>A</td><td class="student-name">俞雅雯</td><td>3</td><td>3</td><td>5</td><td>A</td><td>-</td><td>4</td><td>5</td><td>-</td><td>-</td><td>-</td><td>-</td><td>21</td><td>-</td></tr>
+<tr><td>7</td><td>A</td><td class="student-name">杜文鐸</td><td>4</td><td>4</td><td>5</td><td>A</td><td>3</td><td>3</td><td>-</td><td>4</td><td>-</td><td>-</td><td>-</td><td>20.5</td><td>23.5</td></tr>
+<tr><td>8</td><td>A</td><td class="student-name">郭君涵</td><td>4</td><td>3</td><td>4</td><td>A</td><td>4</td><td>Abs</td><td>-</td><td>-</td><td>5</td><td>-</td><td>-</td><td>20.5</td><td>-</td></tr>
+<tr><td>9</td><td>A</td><td class="student-name">洪貝詩</td><td>5</td><td>3</td><td>4</td><td>A</td><td>4</td><td>-</td><td>4</td><td>-</td><td>-</td><td>-</td><td>-</td><td>20.5</td><td>-</td></tr>
+<tr><td>10</td><td>A</td><td class="student-name">周王子廷</td><td>4</td><td>3</td><td>4</td><td>A</td><td>-</td><td>-</td><td>-</td><td>-</td><td>5</td><td>4</td><td>-</td><td>20.5</td><td>-</td></tr>
+<tr><td>11</td><td>A</td><td class="student-name">施洛嶺</td><td>5*</td><td>3</td><td>4</td><td>A</td><td>-</td><td>-</td><td>3</td><td>-</td><td>3</td><td>-</td><td>-</td><td>20</td><td>-</td></tr>
+<tr><td>12</td><td>A</td><td class="student-name">駱思穎</td><td>5</td><td>3</td><td>3</td><td>A</td><td>-</td><td>-</td><td>-</td><td>-</td><td>4</td><td>4</td><td>-</td><td>19.5</td><td>-</td></tr>
+<tr><td>13</td><td>B</td><td class="student-name">陳雯玉</td><td>3</td><td>3</td><td>5</td><td>A</td><td>4</td><td>-</td><td>-</td><td>3</td><td>-</td><td>-</td><td>-</td><td>18.5</td><td>-</td></tr>
+<tr><td>14</td><td>B</td><td class="student-name">平子銘</td><td>5*</td><td>2</td><td>4</td><td>A</td><td>-</td><td>-</td><td>-</td><td>-</td><td>2</td><td>4</td><td>-</td><td>18.5</td><td>-</td></tr>
+<tr><td>15</td><td>B</td><td class="student-name">譚星瑤</td><td>4</td><td>3</td><td>4</td><td>A</td><td>3</td><td>4</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>18</td><td>-</td></tr>
+<tr><td>16</td><td>B</td><td class="student-name">汪凱恩</td><td>4</td><td>3</td><td>5</td><td>A</td><td>3</td><td>3</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>18</td><td>-</td></tr>
+<tr><td>17</td><td>B</td><td class="student-name">戴嘉鍇</td><td>3</td><td>3</td><td>4</td><td>A</td><td>4</td><td>-</td><td>-</td><td>-</td><td>3</td><td>-</td><td>-</td><td>17</td><td>-</td></tr>
+<tr><td>18</td><td>B</td><td class="student-name">劉嘉慧</td><td>4</td><td>2</td><td>4</td><td>A</td><td>3</td><td>-</td><td>-</td><td>-</td><td>4</td><td>-</td><td>-</td><td>17</td><td>-</td></tr>
+<tr><td>19</td><td>B</td><td class="student-name">黃佳琪</td><td>4</td><td>3</td><td>4</td><td>A</td><td>-</td><td>-</td><td>3</td><td>-</td><td>3</td><td>-</td><td>-</td><td>16</td><td>-</td></tr>
+<tr><td>20</td><td>B</td><td class="student-name">顧嘉桐</td><td>3</td><td>2</td><td>4</td><td>A</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>3</td><td>3</td><td>15</td><td>-</td></tr>
+<tr><td>21</td><td>B</td><td class="student-name">劉博涵</td><td>3</td><td>2</td><td>4</td><td>A</td><td>3</td><td>2</td><td>-</td><td>Abs</td><td>-</td><td>-</td><td>-</td><td>14</td><td>-</td></tr>
+<tr><td>22</td><td>B</td><td class="student-name">陳思琦</td><td>3</td><td>2</td><td>3</td><td>A</td><td>-</td><td>-</td><td>-</td><td>-</td><td>3</td><td>3</td><td>-</td><td>14</td><td>-</td></tr>
+</tbody>
+</table>
+</div>
+<div class="mt-6 text-sm text-gray-600">
+<p><strong>說明：</strong>"-" 表示未選修該科目，"Abs" 表示缺考，"A" 表示公社科達標（A級）</p>
+<p><strong>Note:</strong> "-" indicates subject not taken, "Abs" indicates absent, "A" indicates Liberal Studies attained (Grade A)</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 與考評局數據對比 -->
+<section class="section">
+<div class="container mx-auto">
+<div class="card">
+<h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+<i class="fas fa-chart-bar mr-3 text-purple-600"></i>
                         與考評局數據對比 Comparison with HKEAA Statistics
                     </h2>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="comparison-card chinese">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-xl font-bold text-red-600">中文科 Chinese</h3>
-                                <i class="fas fa-book text-red-500 text-2xl"></i>
-                            </div>
-                            <div class="space-y-4">
-                                <div class="bg-red-50 p-4 rounded-lg">
-                                    <div class="text-sm text-gray-600 mb-1">及格率 Pass Rate (≥3級)</div>
-                                    <div class="flex justify-between items-center">
-                                        <div>
-                                            <div class="text-2xl font-bold text-red-600">100%</div>
-                                            <div class="text-sm text-gray-500">萬鶴書院</div>
-                                        </div>
-                                        <div class="text-center">
-                                            <div class="text-lg font-semibold text-green-600">+36.1%</div>
-                                            <div class="text-xs text-gray-500">領先</div>
-                                        </div>
-                                        <div class="text-right">
-                                            <div class="text-lg font-semibold text-gray-600">63.9%</div>
-                                            <div class="text-sm text-gray-500">考評局</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="bg-red-50 p-4 rounded-lg">
-                                    <div class="text-sm text-gray-600 mb-1">5級以上 Level 5+</div>
-                                    <div class="flex justify-between items-center">
-                                        <div>
-                                            <div class="text-2xl font-bold text-red-600">27.3%</div>
-                                            <div class="text-sm text-gray-500">萬鶴書院</div>
-                                        </div>
-                                        <div class="text-center">
-                                            <div class="text-lg font-semibold text-green-600">+16.1%</div>
-                                            <div class="text-xs text-gray-500">領先</div>
-                                        </div>
-                                        <div class="text-right">
-                                            <div class="text-lg font-semibold text-gray-600">11.2%</div>
-                                            <div class="text-sm text-gray-500">考評局</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="comparison-card math">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-xl font-bold text-blue-600">數學科 Mathematics</h3>
-                                <i class="fas fa-calculator text-blue-500 text-2xl"></i>
-                            </div>
-                            <div class="space-y-4">
-                                <div class="bg-blue-50 p-4 rounded-lg">
-                                    <div class="text-sm text-gray-600 mb-1">及格率 Pass Rate (≥3級)</div>
-                                    <div class="flex justify-between items-center">
-                                        <div>
-                                            <div class="text-2xl font-bold text-blue-600">100%</div>
-                                            <div class="text-sm text-gray-500">萬鶴書院</div>
-                                        </div>
-                                        <div class="text-center">
-                                            <div class="text-lg font-semibold text-green-600">+39.1%</div>
-                                            <div class="text-xs text-gray-500">領先</div>
-                                        </div>
-                                        <div class="text-right">
-                                            <div class="text-lg font-semibold text-gray-600">60.9%</div>
-                                            <div class="text-sm text-gray-500">考評局</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="bg-blue-50 p-4 rounded-lg">
-                                    <div class="text-sm text-gray-600 mb-1">5級以上 Level 5+</div>
-                                    <div class="flex justify-between items-center">
-                                        <div>
-                                            <div class="text-2xl font-bold text-blue-600">40.9%</div>
-                                            <div class="text-sm text-gray-500">萬鶴書院</div>
-                                        </div>
-                                        <div class="text-center">
-                                            <div class="text-lg font-semibold text-green-600">+25.2%</div>
-                                            <div class="text-xs text-gray-500">領先</div>
-                                        </div>
-                                        <div class="text-right">
-                                            <div class="text-lg font-semibold text-gray-600">15.7%</div>
-                                            <div class="text-sm text-gray-500">考評局</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="comparison-card english">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-xl font-bold text-green-600">英文科 English</h3>
-                                <i class="fas fa-globe text-green-500 text-2xl"></i>
-                            </div>
-                            <div class="space-y-4">
-                                <div class="bg-green-50 p-4 rounded-lg">
-                                    <div class="text-sm text-gray-600 mb-1">及格率 Pass Rate (≥3級)</div>
-                                    <div class="flex justify-between items-center">
-                                        <div>
-                                            <div class="text-2xl font-bold text-green-600">77.3%</div>
-                                            <div class="text-sm text-gray-500">萬鶴書院</div>
-                                        </div>
-                                        <div class="text-center">
-                                            <div class="text-lg font-semibold text-green-600">+23.7%</div>
-                                            <div class="text-xs text-gray-500">領先</div>
-                                        </div>
-                                        <div class="text-right">
-                                            <div class="text-lg font-semibold text-gray-600">53.6%</div>
-                                            <div class="text-sm text-gray-500">考評局</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="bg-green-50 p-4 rounded-lg">
-                                    <div class="text-sm text-gray-600 mb-1">教學優勢 Teaching Advantage</div>
-                                    <div class="text-center">
-                                        <div class="text-lg font-semibold text-green-600">全面提升</div>
-                                        <div class="text-sm text-gray-500">英語能力培養</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 升學前景分析 -->
-        <section class="section bg-gray-50">
-            <div class="container mx-auto">
-                <div class="card">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
-                        <i class="fas fa-university mr-3 text-indigo-600"></i>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="comparison-card chinese">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-xl font-bold text-red-600">中文科 Chinese</h3>
+<i class="fas fa-book text-red-500 text-2xl"></i>
+</div>
+<div class="space-y-4">
+<div class="bg-red-50 p-4 rounded-lg">
+<div class="text-sm text-gray-600 mb-1">及格率 Pass Rate (≥3級)</div>
+<div class="flex justify-between items-center">
+<div>
+<div class="text-2xl font-bold text-red-600">100%</div>
+<div class="text-sm text-gray-500">萬鶴書院</div>
+</div>
+<div class="text-center">
+<div class="text-lg font-semibold text-green-600">+36.1%</div>
+<div class="text-xs text-gray-500">領先</div>
+</div>
+<div class="text-right">
+<div class="text-lg font-semibold text-gray-600">63.9%</div>
+<div class="text-sm text-gray-500">考評局</div>
+</div>
+</div>
+</div>
+<div class="bg-red-50 p-4 rounded-lg">
+<div class="text-sm text-gray-600 mb-1">5級以上 Level 5+</div>
+<div class="flex justify-between items-center">
+<div>
+<div class="text-2xl font-bold text-red-600">27.3%</div>
+<div class="text-sm text-gray-500">萬鶴書院</div>
+</div>
+<div class="text-center">
+<div class="text-lg font-semibold text-green-600">+16.1%</div>
+<div class="text-xs text-gray-500">領先</div>
+</div>
+<div class="text-right">
+<div class="text-lg font-semibold text-gray-600">11.2%</div>
+<div class="text-sm text-gray-500">考評局</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="comparison-card math">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-xl font-bold text-blue-600">數學科 Mathematics</h3>
+<i class="fas fa-calculator text-blue-500 text-2xl"></i>
+</div>
+<div class="space-y-4">
+<div class="bg-blue-50 p-4 rounded-lg">
+<div class="text-sm text-gray-600 mb-1">及格率 Pass Rate (≥3級)</div>
+<div class="flex justify-between items-center">
+<div>
+<div class="text-2xl font-bold text-blue-600">100%</div>
+<div class="text-sm text-gray-500">萬鶴書院</div>
+</div>
+<div class="text-center">
+<div class="text-lg font-semibold text-green-600">+39.1%</div>
+<div class="text-xs text-gray-500">領先</div>
+</div>
+<div class="text-right">
+<div class="text-lg font-semibold text-gray-600">60.9%</div>
+<div class="text-sm text-gray-500">考評局</div>
+</div>
+</div>
+</div>
+<div class="bg-blue-50 p-4 rounded-lg">
+<div class="text-sm text-gray-600 mb-1">5級以上 Level 5+</div>
+<div class="flex justify-between items-center">
+<div>
+<div class="text-2xl font-bold text-blue-600">40.9%</div>
+<div class="text-sm text-gray-500">萬鶴書院</div>
+</div>
+<div class="text-center">
+<div class="text-lg font-semibold text-green-600">+25.2%</div>
+<div class="text-xs text-gray-500">領先</div>
+</div>
+<div class="text-right">
+<div class="text-lg font-semibold text-gray-600">15.7%</div>
+<div class="text-sm text-gray-500">考評局</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="comparison-card english">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-xl font-bold text-green-600">英文科 English</h3>
+<i class="fas fa-globe text-green-500 text-2xl"></i>
+</div>
+<div class="space-y-4">
+<div class="bg-green-50 p-4 rounded-lg">
+<div class="text-sm text-gray-600 mb-1">及格率 Pass Rate (≥3級)</div>
+<div class="flex justify-between items-center">
+<div>
+<div class="text-2xl font-bold text-green-600">77.3%</div>
+<div class="text-sm text-gray-500">萬鶴書院</div>
+</div>
+<div class="text-center">
+<div class="text-lg font-semibold text-green-600">+23.7%</div>
+<div class="text-xs text-gray-500">領先</div>
+</div>
+<div class="text-right">
+<div class="text-lg font-semibold text-gray-600">53.6%</div>
+<div class="text-sm text-gray-500">考評局</div>
+</div>
+</div>
+</div>
+<div class="bg-green-50 p-4 rounded-lg">
+<div class="text-sm text-gray-600 mb-1">教學優勢 Teaching Advantage</div>
+<div class="text-center">
+<div class="text-lg font-semibold text-green-600">全面提升</div>
+<div class="text-sm text-gray-500">英語能力培養</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 升學前景分析 -->
+<section class="section bg-gray-50">
+<div class="container mx-auto">
+<div class="card">
+<h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+<i class="fas fa-university mr-3 text-indigo-600"></i>
                         升學前景分析 University Admission Analysis
                     </h2>
-                    
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div>
-                            <div class="chart-container">
-                                <canvas id="admissionChart"></canvas>
-                            </div>
-                        </div>
-                        
-                        <div class="space-y-4">
-                            <div class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white p-6 rounded-lg">
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <h3 class="text-xl font-bold mb-2">港前三大學 Top 3 Universities</h3>
-                                        <p class="text-sm opacity-90">香港大學、中文大學、科技大學</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <div class="text-3xl font-bold">45.5%</div>
-                                        <div class="text-sm">10名學生</div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="bg-gradient-to-r from-red-400 to-pink-500 text-white p-6 rounded-lg">
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <h3 class="text-xl font-bold mb-2">港前五大學 Top 5 Universities</h3>
-                                        <p class="text-sm opacity-90">城市大學、理工大學</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <div class="text-3xl font-bold">27.3%</div>
-                                        <div class="text-sm">6名學生</div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="bg-gradient-to-r from-teal-400 to-blue-500 text-white p-6 rounded-lg">
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <h3 class="text-xl font-bold mb-2">港前八大學 Top 8 Universities</h3>
-                                        <p class="text-sm opacity-90">浸會大學、嶺南大學、教育大學</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <div class="text-3xl font-bold">9.1%</div>
-                                        <div class="text-sm">2名學生</div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="bg-gradient-to-r from-green-400 to-green-600 text-white p-6 rounded-lg">
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <h3 class="text-xl font-bold mb-2">其他選擇 Other Options</h3>
-                                        <p class="text-sm opacity-90">海外升學、其他院校</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <div class="text-3xl font-bold">18.2%</div>
-                                        <div class="text-sm">4名學生</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 關鍵指標總結 -->
-        <section class="section bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white">
-            <div class="container mx-auto text-center">
-                <h2 class="text-4xl font-bold mb-12">教學成果總結 Academic Achievement Summary</h2>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-                    <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6">
-                        <i class="fas fa-medal text-yellow-400 text-4xl mb-4"></i>
-                        <div class="text-2xl font-bold mb-2">20個</div>
-                        <div class="text-lg">奪星總數</div>
-                        <div class="text-sm opacity-80">5** + 5* 等級</div>
-                    </div>
-                    
-                    <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6">
-                        <i class="fas fa-percentage text-blue-400 text-4xl mb-4"></i>
-                        <div class="text-2xl font-bold mb-2">100%</div>
-                        <div class="text-lg">公社科通過率</div>
-                        <div class="text-sm opacity-80">全部達A級</div>
-                    </div>
-                    
-                    <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6">
-                        <i class="fas fa-graduation-cap text-green-400 text-4xl mb-4"></i>
-                        <div class="text-2xl font-bold mb-2">65.4%</div>
-                        <div class="text-lg">本科升學率</div>
-                        <div class="text-sm opacity-80">332A22達標</div>
-                    </div>
-                    
-                    <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6">
-                        <i class="fas fa-trophy text-orange-400 text-4xl mb-4"></i>
-                        <div class="text-2xl font-bold mb-2">45.5%</div>
-                        <div class="text-lg">港前三預估率</div>
-                        <div class="text-sm opacity-80">頂尖大學入學</div>
-                    </div>
-                </div>
-                
-                <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-8 max-w-4xl mx-auto">
-                    <h3 class="text-2xl font-bold mb-6">卓越成果亮點 Excellence Highlights</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-                        <div>
-                            <h4 class="font-bold mb-3 text-yellow-400">
-                                <i class="fas fa-star mr-2"></i>學術表現
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<div>
+<div class="chart-container">
+<canvas id="admissionChart"></canvas>
+</div>
+</div>
+<div class="space-y-4">
+<div class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white p-6 rounded-lg">
+<div class="flex items-center justify-between">
+<div>
+<h3 class="text-xl font-bold mb-2">港前三大學 Top 3 Universities</h3>
+<p class="text-sm opacity-90">香港大學、中文大學、科技大學</p>
+</div>
+<div class="text-right">
+<div class="text-3xl font-bold">45.5%</div>
+<div class="text-sm">10名學生</div>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-r from-red-400 to-pink-500 text-white p-6 rounded-lg">
+<div class="flex items-center justify-between">
+<div>
+<h3 class="text-xl font-bold mb-2">港前五大學 Top 5 Universities</h3>
+<p class="text-sm opacity-90">城市大學、理工大學</p>
+</div>
+<div class="text-right">
+<div class="text-3xl font-bold">27.3%</div>
+<div class="text-sm">6名學生</div>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-r from-teal-400 to-blue-500 text-white p-6 rounded-lg">
+<div class="flex items-center justify-between">
+<div>
+<h3 class="text-xl font-bold mb-2">港前八大學 Top 8 Universities</h3>
+<p class="text-sm opacity-90">浸會大學、嶺南大學、教育大學</p>
+</div>
+<div class="text-right">
+<div class="text-3xl font-bold">9.1%</div>
+<div class="text-sm">2名學生</div>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-r from-green-400 to-green-600 text-white p-6 rounded-lg">
+<div class="flex items-center justify-between">
+<div>
+<h3 class="text-xl font-bold mb-2">其他選擇 Other Options</h3>
+<p class="text-sm opacity-90">海外升學、其他院校</p>
+</div>
+<div class="text-right">
+<div class="text-3xl font-bold">18.2%</div>
+<div class="text-sm">4名學生</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 關鍵指標總結 -->
+<section class="section bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white">
+<div class="container mx-auto text-center">
+<h2 class="text-4xl font-bold mb-12">教學成果總結 Academic Achievement Summary</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+<div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6">
+<i class="fas fa-medal text-yellow-400 text-4xl mb-4"></i>
+<div class="text-2xl font-bold mb-2">20個</div>
+<div class="text-lg">奪星總數</div>
+<div class="text-sm opacity-80">5** + 5* 等級</div>
+</div>
+<div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6">
+<i class="fas fa-percentage text-blue-400 text-4xl mb-4"></i>
+<div class="text-2xl font-bold mb-2">100%</div>
+<div class="text-lg">公社科通過率</div>
+<div class="text-sm opacity-80">全部達A級</div>
+</div>
+<div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6">
+<i class="fas fa-graduation-cap text-green-400 text-4xl mb-4"></i>
+<div class="text-2xl font-bold mb-2">65.4%</div>
+<div class="text-lg">本科升學率</div>
+<div class="text-sm opacity-80">332A22達標</div>
+</div>
+<div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6">
+<i class="fas fa-trophy text-orange-400 text-4xl mb-4"></i>
+<div class="text-2xl font-bold mb-2">45.5%</div>
+<div class="text-lg">港前三預估率</div>
+<div class="text-sm opacity-80">頂尖大學入學</div>
+</div>
+</div>
+<div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-8 max-w-4xl mx-auto">
+<h3 class="text-2xl font-bold mb-6">卓越成果亮點 Excellence Highlights</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+<div>
+<h4 class="font-bold mb-3 text-yellow-400">
+<i class="fas fa-star mr-2"></i>學術表現
                             </h4>
-                            <ul class="space-y-2 text-sm">
-                                <li>• 數學科100%及格率，40.9%達5級以上</li>
-                                <li>• 中文科100%及格率，27.3%達5級以上</li>
-                                <li>• 英文科77.3%及格率，超越全港平均</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 class="font-bold mb-3 text-blue-400">
-                                <i class="fas fa-chart-line mr-2"></i>升學優勢
+<ul class="space-y-2 text-sm">
+<li>• 數學科100%及格率，40.9%達5級以上</li>
+<li>• 中文科100%及格率，27.3%達5級以上</li>
+<li>• 英文科77.3%及格率，超越全港平均</li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-3 text-blue-400">
+<i class="fas fa-chart-line mr-2"></i>升學優勢
                             </h4>
-                            <ul class="space-y-2 text-sm">
-                                <li>• 45.5%學生具備港前三入學條件</li>
-                                <li>• 72.8%學生可進入港前五大學</li>
-                                <li>• 81.9%學生達港前八升學標準</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 class="font-bold mb-3 text-green-400">
-                                <i class="fas fa-award mr-2"></i>教學質量
+<ul class="space-y-2 text-sm">
+<li>• 45.5%學生具備港前三入學條件</li>
+<li>• 72.8%學生可進入港前五大學</li>
+<li>• 81.9%學生達港前八升學標準</li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-3 text-green-400">
+<i class="fas fa-award mr-2"></i>教學質量
                             </h4>
-                            <ul class="space-y-2 text-sm">
-                                <li>• 全面超越考評局平均水平</li>
-                                <li>• 公社科100%通過率</li>
-                                <li>• 20個5**和5*等級成就</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="mt-12">
-                    <p class="text-xl opacity-90 mb-4">萬鶴書院 —— 您的升學夢想啟航地</p>
-                    <p class="text-lg opacity-80">Wanhe Academy - Where Your University Dreams Take Flight</p>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <script>
+<ul class="space-y-2 text-sm">
+<li>• 全面超越考評局平均水平</li>
+<li>• 公社科100%通過率</li>
+<li>• 20個5**和5*等級成就</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="mt-12">
+<p class="text-xl opacity-90 mb-4">萬鶴書院 —— 您的升學夢想啟航地</p>
+<p class="text-lg opacity-80">Wanhe Academy - Where Your University Dreams Take Flight</p>
+</div>
+</div>
+</section>
+</div>
+<script>
         let namesHidden = false;
         
         function checkPassword() {
@@ -688,12 +657,10 @@
     </script>
 </body>
 </html>
-    <script id="html_badge_script1">
+<script id="html_badge_script1">
         window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
             "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDlgnn%2BPpPIu4zfDJXDlpbV%2BsSAnfQef75IxumhPZLPfZQV78X%2FJk%2BtNjN6ve%2Fnb9sJety9rGmmHQiyOqclXIhKQOowZ8LQmc2yr6PEJoUDT28Ioqsd6JUE%2FZyxTVnjN%2FtWB4%2FukRis1rwntm8J2W4DXaRfqrloVNXVNRTrpxGmq9prRBtsE%2FFK%2B2kVNrYuI%2BEj85%2Fh9OO0drHh%2BuTxPrnYm30NMJb5Fg60dUF%2FwzaOy4a%2F1a3nE%2F%2FyP1SIZ8lkrTwwu6Idbcsx9f2UAjjFhcUADNrqOFk8JzTraMtorFXjQ%2BzLC%2BOTjES6iQP5VCDAQ%2BkMd%2BTy0RaBq29RsDg0Gvw3JN%2BWUQ675h8sp8fohwT1FOfqYj0OIErsLe9BSDxXwXRnyc%2FiTxcCcqDi5CXipob1B1zveAhw3efXGl7Umv1YhnLxFIX5K%2Fyiu39vnu3XNJuc6pGMnakLK2%2BKGZt%2Bm55ZqZhhgA4XWtdvl8evXwSelUXuapA9d4dBKkVUV9lA6jSDjDayzB%2FOz1aBck6UozP9g%3D";
         window.__genspark_locale = "zh-CN";
         window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDlgnn+PpPIu4zfDJXDlpbV+sSAnfQef75IxumhPZLPfZQV78X/Jk+tNjN6ve/nb9sJety9rGmmHQiyOqclXIhKQOowZ8LQmc2yr6PEJoUDT28Ioqsd6JUE/ZyxTVnjN/tWB4/ukRis1rwntm8J2W4DXaRfqrloVNXVNRTrpxGmq9prRBtsE/FK+2kVNrYuI+Ej85/h9OO0drHh+uTxPrnYm30NMJb5Fg60dUF/wzaOy4a/1a3nE//yP1SIZ8lkrTwwu6Idbcsx9f2UAjjFhcUADNrqOFk8JzTraMtorFXjQ+zLC+OTjES6iQP5VCDAQ+kMd+Ty0RaBq29RsDg0Gvw3JN+WUQ675h8sp8fohwT1FOfqYj0OIErsLe9BSDxXwXRnyc/iTxcCcqDi5CXipob1B1zveAhw3efXGl7Umv1YhnLxFIX5K/yiu39vnu3XNJuc6pGMnakLK2+KGZt+m55ZqZhhgA4XWtdvl8evXwSelUXuapA9d4dBKkVUV9lA6jSDjDayzB/Oz1aBck6UozP9g=";
     </script>
-    
-    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
-    
+<script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
