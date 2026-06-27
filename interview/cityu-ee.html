@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>香港城市大学 JS1205 电子工程 | Vanhok Academy</title>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <div class="site-shell">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="index.html">
+          <img src="assets/logo.png" alt="Vanhok Academy Logo" />
+          <div class="brand-meta">
+            <strong>萬鶴書院 / VANHOK ACADEMY</strong>
+            <span>香港高校专业面试培训网站</span>
+          </div>
+        </a>
+        <nav class="nav"><a href="index.html" class="">首页</a><a href="mbchb.html" class="">CUHK MBChB</a><a href="maeg.html" class="">CUHK MAEG</a><a href="marketing.html" class="">CityU Marketing</a><a href="cityu-ee.html" class="active">CityU EE</a><a href="cityu-energy-env.html" class="">CityU SEE</a><a href="polyu.html" class="">PolyU AMFA</a><a href="hkbu-bba.html" class="">HKBU BBA</a><a href="hkbu.html" class="">HKBU 双学位</a><a href="appendix.html" class="">附录训练</a></nav>
+      </div>
+    </header>
+    
+<main class="container page-wrap">
+  <aside class="sidebar">
+    <h3>CityU EE JS1205</h3>
+    <h4>页内目录</h4>
+    <ul>
+      <li><a href="#cityu-ee-format">第一部分：CityU JS1205 电子工程——已知面试形式与考察逻辑</a></li>
+      <li><a href="#cityu-ee-qa">第二部分：CityU JS1205 高频问题库与参考答案（20题）</a></li>
+      <li><a href="#cityu-ee-sources">研究依据与来源</a></li>
+    </ul>
+    <div class="quick-links"><a href="index.html">返回首页</a><a href="appendix.html">查看附录训练</a></div>
+  </aside>
+  <article class="content">
+    <div class="content-header">
+      <span class="eyebrow">专业面试训练</span>
+      <h1>香港城市大学 JS1205 电子工程</h1>
+      <p>Department of Electrical Engineering（Majors: BEng Computer and Data Engineering / BEng Electronic and Electrical Engineering / BEng Information Engineering / BEng Microelectronics Engineering）</p>
+    </div>
+
+    <h2 id="cityu-ee-format">第一部分：CityU JS1205 电子工程——已知面试形式与考察逻辑</h2>
+    <div class="summary-box">
+      <h4>官方 / 校方可验证信息</h4>
+      <ul>
+        <li><strong>面试安排：</strong> CityU 官方 Interview Arrangements 页面写明，<strong>JS1205 为 selective basis</strong>，时间在 <strong>early July</strong>，形式为 <strong>group interview</strong>，语言为 <strong>English</strong>。</li>
+        <li><strong>录取结构：</strong> JUPAS 申请者先进入 Department of Electrical Engineering，之后再分流到四个 majors：<strong>Computer and Data Engineering、Electronic and Electrical Engineering、Information Engineering、Microelectronics Engineering</strong>。</li>
+        <li><strong>分流特点：</strong> JUPAS 页面写明，<strong>top 40% of students</strong> 可自由选择系内 majors；其余学生则按学额和各 major selection criteria 分配。这意味着面试官很可能在意你是否真正理解“先入系、后分流”的结构。</li>
+        <li><strong>学科基础：</strong> JUPAS 页面强调早期训练覆盖 <strong>Mathematics and Physics、Electronics and Circuits、Computer Programming、Information Technology</strong>，说明项目并不是只看单一点兴趣，而是看你是否愿意接受数理、软硬件、系统思维的综合训练。</li>
+        <li><strong>项目卖点：</strong> 官方项目页和 Department 页面强调 AI、data engineering、machine learning、IoT、cybersecurity、wireless communications、photonics、power systems、signal processing、IC / ASIC design 等方向，并强调 industry partnerships、internships、collaborative projects、research exposure。</li>
+        <li><strong>招生活动线索：</strong> Department events 页面列出“<strong>Programme Information Session and Interviews for JUPAS Applicants</strong>”；2021 官方社媒回顾提到活动最后有 <strong>breakout group interviews with our EE faculty</strong>，而参加者表现出对 prevailing technologies and their applications 的兴趣。</li>
+      </ul>
+    </div>
+
+    <div class="summary-box">
+      <h4>高概率考察逻辑</h4>
+      <ul>
+        <li><strong>Why EE / Why this department：</strong> 不只是说“我喜欢科技”，而是要说明你对电机工程的哪一层真正感兴趣：软硬件结合、通信与信号、数据与 AI、芯片与系统，还是控制与应用。</li>
+        <li><strong>Department-level fit：</strong> 因为 JS1205 不是直接录到单一 major，所以面试官更想看你是否理解 broad departmental training，并能说出自己当前最倾向的方向。</li>
+        <li><strong>工程直觉与问题解决：</strong> 即使不一定问很难的公式题，也很可能看你能否用工程思维解释一个系统、拆解一个问题、比较一个方案。</li>
+        <li><strong>团队与英文群面表现：</strong> 官方明确是英文 group interview，因此表达清晰、回应别人、推动讨论、在技术话题里讲清逻辑，会非常关键。</li>
+        <li><strong>技术好奇心与 hands-on 倾向：</strong> 项目一直强调 labs、projects、internships、industry links、robotics、research，因此很看重你是不是愿意“动手做”、不是只停留在概念层面。</li>
+      </ul>
+    </div>
+
+    <p><strong>训练建议：</strong> 这类面试最忌讳“泛科技叙事”。学生如果只说自己喜欢 AI、芯片、机器人，却讲不清自己做过什么、看过什么、怎么理解软硬件和系统之间的关系，就容易显得空泛。更好的回答方式是：<strong>兴趣来源 + 一个具体技术场景 + 你想在 CityU EE 得到什么训练</strong>。</p>
+
+    <h2 id="cityu-ee-qa">第二部分：CityU JS1205 高频问题库与参考答案（20题）</h2>
+
+    <h3>分组一：专业动机与项目匹配</h3>
+
+    <div class="qa-card">
+      <h4>Q1. Why electrical engineering, not just computer science or general engineering?</h4>
+      <div class="qa-meta"><strong>考察点：</strong> 是否理解 EE 的跨层次特征。<br/><strong>回答结构：</strong> 对系统的兴趣 + 软硬件结合 + 与个人倾向的对应。</div>
+      <div class="answer-en">I am drawn to electrical engineering because it sits at the level where ideas become functioning systems. Computer science focuses more on algorithms and software, while general engineering can be broader and less tied to information-driven technologies. What attracts me to electrical engineering is the combination of circuits, signals, computation, and real-world applications. I like the idea that an engineer should understand not only what a system is supposed to do, but also how data, hardware, and communication work together to make it possible. That systems perspective is what makes this field particularly meaningful to me.</div>
+      <div class="comment-box"><strong>点评：</strong> 不是把 EE 说成“比 CS 更高级”，而是清楚点出系统层面的吸引力。</div>
+    </div>
+
+    <div class="qa-card">
+      <h4>Q2. Why CityU JS1205 instead of applying directly to a narrower major?</h4>
+      <div class="qa-meta"><strong>考察点：</strong> 是否理解“先入系、后分流”。<br/><strong>回答结构：</strong> broad foundation + current preference + informed choice。</div>
+      <div class="answer-en">I like CityU JS1205 because it gives me a broad engineering foundation before I commit to a final major. Right now, I am especially interested in information-oriented areas such as computer and data engineering or information engineering, but I also recognise that strong engineering judgment comes from understanding more than one layer of technology. The department-first model allows me to strengthen my foundations in mathematics, circuits, programming, and systems before making a more informed decision. To me, that is a thoughtful structure because it encourages exploration without losing direction.</div>
+      <div class="comment-box"><strong>点评：</strong> 很适合 JS1205，体现“方向感 + 开放性”并存。</div>
+    </div>
+
+    <div class="qa-card">
+      <h4>Q3. Which of the four majors currently interests you most, and why?</h4>
+      <div class="qa-meta"><strong>考察点：</strong> 是否有初步方向感。<br/><strong>回答结构：</strong> 当前偏好 + 理由 + 保留调整空间。</div>
+      <div class="answer-en">At this stage, I am most interested in Computer and Data Engineering, with Information Engineering as another major that strongly appeals to me. Computer and Data Engineering attracts me because it combines programming, hardware awareness, and data-driven technologies such as AI and machine learning. Information Engineering also interests me because it connects communication systems, optimisation, cybersecurity, and signal processing. What I like about JS1205 is that I do not need to force a final choice too early. I can enter with a clear current preference while still allowing my first-year learning experience to sharpen that choice.</div>
+      <div class="comment-box"><strong>点评：</strong> 回答里最好有“主偏好 + 次偏好”，显得更真实成熟。</div>
+    </div>
+
+    <div class="qa-card">
+      <h4>Q4. What kind of engineer do you hope to become?</h4>
+      <div class="qa-meta"><strong>考察点：</strong> 职业想象与价值取向。<br/><strong>回答结构：</strong> 技术能力 + 解决问题方式 + 对社会/产业的理解。</div>
+      <div class="answer-en">I hope to become the kind of engineer who can move between theory and implementation. I do not just want to understand concepts in isolation; I want to be able to use them to build or improve systems that solve practical problems. Ideally, I would like to become an engineer who can think clearly, communicate technical ideas well, and work effectively across teams. In a fast-changing field, I think the most valuable engineers are not only technically strong, but also adaptable, collaborative, and able to keep learning as technologies evolve.</div>
+      <div class="comment-box"><strong>点评：</strong> 很适合工程类专业的成熟表达，不浮夸，也不空洞。</div>
+    </div>
+
+    <div class="qa-card">
+      <h4>Q5. What attracts you more: the theory, the hardware, the coding, or the application?</h4>
+      <div class="qa-meta"><strong>考察点：</strong> 自我认知是否清楚。<br/><strong>回答结构：</strong> 首选项 + 为什么 + 如何看待其他层面。</div>
+      <div class="answer-en">If I had to choose, I would say I am most attracted to the application layer, but only when it is supported by real technical understanding. I enjoy coding because it gives immediate feedback, and I am increasingly interested in hardware because it makes me think more carefully about constraints, efficiency, and implementation. At the same time, I know that applications without theory become superficial, while theory without application can stay too abstract. So what excites me most is the connection between them: how mathematics, programming, and electronic systems come together to create something useful.</div>
+      <div class="comment-box"><strong>点评：</strong> 不是简单选一个，而是体现工程整体观。</div>
+    </div>
+
+    <h3>分组二：技术兴趣与工程问题解决</h3>
+
+    <div class="qa-card">
+      <h4>Q6. Tell us about a technology area that genuinely excites you.</h4>
+      <div class="qa-meta"><strong>考察点：</strong> 技术兴趣是否具体。<br/><strong>回答结构：</strong> 领域 + 为什么重要 + 你被什么问题吸引。</div>
+      <div class="answer-en">One area that genuinely excites me is the intersection of AI and embedded systems. Many people think of AI only as software running in the cloud, but I am especially interested in what happens when intelligence has to work under hardware constraints such as power, latency, or memory limits. That is where engineering becomes more interesting, because you cannot just ask whether a model is accurate. You also have to ask whether it is efficient, reliable, and deployable in the real world. I find that balance between performance and practicality very compelling.</div>
+      <div class="comment-box"><strong>点评：</strong> 有“技术点 + 工程约束”的意识，就会比泛泛说 AI 强很多。</div>
+    </div>
+
+    <div class="qa-card">
+      <h4>Q7. How would you explain the difference between software thinking and engineering thinking?</h4>
+      <div class="qa-meta"><strong>考察点：</strong> 是否能抽象比较不同思维方式。<br/><strong>回答结构：</strong> 功能实现 vs constraints / integration / reliability。</div>
+      <div class="answer-en">Software thinking often focuses first on functionality: what the program should do and how to make the logic work. Engineering thinking includes that, but it also asks how the entire system performs under constraints such as power, timing, cost, physical limits, safety, and maintainability. In other words, software may solve the logic of a problem, while engineering has to solve the problem in context. That is why I think electrical engineering is appealing: it forces you to consider performance, integration, and trade-offs rather than only correctness at an abstract level.</div>
+      <div class="comment-box"><strong>点评：</strong> 很适合 JS1205，因为项目本身强调系统与跨层训练。</div>
+    </div>
+
+    <div class="qa-card">
+      <h4>Q8. What do you do when you face a technical problem you cannot solve immediately?</h4>
+      <div class="qa-meta"><strong>考察点：</strong> 遇到困难时的工程方法。<br/><strong>回答结构：</strong> 拆问题 + 验假设 + 查资料/求助 + 复盘。</div>
+      <div class="answer-en">When I cannot solve a technical problem immediately, I first try to define the exact point of failure instead of reacting emotionally to the whole problem. Then I break the system into smaller parts and test my assumptions one by one. If needed, I review documentation, compare examples, or ask for help with a specific question rather than a vague request. What matters to me is not pretending I know everything, but making sure my process is disciplined. I think good engineers are not those who never get stuck, but those who know how to recover systematically.</div>
+      <div class="comment-box"><strong>点评：</strong> 这类回答非常适合工程面试，能体现 problem-solving maturity。</div>
+    </div>
+
+    <div class="qa-card">
+      <h4>Q9. Why are mathematics and physics still important in modern engineering?</h4>
+      <div class="qa-meta"><strong>考察点：</strong> 是否尊重基础学科。<br/><strong>回答结构：</strong> 基础不是背公式，而是理解模型与限制。</div>
+      <div class="answer-en">Mathematics and physics remain essential because they give engineers a way to model reality instead of relying only on intuition. Modern tools can automate many calculations, but without understanding the principles behind signals, energy, control, probability, or optimisation, an engineer may use tools without knowing their limits. Mathematics trains precision and abstraction, while physics keeps our thinking grounded in how systems actually behave. In my view, strong foundations do not make engineering old-fashioned. They make advanced technologies more understandable and more trustworthy.</div>
+      <div class="comment-box"><strong>点评：</strong> 对工程类老师来说，这种回答会显得基本功观念很正。</div>
+    </div>
+
+    <div class="qa-card">
+      <h4>Q10. What is more important in engineering: creativity or reliability?</h4>
+      <div class="qa-meta"><strong>考察点：</strong> trade-off 判断。<br/><strong>回答结构：</strong> 不二选一；先场景再平衡。</div>
+      <div class="answer-en">I do not think the best answer is to choose one and dismiss the other. Creativity is what opens up new solutions, but reliability is what makes those solutions usable in the real world. An engineering idea that is creative but unstable may remain a demonstration, while a reliable but unimaginative approach may fail to solve new problems efficiently. The real skill is knowing what the situation demands. In safety-critical or infrastructure systems, reliability may dominate. In early-stage innovation, creativity may matter more first. A good engineer needs both, but in the right proportion.</div>
+      <div class="comment-box"><strong>点评：</strong> 很典型的工程判断题，答出“场景化平衡”就会加分。</div>
+    </div>
+
+    <h3>分组三：方向选择、行业趋势与资源利用</h3>
+
+    <div class="qa-card">
+      <h4>Q11. How do you see the relationship between AI and electrical engineering?</h4>
+      <div class="qa-meta"><strong>考察点：</strong> 是否能把热门技术放回专业语境。<br/><strong>回答结构：</strong> AI 不只是模型，也依赖系统、算力、数据、硬件。</div>
+      <div class="answer-en">AI and electrical engineering are closely connected because AI does not exist only at the algorithm level. It depends on sensing, data transmission, computing hardware, power efficiency, embedded implementation, and system integration. Electrical engineering provides much of the infrastructure that allows AI to function beyond theory. That is why I see AI not as a separate trend replacing engineering, but as a field that makes electrical engineering even more relevant. The more intelligent systems become, the more important it is to understand how hardware, signals, and communication support them.</div>
+      <div class="comment-box"><strong>点评：</strong> 回答把 AI 从“热词”拉回工程本体，质量会高很多。</div>
+    </div>
+
+    <div class="qa-card">
+      <h4>Q12. If you entered JS1205, how would you make use of internships, labs, or industry links?</h4>
+      <div class="qa-meta"><strong>考察点：</strong> 是否会真正使用系内资源。<br/><strong>回答结构：</strong> 先打基础 + 再进 lab / internship + 明确目标。</div>
+      <div class="answer-en">If I entered JS1205, I would first focus on building strong academic foundations so that I could use practical opportunities meaningfully instead of superficially. After that, I would actively look for lab exposure, student projects, and internships that match my direction. For example, if I moved toward data-oriented engineering, I would want projects involving embedded systems, sensing, or signal-based intelligence. If I leaned toward electronic or microelectronics areas, I would want more hardware-oriented lab experience. To me, internships and industry links are most valuable when they are not treated as checkboxes, but as chances to test whether my academic interests fit real engineering work.</div>
+      <div class="comment-box"><strong>点评：</strong> 很符合 CityU EE 强调 internship / industry partnership 的定位。</div>
+    </div>
+
+    <div class="qa-card">
+      <h4>Q13. Why might someone choose microelectronics engineering today?</h4>
+      <div class="qa-meta"><strong>考察点：</strong> 是否理解四个 majors 的差异。<br/><strong>回答结构：</strong> 芯片重要性 + 底层能力 + 应用广度。</div>
+      <div class="answer-en">Someone might choose microelectronics engineering because semiconductors remain one of the foundational technologies behind modern digital life. From AI accelerators to mobile devices, sensors, and communication systems, chip design and fabrication shape what higher-level technologies can achieve. What makes the field attractive is that it connects physics, materials, circuit design, and system performance. It is demanding, but for students who are interested in building technology at the most fundamental hardware level, it offers both depth and long-term relevance.</div>
+      <div class="comment-box"><strong>点评：</strong> 说明你不是只懂自己喜欢的方向，也理解系内其他 major。</div>
+    </div>
+
+    <div class="qa-card">
+      <h4>Q14. What do you think makes a good engineering team?</h4>
+      <div class="qa-meta"><strong>考察点：</strong> 团队观与协作意识。<br/><strong>回答结构：</strong> 分工 + 沟通 + 责任感 + 尊重不同强项。</div>
+      <div class="answer-en">A good engineering team is not simply a group of technically strong individuals. It is a team that can coordinate different strengths effectively. Good teams usually have clear goals, honest communication, and shared responsibility for outcomes. In engineering work, people may think differently—some focus on theory, some on implementation, and some on debugging or documentation. A strong team makes room for those differences while keeping standards high. I also think reliability matters at the team level: people need to do what they said they would do, because technical work depends heavily on trust.</div>
+      <div class="comment-box"><strong>点评：</strong> 非常适合英文群面场景，可自然延展到自身经验。</div>
+    </div>
+
+    <div class="qa-card">
+      <h4>Q15. How would you decide among the four majors after entering the department?</h4>
+      <div class="qa-meta"><strong>考察点：</strong> 是否有 decision framework。<br/><strong>回答结构：</strong> 兴趣 + aptitude + coursework experience + long-term fit。</div>
+      <div class="answer-en">I would make the decision based on four things: sustained interest, performance in foundational courses, enjoyment of specific types of problems, and long-term career fit. Interest matters, but I think it should be tested through actual coursework and projects rather than assumed from online impressions. I would also pay attention to whether I prefer signal and communication problems, hardware design, software-hardware integration, or chip-level thinking. The best choice is not the one that sounds most fashionable, but the one where my motivation and my strengths reinforce each other over time.</div>
+      <div class="comment-box"><strong>点评：</strong> 很适合 JS1205 的“后分流”结构，回答显得理性成熟。</div>
+    </div>
+
+    <h3>分组四：英文群面、表达与成长潜力</h3>
+
+    <div class="qa-card">
+      <h4>Q16. Please introduce yourself briefly.</h4>
+      <div class="qa-meta"><strong>考察点：</strong> 英文开场的清晰度与结构感。<br/><strong>回答结构：</strong> identity + technical curiosity + fit with department。</div>
+      <div class="answer-en">Good afternoon, and thank you for the opportunity. I am a student who is strongly interested in technology, especially in how software, hardware, and data work together in real systems. Over time, I realised that I do not only enjoy using technology, but also understanding the principles behind it and thinking about how it can be improved. That is why I am applying to CityU’s Department of Electrical Engineering. I value the department’s broad foundation, the flexibility to choose among different majors later, and the strong emphasis on practical and industry-linked learning.</div>
+      <div class="comment-box"><strong>点评：</strong> 适合 JS1205 的 department-based 招生逻辑，不要一上来只讲单一 major。</div>
+    </div>
+
+    <div class="qa-card">
+      <h4>Q17. In a group interview, what would you do if your idea was not accepted immediately?</h4>
+      <div class="qa-meta"><strong>考察点：</strong> 群面成熟度与抗压性。<br/><strong>回答结构：</strong> 先听反馈，再澄清，再必要时让步。</div>
+      <div class="answer-en">If my idea was not accepted immediately, I would first try to understand why rather than defend it emotionally. Maybe the issue is not the idea itself, but how I explained it or whether it fits the group’s goal. I would clarify my reasoning briefly, but if the group had stronger evidence or a more practical direction, I would be willing to adjust. In a group interview, I think the goal is not to win every point. It is to improve the discussion and help the group move toward a better answer.</div>
+      <div class="comment-box"><strong>点评：</strong> 工程群面很看重 process，不是辩赢别人。</div>
+    </div>
+
+    <div class="qa-card">
+      <h4>Q18. How would you explain a technical idea to a non-technical person?</h4>
+      <div class="qa-meta"><strong>考察点：</strong> 沟通能力。<br/><strong>回答结构：</strong> 先讲目的，再用类比，再避免术语堆砌。</div>
+      <div class="answer-en">I would begin with the purpose rather than the terminology. Before explaining how something works, I would explain what problem it solves and why it matters. Then I would use a simple analogy if it helps, but I would make sure the analogy remains accurate enough to be useful. I would also avoid unnecessary jargon and check whether the other person is following my explanation. To me, being technical is not only about understanding complexity. It is also about being able to translate that complexity into something clear and meaningful for others.</div>
+      <div class="comment-box"><strong>点评：</strong> 这题对工程学生非常重要，尤其适合老师拿来训练表达能力。</div>
+    </div>
+
+    <div class="qa-card">
+      <h4>Q19. Tell us about a time you learned something difficult.</h4>
+      <div class="qa-meta"><strong>考察点：</strong> 学习韧性。<br/><strong>回答结构：</strong> 困难点 + 你怎么学 + 最后有什么改变。</div>
+      <div class="answer-en">One valuable learning experience for me was realising that understanding something difficult often requires patience more than talent. When I encountered a topic that felt overwhelming at first, I learned to stop judging myself too early and instead build understanding step by step. I tried examples, revisited the fundamentals, and forced myself to explain the concept in simpler language. What changed was not only my knowledge of that topic, but also my attitude. I became more confident that complex things can become manageable if I approach them systematically and stay consistent.</div>
+      <div class="comment-box"><strong>点评：</strong> 很适合工程专业，因为工程学习往往就是长期克服复杂度。</div>
+    </div>
+
+    <div class="qa-card">
+      <h4>Q20. What would you do if you entered JS1205 and later found your first preferred major was not the best fit?</h4>
+      <div class="qa-meta"><strong>考察点：</strong> 适应力与现实感。<br/><strong>回答结构：</strong> 接受调整 + 用证据修正 + 仍保持成长目标。</div>
+      <div class="answer-en">If that happened, I would see it as part of the value of the programme rather than as failure. One reason I appreciate the department-based structure is that it gives students room to test their interests against real coursework and experience. If I discovered that my first preference was not the best fit, I would re-evaluate based on what I had learned about my strengths, motivation, and performance. I think intellectual flexibility is important in engineering. Making a better-informed choice later can be wiser than forcing myself to stay with an early assumption that no longer matches reality.</div>
+      <div class="comment-box"><strong>点评：</strong> 非常契合 JS1205 后分流结构，是这页必须训练的一题。</div>
+    </div>
+
+    <h2 id="cityu-ee-sources">研究依据与来源</h2>
+    <div class="summary-box">
+      <h4>本页内容的依据</h4>
+      <ul>
+        <li><a href="https://www.cityu.edu.hk/admo/interview-arrangements-local-jupas-applicants">CityU 官方 Interview Arrangements 页面</a>：JS1205 为 selective basis、early July、group interview、English。</li>
+        <li><a href="https://www.jupas.edu.hk/en/programme/cityuhk/JS1205/">JUPAS JS1205 页面</a>：Department-first admission、top 40% free choice of majors、四个 majors、基础训练与 industry partnerships。</li>
+        <li><a href="https://www.cityu.edu.hk/admo/programmes/department-electrical-engineering-options-beng-computer-and-data-engineering-beng">CityU programme page</a>：四个 majors 的方向定位与内容描述。</li>
+        <li><a href="https://www.ee.cityu.edu.hk/en/prospective_students/undergraduate_admission/admission_information">CityU EE Admission Information</a>：JS1205 admission arrangement、奖学金、Band A 倾向、assessment 中会参考 interview / OEA / discipline-related subjects。</li>
+        <li><a href="https://www.ee.cityu.edu.hk/events/upcoming_events">CityU EE Events 页面</a>：Programme Information Session and Interviews for JUPAS Applicants。</li>
+        <li><a href="https://www.instagram.com/p/CR0txFSsXnt/">CityU EE 官方社媒回顾</a>：2021 活动中包含 breakout group interviews with EE faculty。</li>
+        <li><a href="https://www.youtube.com/watch?v=o826S_7Jc4g">CityU Department of Electrical Engineering video</a>：软件/硬件/数据方向、机器人队、项目协作、教师支持等线索。</li>
+        <li><a href="https://www.youtube.com/watch?v=9IyqfoPMgcE">CityUHK EE JS1205 介绍影片</a>：hands-on 活动、research、internships、joint lab、industry links、career support 等线索。</li>
+      </ul>
+      <p><strong>说明：</strong> 本页“高频问题库与参考答案”基于以上公开资料，并沿用网站现有专业页面的统一训练逻辑扩展而成，属于培训用途的训练题库，不是校方官方题单。</p>
+    </div>
+  </article>
+</main>
+
+    <footer class="footer">
+      <div class="container footer-card">
+        <div>本网站供面试培训教学使用，按专业整理面试形式、重点问题与作答技巧，便于老师快速进入相应页面开展训练。</div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
