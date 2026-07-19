@@ -1,153 +1,202 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-HK">
 <head>
     <meta charset="UTF-8">
-    <title>万鹤书院信息发布页</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body {
-            background: #f7f9fa;
-            font-family: 'Noto Sans SC', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background: #3e70c9;
-            color: white;
-            padding: 32px 0 20px 0;
-            text-align: center;
-            letter-spacing: 4px;
-            box-shadow: 0 4px 10px rgba(62,112,201,0.08);
-        }
-        h1 {
-            margin: 0;
-            font-size: 2.2em;
-            letter-spacing: 4px;
-        }
-        main {
-            max-width: 600px;
-            margin: 32px auto 0 auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 16px rgba(62,112,201,0.10);
-            padding: 36px 28px 28px 28px;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        li {
-            margin: 15px 0;
-            font-size: 1.1em;
-        }
-        a {
-            text-decoration: none;
-            color: #2156ae;
-            transition: color 0.2s;
-        }
-        a:hover {
-            color: #13408b;
-            text-decoration: underline;
-        }
-        .folder {
-            font-weight: bold;
-            color: #333;
-            font-size: 1.08em;
-        }
-        .emoji-folder {
-            margin-right: 4px;
-        }
-        .note {
-            color: #888;
-            font-size: 0.97em;
-            text-align: right;
-            margin-top: -8px;
-            margin-bottom: 22px;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>香港中學查詢系統 - 萬鶴書院 | 搜尋全港中學資訊 | 升學選校工具</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="萬鶴書院香港中學查詢系統，提供全港中學詳細資訊搜尋，包括學校類型、地區、組別、授課語言等篩選條件，助力家長和學生選擇合適的中學，提供專業升學指導服務。">
+    <meta name="keywords" content="香港中學,中學查詢,學校搜尋,升學選校,萬鶴書院,中學資訊,香港教育,選校指南,中一派位,升中選校">
+    <meta name="author" content="萬鶴書院 Wanhe Academy">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <link rel="canonical" href="https://page.vanhok.com/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://page.vanhok.com/">
+    <meta property="og:title" content="香港中學查詢系統 - 萬鶴書院">
+    <meta property="og:description" content="全港中學詳細資訊搜尋平台，提供學校類型、地區、組別、授課語言等多維度篩選，助您輕鬆找到合適的中學。">
+    <meta property="og:site_name" content="萬鶴書院 Wanhe Academy">
+    <meta property="og:locale" content="zh_HK">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://page.vanhok.com/">
+    <meta name="twitter:title" content="香港中學查詢系統 - 萬鶴書院">
+    <meta name="twitter:description" content="全港中學詳細資訊搜尋平台，多維度篩選，助您找到合適的中學。">
+    
+    <!-- Additional SEO -->
+    <meta name="language" content="zh-HK">
+    <meta name="revisit-after" content="7 days">
+    <meta name="distribution" content="global">
+    <meta name="rating" content="general">
+    
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "香港中學查詢系統",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "HKD"
+      },
+      "provider": {
+        "@type": "EducationalOrganization",
+        "name": "萬鶴書院",
+        "alternateName": "Wanhe Academy"
+      },
+      "description": "提供全港中學詳細資訊搜尋，包括學校類型、地區、組別、授課語言等篩選條件",
+      "url": "https://page.vanhok.com",
+      "areaServed": "Hong Kong"
+    }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <h1>万鹤书院信息发布页</h1>
-        <div class="note">仅显示每组页面最新版本</div>
+    <!-- 页头 -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo">
+                        <svg viewBox="0 0 48 48" class="crane-logo">
+                            <path d="M24 4L8 12V20C8 30 14 38 24 44C34 38 40 30 40 20V12L24 4Z" fill="currentColor"/>
+                            <path d="M24 8L12 14V20C12 28 16 34 24 40C32 34 36 28 36 20V14L24 8Z" fill="white"/>
+                        </svg>
+                    </div>
+                    <div class="header-text">
+                        <h1>香港中學查詢系統</h1>
+                        <p class="subtitle">萬鶴書院 Wanhe Academy</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </header>
-    <main>
-        <ul id="directory-list"></ul>
+
+    <!-- 主要内容 -->
+    <main class="main-content">
+        <div class="container">
+            <!-- 筛选区域 -->
+            <section class="filter-section">
+                <h2 class="section-title">篩選條件</h2>
+                <div class="filter-grid">
+                    <div class="filter-item">
+                        <label for="filter-type">種類</label>
+                        <select id="filter-type" class="filter-select">
+                            <option value="">全部</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-item">
+                        <label for="filter-district">所屬地區</label>
+                        <select id="filter-district" class="filter-select">
+                            <option value="">全部</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-item">
+                        <label for="filter-group">組別</label>
+                        <select id="filter-group" class="filter-select">
+                            <option value="">全部</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-item">
+                        <label for="filter-language">授課語言</label>
+                        <select id="filter-language" class="filter-select">
+                            <option value="">全部</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-item">
+                        <label for="filter-gender">學生性別</label>
+                        <select id="filter-gender" class="filter-select">
+                            <option value="">全部</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-item">
+                        <label for="filter-religion">宗教</label>
+                        <select id="filter-religion" class="filter-select">
+                            <option value="">全部</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-item search-item">
+                        <label for="filter-search">搜索學校名稱</label>
+                        <input type="text" id="filter-search" class="filter-input" placeholder="輸入學校名稱...">
+                    </div>
+                    
+                    <div class="filter-item button-item">
+                        <button id="reset-filters" class="btn-reset">重置篩選</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 统计信息 -->
+            <section class="stats-section">
+                <div class="stats-card">
+                    <div class="stat-number" id="total-schools">0</div>
+                    <div class="stat-label">所學校符合條件</div>
+                </div>
+            </section>
+
+            <!-- 结果展示区域 -->
+            <section class="results-section">
+                <div class="results-header">
+                    <h2 class="section-title">查詢結果</h2>
+                    <div class="view-toggle">
+                        <button class="view-btn active" data-view="grid">
+                            <svg viewBox="0 0 24 24" width="20" height="20">
+                                <rect x="3" y="3" width="7" height="7" fill="currentColor"/>
+                                <rect x="14" y="3" width="7" height="7" fill="currentColor"/>
+                                <rect x="3" y="14" width="7" height="7" fill="currentColor"/>
+                                <rect x="14" y="14" width="7" height="7" fill="currentColor"/>
+                            </svg>
+                        </button>
+                        <button class="view-btn" data-view="list">
+                            <svg viewBox="0 0 24 24" width="20" height="20">
+                                <rect x="3" y="4" width="18" height="2" fill="currentColor"/>
+                                <rect x="3" y="11" width="18" height="2" fill="currentColor"/>
+                                <rect x="3" y="18" width="18" height="2" fill="currentColor"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="schools-container" class="schools-grid">
+                    <!-- 学校卡片将通过JavaScript动态生成 -->
+                </div>
+                
+                <div id="no-results" class="no-results" style="display: none;">
+                    <svg viewBox="0 0 24 24" width="48" height="48">
+                        <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="currentColor"/>
+                    </svg>
+                    <p>未找到符合條件的學校</p>
+                    <p class="hint">請嘗試調整篩選條件</p>
+                </div>
+            </section>
+        </div>
     </main>
-    <script>
-        // 配置
-        const username = "ankerwong"; // 修改为你的GitHub用户名
-        const repo = "vanhok"; // 修改为你的仓库名
-        const branch = "main"; // 如果主分支不是main请修改
 
-        const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/?ref=${branch}`;
-        const baseUrl = `https://${username}.github.io/${repo}/`;
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 萬鶴書院 Wanhe Academy. 版權所有.</p>
+                <p class="footer-note">數據來源：香港中學資訊 | 共收錄 <span id="footer-total">479</span> 所中學</p>
+            </div>
+        </div>
+    </footer>
 
-        // 获取版本号函数，如fuduban2025.html的2025
-        function extractVersion(filename) {
-            const match = filename.match(/(\d{4,})\.html$/i);
-            return match ? parseInt(match[1]) : null;
-        }
-        // 获取主文件名，不含年份
-        function baseName(filename) {
-            return filename.replace(/\d{4,}\.html$/i, '').replace(/\.html$/i, '');
-        }
-
-        fetch(apiUrl)
-            .then(response => response.json())
-            .then(items => {
-                // 只保留文件和文件夹
-                const files = items.filter(item => item.type === 'file' && item.name.endsWith('.html'));
-                const dirs = items.filter(item => item.type === 'dir');
-
-                // 文件去重，只显示每组最新版本
-                const latestFiles = {};
-                files.forEach(file => {
-                    const name = baseName(file.name);
-                    const version = extractVersion(file.name) || 0;
-                    if (!latestFiles[name] || version > latestFiles[name].version) {
-                        latestFiles[name] = {
-                            name: file.name,
-                            url: baseUrl + file.name,
-                            version: version
-                        };
-                    }
-                });
-
-                // 渲染文件
-                const ul = document.getElementById('directory-list');
-                // 文件夹优先
-                dirs.forEach(dir => {
-                    const li = document.createElement('li');
-                    const a = document.createElement('a');
-                    if (dir.name === 'ielts') {
-                        a.textContent = "🎯 " + dir.name + "/ - IELTS Mock Test Platform";
-                        a.style.color = "#e67e22";
-                        a.style.fontWeight = "bold";
-                    } else {
-                        a.textContent = "📁 " + dir.name + "/";
-                    }
-                    a.href = baseUrl + dir.name + "/";
-                    a.className = "folder";
-                    li.appendChild(a);
-                    ul.appendChild(li);
-                });
-                // 文件
-                Object.values(latestFiles).sort((a, b) => a.name.localeCompare(b.name)).forEach(file => {
-                    const li = document.createElement('li');
-                    const a = document.createElement('a');
-                    a.textContent = file.name;
-                    a.href = file.url;
-                    a.target = "_blank";
-                    li.appendChild(a);
-                    ul.appendChild(li);
-                });
-            })
-            .catch(error => {
-                document.getElementById('directory-list').innerHTML = "<li>获取目录失败，请刷新重试。</li>";
-                console.error(error);
-            });
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>

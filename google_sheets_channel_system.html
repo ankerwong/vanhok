@@ -1,13 +1,14 @@
 <!DOCTYPE html>
+
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Sheets集成渠道管理系统</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="基于Google Sheets的频道管理系统，用于教学数据管理、学生信息记录等教育管理场景。" name="description"/><meta content="Google Sheets,数据管理,教学工具,万鹤书院,频道系统" name="keywords"/><meta content="万鹤书院 Vanhok Academy" name="author"/><meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots"/><link href="https://page.vanhok.com/google_sheets_channel_system.html" rel="canonical"/><meta content="website" property="og:type"/><meta content="https://page.vanhok.com/google_sheets_channel_system.html" property="og:url"/><meta content="Google Sheets频道系统 | 数据管理工具 | 万鹤书院" property="og:title"/><meta content="基于Google Sheets的频道管理系统，用于教学数据管理、学生信息记录等教育管理场景。" property="og:description"/><meta content="万鹤书院 Vanhok Academy" property="og:site_name"/><meta content="zh_HK" property="og:locale"/><meta content="summary_large_image" name="twitter:card"/><meta content="https://page.vanhok.com/google_sheets_channel_system.html" name="twitter:url"/><meta content="Google Sheets频道系统 | 数据管理工具 | 万鹤书院" name="twitter:title"/><meta content="基于Google Sheets的频道管理系统，用于教学数据管理、学生信息记录等教育管理场景。" name="twitter:description"/><meta content="zh-CN" name="language"/><meta content="7 days" name="revisit-after"/><meta content="global" name="distribution"/><meta content="general" name="rating"/>
+<title>Google Sheets频道系统 | 数据管理工具 | 万鹤书院</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
         .sync-indicator {
             animation: pulse 2s infinite;
         }
@@ -50,502 +51,483 @@
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
-    <!-- Header -->
-    <header class="bg-white shadow-sm border-b">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center">
-                    <i class="fas fa-chart-line text-blue-600 text-2xl mr-3"></i>
-                    <h1 class="text-xl font-semibold text-gray-900">渠道跟进监控系统</h1>
-                    <span class="ml-2 text-sm text-gray-500">Google Sheets集成版</span>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <!-- Sync Status Indicator -->
-                    <div id="syncStatus" class="flex items-center">
-                        <div id="syncIndicator" class="w-3 h-3 rounded-full online-indicator mr-2"></div>
-                        <span id="syncText" class="text-sm text-gray-600">已连接</span>
-                        <i id="syncIcon" class="fas fa-sync-alt ml-2 text-gray-400 cursor-pointer" onclick="manualSync()"></i>
-                    </div>
-                    <!-- Google Sheets Link -->
-                    <a id="sheetsLink" href="#" target="_blank" class="text-blue-600 hover:text-blue-800">
-                        <i class="fab fa-google text-lg"></i>
-                    </a>
-                    <!-- Export Button -->
-                    <button onclick="exportData()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm">
-                        <i class="fas fa-download mr-2"></i>导出数据
+<!-- Header -->
+<header class="bg-white shadow-sm border-b">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-16">
+<div class="flex items-center">
+<i class="fas fa-chart-line text-blue-600 text-2xl mr-3"></i>
+<h1 class="text-xl font-semibold text-gray-900">渠道跟进监控系统</h1>
+<span class="ml-2 text-sm text-gray-500">Google Sheets集成版</span>
+</div>
+<div class="flex items-center space-x-4">
+<!-- Sync Status Indicator -->
+<div class="flex items-center" id="syncStatus">
+<div class="w-3 h-3 rounded-full online-indicator mr-2" id="syncIndicator"></div>
+<span class="text-sm text-gray-600" id="syncText">已连接</span>
+<i class="fas fa-sync-alt ml-2 text-gray-400 cursor-pointer" id="syncIcon" onclick="manualSync()"></i>
+</div>
+<!-- Google Sheets Link -->
+<a class="text-blue-600 hover:text-blue-800" href="#" id="sheetsLink" target="_blank">
+<i class="fab fa-google text-lg"></i>
+</a>
+<!-- Export Button -->
+<button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm" onclick="exportData()">
+<i class="fas fa-download mr-2"></i>导出数据
                     </button>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Navigation Tabs -->
-    <nav class="bg-white border-b">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex space-x-8">
-                <button class="tab-button py-4 px-1 border-b-2 border-blue-500 text-blue-600 font-medium text-sm" onclick="showTab('dashboard')">
-                    <i class="fas fa-tachometer-alt mr-2"></i>数据概览
+</div>
+</div>
+</div>
+</header>
+<!-- Navigation Tabs -->
+<nav class="bg-white border-b">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex space-x-8">
+<button class="tab-button py-4 px-1 border-b-2 border-blue-500 text-blue-600 font-medium text-sm" onclick="showTab('dashboard')">
+<i class="fas fa-tachometer-alt mr-2"></i>数据概览
                 </button>
-                <button class="tab-button py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm" onclick="showTab('channels')">
-                    <i class="fas fa-users mr-2"></i>渠道管理
+<button class="tab-button py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm" onclick="showTab('channels')">
+<i class="fas fa-users mr-2"></i>渠道管理
                 </button>
-                <button class="tab-button py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm" onclick="showTab('dataEntry')">
-                    <i class="fas fa-plus-circle mr-2"></i>数据录入
+<button class="tab-button py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm" onclick="showTab('dataEntry')">
+<i class="fas fa-plus-circle mr-2"></i>数据录入
                 </button>
-                <button class="tab-button py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm" onclick="showTab('analysis')">
-                    <i class="fas fa-chart-bar mr-2"></i>数据分析
+<button class="tab-button py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm" onclick="showTab('analysis')">
+<i class="fas fa-chart-bar mr-2"></i>数据分析
                 </button>
-                <button class="tab-button py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm" onclick="showTab('sync')">
-                    <i class="fab fa-google mr-2"></i>同步设置
+<button class="tab-button py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm" onclick="showTab('sync')">
+<i class="fab fa-google mr-2"></i>同步设置
                 </button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
-        <!-- Dashboard Tab -->
-        <div id="dashboard" class="tab-content active">
-            <!-- Stats Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <div class="bg-white rounded-lg shadow p-6">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                            <i class="fas fa-database text-blue-600 text-2xl"></i>
-                        </div>
-                        <div class="ml-4">
-                            <p class="text-sm font-medium text-gray-500">总数据量</p>
-                            <p id="totalData" class="text-2xl font-semibold text-gray-900">0</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow p-6">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                            <i class="fas fa-clock text-yellow-600 text-2xl"></i>
-                        </div>
-                        <div class="ml-4">
-                            <p class="text-sm font-medium text-gray-500">待跟进</p>
-                            <p id="pendingFollow" class="text-2xl font-semibold text-gray-900">0</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow p-6">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                            <i class="fas fa-check-circle text-green-600 text-2xl"></i>
-                        </div>
-                        <div class="ml-4">
-                            <p class="text-sm font-medium text-gray-500">已成交</p>
-                            <p id="completedDeals" class="text-2xl font-semibold text-gray-900">0</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow p-6">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                            <i class="fas fa-sync-alt text-purple-600 text-2xl"></i>
-                        </div>
-                        <div class="ml-4">
-                            <p class="text-sm font-medium text-gray-500">同步状态</p>
-                            <p id="lastSyncTime" class="text-sm font-semibold text-gray-900">未同步</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Charts Row -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                <!-- Data Allocation Chart -->
-                <div class="bg-white rounded-lg shadow p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">数据分配统计</h3>
-                    <div class="mb-4">
-                        <select id="allocationPeriod" onchange="updateAllocationChart()" class="border border-gray-300 rounded-md px-3 py-2 text-sm">
-                            <option value="day">今日</option>
-                            <option value="week">本周</option>
-                            <option value="month">本月</option>
-                            <option value="year">本年</option>
-                        </select>
-                    </div>
-                    <canvas id="allocationChart" style="height: 300px;"></canvas>
-                </div>
-                
-                <!-- Channel Performance Chart -->
-                <div class="bg-white rounded-lg shadow p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">渠道表现对比</h3>
-                    <canvas id="performanceChart" style="height: 300px;"></canvas>
-                </div>
-            </div>
-
-            <!-- Recent Activities -->
-            <div class="bg-white rounded-lg shadow">
-                <div class="px-6 py-4 border-b border-gray-200">
-                    <h3 class="text-lg font-semibold text-gray-900">最近活动</h3>
-                </div>
-                <div class="divide-y divide-gray-200">
-                    <div id="recentActivities" class="p-6">
-                        <p class="text-gray-500 text-center">暂无活动记录</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Channels Tab -->
-        <div id="channels" class="tab-content">
-            <div class="bg-white rounded-lg shadow">
-                <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-                    <h3 class="text-lg font-semibold text-gray-900">渠道管理</h3>
-                    <button onclick="addChannel()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">
-                        <i class="fas fa-plus mr-2"></i>添加渠道
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<!-- Dashboard Tab -->
+<div class="tab-content active" id="dashboard">
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<div class="bg-white rounded-lg shadow p-6">
+<div class="flex items-center">
+<div class="flex-shrink-0">
+<i class="fas fa-database text-blue-600 text-2xl"></i>
+</div>
+<div class="ml-4">
+<p class="text-sm font-medium text-gray-500">总数据量</p>
+<p class="text-2xl font-semibold text-gray-900" id="totalData">0</p>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-lg shadow p-6">
+<div class="flex items-center">
+<div class="flex-shrink-0">
+<i class="fas fa-clock text-yellow-600 text-2xl"></i>
+</div>
+<div class="ml-4">
+<p class="text-sm font-medium text-gray-500">待跟进</p>
+<p class="text-2xl font-semibold text-gray-900" id="pendingFollow">0</p>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-lg shadow p-6">
+<div class="flex items-center">
+<div class="flex-shrink-0">
+<i class="fas fa-check-circle text-green-600 text-2xl"></i>
+</div>
+<div class="ml-4">
+<p class="text-sm font-medium text-gray-500">已成交</p>
+<p class="text-2xl font-semibold text-gray-900" id="completedDeals">0</p>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-lg shadow p-6">
+<div class="flex items-center">
+<div class="flex-shrink-0">
+<i class="fas fa-sync-alt text-purple-600 text-2xl"></i>
+</div>
+<div class="ml-4">
+<p class="text-sm font-medium text-gray-500">同步状态</p>
+<p class="text-sm font-semibold text-gray-900" id="lastSyncTime">未同步</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Charts Row -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+<!-- Data Allocation Chart -->
+<div class="bg-white rounded-lg shadow p-6">
+<h3 class="text-lg font-semibold text-gray-900 mb-4">数据分配统计</h3>
+<div class="mb-4">
+<select class="border border-gray-300 rounded-md px-3 py-2 text-sm" id="allocationPeriod" onchange="updateAllocationChart()">
+<option value="day">今日</option>
+<option value="week">本周</option>
+<option value="month">本月</option>
+<option value="year">本年</option>
+</select>
+</div>
+<canvas id="allocationChart" style="height: 300px;"></canvas>
+</div>
+<!-- Channel Performance Chart -->
+<div class="bg-white rounded-lg shadow p-6">
+<h3 class="text-lg font-semibold text-gray-900 mb-4">渠道表现对比</h3>
+<canvas id="performanceChart" style="height: 300px;"></canvas>
+</div>
+</div>
+<!-- Recent Activities -->
+<div class="bg-white rounded-lg shadow">
+<div class="px-6 py-4 border-b border-gray-200">
+<h3 class="text-lg font-semibold text-gray-900">最近活动</h3>
+</div>
+<div class="divide-y divide-gray-200">
+<div class="p-6" id="recentActivities">
+<p class="text-gray-500 text-center">暂无活动记录</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Channels Tab -->
+<div class="tab-content" id="channels">
+<div class="bg-white rounded-lg shadow">
+<div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+<h3 class="text-lg font-semibold text-gray-900">渠道管理</h3>
+<button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm" onclick="addChannel()">
+<i class="fas fa-plus mr-2"></i>添加渠道
                     </button>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">渠道名称</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">联系人</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">返佣比例</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">反馈时效</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">状态</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">操作</th>
-                            </tr>
-                        </thead>
-                        <tbody id="channelsTable" class="bg-white divide-y divide-gray-200">
-                            <!-- Dynamic content -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Data Entry Tab -->
-        <div id="dataEntry" class="tab-content">
-            <div class="bg-white rounded-lg shadow">
-                <div class="px-6 py-4 border-b border-gray-200">
-                    <h3 class="text-lg font-semibold text-gray-900">数据录入</h3>
-                </div>
-                <div class="p-6">
-                    <form id="dataEntryForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Basic Info -->
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">家长姓名</label>
-                            <input type="text" id="parentName" class="w-full border border-gray-300 rounded-md px-3 py-2" required>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">联系电话</label>
-                            <input type="tel" id="phone" class="w-full border border-gray-300 rounded-md px-3 py-2" required>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">学生年级</label>
-                            <select id="grade" class="w-full border border-gray-300 rounded-md px-3 py-2">
-                                <option value="">请选择年级</option>
-                                <option value="小学一年级">小学一年级</option>
-                                <option value="小学二年级">小学二年级</option>
-                                <option value="小学三年级">小学三年级</option>
-                                <option value="小学四年级">小学四年级</option>
-                                <option value="小学五年级">小学五年级</option>
-                                <option value="小学六年级">小学六年级</option>
-                                <option value="初一">初一</option>
-                                <option value="初二">初二</option>
-                                <option value="初三">初三</option>
-                                <option value="高一">高一</option>
-                                <option value="高二">高二</option>
-                                <option value="高三">高三</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">咨询类目</label>
-                            <input type="text" id="subject" class="w-full border border-gray-300 rounded-md px-3 py-2" placeholder="如：数学一对一">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">分配渠道</label>
-                            <select id="channel" class="w-full border border-gray-300 rounded-md px-3 py-2" onchange="updateChannelContact()">
-                                <option value="">请选择渠道</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">渠道联系人</label>
-                            <input type="text" id="channelContact" class="w-full border border-gray-300 rounded-md px-3 py-2" readonly>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">下次跟进时间</label>
-                            <input type="datetime-local" id="nextFollowUp" class="w-full border border-gray-300 rounded-md px-3 py-2">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">当前状态</label>
-                            <select id="status" class="w-full border border-gray-300 rounded-md px-3 py-2">
-                                <option value="待联系">待联系</option>
-                                <option value="已联系">已联系</option>
-                                <option value="跟进中">跟进中</option>
-                                <option value="已成交">已成交</option>
-                                <option value="无效">无效</option>
-                            </select>
-                        </div>
-                        <!-- Notes -->
-                        <div class="md:col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">我方备注</label>
-                            <textarea id="ourNotes" rows="3" class="w-full border border-gray-300 rounded-md px-3 py-2" placeholder="记录客户情况、跟进策略等"></textarea>
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">渠道反馈备注</label>
-                            <textarea id="channelFeedback" rows="3" class="w-full border border-gray-300 rounded-md px-3 py-2" placeholder="记录渠道方的反馈内容"></textarea>
-                        </div>
-                        <!-- Deal Info -->
-                        <div id="dealInfo" style="display: none;" class="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">成交金额</label>
-                                <input type="number" id="dealAmount" class="w-full border border-gray-300 rounded-md px-3 py-2" onchange="calculateCommission()">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">返佣比例</label>
-                                <input type="text" id="commissionRate" class="w-full border border-gray-300 rounded-md px-3 py-2" readonly>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">返佣金额</label>
-                                <input type="text" id="commissionAmount" class="w-full border border-gray-300 rounded-md px-3 py-2" readonly>
-                            </div>
-                        </div>
-                        <!-- Submit Button -->
-                        <div class="md:col-span-2">
-                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md">
-                                <i class="fas fa-save mr-2"></i>保存数据
+</div>
+<div class="overflow-x-auto">
+<table class="min-w-full divide-y divide-gray-200">
+<thead class="bg-gray-50">
+<tr>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">渠道名称</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">联系人</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">返佣比例</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">反馈时效</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">状态</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">操作</th>
+</tr>
+</thead>
+<tbody class="bg-white divide-y divide-gray-200" id="channelsTable">
+<!-- Dynamic content -->
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Data Entry Tab -->
+<div class="tab-content" id="dataEntry">
+<div class="bg-white rounded-lg shadow">
+<div class="px-6 py-4 border-b border-gray-200">
+<h3 class="text-lg font-semibold text-gray-900">数据录入</h3>
+</div>
+<div class="p-6">
+<form class="grid grid-cols-1 md:grid-cols-2 gap-6" id="dataEntryForm">
+<!-- Basic Info -->
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">家长姓名</label>
+<input class="w-full border border-gray-300 rounded-md px-3 py-2" id="parentName" required="" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">联系电话</label>
+<input class="w-full border border-gray-300 rounded-md px-3 py-2" id="phone" required="" type="tel"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">学生年级</label>
+<select class="w-full border border-gray-300 rounded-md px-3 py-2" id="grade">
+<option value="">请选择年级</option>
+<option value="小学一年级">小学一年级</option>
+<option value="小学二年级">小学二年级</option>
+<option value="小学三年级">小学三年级</option>
+<option value="小学四年级">小学四年级</option>
+<option value="小学五年级">小学五年级</option>
+<option value="小学六年级">小学六年级</option>
+<option value="初一">初一</option>
+<option value="初二">初二</option>
+<option value="初三">初三</option>
+<option value="高一">高一</option>
+<option value="高二">高二</option>
+<option value="高三">高三</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">咨询类目</label>
+<input class="w-full border border-gray-300 rounded-md px-3 py-2" id="subject" placeholder="如：数学一对一" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">分配渠道</label>
+<select class="w-full border border-gray-300 rounded-md px-3 py-2" id="channel" onchange="updateChannelContact()">
+<option value="">请选择渠道</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">渠道联系人</label>
+<input class="w-full border border-gray-300 rounded-md px-3 py-2" id="channelContact" readonly="" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">下次跟进时间</label>
+<input class="w-full border border-gray-300 rounded-md px-3 py-2" id="nextFollowUp" type="datetime-local"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">当前状态</label>
+<select class="w-full border border-gray-300 rounded-md px-3 py-2" id="status">
+<option value="待联系">待联系</option>
+<option value="已联系">已联系</option>
+<option value="跟进中">跟进中</option>
+<option value="已成交">已成交</option>
+<option value="无效">无效</option>
+</select>
+</div>
+<!-- Notes -->
+<div class="md:col-span-2">
+<label class="block text-sm font-medium text-gray-700 mb-2">我方备注</label>
+<textarea class="w-full border border-gray-300 rounded-md px-3 py-2" id="ourNotes" placeholder="记录客户情况、跟进策略等" rows="3"></textarea>
+</div>
+<div class="md:col-span-2">
+<label class="block text-sm font-medium text-gray-700 mb-2">渠道反馈备注</label>
+<textarea class="w-full border border-gray-300 rounded-md px-3 py-2" id="channelFeedback" placeholder="记录渠道方的反馈内容" rows="3"></textarea>
+</div>
+<!-- Deal Info -->
+<div class="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4" id="dealInfo" style="display: none;">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">成交金额</label>
+<input class="w-full border border-gray-300 rounded-md px-3 py-2" id="dealAmount" onchange="calculateCommission()" type="number"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">返佣比例</label>
+<input class="w-full border border-gray-300 rounded-md px-3 py-2" id="commissionRate" readonly="" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">返佣金额</label>
+<input class="w-full border border-gray-300 rounded-md px-3 py-2" id="commissionAmount" readonly="" type="text"/>
+</div>
+</div>
+<!-- Submit Button -->
+<div class="md:col-span-2">
+<button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md" type="submit">
+<i class="fas fa-save mr-2"></i>保存数据
                             </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Data List -->
-            <div class="mt-8 bg-white rounded-lg shadow">
-                <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-                    <h3 class="text-lg font-semibold text-gray-900">数据列表</h3>
-                    <div class="flex space-x-2">
-                        <input type="search" id="searchData" placeholder="搜索..." class="border border-gray-300 rounded-md px-3 py-2 text-sm" onkeyup="filterData()">
-                        <select id="filterStatus" onchange="filterData()" class="border border-gray-300 rounded-md px-3 py-2 text-sm">
-                            <option value="">所有状态</option>
-                            <option value="待联系">待联系</option>
-                            <option value="已联系">已联系</option>
-                            <option value="跟进中">跟进中</option>
-                            <option value="已成交">已成交</option>
-                            <option value="无效">无效</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="overflow-x-auto custom-scrollbar" style="max-height: 600px;">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50 sticky top-0">
-                            <tr>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">编号</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">家长姓名</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">电话</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">年级</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">渠道</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">状态</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">反馈时长</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">下次跟进</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">操作</th>
-                            </tr>
-                        </thead>
-                        <tbody id="dataTable" class="bg-white divide-y divide-gray-200">
-                            <!-- Dynamic content -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Analysis Tab -->
-        <div id="analysis" class="tab-content">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                <!-- Feedback Time Analysis -->
-                <div class="bg-white rounded-lg shadow p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">反馈时效分析</h3>
-                    <canvas id="feedbackTimeChart" style="height: 300px;"></canvas>
-                </div>
-                
-                <!-- Conversion Rate Analysis -->
-                <div class="bg-white rounded-lg shadow p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">转化率分析</h3>
-                    <canvas id="conversionChart" style="height: 300px;"></canvas>
-                </div>
-            </div>
-
-            <!-- Channel Performance Table -->
-            <div class="bg-white rounded-lg shadow">
-                <div class="px-6 py-4 border-b border-gray-200">
-                    <h3 class="text-lg font-semibold text-gray-900">渠道表现详情</h3>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">渠道名称</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">数据量</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">平均反馈时间</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">成交数量</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">成交率</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">总成交金额</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">总返佣</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">综合评分</th>
-                            </tr>
-                        </thead>
-                        <tbody id="performanceTable" class="bg-white divide-y divide-gray-200">
-                            <!-- Dynamic content -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Sync Settings Tab -->
-        <div id="sync" class="tab-content">
-            <div class="max-w-4xl">
-                <!-- Google Sheets Configuration -->
-                <div class="bg-white rounded-lg shadow mb-6">
-                    <div class="px-6 py-4 border-b border-gray-200">
-                        <h3 class="text-lg font-semibold text-gray-900">Google Sheets配置</h3>
-                    </div>
-                    <div class="p-6">
-                        <form id="sheetsConfig">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Google Apps Script URL</label>
-                                    <input type="url" id="appsScriptUrl" class="w-full border border-gray-300 rounded-md px-3 py-2" placeholder="https://script.google.com/macros/s/...">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">表格ID</label>
-                                    <input type="text" id="spreadsheetId" class="w-full border border-gray-300 rounded-md px-3 py-2" placeholder="1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs...">
-                                </div>
-                                <div class="md:col-span-2">
-                                    <button type="button" onclick="testConnection()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md mr-4">
-                                        <i class="fas fa-plug mr-2"></i>测试连接
+</div>
+</form>
+</div>
+</div>
+<!-- Data List -->
+<div class="mt-8 bg-white rounded-lg shadow">
+<div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+<h3 class="text-lg font-semibold text-gray-900">数据列表</h3>
+<div class="flex space-x-2">
+<input class="border border-gray-300 rounded-md px-3 py-2 text-sm" id="searchData" onkeyup="filterData()" placeholder="搜索..." type="search"/>
+<select class="border border-gray-300 rounded-md px-3 py-2 text-sm" id="filterStatus" onchange="filterData()">
+<option value="">所有状态</option>
+<option value="待联系">待联系</option>
+<option value="已联系">已联系</option>
+<option value="跟进中">跟进中</option>
+<option value="已成交">已成交</option>
+<option value="无效">无效</option>
+</select>
+</div>
+</div>
+<div class="overflow-x-auto custom-scrollbar" style="max-height: 600px;">
+<table class="min-w-full divide-y divide-gray-200">
+<thead class="bg-gray-50 sticky top-0">
+<tr>
+<th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">编号</th>
+<th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">家长姓名</th>
+<th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">电话</th>
+<th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">年级</th>
+<th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">渠道</th>
+<th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">状态</th>
+<th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">反馈时长</th>
+<th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">下次跟进</th>
+<th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">操作</th>
+</tr>
+</thead>
+<tbody class="bg-white divide-y divide-gray-200" id="dataTable">
+<!-- Dynamic content -->
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Analysis Tab -->
+<div class="tab-content" id="analysis">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+<!-- Feedback Time Analysis -->
+<div class="bg-white rounded-lg shadow p-6">
+<h3 class="text-lg font-semibold text-gray-900 mb-4">反馈时效分析</h3>
+<canvas id="feedbackTimeChart" style="height: 300px;"></canvas>
+</div>
+<!-- Conversion Rate Analysis -->
+<div class="bg-white rounded-lg shadow p-6">
+<h3 class="text-lg font-semibold text-gray-900 mb-4">转化率分析</h3>
+<canvas id="conversionChart" style="height: 300px;"></canvas>
+</div>
+</div>
+<!-- Channel Performance Table -->
+<div class="bg-white rounded-lg shadow">
+<div class="px-6 py-4 border-b border-gray-200">
+<h3 class="text-lg font-semibold text-gray-900">渠道表现详情</h3>
+</div>
+<div class="overflow-x-auto">
+<table class="min-w-full divide-y divide-gray-200">
+<thead class="bg-gray-50">
+<tr>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">渠道名称</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">数据量</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">平均反馈时间</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">成交数量</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">成交率</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">总成交金额</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">总返佣</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">综合评分</th>
+</tr>
+</thead>
+<tbody class="bg-white divide-y divide-gray-200" id="performanceTable">
+<!-- Dynamic content -->
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Sync Settings Tab -->
+<div class="tab-content" id="sync">
+<div class="max-w-4xl">
+<!-- Google Sheets Configuration -->
+<div class="bg-white rounded-lg shadow mb-6">
+<div class="px-6 py-4 border-b border-gray-200">
+<h3 class="text-lg font-semibold text-gray-900">Google Sheets配置</h3>
+</div>
+<div class="p-6">
+<form id="sheetsConfig">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Google Apps Script URL</label>
+<input class="w-full border border-gray-300 rounded-md px-3 py-2" id="appsScriptUrl" placeholder="https://script.google.com/macros/s/..." type="url"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">表格ID</label>
+<input class="w-full border border-gray-300 rounded-md px-3 py-2" id="spreadsheetId" placeholder="1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs..." type="text"/>
+</div>
+<div class="md:col-span-2">
+<button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md mr-4" onclick="testConnection()" type="button">
+<i class="fas fa-plug mr-2"></i>测试连接
                                     </button>
-                                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md">
-                                        <i class="fas fa-save mr-2"></i>保存配置
+<button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md" type="submit">
+<i class="fas fa-save mr-2"></i>保存配置
                                     </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- Sync Controls -->
-                <div class="bg-white rounded-lg shadow mb-6">
-                    <div class="px-6 py-4 border-b border-gray-200">
-                        <h3 class="text-lg font-semibold text-gray-900">同步控制</h3>
-                    </div>
-                    <div class="p-6">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <button onclick="syncToSheets()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md">
-                                <i class="fas fa-upload mr-2"></i>同步到表格
+</div>
+</div>
+</form>
+</div>
+</div>
+<!-- Sync Controls -->
+<div class="bg-white rounded-lg shadow mb-6">
+<div class="px-6 py-4 border-b border-gray-200">
+<h3 class="text-lg font-semibold text-gray-900">同步控制</h3>
+</div>
+<div class="p-6">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md" onclick="syncToSheets()">
+<i class="fas fa-upload mr-2"></i>同步到表格
                             </button>
-                            <button onclick="syncFromSheets()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md">
-                                <i class="fas fa-download mr-2"></i>从表格同步
+<button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md" onclick="syncFromSheets()">
+<i class="fas fa-download mr-2"></i>从表格同步
                             </button>
-                            <button onclick="fullSync()" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md">
-                                <i class="fas fa-sync mr-2"></i>双向同步
+<button class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md" onclick="fullSync()">
+<i class="fas fa-sync mr-2"></i>双向同步
                             </button>
-                        </div>
-                        <div class="mt-4">
-                            <label class="flex items-center">
-                                <input type="checkbox" id="autoSync" class="mr-2">
-                                <span class="text-sm text-gray-700">启用自动同步（每5分钟）</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Sync Log -->
-                <div class="bg-white rounded-lg shadow">
-                    <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-                        <h3 class="text-lg font-semibold text-gray-900">同步日志</h3>
-                        <button onclick="clearSyncLog()" class="text-red-600 hover:text-red-800 text-sm">
-                            <i class="fas fa-trash mr-1"></i>清空日志
+</div>
+<div class="mt-4">
+<label class="flex items-center">
+<input class="mr-2" id="autoSync" type="checkbox"/>
+<span class="text-sm text-gray-700">启用自动同步（每5分钟）</span>
+</label>
+</div>
+</div>
+</div>
+<!-- Sync Log -->
+<div class="bg-white rounded-lg shadow">
+<div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+<h3 class="text-lg font-semibold text-gray-900">同步日志</h3>
+<button class="text-red-600 hover:text-red-800 text-sm" onclick="clearSyncLog()">
+<i class="fas fa-trash mr-1"></i>清空日志
                         </button>
-                    </div>
-                    <div id="syncLog" class="p-6 max-h-96 overflow-y-auto custom-scrollbar">
-                        <p class="text-gray-500 text-center">暂无同步记录</p>
-                    </div>
-                </div>
-
-                <!-- Setup Instructions -->
-                <div class="bg-blue-50 rounded-lg p-6 mt-6">
-                    <h4 class="text-lg font-semibold text-blue-900 mb-4">
-                        <i class="fas fa-info-circle mr-2"></i>配置说明
+</div>
+<div class="p-6 max-h-96 overflow-y-auto custom-scrollbar" id="syncLog">
+<p class="text-gray-500 text-center">暂无同步记录</p>
+</div>
+</div>
+<!-- Setup Instructions -->
+<div class="bg-blue-50 rounded-lg p-6 mt-6">
+<h4 class="text-lg font-semibold text-blue-900 mb-4">
+<i class="fas fa-info-circle mr-2"></i>配置说明
                     </h4>
-                    <div class="space-y-4 text-sm text-blue-800">
-                        <p><strong>步骤1：</strong> 创建Google Sheets表格并按照系统字段设置表头</p>
-                        <p><strong>步骤2：</strong> 创建Google Apps Script项目作为API代理</p>
-                        <p><strong>步骤3：</strong> 复制Apps Script的Web应用URL到上方配置</p>
-                        <p><strong>步骤4：</strong> 输入Google Sheets的表格ID</p>
-                        <p><strong>步骤5：</strong> 测试连接并保存配置</p>
-                        <p class="text-blue-600">
-                            <i class="fas fa-external-link-alt mr-1"></i>
-                            <a href="#" onclick="showSetupGuide()" class="underline">查看详细配置指南</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Modal for Channel Form -->
-    <div id="channelModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden z-50">
-        <div class="flex items-center justify-center min-h-screen px-4">
-            <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
-                <div class="px-6 py-4 border-b border-gray-200">
-                    <h3 id="channelModalTitle" class="text-lg font-semibold text-gray-900">添加渠道</h3>
-                </div>
-                <div class="p-6">
-                    <form id="channelForm">
-                        <input type="hidden" id="channelId">
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">渠道名称</label>
-                                <input type="text" id="channelName" class="w-full border border-gray-300 rounded-md px-3 py-2" required>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">联系人</label>
-                                <input type="text" id="channelContactPerson" class="w-full border border-gray-300 rounded-md px-3 py-2" required>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">返佣比例 (%)</label>
-                                <input type="number" id="channelCommission" class="w-full border border-gray-300 rounded-md px-3 py-2" step="0.1" min="0" max="100">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">预期反馈时效 (小时)</label>
-                                <input type="number" id="channelFeedbackTime" class="w-full border border-gray-300 rounded-md px-3 py-2" min="1">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">状态</label>
-                                <select id="channelStatus" class="w-full border border-gray-300 rounded-md px-3 py-2">
-                                    <option value="active">活跃</option>
-                                    <option value="inactive">暂停</option>
-                                    <option value="testing">测试中</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="mt-6 flex justify-end space-x-3">
-                            <button type="button" onclick="closeChannelModal()" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">取消</button>
-                            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">保存</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Toast Notification -->
-    <div id="toast" class="fixed top-4 right-4 bg-green-600 text-white px-6 py-3 rounded-md shadow-lg hidden z-50">
-        <div class="flex items-center">
-            <i class="fas fa-check mr-2"></i>
-            <span id="toastMessage"></span>
-        </div>
-    </div>
-
-    <script>
+<div class="space-y-4 text-sm text-blue-800">
+<p><strong>步骤1：</strong> 创建Google Sheets表格并按照系统字段设置表头</p>
+<p><strong>步骤2：</strong> 创建Google Apps Script项目作为API代理</p>
+<p><strong>步骤3：</strong> 复制Apps Script的Web应用URL到上方配置</p>
+<p><strong>步骤4：</strong> 输入Google Sheets的表格ID</p>
+<p><strong>步骤5：</strong> 测试连接并保存配置</p>
+<p class="text-blue-600">
+<i class="fas fa-external-link-alt mr-1"></i>
+<a class="underline" href="#" onclick="showSetupGuide()">查看详细配置指南</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Modal for Channel Form -->
+<div class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden z-50" id="channelModal">
+<div class="flex items-center justify-center min-h-screen px-4">
+<div class="bg-white rounded-lg shadow-xl max-w-md w-full">
+<div class="px-6 py-4 border-b border-gray-200">
+<h3 class="text-lg font-semibold text-gray-900" id="channelModalTitle">添加渠道</h3>
+</div>
+<div class="p-6">
+<form id="channelForm">
+<input id="channelId" type="hidden"/>
+<div class="space-y-4">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">渠道名称</label>
+<input class="w-full border border-gray-300 rounded-md px-3 py-2" id="channelName" required="" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">联系人</label>
+<input class="w-full border border-gray-300 rounded-md px-3 py-2" id="channelContactPerson" required="" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">返佣比例 (%)</label>
+<input class="w-full border border-gray-300 rounded-md px-3 py-2" id="channelCommission" max="100" min="0" step="0.1" type="number"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">预期反馈时效 (小时)</label>
+<input class="w-full border border-gray-300 rounded-md px-3 py-2" id="channelFeedbackTime" min="1" type="number"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">状态</label>
+<select class="w-full border border-gray-300 rounded-md px-3 py-2" id="channelStatus">
+<option value="active">活跃</option>
+<option value="inactive">暂停</option>
+<option value="testing">测试中</option>
+</select>
+</div>
+</div>
+<div class="mt-6 flex justify-end space-x-3">
+<button class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50" onclick="closeChannelModal()" type="button">取消</button>
+<button class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" type="submit">保存</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+<!-- Toast Notification -->
+<div class="fixed top-4 right-4 bg-green-600 text-white px-6 py-3 rounded-md shadow-lg hidden z-50" id="toast">
+<div class="flex items-center">
+<i class="fas fa-check mr-2"></i>
+<span id="toastMessage"></span>
+</div>
+</div>
+<script>
         // Global variables
         let channels = JSON.parse(localStorage.getItem('channels')) || [];
         let dataEntries = JSON.parse(localStorage.getItem('dataEntries')) || [];
@@ -1560,15 +1542,13 @@
             updateSyncLogDisplay();
         });
     </script>
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"968e52ec6af3e69a","serverTiming":{"name":{"cfExtPri":true,"cfEdge":true,"cfOrigin":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.7.0","token":"4edd5f8ec12a48cfa682ab8261b80a79"}' crossorigin="anonymous"></script>
+<script crossorigin="anonymous" data-cf-beacon='{"rayId":"968e52ec6af3e69a","serverTiming":{"name":{"cfExtPri":true,"cfEdge":true,"cfOrigin":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.7.0","token":"4edd5f8ec12a48cfa682ab8261b80a79"}' defer="" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015"></script>
 </body>
 </html>
-    <script id="html_badge_script1">
+<script id="html_badge_script1">
         window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
             "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDnsyjLITZ6KV%2FJUNN6epVhxK3SCB%2FhykAyfNVT1u2q6eGrn%2B6Z6j1xqtnXznRC%2BSi%2B42rRroGpb26Ud9Xh0vQC8wjVnPbDM05uRYkBM%2F5BtspN8nQKrhiZidguRZFQA8508A6GARQsyxt85zmNw6QHxAL1707Wj%2F%2FHfjlRn5NgzaQJOty4E8TROV6D2xzHu5%2FYABAedzb4JaRQSR1OXmy7rvvYNrLbWinm8HzwadIdTMvCYYbPJ%2Bfdia4ESou5kY%2FHkZBiZXf55nZmVWMCNwiW%2FvTrTLere9anlzly9%2F4s9RIlmvhjpCypnPsfQ2jWCsxYQWCIv4Uk9NJDGJAwxIF6sJZOIB4%2BjucaQrNfkstoUeq8yho1Qheau1drEYzJh94FILTmKynxhCo5oqyqdL0%2Fu7coIFL3cNQC9xfqBc5yNT5AMIp2yXika8VRsimoXGCQqFGMYahHrp0hr4S30wkMZEi2BfZQM2xV%2F0M41O12qejh%2BnEGKSotbCIanS%2Frkkd2J%2BNbiGRR%2FveYEpGB%2Bh%2FeU%3D";
         window.__genspark_locale = "zh-CN";
         window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDnsyjLITZ6KV/JUNN6epVhxK3SCB/hykAyfNVT1u2q6eGrn+6Z6j1xqtnXznRC+Si+42rRroGpb26Ud9Xh0vQC8wjVnPbDM05uRYkBM/5BtspN8nQKrhiZidguRZFQA8508A6GARQsyxt85zmNw6QHxAL1707Wj//HfjlRn5NgzaQJOty4E8TROV6D2xzHu5/YABAedzb4JaRQSR1OXmy7rvvYNrLbWinm8HzwadIdTMvCYYbPJ+fdia4ESou5kY/HkZBiZXf55nZmVWMCNwiW/vTrTLere9anlzly9/4s9RIlmvhjpCypnPsfQ2jWCsxYQWCIv4Uk9NJDGJAwxIF6sJZOIB4+jucaQrNfkstoUeq8yho1Qheau1drEYzJh94FILTmKynxhCo5oqyqdL0/u7coIFL3cNQC9xfqBc5yNT5AMIp2yXika8VRsimoXGCQqFGMYahHrp0hr4S30wkMZEi2BfZQM2xV/0M41O12qejh+nEGKSotbCIanS/rkkd2J+NbiGRR/veYEpGB+h/eU=";
     </script>
-    
-    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
-    
+<script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
