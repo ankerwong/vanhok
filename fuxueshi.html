@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>香港副学士全景式解读：家长需要知道的升学路径、院校选择与真实数据</title>
+  <style>
+    :root {
+      --bg: #f5f1e8;
+      --paper: #fffdf8;
+      --ink: #1f2937;
+      --muted: #6b7280;
+      --line: #e7dcc8;
+      --accent: #8b5e34;
+      --accent-2: #b88746;
+      --soft: #f7efe1;
+      --soft-2: #efe3cf;
+      --success: #245c43;
+      --shadow: 0 10px 30px rgba(76, 56, 31, 0.08);
+      --radius: 18px;
+      --max: 980px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, #fbf7ef 0, #f5f1e8 35%, #f1ebdf 100%);
+      line-height: 1.8;
+    }
+    .hero {
+      padding: 56px 20px 32px;
+      background: linear-gradient(145deg, rgba(255,253,248,0.96), rgba(247,239,225,0.92));
+      border-bottom: 1px solid var(--line);
+    }
+    .hero-inner, .container { max-width: var(--max); margin: 0 auto; }
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .06em;
+    }
+    h1 {
+      margin: 18px 0 14px;
+      font-size: clamp(30px, 4.5vw, 52px);
+      line-height: 1.16;
+      letter-spacing: -.02em;
+    }
+    .subtitle {
+      font-size: 18px;
+      color: #4b5563;
+      max-width: 860px;
+      margin: 0 0 18px;
+    }
+    .meta {
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin: 28px 0 8px;
+    }
+    .summary-card, .stat-card, .faq-item, .school-card, .image-card, .tip-box {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .summary-card {
+      padding: 18px;
+    }
+    .summary-card strong {
+      display: block;
+      font-size: 15px;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .sticky-nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 253, 248, 0.88);
+      border-bottom: 1px solid var(--line);
+    }
+    .sticky-nav .nav-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 10px 20px;
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
+    }
+    .sticky-nav .nav-inner::-webkit-scrollbar { display: none; }
+    .sticky-nav a {
+      color: var(--accent);
+      text-decoration: none;
+      background: var(--soft);
+      border: 1px solid var(--soft-2);
+      border-radius: 999px;
+      padding: 9px 13px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .container {
+      padding: 26px 20px 80px;
+    }
+    .page {
+      position: relative;
+      background: rgba(255, 253, 248, 0.82);
+      border: 1px solid rgba(231, 220, 200, 0.9);
+      border-radius: 28px;
+      margin: 24px 0;
+      padding: 34px 22px 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.20), transparent 18%);
+      pointer-events: none;
+    }
+    .page-no {
+      position: absolute;
+      right: 18px;
+      top: 16px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: white;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 8px 18px rgba(139, 94, 52, 0.22);
+    }
+    h2 {
+      margin: 0 0 18px;
+      padding-right: 56px;
+      font-size: clamp(22px, 3vw, 30px);
+      line-height: 1.3;
+    }
+    h3 {
+      margin: 24px 0 10px;
+      font-size: 21px;
+      color: #2f3a4a;
+    }
+    h4 {
+      margin: 18px 0 8px;
+      font-size: 17px;
+      color: #374151;
+    }
+    p { margin: 0 0 14px; }
+    ul, ol { margin: 0 0 16px 1.2em; padding: 0; }
+    li { margin: 7px 0; }
+    .lead {
+      font-size: 18px;
+      color: #374151;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin: 22px 0 8px;
+    }
+    .stat-card { padding: 16px; }
+    .stat-card .num {
+      display: block;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1.15;
+      margin-bottom: 6px;
+    }
+    .stat-card .label {
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .school-grid, .image-grid, .faq-grid {
+      display: grid;
+      gap: 18px;
+    }
+    .school-card, .faq-item { padding: 18px; }
+    .school-card h4 { margin-top: 0; }
+    .pill {
+      display: inline-block;
+      padding: 4px 10px;
+      background: var(--soft);
+      color: var(--accent);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      margin: 0 6px 6px 0;
+    }
+    .image-card { overflow: hidden; }
+    .image-card img {
+      width: 100%;
+      display: block;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      background: #e5e7eb;
+    }
+    .image-caption {
+      padding: 14px 16px 16px;
+      font-size: 14px;
+      color: #475569;
+    }
+    .tip-box {
+      padding: 18px 18px 14px;
+      background: linear-gradient(180deg, rgba(247,239,225,0.75), rgba(255,253,248,0.95));
+    }
+    .tip-box strong { color: var(--success); }
+    .faq-item h4 { margin: 0 0 8px; }
+    a { color: #8a5b2c; }
+    .source-list {
+      margin-top: 20px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--line);
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .footer {
+      max-width: var(--max);
+      margin: 0 auto 40px;
+      padding: 0 20px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    @media (min-width: 860px) {
+      .school-grid { grid-template-columns: 1fr 1fr; }
+      .image-grid { grid-template-columns: 1fr 1fr; }
+      .faq-grid { grid-template-columns: 1fr 1fr; }
+      .page { padding: 40px 34px 34px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">家长转发版 · 深度调研网页</div>
+      <h1>香港副学士全景式解读：家长需要知道的升学路径、院校选择与真实数据</h1>
+      <p class="subtitle">它不是香港本科的“替代品”，更像是一张重新进入本科赛道的“再入场券”。这份网页把制度定位、院校差异、升学比例、入学要求与真实校园图片放在同一页，方便家长快速判断。</p>
+      <div class="meta">整理日期：2026-07-20 · 形式：单文件 HTML 网页 · 图片均为院校官方页面来源</div>
+      <div class="summary-grid">
+        <div class="summary-card"><strong>核心定位</strong>副学士属于香港副学位体系，更偏学术基础与升学衔接，不等同于内地语境下的普通“专科”。</div>
+        <div class="summary-card"><strong>主流路径</strong>最典型模式是“2+2”：两年副学士 + 两年本科，合计四年完成学士学位。</div>
+        <div class="summary-card"><strong>政府通道</strong>自 2018/19 学年起，每年有 5,000 个教资会资助高年级学士学位学额供优秀副学位毕业生衔接。</div>
+        <div class="summary-card"><strong>自资衔接容量</strong>自资衔接学士学位学额由 2010/11 学年的约 3,000 个增至 2026/27 学年的约 8,300 个。</div>
+        <div class="summary-card"><strong>头部院校表现</strong>HKBU CIE 2025 学年副学士毕业生升学率 91.5%；PolyU HKCC 2025 年整体升学率 90.4%。</div>
+        <div class="summary-card"><strong>家长判断重点</strong>不要只看升学率百分比，更要看升学人数、进入八大资助学额比例、专业衔接度与校园资源。</div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="sticky-nav">
+    <div class="nav-inner">
+      <a href="#p1">定义与制度</a>
+      <a href="#p2">适合人群</a>
+      <a href="#p3">院校与专业</a>
+      <a href="#p4">升学比例</a>
+      <a href="#p5">入学与升本要求</a>
+      <a href="#p6">校园图片</a>
+      <a href="#p7">家长判断框架</a>
+      <a href="#p8">FAQ</a>
+      <a href="#sources">来源</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section class="page" id="p1">
+      <div class="page-no">01</div>
+      <h2>什么是香港副学士？它在香港教育体系里处于什么位置？</h2>
+      <p class="lead">很多家长第一次接触香港副学士（Associate Degree，简称 Asso）时，会把它理解为“没考上本科后的替代品”。但从香港官方制度设计来看，它其实是一个长期存在、定位清晰、能衔接本科的副学位体系。</p>
+      <p>按香港官方定义，<strong>副学位（Sub-degree）</strong>是一个总称，主要包括两类：<strong>副学士（Associate Degree）</strong>与<strong>高级文凭（Higher Diploma）</strong>。其中，副学士更偏通识与学术基础，强调广博知识、一般技能与升学衔接；高级文凭则更偏专业与职业导向，更强调专业知识与就业应用。<a href="https://www.cspe.edu.hk/tc/ipass/q-and-a/">官方来源</a></p>
+      <p>香港官方还明确指出，副学士是<strong>两年制课程</strong>，其结业资格大致相等于北美四年制大学学位的一半，或英国三年制大学学位的三分之一。这也是为什么香港副学士最核心的逻辑叫做<strong>“2+2”</strong>：先读两年副学士，再衔接两年本科，四年完成学士学位。<a href="https://www.cspe.edu.hk/tc/ipass/q-and-a/">官方来源</a> <a href="https://www.cie.hkbu.edu.hk/admissions/associate-degree/tc/programme/?tag=programme-features">HKBU CIE 2+2 说明</a></p>
+      <div class="stats">
+        <div class="stat-card"><span class="num">2 年</span><span class="label">副学士标准修读年期</span></div>
+        <div class="stat-card"><span class="num">2+2</span><span class="label">最典型升学衔接模式</span></div>
+        <div class="stat-card"><span class="num">128 学分</span><span class="label">浸大会籍网页示例中的四年制学士通常要求总学分</span></div>
+      </div>
+      <div class="source-list">
+        参考来源：
+        <a href="https://www.cspe.edu.hk/tc/ipass/q-and-a/">CSPE 副学位课程问与答</a> ·
+        <a href="https://www.cie.hkbu.edu.hk/admissions/associate-degree/tc/programme/?tag=programme-features">HKBU CIE 课程介绍</a>
+      </div>
+    </section>
+
+    <section class="page" id="p2">
+      <div class="page-no">02</div>
+      <h2>香港为什么会有副学士？它的制度价值是什么？适合哪些学生？</h2>
+      <p>香港副学士并不是临时性的“兜底安排”，而是被政府长期制度化管理的副学位体系。官方明确写明，副学位（包括副学士和高级文凭）是<strong>独立而有价值的结业资历</strong>，毕业生既可以继续升学，也可以担任初级行政和管理职位。<a href="https://www.cspe.edu.hk/tc/programmes/sub-degree-sector/">官方来源</a></p>
+      <div class="stats">
+        <div class="stat-card"><span class="num">5,000</span><span class="label">自 2018/19 学年起，每年教资会资助高年级学士学位学额</span></div>
+        <div class="stat-card"><span class="num">约 8,300</span><span class="label">2026/27 学年自资衔接学士学位学额</span></div>
+        <div class="stat-card"><span class="num">14</span><span class="label">已明确接纳副学位为入职资格的公务员职系数</span></div>
+        <div class="stat-card"><span class="num">约 80</span><span class="label">副学位毕业生可申请的公务员职系总量</span></div>
+      </div>
+      <p>从政策支持看，香港政府一直在扩大副学位毕业生的上升通道：自 2018/19 学年起，每年有 5,000 个教资会资助全日制高年级学士学位学额，专供表现优秀的副学位毕业生衔接升学；而自资衔接学士学位学额则由 2010/11 学年的约 3,000 个增至 2026/27 学年的约 8,300 个。<a href="https://www.cspe.edu.hk/tc/programmes/sub-degree-sector/">官方来源</a></p>
+      <div class="tip-box">
+        <p><strong>哪些学生更适合走这条路？</strong></p>
+        <ul>
+          <li>DSE / 高考成绩距离理想本科直录还有差距，但学术能力并不差；</li>
+          <li>最终目标依然是香港或海外大学本科学位；</li>
+          <li>愿意把两年副学士当作一次“二次竞争”和“重新排名”的机会。</li>
+        </ul>
+      </div>
+      <div class="source-list">
+        参考来源：
+        <a href="https://www.cspe.edu.hk/tc/programmes/sub-degree-sector/">CSPE 副学位</a> ·
+        <a href="https://www.cspe.edu.hk/tc/ipass/q-and-a/">CSPE 问与答</a>
+      </div>
+    </section>
+
+    <section class="page" id="p3">
+      <div class="page-no">03</div>
+      <h2>香港有哪些主要院校开设副学士？专业怎么选？</h2>
+      <p>香港完整的自资专上院校名录，官方建议通过 CSPE / Concourse 的院校列表查询，并可按“副学位课程 → 副学士学位”筛选。以下是本次已核实到、最具有代表性的几类院校与专业方向。<a href="https://www.cspe.edu.hk/tc/institution/list/">官方院校列表</a></p>
+      <div class="school-grid">
+        <article class="school-card">
+          <h4><a href="https://www2.hkuspace.hku.hk/cc/about-us/about-the-college">香港大学附属学院 HKU SPACE Community College</a></h4>
+          <div><span class="pill">成立于 2000 年</span><span class="pill">学生约 13,000</span><span class="pill">35+ 课程</span></div>
+          <p>官网显示，学院学生人数约 13,000，开办超过 35 个副学士及高级文凭课程，成功完成课程后可通过 HKU SPACE 获得香港大学体系内的副学位资格。</p>
+          <p>升学累计数据方面，自 2000 年以来已有超过 18,000 名学生成功升读本地大学教资会资助全日制学士学位课程，其中接近 5,500 名入读香港大学，累计成功升读学位课程总人数超过 34,000 人。<a href="https://www2.hkuspace.hku.hk/cc/cht/articulation/facts-and-figures">官方来源</a></p>
+        </article>
+        <article class="school-card">
+          <h4><a href="https://www.hkcc-polyu.edu.hk/en/about-hkcc/graduate-articulation-overview/graduate-articulation-overview/index.html">香港理工大学香港专上学院 PolyU HKCC</a></h4>
+          <div><span class="pill">2025 升学率 90.4%</span><span class="pill">连续 6 年 90%+</span><span class="pill">八大资助占比 53.2%</span></div>
+          <p>HKCC 是香港最具代表性的副学位院校之一。官网数据显示，2025 年整体升学率为 90.4%，共有 2,577 名毕业生升读学士学位课程，其中 1,370 人（53.2%）升读八大教资会资助高年级学额，2,034 人（78.9%）升读八大课程。</p>
+          <p>其副学士覆盖人文及传意、中国语言及文学、工程学、应用社会科学、工商业等多个方向。<a href="https://www.hkcc-polyu.edu.hk/tc/programmes/associate-degree/index.html">官方课程页</a></p>
+        </article>
+        <article class="school-card">
+          <h4><a href="https://www.cie.hkbu.edu.hk/admissions/associate-degree/tc/programme/?tag=programme-features">香港浸会大学国际学院 HKBU CIE</a></h4>
+          <div><span class="pill">30 项课程</span><span class="pill">2025 升学率 91.5%</span><span class="pill">85.6% 升读八大资助学位</span></div>
+          <p>官网明确写到，共开办 30 项副学士专修及高级文凭课程，涵盖应用科学、人文及语言学、商学、传理学、社会科学五大学术范畴，课程可按兴趣、能力和志向灵活组合。</p>
+          <p>2025 学年副学士毕业生升学率为 91.5%，其中 85.6% 升读八间教资会资助院校学士学位课程；过去三年超过 1,700 位副学士毕业生成功升读八大教资会资助院校。<a href="https://www.cie.hkbu.edu.hk/admissions/associate-degree/tc/programme/?tag=programme-features">官方来源</a></p>
+        </article>
+        <article class="school-card">
+          <h4><a href="https://www.uowchk.edu.hk/s-21476/s-21868/find-programmes/s-21664/">香港伍伦贡学院 UOW College Hong Kong</a></h4>
+          <div><span class="pill">理工应用较多</span><span class="pill">设计方向可见</span><span class="pill">新兴专业更突出</span></div>
+          <p>官网课程检索可见课程示例包括：文学副学士（视觉设计）、工程学副学士、理学副学士（机场营运及航空物流）、理学副学士（人工智能系统）、理学副学士（航空及飞行）、理学副学士（云端系统管理）等。</p>
+        </article>
+        <article class="school-card">
+          <h4><a href="https://www.ln.edu.hk/cht/life/admissions/ad-hd-diploma-programmes">岭南大学持续进修学院 Lingnan LIFE</a></h4>
+          <div><span class="pill">提供副学士/高级文凭申请</span><span class="pill">接受 HKDSE Level 2 路径</span></div>
+          <p>官方确认提供副学士及高级文凭课程申请通道，并公布完整入学要求，是大学体系下明确参与香港副学位赛道的办学主体之一。</p>
+        </article>
+      </div>
+      <h3>专业选择怎么理解？</h3>
+      <p>官方资料显示，副学位课程覆盖面并不窄，常见学科包括人文及社会科学、科学及科技、资讯科技、设计、建筑、护理等。简化理解：</p>
+      <ul>
+        <li><strong>商科类</strong>：申请面广、衔接成熟、家长最容易理解；</li>
+        <li><strong>社科传媒类</strong>：转专业弹性较大；</li>
+        <li><strong>理工科技类</strong>：对数学和逻辑要求更高，但目标更清晰；</li>
+        <li><strong>设计创意类</strong>：适合作品表达较强的学生；</li>
+        <li><strong>专业应用类</strong>：兼顾升学与职业方向。</li>
+      </ul>
+      <div class="source-list">
+        参考来源：
+        <a href="https://www.cspe.edu.hk/tc/institution/list/">CSPE 院校列表</a> ·
+        <a href="https://www.cspe.edu.hk/tc/ipass/q-and-a/">CSPE 问与答</a> ·
+        <a href="https://www.hkcc-polyu.edu.hk/tc/programmes/associate-degree/index.html">HKCC 课程页</a> ·
+        <a href="https://www.uowchk.edu.hk/s-21476/s-21868/find-programmes/s-21664/">UOW 课程页</a>
+      </div>
+    </section>
+
+    <section class="page" id="p4">
+      <div class="page-no">04</div>
+      <h2>香港副学士的升学比例，到底高不高？</h2>
+      <p class="lead">结论先说：<strong>高，但不是“躺着升”；头部院校数据强，但竞争也真实存在。</strong></p>
+      <div class="stats">
+        <div class="stat-card"><span class="num">91.5%</span><span class="label">HKBU CIE 2025 学年副学士毕业生升学率</span></div>
+        <div class="stat-card"><span class="num">85.6%</span><span class="label">HKBU CIE 升读八间教资会资助院校学士学位比例</span></div>
+        <div class="stat-card"><span class="num">90.4%</span><span class="label">PolyU HKCC 2025 年整体升学率</span></div>
+        <div class="stat-card"><span class="num">53.2%</span><span class="label">PolyU HKCC 升读八大资助高年级学额比例</span></div>
+      </div>
+      <p>从官方数据看，香港头部副学位院校的升学率普遍很能打。HKBU CIE 2025 学年副学士毕业生升学率高达 91.5%，其中 85.6% 升读八间教资会资助院校学士学位课程。<a href="https://www.cie.hkbu.edu.hk/admissions/associate-degree/tc/programme/?tag=programme-features">官方来源</a></p>
+      <p>PolyU HKCC 方面，2025 年整体升学率 90.4%，共有 2,577 名毕业生升读学士学位课程，其中 1,370 人（53.2%）升读八大教资会资助高年级学额，2,034 人（78.9%）升读八大课程。更重要的是，官网显示该校 2020–2025 连续六年升学率都在 90% 以上。<a href="https://www.hkcc-polyu.edu.hk/en/about-hkcc/graduate-articulation-overview/graduate-articulation-overview/index.html">官方来源</a></p>
+      <p>HKU SPACE CC 在同一页面没有给出一个单一年份整体升学率，但给出了非常有参考价值的长期累计结果：自 2000 年以来，已有超过 18,000 人升读本地大学教资会资助全日制学士学位课程，累计成功升读学位课程总人数超过 34,000 人。<a href="https://www2.hkuspace.hku.hk/cc/cht/articulation/facts-and-figures">官方来源</a></p>
+      <p>如果看政府层面的历史判断，教育局过往检讨文件曾指出：近年约有八成副学士学生毕业后修读学位课程。这不是最新年度统计口径，但足以说明副学士长期以来就是一条以升学为核心的赛道。<a href="https://www.edb.gov.hk/attachment/tc/about-edb/press/consultation/TF_SFPE_Consultation%20Doc_TC.pdf">教育局历史文件</a></p>
+      <div class="tip-box">
+        <p><strong>家长需要理解的关键：</strong>升学率高，不等于人人都能升进“港大、中大、科大”等最热门目标。真正的竞争，通常发生在三个层面：能不能升本科、能不能升八大、能不能升到理想专业。</p>
+      </div>
+    </section>
+
+    <section class="page" id="p5">
+      <div class="page-no">05</div>
+      <h2>香港副学士的入学要求与升本科要求是什么？</h2>
+      <h3>1）入学要求：读副学士本身需要什么条件？</h3>
+      <p>根据教育局《副学士学位及高级文凭课程的新修订通用指标（2024/25 学年生效）》，副学士最低入学要求通常为：香港中学文凭试其中五科取得成绩，其中须包括中国语文与英国语文，一般要求为第二级（Level 2）。此外可接受应用学习科目成绩、其他同等学历（包括本地及境外非本地学历），院校也可在一定比例内作特殊收生。<a href="https://gia.info.gov.hk/general/202307/04/P2023070400462_424242_1_1688612358221.pdf">教育局文件</a></p>
+      <h3>2）院校层面的具体例子</h3>
+      <ul>
+        <li><strong>HKU SPACE CC</strong>：官网写明接受 HKDSE 五科（包括中、英文）Level 2 或以上，也考虑其他国际学历。<a href="https://www2.hkuspace.hku.hk/cc/cht/admission/general-entrance-requirements/">官方来源</a></li>
+        <li><strong>岭南 LIFE</strong>：官网写明接受 HKDSE 五科（包括中、英文）Level 2 或以上，接受应用学习科目、公民与社会发展科达标、数学延伸部分 M1/M2 Level 2 等。<a href="https://www.ln.edu.hk/cht/life/admissions/ad-hd-diploma-programmes">官方来源</a></li>
+      </ul>
+      <h3>3）升本科的关键：真正重要的是副学士阶段的表现</h3>
+      <p>现实中，决定能否升到理想本科的，往往不是“能不能毕业”，而是以下几个要素：副学士阶段的整体成绩、申请专业与原读课程的衔接度，以及个别课程要求的面试、作品集、数学基础、英语能力等。官方页面通常只写成“成绩达标者可衔接学士学位”，并不会在统一页面上公布一条适用于所有专业的固定 GPA 线。<a href="https://www.cie.hkbu.edu.hk/admissions/associate-degree/tc/programme/?tag=programme-features">HKBU CIE 说明</a></p>
+      <div class="tip-box">
+        <p><strong>一句话理解：</strong>副学士不是“自动升本”，而是一条凭两年表现重新竞争本科席位的赛道。</p>
+      </div>
+    </section>
+
+    <section class="page" id="p6">
+      <div class="page-no">06</div>
+      <h2>真实院校图片：教学楼、学习环境与设施（非 AI 图）</h2>
+      <p>以下图片均来自院校官方页面，适合家长直观看到香港副学士学生可能接触到的真实学习空间与校园环境。</p>
+      <div class="image-grid">
+        <figure class="image-card">
+          <img src="https://www.cie.hkbu.edu.hk/main/images/campuses_and_services/facilities_library_01.jpg" alt="香港浸会大学国际学院图书设施" />
+          <figcaption class="image-caption"><strong>香港浸会大学国际学院：图书设施</strong><br/>图片来源：官方页面 <a href="https://www.cie.hkbu.edu.hk/main/sc/about_us/learning_support_and_facilities">HKBU CIE Learning Support and Facilities</a></figcaption>
+        </figure>
+        <figure class="image-card">
+          <img src="https://www.cie.hkbu.edu.hk/main/images/campuses_and_services/facilities_learning_common_01.jpg" alt="香港浸会大学国际学院 Learning Common" />
+          <figcaption class="image-caption"><strong>香港浸会大学国际学院：Learning Common 学习共享空间</strong><br/>图片来源：官方页面 <a href="https://www.cie.hkbu.edu.hk/main/sc/about_us/learning_support_and_facilities">HKBU CIE Learning Support and Facilities</a></figcaption>
+        </figure>
+        <figure class="image-card">
+          <img src="https://sspark.genspark.ai/cfimages?u1=X7sSxLrlyG%2BaV%2B6NCoOQj1bIn06qqWEYaNJZ%2FkZA%2B4owV5KZ083ZOkTfBzbpQTc1MBP3n4et64WGA9CGq7BpxLc0XQ6HzwGf5UyepyV2V%2BWXc7NSUKoMVKsbjsFOFw%3D%3D&u2=njz97aZND0uDDaQj&width=2560" alt="PolyU HKCC 校园环境" />
+          <figcaption class="image-caption"><strong>香港理工大学香港专上学院：校园环境</strong><br/>图片来源：官方页面 <a href="https://www.hkcc-polyu.edu.hk/en/about-hkcc/college-overview/index.html">PolyU HKCC College Overview</a></figcaption>
+        </figure>
+        <figure class="image-card">
+          <img src="https://sspark.genspark.ai/cfimages?u1=Z9OqefRrODVnzlmYJ7xvOr8lCt6OXBZgfwU3UXeGDve17g40RKO2l76toyB2nTdf6rodWIk9HlEPJtlxyTJCc4qpThKPJqsdIXno2Km8ufD8vuCemsx7WHKmwmP8pC10dhjgWw%3D%3D&u2=WgniM9xB8S3jyKFb&width=2560" alt="HKU SPACE Community College 学院环境" />
+          <figcaption class="image-caption"><strong>香港大学附属学院：学院环境</strong><br/>图片来源：官方页面 <a href="https://www2.hkuspace.hku.hk/cc/about-us/about-the-college">HKU SPACE CC About the College</a></figcaption>
+        </figure>
+      </div>
+      <p>根据 HKBU CIE 官方说明，其学习支援设施包括电子书资源、Learning Common、自主学习空间、全校 Wi‑Fi、教学场地、传播工作室、新闻发布室、专业实验室、体育中心和舞蹈室等，整体更接近“完整大学学习环境”。<a href="https://www.cie.hkbu.edu.hk/main/sc/about_us/learning_support_and_facilities">官方来源</a></p>
+    </section>
+
+    <section class="page" id="p7">
+      <div class="page-no">07</div>
+      <h2>家长如何判断一所副学士院校值不值得读？</h2>
+      <ol>
+        <li><strong>看升学率，但更要看升学人数。</strong>HKCC 官网特别提醒，不能只看百分比，也要看实际升学人数。一个学校如果升学率高但人数很少，参考意义有限；如果能连续多年保持大规模升学，体系成熟度更高。<a href="https://www.hkcc-polyu.edu.hk/en/about-hkcc/graduate-articulation-overview/graduate-articulation-overview/index.html">官方来源</a></li>
+        <li><strong>看进入八大资助高年级学额的比例。</strong>这项指标最能体现竞争力，因为学额有限、申请者集中。</li>
+        <li><strong>看专业与未来本科目标是否衔接。</strong>如果未来想升商科、数据科学、传媒、设计等，本科目标与副学士专业最好在逻辑上对得上。</li>
+        <li><strong>看课程定位是学术型还是职业型。</strong>副学士更偏学术基础与升学衔接，高级文凭更偏专业技能与就业应用。<a href="https://www.cspe.edu.hk/tc/ipass/q-and-a/">官方来源</a></li>
+        <li><strong>看校园资源。</strong>图书资源、学习空间、实验室、传播工作室、体育空间等“软条件”，实际上会直接影响学生两年的学习密度和申请材料质量。</li>
+      </ol>
+      <div class="tip-box">
+        <p><strong>最终判断逻辑：</strong>不要只问“这是不是好学校”，而要问“这所学校的这条课程，能不能把孩子送到下一阶段更好的本科”。</p>
+      </div>
+    </section>
+
+    <section class="page" id="p8">
+      <div class="page-no">08</div>
+      <h2>家长最常见的 6 个问题 FAQ</h2>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h4>Q1：香港副学士是不是等同于内地专科？</h4>
+          <p>不完全等同。香港官方把副学士放在副学位体系中，定位更偏学术基础与升学衔接，典型路径是“2+2”升读学士学位，而不是单纯终结在专科层级。<a href="https://www.cspe.edu.hk/tc/ipass/q-and-a/">来源</a></p>
+        </div>
+        <div class="faq-item">
+          <h4>Q2：读完副学士能不能升本科？</h4>
+          <p>可以，而且这正是它最核心的功能之一。香港政府提供每年 5,000 个教资会资助高年级学士学位学额，另外 2026/27 学年还有约 8,300 个自资衔接学士学位学额。<a href="https://www.cspe.edu.hk/tc/programmes/sub-degree-sector/">来源</a></p>
+        </div>
+        <div class="faq-item">
+          <h4>Q3：升学率高，是不是意味着很容易升？</h4>
+          <p>不意味着“躺着升”。头部院校升学率确实高，但能否进入八大资助学位、是否能升到理想专业，仍取决于副学士阶段的成绩与专业匹配度。</p>
+        </div>
+        <div class="faq-item">
+          <h4>Q4：副学士和高级文凭应该怎么选？</h4>
+          <p>如果学生更明确想继续升本科、走学术型路线，通常优先考虑副学士；如果更偏职业技能、行业应用或专业导向，则高级文凭更值得比较。<a href="https://www.cspe.edu.hk/tc/ipass/q-and-a/">来源</a></p>
+        </div>
+        <div class="faq-item">
+          <h4>Q5：入学门槛大概是什么水平？</h4>
+          <p>教育局修订通用指标显示，副学士一般最低入学要求为 HKDSE 五科达到要求，其中包括中英文，一般要求 Level 2；也接受应用学习科目及其他同等学历。<a href="https://gia.info.gov.hk/general/202307/04/P2023070400462_424242_1_1688612358221.pdf">来源</a></p>
+        </div>
+        <div class="faq-item">
+          <h4>Q6：家长最该看哪些数据？</h4>
+          <p>至少看四类：整体升学率、实际升学人数、进入八大资助高年级学额比例，以及目标专业的衔接情况。只看一个“百分比”远远不够。<a href="https://www.hkcc-polyu.edu.hk/en/about-hkcc/graduate-articulation-overview/graduate-articulation-overview/index.html">来源</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="sources">
+      <div class="page-no">09</div>
+      <h2>主要来源汇总</h2>
+      <ul>
+        <li><a href="https://www.cspe.edu.hk/tc/programmes/sub-degree-sector/">CSPE：副学位</a></li>
+        <li><a href="https://www.cspe.edu.hk/tc/ipass/q-and-a/">CSPE：副学位课程问与答</a></li>
+        <li><a href="https://www.cspe.edu.hk/tc/institution/list/">CSPE：自资专上院校列表</a></li>
+        <li><a href="https://gia.info.gov.hk/general/202307/04/P2023070400462_424242_1_1688612358221.pdf">教育局：副学士学位及高级文凭课程的新修订通用指标</a></li>
+        <li><a href="https://www.cie.hkbu.edu.hk/admissions/associate-degree/tc/programme/?tag=programme-features">HKBU CIE：课程介绍与升学数据</a></li>
+        <li><a href="https://www.cie.hkbu.edu.hk/main/sc/about_us/learning_support_and_facilities">HKBU CIE：学习支援与设施</a></li>
+        <li><a href="https://www.hkcc-polyu.edu.hk/en/about-hkcc/graduate-articulation-overview/graduate-articulation-overview/index.html">PolyU HKCC：Graduate Articulation Overview</a></li>
+        <li><a href="https://www.hkcc-polyu.edu.hk/tc/programmes/associate-degree/index.html">PolyU HKCC：副学士课程页</a></li>
+        <li><a href="https://www.hkcc-polyu.edu.hk/sc/programmes/associate-degree/programmeDetails.php?sid=15">PolyU HKCC：人文及传意类课程页</a></li>
+        <li><a href="https://www2.hkuspace.hku.hk/cc/about-us/about-the-college">HKU SPACE CC：About the College</a></li>
+        <li><a href="https://www2.hkuspace.hku.hk/cc/cht/articulation/facts-and-figures">HKU SPACE CC：升学统计</a></li>
+        <li><a href="https://www2.hkuspace.hku.hk/cc/cht/admission/general-entrance-requirements/">HKU SPACE CC：一般入学要求</a></li>
+        <li><a href="https://www.uowchk.edu.hk/s-21476/s-21868/find-programmes/s-21664/">UOW College Hong Kong：课程检索</a></li>
+        <li><a href="https://www.ln.edu.hk/cht/life/admissions/ad-hd-diploma-programmes">岭南大学持续进修学院：副学士及高级文凭课程入学要求</a></li>
+        <li><a href="https://www.edb.gov.hk/attachment/tc/about-edb/press/consultation/TF_SFPE_Consultation%20Doc_TC.pdf">教育局历史检讨文件</a></li>
+      </ul>
+      <p>网页结论均依据以上已核实页面整理，不新增未经验证的学校数据、费用数字或排名。</p>
+    </section>
+  </main>
+
+  <div class="footer">
+    说明：本 HTML 为便于家长转发阅读而整理的单文件网页版本，采用纸张分页式视觉风格，页码为装饰性设计。
+  </div>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
